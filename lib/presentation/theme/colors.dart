@@ -7,5 +7,4 @@ class AppColors {
   static const primaryTxt = Color(0xff060606) ;
   static const Color secondaryTxt = Color.fromRGBO(0, 0, 0, 0.7) ;
 
-  
 }
