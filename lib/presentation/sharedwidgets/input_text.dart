@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project_management_app/presentation/theme/colors.dart';
-import 'package:project_management_app/presentation/theme/styles.dart';
+
+import '../utils/colors.dart';
+import '../utils/styles.dart';
+
 
 class InputText extends StatelessWidget {
   const InputText(
@@ -32,6 +34,7 @@ class InputText extends StatelessWidget {
           hintText: hintText,
           hintStyle: robotoRegular.copyWith(color: AppColors.secondaryTxt),
           border: OutlineInputBorder(
+            borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(borderRadius),
           )),
       validator: validator,
