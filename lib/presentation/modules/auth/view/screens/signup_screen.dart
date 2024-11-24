@@ -16,40 +16,42 @@ class SignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffold,
-      body: Stack(
-        children: [
-          Align(
-              alignment: Alignment.topLeft ,
-              child: SvgPicture.asset('assets/Shape.svg')
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Column(
-              children: [
-                 SizedBox(
-                  height: 180.h,
-                ),
-                _showWelcomeSection(),
-                 SizedBox(
-                  height: 50.h,
-                ),
-                _showNameSection(),
-                const SizedBox(
-                  height: 20,
-                ),
-                _showEmailSection(),
-                const SizedBox(
-                  height: 20,
-                ),
-                _showPasswordSection(),
-                 SizedBox(
-                  height: 100.h,
-                ),
-                _showButton()
-              ],
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Align(
+                alignment: Alignment.topLeft ,
+                child: SvgPicture.asset('assets/Shape.svg')
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Column(
+                children: [
+                   SizedBox(
+                    height: 180.h,
+                  ),
+                  _showWelcomeSection(),
+                   SizedBox(
+                    height: 50.h,
+                  ),
+                  _showNameSection(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  _showEmailSection(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  _showPasswordSection(),
+                   SizedBox(
+                    height: 100.h,
+                  ),
+                  _showButton()
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
