@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_management_app/presentation/modules/auth/view/screens/signup_screen.dart';
 
+import 'application/helpers/screen_configuraton.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -11,6 +13,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final screenUtility = ScreenConfiguration();
+    screenUtility.initialize(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
