@@ -1,5 +1,5 @@
 class ApiResponse<T> {
-  T data ;
+  T? data ;
   int statusCode ;
-  ApiResponse(this.data, this.statusCode);
+  ApiResponse(this.data , this.statusCode );
 }
