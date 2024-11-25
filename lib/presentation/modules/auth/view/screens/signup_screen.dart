@@ -2,10 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
+import 'package:project_management_app/data/dataSource/remoteDataSource/auth_remote_data_source.dart';
+import 'package:project_management_app/data/network/requests.dart';
+import 'package:project_management_app/data/repositoryImp/auth_repo_impl.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_button.dart';
 import 'package:project_management_app/presentation/sharedwidgets/input_text.dart';
 
+import '../../../../../data/network/internet_checker.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/styles.dart';
 
@@ -20,18 +25,17 @@ class SignupScreen extends StatelessWidget {
         child: Stack(
           children: [
             Align(
-                alignment: Alignment.topLeft ,
-                child: SvgPicture.asset('assets/Shape.svg')
-            ),
+                alignment: Alignment.topLeft,
+                child: SvgPicture.asset('assets/Shape.svg')),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                 children: [
-                   SizedBox(
+                  SizedBox(
                     height: 180.h,
                   ),
                   _showWelcomeSection(),
-                   SizedBox(
+                  SizedBox(
                     height: 50.h,
                   ),
                   _showNameSection(),
@@ -43,7 +47,7 @@ class SignupScreen extends StatelessWidget {
                     height: 20,
                   ),
                   _showPasswordSection(),
-                   SizedBox(
+                  SizedBox(
                     height: 100.h,
                   ),
                   _showButton()

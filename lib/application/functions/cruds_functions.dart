@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:project_management_app/data/responses/api_response.dart';
 import '../constants/constants.dart';
 
 Future<T> executeGetRequest<T>({
@@ -40,7 +39,7 @@ Future<ApiResponse> executePostRequest<ApiResponse>({
       'Accept': 'application/json',
       if (bearerToken != null) 'Authorization': 'Bearer $bearerToken'
     },
-    body: requestBody,
+    body: requestBody
   );
 
   final jsonResult = jsonDecode(response.body);
