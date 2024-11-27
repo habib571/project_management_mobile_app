@@ -8,11 +8,17 @@ import 'package:project_management_app/presentation/utils/colors.dart';
 import '../utils/styles.dart';
 
 enum StateRendererType {
+  // POPUP STATES (DIALOG)
+  popupLoadingState,
+  popupErrorState,
+  popupSuccess,
+  // FULL SCREEN STATES (FULL SCREEN)
   fullScreenLoadingState,
   fullScreenErrorState,
   fullScreenEmptyState,
+  // general
   contentState,
-  snackBarState
+  snackbarState  // NEW STATE FOR SNACKBAR
 }
 
 // ignore: must_be_immutable
@@ -37,7 +43,15 @@ class StateRenderer extends StatelessWidget {
 
   Widget _getStateWidget(BuildContext context) {
     switch (stateRendererType) {
-
+      case StateRendererType.popupLoadingState:
+        return _getPopUpDialog(
+            context, [_getAnimatedImage('assets/json/loading.json')]);
+      case StateRendererType.popupErrorState:
+        return _getPopUpDialog(context, [
+          _getAnimatedImage('assets/json/error.json'),
+          _getMessage(message),
+          _getRetryButton('OK', context)
+        ]);
       case StateRendererType.fullScreenLoadingState:
         return _getItemsColumn(
             [
@@ -58,7 +72,14 @@ class StateRenderer extends StatelessWidget {
             ]);
       case StateRendererType.contentState:
         return const SizedBox();
-      case StateRendererType.snackBarState: // HANDLE SNACKBAR STATE
+      case StateRendererType.popupSuccess:
+        return _getPopUpDialog(context, [
+          _getAnimatedImage('assets/json/success.json'),
+          _getMessage(title),
+          _getMessage(message),
+          _getRetryButton('OK', context)
+        ]);
+      case StateRendererType.snackbarState: // HANDLE SNACKBAR STATE
         Future.delayed(Duration.zero, () {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(message),
@@ -74,7 +95,31 @@ class StateRenderer extends StatelessWidget {
     }
   }
 
+  Widget _getPopUpDialog(BuildContext context, List<Widget> children) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14)),
+      elevation: 2,
+      backgroundColor: Colors.transparent,
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(14),
+            boxShadow: const [BoxShadow(color: Colors.black26)]),
+        child: _getDialogContent(context, children),
+      ),
+    );
+  }
 
+  Widget _getDialogContent(BuildContext context, List<Widget> children) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: children,
+    );
+  }
 
   Widget _getItemsColumn(List<Widget> children) {
     return Column(
@@ -86,10 +131,9 @@ class StateRenderer extends StatelessWidget {
 
   Widget _getAnimatedImage(String animationName) {
     return const SizedBox(
-        height: 100,
-        width: 100,
-        child: CircularProgressIndicator(color: AppColors.primary,)
-    );
+        height: 50,
+        width: 50,
+        child : CircularProgressIndicator(color: AppColors.primary,) ) ;
   }
 
   Widget _getMessage(String message) {
@@ -98,7 +142,7 @@ class StateRenderer extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Text(
           message,
-          style: robotoRegular.copyWith(fontSize: 17) ,
+          style: robotoBold.copyWith(color: AppColors.primary) ,
           textAlign: TextAlign.center,
         ),
       ),
@@ -111,12 +155,14 @@ class StateRenderer extends StatelessWidget {
         padding: const EdgeInsets.all(25),
         child: SizedBox(
             width: double.infinity,
-            child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 80.w) ,
-                 child: CustomButton(onPressed: () {
-                   retryActionFunction.call() ;
-                 }, text: buttonTitle
-                 ),
+            child: ElevatedButton(
+                onPressed: () {
+                  retryActionFunction.call();
+                },
+                child: Text(
+                  buttonTitle,
+                  style: robotoBold.copyWith(color: AppColors.primary)
+                )
             )
         ),
       ),

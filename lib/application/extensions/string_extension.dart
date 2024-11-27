@@ -3,6 +3,11 @@ extension StringExtensions on String? {
     return this == null || this!.isEmpty;
   }
 
+  String? isEmptyInput() {
+    if (isNullOrEmpty()) return "cannot be empty";
+    return null;
+  }
+
   String? isValidEmail() {
     final expression = RegExp(
       r"""^((?:[A-Za-z0-9!#$%&\'*+\-\/=?^_`{|}~]|(?<=^|\.)"|"(?=$|\.|@)|(?<=".*)[ .](?=.*")|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$""",

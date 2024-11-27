@@ -14,10 +14,11 @@ class LoadingState extends FlowState {
   StateRendererType stateRendererType;
   String? message;
 
-  LoadingState({required this.stateRendererType, String message = "loading.."});
+  LoadingState(
+      {required this.stateRendererType, String message = "loading.."});
 
   @override
-  String getMessage() => message ?? 'loading..';
+  String getMessage() => message ?? "loading";
 
   @override
   StateRendererType getStateRendererType() => stateRendererType;
@@ -32,7 +33,7 @@ class SnackbarState extends FlowState {
   String getMessage() => message;
 
   @override
-  StateRendererType getStateRendererType() => StateRendererType.snackBarState;
+  StateRendererType getStateRendererType() => StateRendererType.snackbarState;
 }
 
 // error state (POPUP,FULL SCREEN)
@@ -76,7 +77,7 @@ class EmptyState extends FlowState {
       StateRendererType.fullScreenEmptyState;
 }
 
-/*
+// success state
 class SuccessState extends FlowState {
   String message;
 
@@ -88,36 +89,46 @@ class SuccessState extends FlowState {
   @override
   StateRendererType getStateRendererType() => StateRendererType.popupSuccess;
 }
-*/
+
 extension FlowStateExtension on FlowState {
   Widget getScreenWidget(BuildContext context, Widget contentScreenWidget,
       Function() retryActionFunction) {
     switch (runtimeType) {
-      case LoadingState _:
+      case LoadingState:
         {
           dismissDialog(context);
+          if (getStateRendererType() == StateRendererType.popupLoadingState) {
+            // show popup loading
 
-          // full screen loading state
-          return StateRenderer(
-              message: getMessage(),
-              stateRendererType: getStateRendererType(),
-              retryActionFunction: retryActionFunction);
+            showPopup(context, getStateRendererType(), getMessage());
+            /*  WidgetsBinding.instance.addPostFrameCallback((_) =>    showDialog(
+          context: context,
+          builder: (_) => const Center(child: CircularProgressIndicator())) )*/
+            //dismissDialog(context);
+
+            return contentScreenWidget;
+          } else {
+            // full screen loading state
+            return StateRenderer(
+                message: getMessage(),
+                stateRendererType: getStateRendererType(),
+                retryActionFunction: retryActionFunction);
+          }
         }
-      case ErrorState _:
+      case ErrorState:
         {
           dismissDialog(context);
-          if (getStateRendererType() == StateRendererType.snackBarState) {
+          if (getStateRendererType() == StateRendererType.popupErrorState) {
             // show popup error
             showPopup(context, getStateRendererType(), getMessage());
             // show content ui of the screen
             return contentScreenWidget;
           } else if (getStateRendererType() ==
-              StateRendererType.snackBarState) {
+              StateRendererType.snackbarState) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  backgroundColor:
-                      Colors.transparent, // Set transparent to customize
+                  backgroundColor: Colors.transparent, // Set transparent to customize
                   elevation: 0,
                   content: Container(
                     height: 100,
@@ -127,6 +138,7 @@ extension FlowStateExtension on FlowState {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Column(
+
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
@@ -165,20 +177,29 @@ extension FlowStateExtension on FlowState {
                 retryActionFunction: retryActionFunction);
           }
         }
-      case EmptyState _:
+      case EmptyState:
         {
           return StateRenderer(
               stateRendererType: getStateRendererType(),
               message: getMessage(),
               retryActionFunction: () {});
         }
-      case ContentState _:
+      case ContentState:
         {
           // dismissDialog(context);
 
           return contentScreenWidget;
         }
-
+      case SuccessState:
+        {
+          // i should check if we are showing loading popup to remove it before showing success popup
+          dismissDialog(context);
+          // show popup
+          showPopup(context, StateRendererType.popupSuccess, getMessage(),
+              title: 'Success');
+          // return content ui of the screen
+          return contentScreenWidget;
+        }
       default:
         {
           //dismissDialog(context);

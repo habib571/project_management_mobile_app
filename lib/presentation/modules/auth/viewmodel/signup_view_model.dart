@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:project_management_app/data/network/requests.dart';
 import 'package:project_management_app/domain/usecases/signup_usecase.dart';
@@ -6,30 +9,36 @@ import 'package:project_management_app/presentation/stateRender/state_render.dar
 import 'package:project_management_app/presentation/stateRender/state_render_impl.dart';
 
 class SignupViewModel extends BaseViewModel {
-  @override
-  void start() {
-    inputState.add(ContentState());
-  }
-
   final SignupUseCase _useCase;
+
   SignupViewModel(this._useCase);
+
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
+  @override
+  void start() {
+    updateState(ContentState());
+  }
+
   void signup() async {
-    inputState.add(LoadingState(
-        stateRendererType: StateRendererType.fullScreenLoadingState));
+    stateController.add(LoadingState(
+      stateRendererType: StateRendererType.fullScreenLoadingState,
+    ));
 
     (await _useCase.signup(RegisterRequest(
-            email: email.text.trim(),
-            fullName: name.text.trim(),
-            password: password.text.trim())))
+      email: email.text.trim(),
+      fullName: name.text.trim(),
+      password: password.text.trim(),
+    )))
         .fold(
-            (failure) => inputState.add(
-                ErrorState(StateRendererType.snackBarState, failure.message)),
-            (success) {
-      inputState.add(ContentState());
-    });
+      (failure) => updateState(
+        ErrorState(StateRendererType.snackbarState, failure.message),
+      ),
+      (success) {
+        updateState(ContentState());
+      },
+    );
   }
 }

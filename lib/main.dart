@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:project_management_app/presentation/modules/auth/view/screens/signup_screen.dart';
 
+import 'application/dependencyInjection/dependency_injection.dart';
 import 'application/helpers/screen_configuraton.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+   initAppModule();
   runApp(const MyApp());
 }
 

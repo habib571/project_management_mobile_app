@@ -29,9 +29,11 @@ class AuthRepositoryImpl implements AuthRepository {
         if (response.statusCode == 200) {
           return Right(AuthResponse.fromJson(response.data));
         } else {
+          log(response.data) ;
           return Left(Failure.fromJson(response.data));
         }
       } catch (error) {
+        log(error.toString()) ;
         return Left(ErrorHandler.handle(error).failure);
       }
     }
