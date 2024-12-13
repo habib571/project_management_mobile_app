@@ -5,20 +5,28 @@ import '../utils/styles.dart';
 
 
 class InputText extends StatelessWidget {
-  const InputText(
+   InputText(
       {super.key,
       this.readOnly = false,
       this.controller,
       this.textInputType = TextInputType.text,
       this.hintText = "",
       this.borderRadius = 40,
-      this.validator});
+      this.validator,
+      this.onChanged,
+      this.suffixIcon,
+      this.obscureText = false
+      });
   final bool readOnly;
+  final bool obscureText;
   final TextEditingController? controller;
   final TextInputType textInputType;
   final String hintText;
   final double borderRadius;
   final String? Function(String? s)? validator;
+  void Function(String)? onChanged ;
+  Widget? suffixIcon;
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +37,7 @@ class InputText extends StatelessWidget {
       keyboardType: textInputType,
       style: robotoRegular.copyWith(fontSize: 13),
       decoration: InputDecoration(
+          suffixIcon: suffixIcon,
           filled: true,
           fillColor: Colors.white,
           hintText: hintText,
@@ -38,6 +47,10 @@ class InputText extends StatelessWidget {
             borderRadius: BorderRadius.circular(borderRadius),
           )),
       validator: validator,
+      onChanged: onChanged,
+      obscureText: obscureText,
+
+
     );
   }
 }
