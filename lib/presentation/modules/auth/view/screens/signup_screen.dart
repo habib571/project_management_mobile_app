@@ -39,7 +39,6 @@ class _SignupScreenState extends State<SignupScreen> {
               snapshot.data?.getScreenWidget(context, _showBody(), () {
                 _viewModel.start();
               }) ?? _showBody() ;
-
           }),
     );
   }
