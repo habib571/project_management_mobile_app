@@ -4,7 +4,7 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:project_management_app/data/network/failure.dart';
-import 'package:project_management_app/data/network/requests.dart';
+import 'package:project_management_app/data/network/requests/auth_requests.dart';
 import 'package:project_management_app/data/responses/auth_response.dart';
 import 'package:project_management_app/domain/repository/auth_repo.dart';
 

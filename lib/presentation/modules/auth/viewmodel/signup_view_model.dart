@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:project_management_app/data/network/requests.dart';
+import 'package:project_management_app/data/network/requests/auth_requests.dart';
 import 'package:project_management_app/domain/usecases/signup_usecase.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
 import 'package:project_management_app/presentation/stateRender/state_render.dart';
