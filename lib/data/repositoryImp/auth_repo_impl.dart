@@ -39,4 +39,10 @@ class AuthRepositoryImpl implements AuthRepository {
     }
     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
   }
+
+  @override
+  Future<Either<Failure, AuthResponse>> signin(RegisterRequest loginRequest) {
+    // TODO: implement signin
+    throw UnimplementedError();
+  }
 }

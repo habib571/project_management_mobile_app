@@ -51,7 +51,7 @@ class SigninScreen extends StatelessWidget {
                   height: 167,
                 ),
                 SizedBox(height: 90.h),
-                _showEmailSection(viewModel),
+                _showEmailSection(),
                 SizedBox(
                   height: 20.h,
                 ),
@@ -84,8 +84,8 @@ class SigninScreen extends StatelessWidget {
             padding: const EdgeInsetsDirectional.only(end: 12.0),
             child: InkWell(
               child: data.isPasswordHidden
-                  ? Icon(Icons.visibility_off_outlined)
-                  : Icon(Icons.visibility_outlined),
+                  ? const Icon(Icons.visibility_off_outlined)
+                  : const Icon(Icons.visibility_outlined),
               onTap: () {
                 data.hideorshowpassword();
               },
@@ -103,10 +103,10 @@ class SigninScreen extends StatelessWidget {
     );
   }
 
-  Widget _showEmailSection(SignInViewModel viewModel) {
+  Widget _showEmailSection() {
     return InputText(
       validator: (val) => val.isValidEmail(),
-      controller: viewModel.email,
+      controller: _viewModel.email,
       hintText: "Enter your email",
     );
   }

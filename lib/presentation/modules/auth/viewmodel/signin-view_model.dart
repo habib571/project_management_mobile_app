@@ -9,13 +9,9 @@ import 'package:project_management_app/presentation/stateRender/state_render_imp
 import '../../../../data/services/token_mamanger.dart';
 
 class SignInViewModel extends BaseViewModel {
-  SignInUseCase _useCase;
-  //TokenManager _tokenManager;
+  final SignInUseCase _signInUseCase;
 
-  //SignInViewModel(this._useCase,this._tokenManager)   ;
-
-  SignInViewModel(this._useCase /*, TokenManager tokenManager*/);
-
+  SignInViewModel(this._signInUseCase);
 
   @override
   void start() {
@@ -32,22 +28,25 @@ class SignInViewModel extends BaseViewModel {
 
   GlobalKey<FormState> get formkey => _formkey;
 
-
   void signin() async {
     if (formkey.currentState!.validate()) {
-      updateState(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
-      (await _useCase.SignIn(RegisterRequest(email: email.text.trim(), password: password.text.trim())))
+      updateState(LoadingState(
+          stateRendererType: StateRendererType.fullScreenLoadingState));
+      (await _signInUseCase.SignIn(RegisterRequest(
+        email: email.text.trim(),
+        fullName: "",
+        password: password.text.trim(),
+      )))
           .fold(
         (failure) {
-          print("---Failure---");
-          updateState(ErrorState(StateRendererType.snackbarState, failure.message),);
-          },
-        (success) {
-          print("Succes");
+          updateState(
+            ErrorState(StateRendererType.snackbarState, failure.message),
+          );
+        },
+        (data) {
           updateState(ContentState());
         },
       );
-      print("--state changet--");
     }
   }
 

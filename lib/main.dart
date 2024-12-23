@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:project_management_app/presentation/modules/auth/view/screens/signin_screen.dart';
 import 'package:project_management_app/presentation/modules/auth/view/screens/signup_screen.dart';
+import 'package:project_management_app/presentation/modules/auth/viewmodel/signin-view_model.dart';
+import 'package:provider/provider.dart';
 
 import 'application/dependencyInjection/dependency_injection.dart';
 import 'application/helpers/screen_configuraton.dart';
@@ -18,30 +22,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenUtility = ScreenConfiguration();
     screenUtility.initialize(context);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const SignupScreen(),
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<SignInViewModel>(create: (_) => GetIt.instance<SignInViewModel>()),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home:  SigninScreen(),
+        )
     );
   }
 }
-

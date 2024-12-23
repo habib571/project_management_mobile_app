@@ -2,7 +2,6 @@ import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../../../application/constants/constants.dart';
-import '../remoteDataSource/auth_remote_data_source.dart';
 
 
 
