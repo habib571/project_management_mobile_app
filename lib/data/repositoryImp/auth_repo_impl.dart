@@ -6,7 +6,7 @@ import 'package:project_management_app/data/network/error_handler.dart';
 
 import 'package:project_management_app/data/network/failure.dart';
 
-import 'package:project_management_app/data/network/requests.dart';
+import 'package:project_management_app/data/network/requests/auth_requests.dart';
 import 'package:project_management_app/data/responses/api_response.dart';
 
 import 'package:project_management_app/data/responses/auth_response.dart';
@@ -41,8 +41,23 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, AuthResponse>> signin(RegisterRequest loginRequest) {
-    // TODO: implement signin
-    throw UnimplementedError();
+  Future<Either<Failure, AuthResponse>> signIn( SignInRequest signInRequest) async{
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _authRemoteDataSource.sigIn(signInRequest) ;
+        if (response.statusCode == 200) {
+          return Right(AuthResponse.fromJson(response.data));
+        } else {
+          log(response.data) ;
+          return Left(Failure.fromJson(response.data));
+        }
+      } catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+
+
   }
 }
