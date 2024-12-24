@@ -16,6 +16,11 @@ class SignupViewModel extends BaseViewModel {
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  GlobalKey<FormState> get formkey => _formkey;
+
+  bool _isPasswordHidden = false;
+  bool get isPasswordHidden => _isPasswordHidden;
 
   @override
   void start() {
@@ -23,6 +28,7 @@ class SignupViewModel extends BaseViewModel {
   }
 
   void signup() async {
+    if(formkey.currentState!.validate()) {
     stateController.add(LoadingState(
       stateRendererType: StateRendererType.fullScreenLoadingState,
     ));
@@ -40,5 +46,9 @@ class SignupViewModel extends BaseViewModel {
         updateState(ContentState());
       },
     );
+  } }
+  void hideorshowpassword() {
+    _isPasswordHidden = !_isPasswordHidden;
+    notifyListeners();
   }
 }
