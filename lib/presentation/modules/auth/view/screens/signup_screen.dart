@@ -79,7 +79,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: 100.h,
                   ),
                   _showButton(),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   _showSignInText()

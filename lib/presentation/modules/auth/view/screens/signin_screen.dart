@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -36,7 +34,7 @@ class SigninScreen extends StatelessWidget {
   }
 
   Widget _showBody() {
-    return Form( 
+    return Form(
       key: _viewModel.formkey,
       child: SingleChildScrollView(
         child: Stack(
@@ -48,7 +46,9 @@ class SigninScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                 children: [
-                  SizedBox(height: 180.h,) ,
+                  SizedBox(
+                    height: 180.h,
+                  ),
                   _showWelcomebackSection(),
                   SizedBox(height: 20.h),
                   SvgPicture.asset(
@@ -68,8 +68,10 @@ class SigninScreen extends StatelessWidget {
                   SizedBox(
                     height: 40.h,
                   ),
-                  _showButton() ,
-                  SizedBox(height: 20,) ,
+                  _showButton(),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   _showSignupText()
                 ],
               ),
@@ -85,9 +87,9 @@ class SigninScreen extends StatelessWidget {
       builder: (context, data, child) {
         return InputText(
           validator: (val) => val.isStrongPassword(),
-          controller:_viewModel.password,
+          controller: _viewModel.password,
           hintText: "Enter your password",
-          obscureText:data.isPasswordHidden,
+          obscureText: data.isPasswordHidden,
           suffixIcon: Padding(
             padding: const EdgeInsetsDirectional.only(end: 12.0),
             child: InkWell(
@@ -136,21 +138,20 @@ class SigninScreen extends StatelessWidget {
       onTap: () {},
     );
   }
+
   Widget _showSignupText() {
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Already have an account?' ,
-            style: robotoMedium.copyWith(fontSize: 14 ),
-          ) ,
-          GestureDetector(
-            onTap: () => Get.toNamed(AppRoutes.signup) ,
-            child: Text('Register' ,style: robotoMedium.copyWith(color: AppColors.primary),
-            ) ,
-
-          )]
-
-    ) ;
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Text(
+        'Already have an account?',
+        style: robotoMedium.copyWith(fontSize: 14),
+      ),
+      GestureDetector(
+        onTap: () => Get.toNamed(AppRoutes.signup),
+        child: Text(
+          'Register',
+          style: robotoMedium.copyWith(color: AppColors.primary),
+        ),
+      )
+    ]);
   }
 }
