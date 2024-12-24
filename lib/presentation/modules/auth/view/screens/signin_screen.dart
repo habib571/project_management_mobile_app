@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
@@ -12,6 +13,8 @@ import 'package:project_management_app/presentation/stateRender/state_render_imp
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../../application/navigation/routes_constants.dart';
 
 class SigninScreen extends StatelessWidget {
   SigninScreen({super.key});
@@ -26,48 +29,53 @@ class SigninScreen extends StatelessWidget {
           stream: _viewModel.outputState,
           builder: (context, snapshot) {
             return snapshot.data
-                    ?.getScreenWidget(context, _showBody(_viewModel), () {}) ??
-                _showBody(_viewModel);
+                    ?.getScreenWidget(context, _showBody(), () {}) ??
+                _showBody();
           },
         ));
   }
 
-  Widget _showBody(SignInViewModel viewModel) {
-    return Form(
-      key: viewModel.formkey,
-      child: Column(
-        children: [
-          Align(
-              alignment: Alignment.topLeft,
-              child: SvgPicture.asset('assets/Shape.svg')),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Column(
-              children: [
-                _showWelcomebackSection(),
-                SizedBox(height: 20.h),
-                SvgPicture.asset(
-                  'assets/signin-image.svg',
-                  height: 167,
-                ),
-                SizedBox(height: 90.h),
-                _showEmailSection(),
-                SizedBox(
-                  height: 20.h,
-                ),
-                _showPasswordSection(),
-                SizedBox(
-                  height: 40.h,
-                ),
-                _showForgetPasswordSection(),
-                SizedBox(
-                  height: 40.h,
-                ),
-                _showButton()
-              ],
-            ),
-          )
-        ],
+  Widget _showBody() {
+    return Form( 
+      key: _viewModel.formkey,
+      child: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Align(
+                alignment: Alignment.topLeft,
+                child: SvgPicture.asset('assets/Shape.svg')),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Column(
+                children: [
+                  SizedBox(height: 180.h,) ,
+                  _showWelcomebackSection(),
+                  SizedBox(height: 20.h),
+                  SvgPicture.asset(
+                    'assets/signin-image.svg',
+                    height: 167,
+                  ),
+                  SizedBox(height: 90.h),
+                  _showEmailSection(),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  _showPasswordSection(),
+                  SizedBox(
+                    height: 40.h,
+                  ),
+                  _showForgetPasswordSection(),
+                  SizedBox(
+                    height: 40.h,
+                  ),
+                  _showButton() ,
+                  SizedBox(height: 20,) ,
+                  _showSignupText()
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -76,7 +84,7 @@ class SigninScreen extends StatelessWidget {
     return Consumer<SignInViewModel>(
       builder: (context, data, child) {
         return InputText(
-          //validator: (val) => val.isStrongPassword(),
+          validator: (val) => val.isStrongPassword(),
           controller:_viewModel.password,
           hintText: "Enter your password",
           obscureText:data.isPasswordHidden,
@@ -114,7 +122,7 @@ class SigninScreen extends StatelessWidget {
   Widget _showButton() {
     return CustomButton(
         onPressed: () {
-          _viewModel.signin();
+          _viewModel.signIn();
         },
         text: 'Log in');
   }
@@ -127,5 +135,22 @@ class SigninScreen extends StatelessWidget {
       ),
       onTap: () {},
     );
+  }
+  Widget _showSignupText() {
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Already have an account?' ,
+            style: robotoMedium.copyWith(fontSize: 14 ),
+          ) ,
+          GestureDetector(
+            onTap: () => Get.toNamed(AppRoutes.signup) ,
+            child: Text('Register' ,style: robotoMedium.copyWith(color: AppColors.primary),
+            ) ,
+
+          )]
+
+    ) ;
   }
 }
