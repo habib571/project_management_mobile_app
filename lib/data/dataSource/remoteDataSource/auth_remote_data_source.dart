@@ -25,7 +25,7 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
   @override
   Future<ApiResponse> sigIn(SignInRequest request) async{
     return await executePostRequest(
-        apiUrl: "/auth/signin",
+        apiUrl: "/auth/login",
         body: request.toJson(),
         onRequestResponse: (response, statusCode) {
           return ApiResponse(response, statusCode);
