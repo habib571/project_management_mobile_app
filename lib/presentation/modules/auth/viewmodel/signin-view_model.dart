@@ -34,7 +34,7 @@ class SignInViewModel extends BaseViewModel {
   void signIn() async {
  if (formkey.currentState!.validate()) {
       updateState(LoadingState(
-          stateRendererType: StateRendererType.fullScreenLoadingState));
+          stateRendererType: StateRendererType.overlayLoadingState));
 
       (await _signInUseCase.signIn(SignInRequest(
         email: email.text.trim(),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:lottie/lottie.dart';
 import 'package:project_management_app/presentation/stateRender/state_render.dart';
 
 import '../../application/constants/constants.dart';
@@ -14,8 +16,7 @@ class LoadingState extends FlowState {
   StateRendererType stateRendererType;
   String? message;
 
-  LoadingState(
-      {required this.stateRendererType, String message = "loading.."});
+  LoadingState({required this.stateRendererType, String message = "loading.."});
 
   @override
   String getMessage() => message ?? "loading";
@@ -96,16 +97,22 @@ extension FlowStateExtension on FlowState {
     switch (runtimeType) {
       case LoadingState:
         {
-          dismissDialog(context);
+          dismissOverlay(context);
           if (getStateRendererType() == StateRendererType.popupLoadingState) {
             // show popup loading
 
             showPopup(context, getStateRendererType(), getMessage());
-            /*  WidgetsBinding.instance.addPostFrameCallback((_) =>    showDialog(
-          context: context,
-          builder: (_) => const Center(child: CircularProgressIndicator())) )*/
-            //dismissDialog(context);
 
+            return contentScreenWidget;
+          } else if (getStateRendererType() ==
+              StateRendererType.overlayLoadingState) {
+            Loader.show(
+              context,
+              progressIndicator: SizedBox(
+                  height: 70,
+                  width: 70,
+                  child: Lottie.asset("assets/overlay.json")),
+            );
             return contentScreenWidget;
           } else {
             // full screen loading state
@@ -117,7 +124,7 @@ extension FlowStateExtension on FlowState {
         }
       case ErrorState:
         {
-          dismissDialog(context);
+          dismissOverlay(context);
           if (getStateRendererType() == StateRendererType.popupErrorState) {
             // show popup error
             showPopup(context, getStateRendererType(), getMessage());
@@ -128,7 +135,8 @@ extension FlowStateExtension on FlowState {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  backgroundColor: Colors.transparent, // Set transparent to customize
+                  backgroundColor:
+                      Colors.transparent, // Set transparent to customize
                   elevation: 0,
                   content: Container(
                     height: 100,
@@ -138,7 +146,6 @@ extension FlowStateExtension on FlowState {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Column(
-
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
@@ -177,23 +184,23 @@ extension FlowStateExtension on FlowState {
                 retryActionFunction: retryActionFunction);
           }
         }
-      case EmptyState:
+      case EmptyState _:
         {
           return StateRenderer(
               stateRendererType: getStateRendererType(),
               message: getMessage(),
               retryActionFunction: () {});
         }
-      case ContentState:
+      case ContentState _:
         {
           // dismissDialog(context);
 
           return contentScreenWidget;
         }
-      case SuccessState:
+      case SuccessState _:
         {
           // i should check if we are showing loading popup to remove it before showing success popup
-          dismissDialog(context);
+          dismissOverlay(context);
           // show popup
           showPopup(context, StateRendererType.popupSuccess, getMessage(),
               title: 'Success');
@@ -208,12 +215,9 @@ extension FlowStateExtension on FlowState {
     }
   }
 
-  _isCurrentDialogShowing(BuildContext context) =>
-      ModalRoute.of(context)?.isCurrent != true;
-
-  dismissDialog(BuildContext context) async {
-    if (_isCurrentDialogShowing(context)) {
-      Navigator.of(context, rootNavigator: true).pop(true);
+  void dismissOverlay(BuildContext context) {
+    if (Loader.isShown) {
+      Loader.hide();
     }
   }
 
@@ -226,8 +230,6 @@ extension FlowStateExtension on FlowState {
             stateRendererType: stateRendererType,
             message: message,
             title: title,
-            retryActionFunction: () {
-              dismissDialog(context);
-            })));
+            retryActionFunction: () {})));
   }
 }

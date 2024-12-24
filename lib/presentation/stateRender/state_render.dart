@@ -1,6 +1,6 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:lottie/lottie.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_button.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
@@ -18,7 +18,8 @@ enum StateRendererType {
   fullScreenEmptyState,
   // general
   contentState,
-  snackbarState  // NEW STATE FOR SNACKBAR
+  snackbarState,
+  overlayLoadingState
 }
 
 // ignore: must_be_immutable
@@ -28,13 +29,12 @@ class StateRenderer extends StatelessWidget {
   String title;
   Function retryActionFunction;
 
-  StateRenderer({
-    super.key,
-    required this.stateRendererType,
-    this.message = '',
-    this.title = "",
-    required this.retryActionFunction
-  });
+  StateRenderer(
+      {super.key,
+      required this.stateRendererType,
+      this.message = '',
+      this.title = "",
+      required this.retryActionFunction});
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +53,10 @@ class StateRenderer extends StatelessWidget {
           _getRetryButton('OK', context)
         ]);
       case StateRendererType.fullScreenLoadingState:
-        return _getItemsColumn(
-            [
-              _getAnimatedImage('assets/json/loading.json'),
-              _getMessage(message)
-            ]);
+        return _getItemsColumn([
+          _getAnimatedImage('assets/json/loading.json'),
+          _getMessage(message)
+        ]);
       case StateRendererType.fullScreenErrorState:
         return _getItemsColumn([
           _getAnimatedImage('assets/json/error.json'),
@@ -65,11 +64,10 @@ class StateRenderer extends StatelessWidget {
           _getRetryButton('Try Again', context)
         ]);
       case StateRendererType.fullScreenEmptyState:
-        return _getItemsColumn(
-            [
-              _getAnimatedImage('assets/json/empty.json'),
-              _getMessage(message)
-            ]);
+        return _getItemsColumn([
+          _getAnimatedImage('assets/json/empty.json'),
+          _getMessage(message)
+        ]);
       case StateRendererType.contentState:
         return const SizedBox();
       case StateRendererType.popupSuccess:
@@ -89,7 +87,29 @@ class StateRenderer extends StatelessWidget {
             ),
           ));
         });
-        return const SizedBox(); // Return empty widget as Snackbar is displayed separately
+        return const SizedBox();
+      case StateRendererType.overlayLoadingState:
+        Future.delayed(Duration.zero, () {
+          if (!Loader.isShown) {
+            Loader.show(
+              context,
+              isSafeAreaOverlay: true,
+              isAppbarOverlay: true,
+              isBottomBarOverlay: true,
+              progressIndicator: SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: Lottie.asset("assets/overlay.json")),
+              themeData: Theme.of(context).copyWith(
+                colorScheme: ColorScheme.fromSwatch().copyWith(
+                  secondary: AppColors.scaffold,
+                ),
+              ),
+            );
+          }
+        });
+        return const SizedBox();
+      // Return empty widget as Snackbar is displayed separately
       default:
         return const SizedBox();
     }
@@ -97,8 +117,7 @@ class StateRenderer extends StatelessWidget {
 
   Widget _getPopUpDialog(BuildContext context, List<Widget> children) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       elevation: 2,
       backgroundColor: Colors.transparent,
       child: Container(
@@ -133,7 +152,9 @@ class StateRenderer extends StatelessWidget {
     return const SizedBox(
         height: 50,
         width: 50,
-        child : CircularProgressIndicator(color: AppColors.primary,) ) ;
+        child: CircularProgressIndicator(
+          color: AppColors.primary,
+        ));
   }
 
   Widget _getMessage(String message) {
@@ -142,7 +163,7 @@ class StateRenderer extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Text(
           message,
-          style: robotoBold.copyWith(color: AppColors.primary) ,
+          style: robotoBold.copyWith(color: AppColors.primary),
           textAlign: TextAlign.center,
         ),
       ),
@@ -159,12 +180,8 @@ class StateRenderer extends StatelessWidget {
                 onPressed: () {
                   retryActionFunction.call();
                 },
-                child: Text(
-                  buttonTitle,
-                  style: robotoBold.copyWith(color: AppColors.primary)
-                )
-            )
-        ),
+                child: Text(buttonTitle,
+                    style: robotoBold.copyWith(color: AppColors.primary)))),
       ),
     );
   }

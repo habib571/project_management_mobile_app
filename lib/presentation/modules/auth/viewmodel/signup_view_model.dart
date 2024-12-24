@@ -34,7 +34,7 @@ class SignupViewModel extends BaseViewModel {
   void signup() async {
     if(formkey.currentState!.validate()) {
     stateController.add(LoadingState(
-      stateRendererType: StateRendererType.fullScreenLoadingState,
+      stateRendererType: StateRendererType.overlayLoadingState,
     ));
 
     (await _useCase.signup(RegisterRequest(
