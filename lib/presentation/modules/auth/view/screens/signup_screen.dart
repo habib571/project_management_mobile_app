@@ -25,10 +25,9 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final SignupViewModel _viewModel = instance<SignupViewModel>();
-
   @override
   void initState() {
-   _viewModel.start() ;
+    _viewModel.start();
     super.initState();
   }
 
@@ -39,11 +38,10 @@ class _SignupScreenState extends State<SignupScreen> {
       body: StreamBuilder<FlowState>(
           stream: _viewModel.outputState,
           builder: (context, snapshot) {
-           return
-              snapshot.data?.getScreenWidget(context, _showBody(), () {
-                _viewModel.start();
-              }) ?? _showBody() ;
-
+            return snapshot.data?.getScreenWidget(context, _showBody(), () {
+                  _viewModel.start();
+                }) ??
+                _showBody();
           }),
     );
   }
@@ -80,10 +78,11 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(
                     height: 100.h,
                   ),
-                  _showButton() ,
-                  SizedBox(height: 20,)  ,
+                  _showButton(),
+                  SizedBox(
+                    height: 20,
+                  ),
                   _showSignInText()
-
                 ],
               ),
             ),
@@ -106,16 +105,16 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Widget _showNameSection() {
-    return  InputText(
-       validator: (val)=> val.isEmptyInput() ,
+    return InputText(
+      validator: (val) => val.isEmptyInput(),
       controller: _viewModel.name,
       hintText: "Enter your full name",
     );
   }
 
   Widget _showEmailSection() {
-    return  InputText(
-      validator: (val)=> val.isValidEmail() ,
+    return InputText(
+      validator: (val) => val.isValidEmail(),
       controller: _viewModel.email,
       hintText: "Enter your email",
     );
@@ -126,9 +125,9 @@ class _SignupScreenState extends State<SignupScreen> {
       builder: (context, data, child) {
         return InputText(
           validator: (val) => val.isStrongPassword(),
-          controller:_viewModel.password,
+          controller: _viewModel.password,
           hintText: "Enter your password",
-          obscureText:data.isPasswordHidden,
+          obscureText: data.isPasswordHidden,
           suffixIcon: Padding(
             padding: const EdgeInsetsDirectional.only(end: 12.0),
             child: InkWell(
@@ -152,21 +151,20 @@ class _SignupScreenState extends State<SignupScreen> {
         },
         text: 'Signup');
   }
+
   Widget _showSignInText() {
-    return Row(
-       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-            'Already have an account?' ,
-            style: robotoMedium.copyWith(fontSize: 14 ),
-        ) ,
-        GestureDetector(
-          onTap: () => Get.toNamed(AppRoutes.login) ,
-          child: Text('SignIn' ,style: robotoMedium.copyWith(color: AppColors.primary),
-        ) ,
-
-        )]
-
-    ) ;
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Text(
+        'Already have an account?',
+        style: robotoMedium.copyWith(fontSize: 14),
+      ),
+      GestureDetector(
+        onTap: () => Get.toNamed(AppRoutes.login),
+        child: Text(
+          'SignIn',
+          style: robotoMedium.copyWith(color: AppColors.primary),
+        ),
+      )
+    ]);
   }
 }
