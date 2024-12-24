@@ -13,7 +13,7 @@ class SignInUseCase {
 
   SignInUseCase(this._repository);
 
-  Future<Either<Failure,AuthResponse>> SignIn(RegisterRequest request)async {
-    return await _repository.signin(request);
+  Future<Either<Failure,AuthResponse>> signIn(SignInRequest request)async {
+    return await _repository.signIn(request);
   }
 }
