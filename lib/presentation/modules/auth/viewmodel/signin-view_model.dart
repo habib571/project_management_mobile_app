@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_management_app/application/helpers/get_storage.dart';
 import 'package:project_management_app/data/network/requests/auth_requests.dart';
 import 'package:project_management_app/domain/usecases/signin_usecase.dart';
 
@@ -6,12 +7,11 @@ import 'package:project_management_app/presentation/base/base_view_model.dart';
 import 'package:project_management_app/presentation/stateRender/state_render.dart';
 import 'package:project_management_app/presentation/stateRender/state_render_impl.dart';
 
-import '../../../../data/services/token_mamanger.dart';
-
 class SignInViewModel extends BaseViewModel {
   final SignInUseCase _signInUseCase;
+  final LocalStorage _localStorage;
 
-  SignInViewModel(this._signInUseCase);
+  SignInViewModel(this._signInUseCase, this._localStorage);
 
   @override
   void start() {
@@ -19,7 +19,7 @@ class SignInViewModel extends BaseViewModel {
     super.start();
   }
 
-  GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
@@ -28,13 +28,13 @@ class SignInViewModel extends BaseViewModel {
 
   GlobalKey<FormState> get formkey => _formkey;
 
-  void signin() async {
-    if (formkey.currentState!.validate()) {
+  void signIn() async {
+ if (formkey.currentState!.validate()) {
       updateState(LoadingState(
           stateRendererType: StateRendererType.fullScreenLoadingState));
-      (await _signInUseCase.SignIn(RegisterRequest(
+
+      (await _signInUseCase.signIn(SignInRequest(
         email: email.text.trim(),
-        fullName: "",
         password: password.text.trim(),
       )))
           .fold(
@@ -44,6 +44,7 @@ class SignInViewModel extends BaseViewModel {
           );
         },
         (data) {
+          _localStorage.saveAuthToken(data.token);
           updateState(ContentState());
         },
       );
@@ -52,7 +53,6 @@ class SignInViewModel extends BaseViewModel {
 
   void hideorshowpassword() {
     _isPasswordHidden = !_isPasswordHidden;
-    print(_isPasswordHidden);
     notifyListeners();
   }
 }
