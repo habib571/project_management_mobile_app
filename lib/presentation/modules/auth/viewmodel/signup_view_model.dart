@@ -37,6 +37,7 @@ class SignupViewModel extends BaseViewModel {
       stateRendererType: StateRendererType.overlayLoadingState,
     ));
 
+
     (await _useCase.signup(RegisterRequest(
       email: email.text.trim(),
       fullName: name.text.trim(),
