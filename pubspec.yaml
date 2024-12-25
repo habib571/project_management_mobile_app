@@ -50,6 +50,7 @@ dependencies:
   flutter_overlay_loader: ^2.0.0
   lottie: ^3.2.0
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
