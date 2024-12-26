@@ -10,7 +10,9 @@ class CustomButton extends StatelessWidget {
       required this.onPressed,
       required this.text,
       this.widget = const SizedBox(),
-      this.height});
+      this.height ,
+        this.borderRadius =40
+      });
   final Color buttonColor;
   final String text;
   final Function() onPressed;
@@ -18,6 +20,7 @@ class CustomButton extends StatelessWidget {
   final TextStyle btnTxtStyle =
       robotoMedium.copyWith(color: Colors.white, fontSize: 16);
   final double? height;
+  final double borderRadius ;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class CustomButton extends StatelessWidget {
               color: buttonColor,
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40)),
+                  borderRadius: BorderRadius.circular(borderRadius)),
               onPressed: onPressed,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
