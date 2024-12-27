@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:project_management_app/presentation/modules/dashboord/view/screens/dashboard_screen.dart';
 
 import '../../utils/colors.dart';
 import '../auth/view/screens/signin_screen.dart';
@@ -37,9 +38,9 @@ class HomeNavBar extends StatelessWidget {
 
   List<Widget> _buildScreens() {
     return [
-      const SignupScreen(),
-      const SignupScreen(),
-      SigninScreen(),
+      const DashboardScreen(),
+      const DashboardScreen(),
+      const DashboardScreen(),
     ];
   }
 
