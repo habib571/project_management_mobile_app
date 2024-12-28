@@ -28,11 +28,7 @@ class LocalStorageImp implements LocalStorage {
 
   @override
   Future<void> clearAuthToken() async {
-    Future.wait([
-     _getStorage.remove('Token'),
-     _getStorage.remove('logedInAt'),
-     ]
-    );
+    await _tokenManager.clearAuthTokenProprities();
   }
 
   bool isUserLogged() {
