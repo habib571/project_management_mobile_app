@@ -16,8 +16,9 @@ abstract class BaseViewModel extends  ChangeNotifier implements BaseViewModelInp
   late Stream<FlowState> _stateStream;
   final stateController = StreamController<FlowState>();
   final TokenManager _tokenManager;
+  bool startTokenMonitoringOnInit;
 
-  BaseViewModel(this._tokenManager,{bool startTokenMonitoringOnInit = true}) {
+  BaseViewModel(this._tokenManager,{this.startTokenMonitoringOnInit = true}) {
     _stateStream = stateController.stream.asBroadcastStream();
     if (startTokenMonitoringOnInit) {
       startTokenMonitoring();
