@@ -1,16 +1,23 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_common/get_reset.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
+import 'package:project_management_app/presentation/modules/home/home_screen.dart';
 
+import '../../../application/dependencyInjection/dependency_injection.dart';
 import '../../sharedwidgets/custom_button.dart';
 import '../../sharedwidgets/input_text.dart';
 import '../../stateRender/state_render_impl.dart';
 import '../../utils/colors.dart';
+import 'add-project-view-model.dart';
 
 class AddProjectScreen extends StatelessWidget {
    AddProjectScreen({super.key});
 
+   final AddProjectViewModel _viewModel = instance<AddProjectViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +67,7 @@ class AddProjectScreen extends StatelessWidget {
   Widget _addProjectNameSection(){
     return InputText(
       validator: (val) => val.isEmptyInput() ,
-      //controller: _viewModel.email,
+      controller: _viewModel.projectName,
       hintText: "Enter The project name",
     );
   }
@@ -68,24 +75,20 @@ class AddProjectScreen extends StatelessWidget {
   Widget _addProjectDesrciprionSection(){
     return InputText(
       validator: (val) => val.isEmptyInput() ,
-      //controller: _viewModel.email,
+      controller: _viewModel.projectDescription,
       hintText: "Enter The project description",
-      maxLines: 15,
+      maxLines: 3,
     );
   }
 
   Widget _addProjectEndDateSection(BuildContext context){
     return InputText(
       validator: (val) => val.isEmptyInput() ,
+      controller: _viewModel.projectEndDate,
       hintText: "Enter The project end date",
+      suffixIcon:const  Icon(Icons.calendar_month_outlined),
       onTap: () async {
-          DateTime? pickedDate = await showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2000),
-            lastDate: DateTime(2100),
-          );
-          if (pickedDate != null) {}
+        await _viewModel.pickProjectEndDate(context);
       },
     );
   }
@@ -100,14 +103,16 @@ class AddProjectScreen extends StatelessWidget {
           Row(
             children: [
                SizedBox(width: 8.w),
+              IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white),
+                  onPressed: (){
+                    Get.off(() => HomeNavBar(), transition: Transition.upToDown);
+                  }
+              ),
+              SizedBox(width: 90.w),
               const Text(
                 'Add Project',
                 style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              Spacer(),
-              IconButton(
-                  icon: const Icon(Icons.close, color: Colors.white),
-                  onPressed: (){}
               ),
             ],
           ),
@@ -121,8 +126,6 @@ class AddProjectScreen extends StatelessWidget {
          onPressed: () {},
          text: 'Add the project');
    }
-
-
 }
 
 
