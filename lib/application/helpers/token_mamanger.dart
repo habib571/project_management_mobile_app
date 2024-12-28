@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dartz/dartz.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:project_management_app/application/constants/constants.dart';
 
@@ -38,4 +39,17 @@ class TokenManager {
     final isTokenValid = expiryDate.isAfter(DateTime.now());
     _tokenValidityController.add(isTokenValid);
   }
+
+
+  Map<String, dynamic> saveTokenRelatedProprities(String token, int expiresIn) {
+    final datatosave = {
+      'Token': token,
+      'expiresIn': expiresIn,
+      'logedInAt': DateTime.now().toIso8601String(),
+    };
+    return datatosave;
+  }
+
+
+
 }
