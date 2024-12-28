@@ -50,6 +50,11 @@ class TokenManager {
     return datatosave;
   }
 
-
+  Future<void> clearAuthTokenProprities()async{
+    Future.wait([
+      _getStorage.remove('Token'),
+      _getStorage.remove('logedInAt')
+    ]);
+  }
 
 }
