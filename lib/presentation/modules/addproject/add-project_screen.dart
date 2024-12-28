@@ -83,6 +83,7 @@ class AddProjectScreen extends StatelessWidget {
 
   Widget _addProjectEndDateSection(BuildContext context){
     return InputText(
+      readOnly: true,
       validator: (val) => val.isEmptyInput() ,
       controller: _viewModel.projectEndDate,
       hintText: "Enter The project end date",
