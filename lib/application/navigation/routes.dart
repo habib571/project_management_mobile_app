@@ -7,7 +7,10 @@ import 'package:project_management_app/presentation/modules/auth/view/screens/si
 import 'package:project_management_app/presentation/modules/auth/view/screens/signup_screen.dart';
 import 'package:project_management_app/presentation/modules/home/home_screen.dart';
 
+import '../../presentation/modules/addproject/add-project_screen.dart';
+
 List<GetPage<dynamic>>? routes = [  GetPage(name: AppRoutes.login, page:()=> SigninScreen() ,middlewares:  [AuthMiddleware()]) ,
   GetPage(name: AppRoutes.signup, page:()=> const SignupScreen()) ,
   GetPage(name: AppRoutes.home, page:()=>  HomeNavBar()),
+  GetPage(name: AppRoutes.addproject, page:()=>  const AddProjectScreen()),
 ] ;
