@@ -18,9 +18,8 @@ class LocalStorageImp implements LocalStorage {
 
   @override
   Future<void> saveAuthToken(String token,int expiresIn) async {
-    await _getStorage.write('Token', token);
-    await _getStorage.write('expiresIn', expiresIn);
-    await _getStorage.write('logedInAt', DateTime.now().toIso8601String());
+    Future.wait(_tokenManager.saveTokenRelatedProprities(token, expiresIn).entries.map((entry)=>_getStorage.write(entry.key, entry.value))
+    );
   }
 
   String? getAuthToken() {
@@ -29,8 +28,11 @@ class LocalStorageImp implements LocalStorage {
 
   @override
   Future<void> clearAuthToken() async {
-    await _getStorage.remove('Token');
-    await _getStorage.remove('logedInAt');
+    Future.wait([
+     _getStorage.remove('Token'),
+     _getStorage.remove('logedInAt'),
+     ]
+    );
   }
 
   bool isUserLogged() {
