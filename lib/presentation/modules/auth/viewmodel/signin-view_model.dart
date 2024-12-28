@@ -14,9 +14,8 @@ import '../../../../application/helpers/token_mamanger.dart';
 class SignInViewModel extends BaseViewModel {
   final SignInUseCase _signInUseCase;
   final LocalStorage _localStorage;
-  final TokenManager _tokenManager;
 
-  SignInViewModel(this._signInUseCase, this._localStorage,this._tokenManager) : super(_tokenManager,startTokenMonitoringOnInit: false)  ;
+  SignInViewModel(this._signInUseCase, this._localStorage,super.tokenManager,{super.startTokenMonitoringOnInit =false}  )  ;
 
   @override
   void start() {
