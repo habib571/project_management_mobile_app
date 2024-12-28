@@ -1,13 +1,16 @@
 import 'dart:async';
 
+import 'package:get_storage/get_storage.dart';
 import 'package:project_management_app/application/constants/constants.dart';
+
 
 class TokenManager {
   //final AuthService _authService; // Service responsable de gérer le token
   final StreamController<bool> _tokenValidityController = StreamController<bool>.broadcast();
   Timer? _timer;
 
-  //TokenManager(this._authService);
+  final GetStorage _getStorage;
+  TokenManager(this._getStorage);
 
   Stream<bool> get tokenValidityStream => _tokenValidityController.stream;
 
@@ -24,8 +27,8 @@ class TokenManager {
   }
 
   DateTime getTokenExpiry(){
-    DateTime createdtAtDate =  DateTime.parse(Constants.createdAt);
-    Duration expiresIn = Duration(milliseconds: Constants.expiresIn);
+    DateTime createdtAtDate = DateTime.parse(_getStorage.read('logedInAt')) ;
+    Duration expiresIn =    Duration(milliseconds: _getStorage.read('expiresIn'));
     DateTime epireDate = createdtAtDate.add(expiresIn);
     return epireDate;
   }
