@@ -16,7 +16,8 @@ class InputText extends StatelessWidget {
         this.onChanged,
         this.suffixIcon,
         this.obscureText = false,
-        this.maxLines = 1
+        this.maxLines = 1,
+        this.onTap
       });
   final bool readOnly;
   final bool obscureText;
@@ -26,6 +27,7 @@ class InputText extends StatelessWidget {
   final double borderRadius;
   final String? Function(String? s)? validator;
   void Function(String)? onChanged ;
+  void Function()? onTap;
   Widget? suffixIcon;
   int maxLines;
 
@@ -51,6 +53,7 @@ class InputText extends StatelessWidget {
           )),
       validator: validator,
       onChanged: onChanged,
+      onTap: onTap,
       obscureText: obscureText,
 
 
