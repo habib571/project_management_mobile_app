@@ -6,13 +6,16 @@ import 'package:project_management_app/application/dependencyInjection/dependenc
 import 'package:project_management_app/application/helpers/get_storage.dart';
 import 'package:project_management_app/application/navigation/routes_constants.dart';
 
-class AuthMiddleware extends GetMiddleware {
-  final LocalStorage localStorageImp = instance<LocalStorage>() ;
+import '../helpers/token_mamanger.dart';
 
+class AuthMiddleware extends GetMiddleware {
+
+  final LocalStorage _localStorageImp = instance<LocalStorage>() ;
 
   @override
   RouteSettings? redirect(String? route) {
-    if (localStorageImp.isUserLoggedIn) {
+    if (_localStorageImp.isUserLoggedIn) {
+      _localStorageImp.clearAuthToken();
       return  const RouteSettings(name: AppRoutes.home);
     }
     return null;
