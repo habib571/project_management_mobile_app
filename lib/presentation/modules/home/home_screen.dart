@@ -1,18 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 
+import '../../stateRender/state_render_impl.dart';
 import '../../utils/colors.dart';
 import '../auth/view/screens/signin_screen.dart';
 import '../auth/view/screens/signup_screen.dart';
+import 'home-viewmodel.dart';
 
 class HomeNavBar extends StatelessWidget {
-  const HomeNavBar({super.key});
+   HomeNavBar({super.key});
+
+  final HomeViewModel _viewModel = instance<HomeViewModel>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body :_showBody( context)
-    );
+        backgroundColor: AppColors.scaffold,
+        body: StreamBuilder<FlowState>(
+          stream: _viewModel.outputState,
+          builder: (context, snapshot) {
+            return snapshot.data
+                ?.getScreenWidget(context, _showBody(context), () {}) ??
+                _showBody(context);
+          },
+        ));
   }
 
 
