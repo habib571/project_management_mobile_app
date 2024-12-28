@@ -9,12 +9,14 @@ import 'package:project_management_app/presentation/stateRender/state_render.dar
 import 'package:project_management_app/presentation/stateRender/state_render_impl.dart';
 
 import '../../../../application/navigation/routes_constants.dart';
+import '../../../../application/helpers/token_mamanger.dart';
 
 class SignInViewModel extends BaseViewModel {
   final SignInUseCase _signInUseCase;
   final LocalStorage _localStorage;
+  final TokenManager _tokenManager;
 
-  SignInViewModel(this._signInUseCase, this._localStorage);
+  SignInViewModel(this._signInUseCase, this._localStorage,this._tokenManager) : super(_tokenManager,startTokenMonitoringOnInit: false)  ;
 
   @override
   void start() {
@@ -47,7 +49,7 @@ class SignInViewModel extends BaseViewModel {
           );
         },
         (data) {
-          _localStorage.saveAuthToken(data.token);
+          _localStorage.saveAuthToken(data.token,data.expiresIn);
           Get.offAllNamed(AppRoutes.home) ;
         },
       );
