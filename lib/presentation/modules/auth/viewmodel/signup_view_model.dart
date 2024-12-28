@@ -11,11 +11,14 @@ import 'package:project_management_app/presentation/stateRender/state_render_imp
 
 import '../../../../application/helpers/get_storage.dart';
 import '../../../../application/navigation/routes_constants.dart';
+import '../../../../application/helpers/token_mamanger.dart';
 
 class SignupViewModel extends BaseViewModel {
   final SignupUseCase _useCase;
   final LocalStorage _localStorage ;
-  SignupViewModel(this._useCase, this._localStorage, );
+  TokenManager _tokenManager;
+
+  SignupViewModel(this._useCase, this._localStorage,this._tokenManager) : super(_tokenManager,startTokenMonitoringOnInit: false)  ;
 
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -48,7 +51,7 @@ class SignupViewModel extends BaseViewModel {
         ErrorState(StateRendererType.snackbarState, failure.message),
       ),
       (data) {
-      _localStorage.saveAuthToken(data.token);
+      _localStorage.saveAuthToken(data.token,data.expiresIn);
          Get.offAllNamed(AppRoutes.home) ;
       },
     );
