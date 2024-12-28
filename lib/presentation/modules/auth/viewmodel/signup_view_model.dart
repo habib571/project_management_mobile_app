@@ -16,9 +16,8 @@ import '../../../../application/helpers/token_mamanger.dart';
 class SignupViewModel extends BaseViewModel {
   final SignupUseCase _useCase;
   final LocalStorage _localStorage ;
-  TokenManager _tokenManager;
 
-  SignupViewModel(this._useCase, this._localStorage,this._tokenManager) : super(_tokenManager,startTokenMonitoringOnInit: false)  ;
+  SignupViewModel(this._useCase, this._localStorage,super.tokenManager,{super.startTokenMonitoringOnInit =false} ) ;
 
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
