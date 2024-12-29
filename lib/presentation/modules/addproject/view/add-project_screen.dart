@@ -7,12 +7,12 @@ import 'package:project_management_app/application/extensions/screen_config_exte
 import 'package:project_management_app/application/extensions/string_extension.dart';
 import 'package:project_management_app/presentation/modules/home/home_screen.dart';
 
-import '../../../application/dependencyInjection/dependency_injection.dart';
-import '../../sharedwidgets/custom_button.dart';
-import '../../sharedwidgets/input_text.dart';
-import '../../stateRender/state_render_impl.dart';
-import '../../utils/colors.dart';
-import 'add-project-view-model.dart';
+import '../../../../application/dependencyInjection/dependency_injection.dart';
+import '../../../sharedwidgets/custom_button.dart';
+import '../../../sharedwidgets/input_text.dart';
+import '../../../stateRender/state_render_impl.dart';
+import '../../../utils/colors.dart';
+import '../viewmodel/add-project-view-model.dart';
 
 class AddProjectScreen extends StatelessWidget {
    AddProjectScreen({super.key});
