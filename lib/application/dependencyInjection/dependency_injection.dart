@@ -33,7 +33,7 @@ initAppModule() async {
          () => TokenManager(instance()));
 
  instance.registerLazySingleton<ProjectDataSource>(
-         () => ProjectRemoteDataSource());
+         () => ProjectRemoteDataSource(instance()));
  instance.registerLazySingleton<ProjectRepository>(
          () => ProjectRepositoryImpl(instance(), instance()));
 
