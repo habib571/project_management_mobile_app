@@ -4,9 +4,6 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 
 import 'package:project_management_app/data/network/failure.dart';
-
-import 'package:project_management_app/data/responses/project_responce.dart';
-
 import '../../domain/models/project.dart';
 import '../../domain/repository/project_repo.dart';
 import '../dataSource/remoteDataSource/project_data_source.dart';
@@ -20,12 +17,12 @@ class ProjectRepositoryImpl implements ProjectRepository{
   ProjectRepositoryImpl(this._networkInfo,this._projectDataSource);
 
   @override
-  Future<Either<Failure, ProjectResponse>> addProject (Project projectRequest) async {
+  Future<Either<Failure, Project>> addProject (Project projectRequest) async {
     if (await _networkInfo.isConnected) {
       try {
         final response = await _projectDataSource.addProject(projectRequest) ;
         if (response.statusCode == 200) {
-          return Right(ProjectResponse.fromJson(response.data));
+          return Right(Project.fromJson(response.data));
         } else {
           log(response.data) ;
           return Left(Failure.fromJson(response.data));
