@@ -124,7 +124,9 @@ class AddProjectScreen extends StatelessWidget {
 
    Widget _showButton() {
      return CustomButton(
-         onPressed: () {},
+         onPressed: () {
+           _viewModel.addProject();
+         },
          text: 'Add the project');
    }
 }
