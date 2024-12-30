@@ -15,7 +15,9 @@ class InputText extends StatelessWidget {
         this.validator,
         this.onChanged,
         this.suffixIcon,
-        this.obscureText = false
+        this.obscureText = false,
+        this.maxLines = 1,
+        this.onTap
       });
   final bool readOnly;
   final bool obscureText;
@@ -25,12 +27,15 @@ class InputText extends StatelessWidget {
   final double borderRadius;
   final String? Function(String? s)? validator;
   void Function(String)? onChanged ;
+  void Function()? onTap;
   Widget? suffixIcon;
+  int maxLines;
 
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: maxLines,
       readOnly: readOnly,
       cursorColor: Colors.black,
       controller: controller,
@@ -48,6 +53,7 @@ class InputText extends StatelessWidget {
           )),
       validator: validator,
       onChanged: onChanged,
+      onTap: onTap,
       obscureText: obscureText,
 
 

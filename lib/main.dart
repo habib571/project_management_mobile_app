@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_it/get_it.dart';
 import 'package:project_management_app/application/navigation/routes.dart';
+import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/auth/view/screens/signin_screen.dart';
 import 'package:project_management_app/presentation/modules/auth/view/screens/signup_screen.dart';
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signin-view_model.dart';
@@ -31,7 +32,10 @@ class MyApp extends StatelessWidget {
               create: (_) => GetIt.instance<SignupViewModel>()),
           ChangeNotifierProvider<SignInViewModel>(
               create: (_) => GetIt.instance<SignInViewModel>()),
-          ChangeNotifierProvider(create: (_) => DashBoardViewModel())
+
+          ChangeNotifierProvider<AddProjectViewModel>(
+              create: (_) => GetIt.instance<AddProjectViewModel>()),
+
         ],
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
