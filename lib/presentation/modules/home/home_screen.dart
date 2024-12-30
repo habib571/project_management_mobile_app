@@ -6,6 +6,9 @@ import 'package:project_management_app/application/dependencyInjection/dependenc
 import 'package:project_management_app/application/navigation/routes_constants.dart';
 import 'package:project_management_app/presentation/modules/addproject/view/add-project_screen.dart';
 
+import 'package:project_management_app/presentation/modules/dashboord/view/screens/dashboard_screen.dart';
+
+
 import '../../stateRender/state_render_impl.dart';
 import '../../utils/colors.dart';
 import '../auth/view/screens/signin_screen.dart';
@@ -53,23 +56,23 @@ class HomeNavBar extends StatelessWidget {
 
   List<Widget> _buildScreens() {
     return [
-      Test(),
-      SignupScreen(),
-      SigninScreen(),
+      const DashboardScreen(),
+      const DashboardScreen(),
+      const DashboardScreen(),
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.home),
+        icon: const Icon(Icons.home),
         title: ("Home"),
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.add,),
+        icon: const Icon(Icons.add,),
         title: ("Add"),
         onPressed: (context){
           Get.toNamed(AppRoutes.addproject);
@@ -79,7 +82,7 @@ class HomeNavBar extends StatelessWidget {
         activeColorSecondary: AppColors.primary,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.person),
+        icon: const Icon(Icons.person),
         title: ("Profile"),
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: AppColors.accent,
@@ -90,16 +93,4 @@ class HomeNavBar extends StatelessWidget {
   }
 
 
-class Test extends StatelessWidget {
-  const Test({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body:Center(
-            child:Text("HIIIII")
-        )
-    ) ;
-  }
-}
 

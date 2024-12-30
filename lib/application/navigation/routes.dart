@@ -11,6 +11,8 @@ import '../../presentation/modules/addproject/view/add-project_screen.dart';
 
 List<GetPage<dynamic>>? routes = [  GetPage(name: AppRoutes.login, page:()=> SigninScreen() ,middlewares:  [AuthMiddleware()]) ,
   GetPage(name: AppRoutes.signup, page:()=> const SignupScreen()) ,
+
   GetPage(name: AppRoutes.home, page:()=>  HomeNavBar()),
   GetPage(name: AppRoutes.addproject, page:()=>   AddProjectScreen()),
+
 ] ;
