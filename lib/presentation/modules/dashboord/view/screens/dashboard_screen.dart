@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../utils/colors.dart';
 import '../../../../utils/styles.dart';
 import '../../viewmodel/dashboard_view_model.dart';
@@ -12,7 +11,6 @@ import '../widgets/project_card.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +37,7 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  /// Combines Projects Carousel and Indicators with the same Selector.
+
   Widget _showProjectsAndIndicators(BuildContext context) {
     return Selector<DashBoardViewModel, int>(
       selector: (_, viewModel) => viewModel.currentProject,
@@ -76,7 +74,6 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  /// Combines Tasks Carousel and Indicators with the same Selector.
   Widget _showTasksAndIndicators(BuildContext context) {
     return Selector<DashBoardViewModel, int>(
       selector: (_, viewModel) => viewModel.currentTask,

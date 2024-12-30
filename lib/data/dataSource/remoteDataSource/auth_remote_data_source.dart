@@ -7,8 +7,6 @@ import 'package:project_management_app/data/responses/auth_response.dart';
 abstract class AuthRemoteDataSource {
   Future<ApiResponse> signup(RegisterRequest request);
   Future<ApiResponse> sigIn(SignInRequest request);
-
-
 }
 
 class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
@@ -30,6 +28,5 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
         onRequestResponse: (response, statusCode) {
           return ApiResponse(response, statusCode);
         });
-
   }
 }
