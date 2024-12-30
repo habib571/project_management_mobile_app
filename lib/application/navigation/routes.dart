@@ -9,7 +9,5 @@ import 'package:project_management_app/presentation/modules/home/home_screen.dar
 
 List<GetPage<dynamic>>? routes = [  GetPage(name: AppRoutes.login, page:()=> SigninScreen() ,middlewares:  [AuthMiddleware()]) ,
   GetPage(name: AppRoutes.signup, page:()=> const SignupScreen()) ,
-  GetPage(name: AppRoutes.signup, page:()=> const HomeNavBar()),
-
-
+  GetPage(name: AppRoutes.home, page:()=> const HomeNavBar()),
 ] ;

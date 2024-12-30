@@ -2,6 +2,7 @@
 class Assets {
   Assets._();
 
+  static const String assetsIcons8Time = 'assets/time.svg';
   static const String assetsOverlay = 'assets/overlay.json';
   static const String assetsShape = 'assets/Shape.svg';
   static const String assetsSigninImage = 'assets/signin-image.svg';

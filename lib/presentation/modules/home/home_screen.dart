@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:project_management_app/presentation/modules/dashboord/view/screens/dashboard_screen.dart';
 
 import '../../utils/colors.dart';
 import '../auth/view/screens/signin_screen.dart';
@@ -37,30 +38,30 @@ class HomeNavBar extends StatelessWidget {
 
   List<Widget> _buildScreens() {
     return [
-      Test(),
-      SignupScreen(),
-      SigninScreen(),
+      const DashboardScreen(),
+      const DashboardScreen(),
+      const DashboardScreen(),
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.home),
+        icon: const Icon(Icons.home),
         title: ("Home"),
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.add,),
+        icon: const Icon(Icons.add,),
         title: ("Add"),
         activeColorPrimary: AppColors.accent,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.person),
+        icon: const Icon(Icons.person),
         title: ("Profile"),
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: AppColors.accent,
@@ -71,16 +72,4 @@ class HomeNavBar extends StatelessWidget {
   }
 
 
-class Test extends StatelessWidget {
-  const Test({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body:Center(
-            child:Text("HIIIII")
-        )
-    ) ;
-  }
-}
 

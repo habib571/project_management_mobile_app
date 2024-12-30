@@ -4,20 +4,26 @@ import '../utils/colors.dart';
 import '../utils/styles.dart';
 
 class CustomButton extends StatelessWidget {
-  CustomButton(
+  const CustomButton(
       {super.key,
       this.buttonColor = AppColors.primary,
       required this.onPressed,
       required this.text,
       this.widget = const SizedBox(),
-      this.height});
+      this.height,
+        this.borderRadius =40,
+        this.textColor  = Colors.white,
+        this.padding =12
+      });
   final Color buttonColor;
+  final Color textColor ;
   final String text;
   final Function() onPressed;
   final Widget widget;
-  final TextStyle btnTxtStyle =
-      robotoMedium.copyWith(color: Colors.white, fontSize: 16);
   final double? height;
+  final double borderRadius ;
+  final double padding ;
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +36,9 @@ class CustomButton extends StatelessWidget {
             height: height ?? 55,
             child: MaterialButton(
               color: buttonColor,
-              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              padding:  EdgeInsets.symmetric(vertical: padding),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40)),
+                  borderRadius: BorderRadius.circular(borderRadius)),
               onPressed: onPressed,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +46,7 @@ class CustomButton extends StatelessWidget {
                   widget,
                   Text(
                     text,
-                    style: btnTxtStyle,
+                    style: robotoMedium.copyWith(color: textColor, fontSize: 16) ,
                     textAlign: TextAlign.center,
                   ),
                 ],
