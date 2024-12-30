@@ -7,6 +7,7 @@ import '../constants/constants.dart';
 abstract class LocalStorage {
   Future<void> saveAuthToken(String token,int expiresIn);
   Future<void> clearAuthToken();
+  String? getAuthToken();
   bool get isUserLoggedIn;
 }
 
@@ -18,12 +19,11 @@ class LocalStorageImp implements LocalStorage {
 
   @override
   Future<void> saveAuthToken(String token,int expiresIn) async {
-    Future.wait(_tokenManager.saveTokenRelatedProprities(token, expiresIn).entries.map((entry)=>_getStorage.write(entry.key, entry.value))
-    );
+     _tokenManager.saveTokenRelatedProprities(token, expiresIn);
   }
 
   String? getAuthToken() {
-    return _getStorage.read(Constants.authToken);
+    return _getStorage.read('Token');
   }
 
   @override

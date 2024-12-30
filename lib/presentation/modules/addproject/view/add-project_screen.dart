@@ -29,37 +29,40 @@ class AddProjectScreen extends StatelessWidget {
 
 
   Widget _showBody(BuildContext context) {
-    return SingleChildScrollView(
-      child: Stack(
-        children: [
-          _appBarSection(),
-          SizedBox(
-            height: 80.h,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 140.h,
-                ),
-                _addProjectNameSection(),
-                SizedBox(
-                  height: 40.h,
-                ),
-                _addProjectDesrciprionSection(),
-                SizedBox(
-                  height: 40.h,
-                ),
-                _addProjectEndDateSection(context),
-                SizedBox(
-                  height: 60.h,
-                ),
-                _showButton()
-              ],
+    return Form(
+      key: _viewModel.formkey ,
+      child: SingleChildScrollView(
+        child: Stack(
+          children: [
+            _appBarSection(),
+            SizedBox(
+              height: 80.h,
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 140.h,
+                  ),
+                  _addProjectNameSection(),
+                  SizedBox(
+                    height: 40.h,
+                  ),
+                  _addProjectDesrciprionSection(),
+                  SizedBox(
+                    height: 40.h,
+                  ),
+                  _addProjectEndDateSection(context),
+                  SizedBox(
+                    height: 60.h,
+                  ),
+                  _showButton()
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

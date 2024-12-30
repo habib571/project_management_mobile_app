@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
+import 'package:project_management_app/application/navigation/routes_constants.dart';
+import 'package:project_management_app/presentation/modules/addproject/view/add-project_screen.dart';
 
 import '../../stateRender/state_render_impl.dart';
 import '../../utils/colors.dart';
@@ -67,6 +71,9 @@ class HomeNavBar extends StatelessWidget {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.add,),
         title: ("Add"),
+        onPressed: (context){
+          Get.toNamed(AppRoutes.addproject);
+        },
         activeColorPrimary: AppColors.accent,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,

@@ -9,9 +9,9 @@ class AddProjectViewModel extends BaseViewModel{
   final AddProjectUseCase _addProjectUseCase ;
 
 
-  AddProjectViewModel(super.tokenManager, this._addProjectUseCase,{super.startTokenMonitoringOnInit=false});
+  AddProjectViewModel(super.tokenManager, this._addProjectUseCase);
 
-  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   TextEditingController projectName = TextEditingController();
   TextEditingController projectDescription = TextEditingController();
   TextEditingController projectEndDate = TextEditingController();
@@ -30,7 +30,10 @@ class AddProjectViewModel extends BaseViewModel{
       projectEndDate.text = "${pickedDate.day.toString().padLeft(2, '0')}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.year}";
     }
   }
-  Future addProject(){
-    return _addProjectUseCase.addProject(Project.request(projectName.text, projectDescription.text, projectEndDate.text));
+  void addProject(){
+    if (formkey.currentState!.validate()) {
+       _addProjectUseCase.addProject(Project.request(
+          projectName.text, projectDescription.text, projectEndDate.text));
+    }
   }
 }

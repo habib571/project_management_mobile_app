@@ -29,8 +29,8 @@ initAppModule() async {
       () => AuthRemoteDataSourceImp());
   instance.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(instance(), instance()));
- instance.registerLazySingleton<TokenManager>(
-         () => TokenManager(instance()));
+ instance.registerLazySingleton<TokenManager>(() =>TokenManager(instance()));
+
 
  instance.registerLazySingleton<ProjectDataSource>(
          () => ProjectRemoteDataSource(instance()));
@@ -71,7 +71,8 @@ initSignInModule() {
 }
 
 initGetStorageModule() async {
-  await GetStorage.init();
-  instance.registerLazySingleton<GetStorage>(() => GetStorage());
-  instance.registerLazySingleton<LocalStorage>(() => LocalStorageImp(instance(),instance()));
+    await GetStorage.init();
+    instance.registerLazySingleton<GetStorage>(() => GetStorage());
+    instance.registerLazySingleton<LocalStorage>(() =>LocalStorageImp(instance(), instance()));
+
 }

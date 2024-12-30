@@ -41,13 +41,13 @@ class TokenManager {
   }
 
 
-  Map<String, dynamic> saveTokenRelatedProprities(String token, int expiresIn) {
+  void saveTokenRelatedProprities(String token, int expiresIn) {
     final datatosave = {
       'Token': token,
       'expiresIn': expiresIn,
       'logedInAt': DateTime.now().toIso8601String(),
     };
-    return datatosave;
+    datatosave.entries.map((entry)=>_getStorage.write(entry.key, entry.value));
   }
 
   Future<void> clearAuthTokenProprities()async{

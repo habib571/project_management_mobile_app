@@ -14,8 +14,8 @@ class AuthMiddleware extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    if (_localStorageImp.isUserLoggedIn) {
-      _localStorageImp.clearAuthToken();
+    if ( _localStorageImp.isUserLoggedIn  ) {
+      //_localStorageImp.clearAuthToken();
       return  const RouteSettings(name: AppRoutes.home);
     }
     return null;

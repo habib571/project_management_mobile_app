@@ -10,17 +10,16 @@ abstract class ProjectDataSource {
   Future<ApiResponse> addProject( Project request );
 }
 
-
  class ProjectRemoteDataSource implements ProjectDataSource{
-   final LocalStorageImp _localStorageImp ;
+   final LocalStorage _localStorage ;
 
-   ProjectRemoteDataSource(this._localStorageImp);
+   ProjectRemoteDataSource(this._localStorage);
 
   @override
   Future<ApiResponse> addProject(Project request) async{
       return await executePostRequest(
           apiUrl: "/project/add_project",
-          bearerToken: _localStorageImp.getAuthToken() ,
+          bearerToken:  _localStorage.getAuthToken() ,
           body: request.toJson(),
           onRequestResponse: (response, statusCode) {
             return ApiResponse(response, statusCode);
