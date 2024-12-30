@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../../data/responses/api_response.dart';
 import '../constants/constants.dart';
 
-Future<T> executeGetRequest<T>({
+Future<ApiResponse> executeGetRequest<ApiResponse>({
   required String apiUrl,
   String? bearerToken,
   bool decodeResult = true,
-  required T Function(dynamic result) onRequestResponse,
+  required ApiResponse Function(dynamic result ,int statusCode) onRequestResponse,
   void Function(int statusCode, String responseBody)? onError,
 }) async {
   final response = await http.get(
@@ -21,7 +22,8 @@ Future<T> executeGetRequest<T>({
   final jsonResult = decodeResult
       ? jsonDecode(response.body) as Map<String, dynamic>
       : response.body;
-  return onRequestResponse(jsonResult);
+  int statusCode = response.statusCode;
+  return onRequestResponse(jsonResult ,statusCode);
 }
 
 Future<ApiResponse> executePostRequest<ApiResponse>({
@@ -29,7 +31,7 @@ Future<ApiResponse> executePostRequest<ApiResponse>({
   Map<String, dynamic>? body,
   String? bearerToken,
   required ApiResponse Function(dynamic result, int statusCode)
-      onRequestResponse,
+  onRequestResponse,
 }) async {
   final requestBody = body != null ? jsonEncode(body) : null;
   final response = await http.post(

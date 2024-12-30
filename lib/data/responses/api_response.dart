@@ -1,5 +1,5 @@
-class ApiResponse<T> {
-  T? data ;
+class ApiResponse {
+  Map<String ,dynamic> data ;
   int statusCode ;
   ApiResponse(this.data , this.statusCode );
 }

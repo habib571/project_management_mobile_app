@@ -32,7 +32,7 @@ class AddProjectScreen extends StatelessWidget {
     return Form(
       key: _viewModel.formkey ,
       child: SingleChildScrollView(
-        child: Stack(
+        child: Column(
           children: [
             _appBarSection(),
             SizedBox(
@@ -42,9 +42,7 @@ class AddProjectScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 140.h,
-                  ),
+
                   _addProjectNameSection(),
                   SizedBox(
                     height: 40.h,
@@ -107,7 +105,7 @@ class AddProjectScreen extends StatelessWidget {
           Row(
             children: [
                SizedBox(width: 8.w),
-              IconButton(
+               IconButton(
                   icon: const Icon(Icons.close, color: Colors.white),
                   onPressed: (){
                     Get.off(() => HomeNavBar(), transition: Transition.upToDown);

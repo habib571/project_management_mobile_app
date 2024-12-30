@@ -32,10 +32,10 @@ class MyApp extends StatelessWidget {
               create: (_) => GetIt.instance<SignupViewModel>()),
           ChangeNotifierProvider<SignInViewModel>(
               create: (_) => GetIt.instance<SignInViewModel>()),
-
+          ChangeNotifierProvider<DashBoardViewModel>(
+              create: (_) => GetIt.instance<DashBoardViewModel>()),
           ChangeNotifierProvider<AddProjectViewModel>(
               create: (_) => GetIt.instance<AddProjectViewModel>()),
-
         ],
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,

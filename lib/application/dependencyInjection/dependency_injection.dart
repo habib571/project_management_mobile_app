@@ -7,6 +7,7 @@ import 'package:project_management_app/data/repositoryImp/project_repo_impl.dart
 import 'package:project_management_app/domain/repository/auth_repo.dart';
 import 'package:project_management_app/domain/repository/project_repo.dart';
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
 
 import '../../data/dataSource/remoteDataSource/auth_remote_data_source.dart';
 import '../../data/dataSource/remoteDataSource/project_data_source.dart';
@@ -42,6 +43,8 @@ initAppModule() async {
   initSignupModule();
   initHomeModule();
   intAddProject();
+ instance.registerLazySingleton<DashBoardViewModel>(() => DashBoardViewModel(instance()) );
+  
 }
 
 

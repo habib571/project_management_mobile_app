@@ -12,6 +12,8 @@ class DashBoardViewModel extends BaseViewModel {
 
   int _currentTask = 0;
 
+  DashBoardViewModel(super.tokenManager);
+
   int get currentTask => _currentTask;
 
   set currentTask(int value) {

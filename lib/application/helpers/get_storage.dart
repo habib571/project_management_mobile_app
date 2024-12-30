@@ -22,6 +22,7 @@ class LocalStorageImp implements LocalStorage {
      _tokenManager.saveTokenRelatedProprities(token, expiresIn);
   }
 
+  @override
   String? getAuthToken() {
     return _getStorage.read('Token');
   }
