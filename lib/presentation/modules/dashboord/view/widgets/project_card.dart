@@ -5,8 +5,11 @@ import 'package:project_management_app/presentation/sharedwidgets/custom_button.
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 
+import '../../../../../domain/models/project.dart';
+
 class ProjectCard extends StatelessWidget {
-  const ProjectCard({super.key});
+  const ProjectCard({super.key, required this.project});
+  final Project project ;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -24,7 +27,7 @@ class ProjectCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'First Project',
+                    project.name!,
                     style: robotoMedium.copyWith(color: Colors.white, fontSize: 18),
                   ),
                   SizedBox(height: 22.h,) ,
@@ -50,7 +53,7 @@ class ProjectCard extends StatelessWidget {
                 lineWidth: 10.0,
                 percent: 0.8,
                 center: Text(
-                  '60%',
+                  project.progress.toString(),
                   style: robotoRegular.copyWith(color: Colors.white),
                 ),
                 backgroundColor: AppColors.accent,
