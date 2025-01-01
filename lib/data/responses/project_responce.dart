@@ -5,11 +5,9 @@ class ProjectResponse {
 
   ProjectResponse(this.projects);
 
-  factory ProjectResponse.fromJson(Map<String, dynamic> json) {
+  factory ProjectResponse.fromJson(List<dynamic> json) {
     return ProjectResponse(
-      (json['data'] as List<dynamic>)  // Assuming 'data' is the key in your response that contains the list
-          .map((projectJson) => Project.fromJson(projectJson as Map<String, dynamic>))
-          .toList(),
+      json.map((projectJson) => Project.fromJson(projectJson as Map<String, dynamic>)).toList(),
     );
   }
 }
