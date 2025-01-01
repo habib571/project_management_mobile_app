@@ -30,10 +30,10 @@ abstract class ProjectDataSource {
   @override
   Future<ApiResponse> getProjects() async{  
     return await executeGetRequest(
-        apiUrl: "/project/my-projects",
+        apiUrl: "/project/my_projects",
         bearerToken:  _localStorage.getAuthToken() ,
         onRequestResponse: (response, statusCode) {
-          return ApiResponse(response, statusCode);
+          return ApiResponse(response as List<dynamic> , statusCode);
         });
   }
 
