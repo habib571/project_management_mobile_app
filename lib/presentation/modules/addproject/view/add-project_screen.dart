@@ -23,10 +23,15 @@ class AddProjectScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.scaffold,
-        body:_showBody(context)
-    );
+        body:StreamBuilder<FlowState>(
+          stream: _viewModel.outputState,
+          builder: (context, snapshot) {
+            return snapshot.data
+                ?.getScreenWidget(context, _showBody(context), () {}) ??
+                _showBody(context);
+          },
+        ));
   }
-
 
   Widget _showBody(BuildContext context) {
     return Form(

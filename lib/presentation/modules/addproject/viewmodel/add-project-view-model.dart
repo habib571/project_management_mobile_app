@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:project_management_app/domain/models/project.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
+import 'package:project_management_app/presentation/stateRender/state_render.dart';
+import 'package:project_management_app/presentation/stateRender/state_render_impl.dart';
 
 import '../../../../domain/usecases/project/addproject-use-case.dart';
 
 class AddProjectViewModel extends BaseViewModel{
+
   final AddProjectUseCase _addProjectUseCase ;
-
-
   AddProjectViewModel(super.tokenManager, this._addProjectUseCase);
 
+  @override
+  void start() {
+    updateState(ContentState()) ;
+    super.start();
+  }
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   TextEditingController projectName = TextEditingController();
   TextEditingController projectDescription = TextEditingController();
@@ -30,10 +37,16 @@ class AddProjectViewModel extends BaseViewModel{
       projectEndDate.text = "${pickedDate.day.toString().padLeft(2, '0')}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.year}";
     }
   }
-  void addProject(){
+   addProject() async{
     if (formkey.currentState!.validate()) {
-       _addProjectUseCase.addProject(Project.request(
-          projectName.text, projectDescription.text, projectEndDate.text));
+      (await _addProjectUseCase.addProject(Project.request(projectName.text, projectDescription.text, projectEndDate.text)))
+          .fold((failure) {
+             updateState(ErrorState(StateRendererType.snackbarState, failure.message)) ;
+      }, (success) {
+            Get.back( );
+      }
+      ) ;
+
     }
   }
 }
