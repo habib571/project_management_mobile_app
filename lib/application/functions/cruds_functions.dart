@@ -20,7 +20,7 @@ Future<ApiResponse> executeGetRequest<ApiResponse>({
   );
 
   final jsonResult = decodeResult
-      ? jsonDecode(response.body) as Map<String, dynamic>
+      ? jsonDecode(response.body)
       : response.body;
   int statusCode = response.statusCode;
   return onRequestResponse(jsonResult ,statusCode);

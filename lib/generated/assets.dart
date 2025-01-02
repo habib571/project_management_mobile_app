@@ -2,9 +2,10 @@
 class Assets {
   Assets._();
 
-  static const String assetsIcons8Time = 'assets/time.svg';
+  static const String assetsIcons8Calendar24 = 'assets/calendar.png';
   static const String assetsOverlay = 'assets/overlay.json';
   static const String assetsShape = 'assets/Shape.svg';
   static const String assetsSigninImage = 'assets/signin-image.svg';
+  static const String assetsTime = 'assets/time.svg';
 
 }
