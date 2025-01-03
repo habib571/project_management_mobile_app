@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../utils/styles.dart';
 
@@ -15,7 +16,9 @@ class CustomAppBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.back() ;
+                  },
                   icon: const Icon(Icons.arrow_back_rounded)),
               Text(title, style: robotoBold.copyWith(fontSize: 18),)
             ],
