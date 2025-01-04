@@ -7,18 +7,23 @@ import 'package:project_management_app/presentation/utils/styles.dart';
 import '../../../../../domain/models/project.dart';
 
 class ProjectDetailCard extends StatelessWidget {
-  const ProjectDetailCard({super.key, });
+  const ProjectDetailCard({
+    super.key,
+  });
   //final Project project;
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(17), color: Colors.white),
       child: Row(
         children: [
-          _showTitles() ,
-          const SizedBox(width: 15,) ,
-          _showTitles()
+          _showTitles(),
+          const SizedBox(
+            width: 15,
+          ),
+          _showContent()
         ],
       ),
     );
@@ -33,10 +38,16 @@ class ProjectDetailCard extends StatelessWidget {
           style: robotoMedium.copyWith(
               color: AppColors.secondaryTxt, fontSize: 13),
         ),
+        const SizedBox(
+          height: 12,
+        ),
         Text(
           "Due date",
           style: robotoMedium.copyWith(
               color: AppColors.secondaryTxt, fontSize: 13),
+        ),
+        const SizedBox(
+          height: 12,
         ),
         Text(
           "Created by",
@@ -49,16 +60,23 @@ class ProjectDetailCard extends StatelessWidget {
 
   Widget _showContent() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Erp app',
           style: robotoMedium.copyWith(fontSize: 14),
         ),
+        const SizedBox(
+          height: 12,
+        ),
         Row(
           children: [
             Image.asset('assets/calendar.png'),
-            Text('02/05/2025')
+            const Text('02/05/2025')
           ],
+        ),
+        const SizedBox(
+          height: 12,
         ),
         Row(
           children: [
@@ -67,8 +85,11 @@ class ProjectDetailCard extends StatelessWidget {
               imageUrl:
                   'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
             ),
+            const SizedBox(
+              width: 7,
+            ),
             Text(
-               'habib rouatbi',
+              'habib rouatbi',
               style: robotoMedium.copyWith(fontSize: 14),
             )
           ],
