@@ -8,9 +8,9 @@ import '../../../../../domain/models/project.dart';
 
 class ProjectDetailCard extends StatelessWidget {
   const ProjectDetailCard({
-    super.key,
+    super.key, required this.project,
   });
-  //final Project project;
+  final Project project;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -63,7 +63,7 @@ class ProjectDetailCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Erp app',
+          project.name!,
           style: robotoMedium.copyWith(fontSize: 14),
         ),
         const SizedBox(
@@ -72,7 +72,7 @@ class ProjectDetailCard extends StatelessWidget {
         Row(
           children: [
             Image.asset('assets/calendar.png'),
-            const Text('02/05/2025')
+             Text(project.endDate!)
           ],
         ),
         const SizedBox(
@@ -89,7 +89,7 @@ class ProjectDetailCard extends StatelessWidget {
               width: 7,
             ),
             Text(
-              'habib rouatbi',
+              project.createdBy!.fullName ,
               style: robotoMedium.copyWith(fontSize: 14),
             )
           ],
