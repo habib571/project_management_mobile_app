@@ -5,41 +5,42 @@ import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 
-class ProjectDetailScreen extends StatelessWidget {
-  const ProjectDetailScreen({super.key});
+import '../../../../../application/dependencyInjection/dependency_injection.dart';
+import '../../viewmodel/dashboard_view_model.dart';
 
+class ProjectDetailScreen extends StatelessWidget {
+  ProjectDetailScreen({super.key});
+  final DashBoardViewModel _viewModel = instance<DashBoardViewModel>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.scaffold ,
+          backgroundColor: AppColors.scaffold,
           body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const CustomAppBar(title: 'Project Details'),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 50.h,
+            child: Column(
+              children: [
+                const CustomAppBar(title: 'Project Details'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 50.h,
+                      ),
+                      ProjectDetailCard(
+                        project: _viewModel.project,
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      _showProjectDescription()
+                    ],
                   ),
-                  _showProjectInfo(),
-                  SizedBox(
-                    height: 30.h,
-                  ),
-                  _showProjectDescription()
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
-      )),
+          )),
     );
-  }
-
-  Widget _showProjectInfo() {
-    return const ProjectDetailCard();
   }
 
   Widget _showProjectDescription() {
