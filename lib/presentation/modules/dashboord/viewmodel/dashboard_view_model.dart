@@ -10,14 +10,21 @@ import '../../../stateRender/state_render_impl.dart';
 class DashBoardViewModel extends BaseViewModel {
   @override
   void start() {
-      getMyProjects() ;
+    getMyProjects();
     super.start();
   }
+
   final GetMyProjectsUseCase _getMyProjectsUseCase;
   DashBoardViewModel(super.tokenManager, this._getMyProjectsUseCase);
 
   int _currentProject = 0;
   int get currentProject => _currentProject;
+  Project? _project;
+  Project get project => _project!;
+
+  setProject(Project project) {
+    _project = project;
+  }
 
   setCurrentProject(int value) {
     _currentProject = value;
@@ -41,15 +48,15 @@ class DashBoardViewModel extends BaseViewModel {
   }
 
   getMyProjects() async {
-    updateState(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
+    updateState(LoadingState(
+        stateRendererType: StateRendererType.fullScreenLoadingState));
     (await _getMyProjectsUseCase.getMyProjects()).fold((failure) {
       updateState(ErrorState(StateRendererType.snackbarState, failure.message));
     }, (data) {
       _projectList = data.projects;
-      notifyListeners() ;
-      log(_projectList.toString()) ;
+      notifyListeners();
+      log(_projectList.toString());
       updateState(ContentState());
-
     });
   }
 }
