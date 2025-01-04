@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
+import 'package:project_management_app/application/navigation/routes_constants.dart';
 import 'package:provider/provider.dart';
 import '../../../../stateRender/state_render_impl.dart';
 import '../../../../utils/colors.dart';
@@ -41,10 +43,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           return RefreshIndicator(
             onRefresh: _onRefresh,
             child: snapshot.data?.getScreenWidget(
-              context,
-              _showBody(context),
+                  context,
+                  _showBody(context),
                   () => _viewModel.start(),
-            ) ??
+                ) ??
                 _showBody(context),
           );
         },
@@ -60,7 +62,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 50.h),
-            Text('My Workspaces (projects)', style: robotoBold.copyWith(fontSize: 18)),
+            Text('My Workspaces (projects)',
+                style: robotoBold.copyWith(fontSize: 18)),
             const SizedBox(height: 25),
             _showProjectsSection(),
             SizedBox(height: 50.h),
@@ -87,8 +90,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return CarouselSlider(
       items: List.generate(
         _viewModel.projectList.length,
-            (index) {
-          return ProjectCard(project: _viewModel.projectList[index]);
+        (index) {
+          return ProjectCard(
+            project: _viewModel.projectList[index],
+            onTap: () {
+              _viewModel.setProject(_viewModel.projectList[index]);
+              Get.toNamed(AppRoutes.projectDetails);
+            },
+          );
         },
       ),
       options: CarouselOptions(
