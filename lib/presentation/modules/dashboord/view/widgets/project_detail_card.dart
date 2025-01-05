@@ -8,7 +8,7 @@ import '../../../../../domain/models/project.dart';
 import '../../viewmodel/dashboard_view_model.dart';
 
 class ProjectDetailCard extends StatelessWidget {
-   ProjectDetailCard({
+   const ProjectDetailCard({
     super.key, required this.project,
   });
   final Project project;

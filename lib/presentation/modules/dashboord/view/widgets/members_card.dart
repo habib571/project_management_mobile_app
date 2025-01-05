@@ -13,7 +13,8 @@ class MembersCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(17)
       ),
       child: Wrap(
-        runSpacing: 5,
+        alignment: WrapAlignment.start,
+        runSpacing: 20,
         spacing: 5,
         children: children
       ) ,
