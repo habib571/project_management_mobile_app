@@ -18,55 +18,57 @@ class ProjectCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: AppColors.primary,
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              flex: 3,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    project.name!,
-                    style: robotoMedium.copyWith(color: Colors.white, fontSize: 18),
-                  ),
-                  SizedBox(height: 22.h,) ,
-                  SizedBox(
-                    width: 110,
-                    child: CustomButton(
-                      padding: 5,
-                      onPressed: () {
-                        onTap() ;
-                      },
-                      text: 'View Project',
-                      height: 40,
-                      borderRadius: 12,
-                      textColor: AppColors.primary,
-                      buttonColor: Colors.white,
+      child: InkWell(
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                flex: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      project.name!,
+                      style: robotoMedium.copyWith(color: Colors.white, fontSize: 18),
                     ),
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: CircularPercentIndicator(
-                radius: 40,
-                lineWidth: 10.0,
-                percent: 0.8,
-                center: Text(
-                  project.progress.toString(),
-                  style: robotoRegular.copyWith(color: Colors.white),
+                    SizedBox(height: 22.h,) ,
+                    SizedBox(
+                      width: 110,
+                      child: CustomButton(
+                        padding: 5,
+                        onPressed: () {
+                          onTap();
+                        },
+                        text: 'View Project',
+                        height: 40,
+                        borderRadius: 12,
+                        textColor: AppColors.primary,
+                        buttonColor: Colors.white,
+                      ),
+                    )
+                  ],
                 ),
-                backgroundColor: AppColors.accent,
-                progressColor: Colors.white
               ),
-            ),
-          ],
+              Expanded(
+                flex: 2,
+                child: CircularPercentIndicator(
+                  radius: 40,
+                  lineWidth: 10.0,
+                  percent: 0.8,
+                  center: Text(
+                    project.progress.toString(),
+                    style: robotoRegular.copyWith(color: Colors.white),
+                  ),
+                  backgroundColor: AppColors.accent,
+                  progressColor: Colors.white
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -24,6 +24,7 @@ class DashBoardViewModel extends BaseViewModel {
 
   setProject(Project project) {
     _project = project;
+    log(_project!.endDate.toString()) ;
   }
 
   setCurrentProject(int value) {

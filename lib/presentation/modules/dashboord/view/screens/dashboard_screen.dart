@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/navigation/routes_constants.dart';
+import 'package:project_management_app/presentation/modules/dashboord/view/screens/projet_detail_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../../stateRender/state_render_impl.dart';
 import '../../../../utils/colors.dart';
@@ -93,9 +96,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         (index) {
           return ProjectCard(
             project: _viewModel.projectList[index],
-            onTap: () {
-              _viewModel.setProject(_viewModel.projectList[index]);
-              Get.toNamed(AppRoutes.projectDetails);
+            onTap: ()  {
+               Get.to(()=> ProjectDetailScreen(project: _viewModel.projectList[index],)) ;
+
             },
           );
         },
@@ -103,6 +106,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       options: CarouselOptions(
         height: 150.h,
         onPageChanged: (index, reason) {
+          _viewModel.setProject(_viewModel.projectList[index]);
           context.read<DashBoardViewModel>().setCurrentProject(index);
         },
       ),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
+import 'package:project_management_app/domain/models/project.dart';
+import 'package:project_management_app/presentation/modules/dashboord/view/widgets/members_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/project_detail_card.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
+import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 
@@ -9,42 +12,50 @@ import '../../../../../application/dependencyInjection/dependency_injection.dart
 import '../../viewmodel/dashboard_view_model.dart';
 
 class ProjectDetailScreen extends StatelessWidget {
-  ProjectDetailScreen({super.key});
-  final DashBoardViewModel _viewModel = instance<DashBoardViewModel>();
+  const ProjectDetailScreen({super.key, required this.project});
+  // final DashBoardViewModel _viewModel = instance<DashBoardViewModel>();
+  final Project project;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          backgroundColor: AppColors.scaffold,
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                const CustomAppBar(title: 'Project Details'),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 50.h,
-                      ),
-                      ProjectDetailCard(
-                        project: _viewModel.project,
-                      ),
-                      SizedBox(
-                        height: 30.h,
-                      ),
-                      _showProjectDescription()
-                    ],
-                  ),
+    return Scaffold(
+        backgroundColor: AppColors.scaffold,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 25.h,
+              ),
+              const CustomAppBar(title: 'Project Details'),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 50.h,
+                    ),
+                    ProjectDetailCard(
+                      project: project,
+                    ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    _showProjectDescription() ,
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    _showMembers()
+                  ],
                 ),
-              ],
-            ),
-          )),
-    );
+              ),
+            ],
+          ),
+        ));
   }
 
   Widget _showProjectDescription() {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(17), color: Colors.white),
@@ -59,12 +70,22 @@ class ProjectDetailScreen extends StatelessWidget {
             height: 15,
           ),
           Text(
-            'erp app for saudien customer aims to manage all company ressources adding to that financal anf human ressources',
+            project.description!,
             style: robotoMedium.copyWith(
                 color: AppColors.secondaryTxt, fontSize: 13),
           )
         ],
       ),
     );
+  }
+
+  Widget _showMembers() {
+    return MembersCard(
+        children: List.generate(14, (index) {
+      return const ImagePlaceHolder(
+          radius: 15,
+          imageUrl:
+              'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80');
+    }));
   }
 }

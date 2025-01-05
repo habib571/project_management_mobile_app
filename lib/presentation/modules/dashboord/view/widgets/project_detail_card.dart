@@ -5,9 +5,10 @@ import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 
 import '../../../../../domain/models/project.dart';
+import '../../viewmodel/dashboard_view_model.dart';
 
 class ProjectDetailCard extends StatelessWidget {
-  const ProjectDetailCard({
+   ProjectDetailCard({
     super.key, required this.project,
   });
   final Project project;
@@ -63,7 +64,7 @@ class ProjectDetailCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          project.name!,
+          project.name ?? "",
           style: robotoMedium.copyWith(fontSize: 14),
         ),
         const SizedBox(
@@ -72,7 +73,7 @@ class ProjectDetailCard extends StatelessWidget {
         Row(
           children: [
             Image.asset('assets/calendar.png'),
-             Text(project.endDate!)
+             Text(project.endDate ?? "")
           ],
         ),
         const SizedBox(
@@ -89,7 +90,7 @@ class ProjectDetailCard extends StatelessWidget {
               width: 7,
             ),
             Text(
-              project.createdBy!.fullName ,
+              project.createdBy?.fullName ?? "" ,
               style: robotoMedium.copyWith(fontSize: 14),
             )
           ],
