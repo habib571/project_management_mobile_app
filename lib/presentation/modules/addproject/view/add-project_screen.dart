@@ -23,16 +23,21 @@ class AddProjectScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.scaffold,
-        body:_showBody(context)
-    );
+        body:StreamBuilder<FlowState>(
+          stream: _viewModel.outputState,
+          builder: (context, snapshot) {
+            return snapshot.data
+                ?.getScreenWidget(context, _showBody(context), () {}) ??
+                _showBody(context);
+          },
+        ));
   }
-
 
   Widget _showBody(BuildContext context) {
     return Form(
       key: _viewModel.formkey ,
       child: SingleChildScrollView(
-        child: Stack(
+        child: Column(
           children: [
             _appBarSection(),
             SizedBox(
@@ -42,9 +47,7 @@ class AddProjectScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 140.h,
-                  ),
+
                   _addProjectNameSection(),
                   SizedBox(
                     height: 40.h,
@@ -107,7 +110,7 @@ class AddProjectScreen extends StatelessWidget {
           Row(
             children: [
                SizedBox(width: 8.w),
-              IconButton(
+               IconButton(
                   icon: const Icon(Icons.close, color: Colors.white),
                   onPressed: (){
                     Get.off(() => HomeNavBar(), transition: Transition.upToDown);

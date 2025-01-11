@@ -12,7 +12,6 @@ import '../stateRender/state_render_impl.dart';
 
 abstract class BaseViewModel extends  ChangeNotifier implements BaseViewModelInputs ,
      BaseViewModelOutputs {
-
   late Stream<FlowState> _stateStream;
   final stateController = StreamController<FlowState>();
   final TokenManager _tokenManager;

@@ -34,13 +34,12 @@ class SignInViewModel extends BaseViewModel {
 
   void signIn() async {
  if (formkey.currentState!.validate()) {
-      //updateState(LoadingState(stateRendererType: StateRendererType.overlayLoadingState));
+      updateState(LoadingState(stateRendererType: StateRendererType.overlayLoadingState));
 
       (await _signInUseCase.signIn(SignInRequest(
         email: email.text.trim(),
         password: password.text.trim(),
-      )))
-          .fold(
+      ))).fold(
         (failure) {
           updateState(
             ErrorState(StateRendererType.snackbarState, failure.message),
@@ -48,8 +47,7 @@ class SignInViewModel extends BaseViewModel {
         },
         (data) {
            _localStorage.saveAuthToken(data.token,data.expiresIn);
-
-          Get.offAllNamed(AppRoutes.home) ;
+            Get.offAllNamed(AppRoutes.home) ;
         },
       );
     }

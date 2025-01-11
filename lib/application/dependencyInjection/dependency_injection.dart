@@ -6,7 +6,9 @@ import 'package:project_management_app/data/repositoryImp/auth_repo_impl.dart';
 import 'package:project_management_app/data/repositoryImp/project_repo_impl.dart';
 import 'package:project_management_app/domain/repository/auth_repo.dart';
 import 'package:project_management_app/domain/repository/project_repo.dart';
+import 'package:project_management_app/domain/usecases/project/myprojects_usecase.dart';
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
 
 import '../../data/dataSource/remoteDataSource/auth_remote_data_source.dart';
 import '../../data/dataSource/remoteDataSource/project_data_source.dart';
@@ -23,15 +25,13 @@ import '../../presentation/modules/home/home-viewmodel.dart';
 GetIt instance = GetIt.instance;
 initAppModule() async {
  await initGetStorageModule() ;
-  instance.registerLazySingleton<NetworkInfo>(
+ instance.registerLazySingleton<TokenManager>(() =>TokenManager(instance()));
+ instance.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(InternetConnectionChecker()));
   instance.registerLazySingleton<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImp());
   instance.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(instance(), instance()));
- instance.registerLazySingleton<TokenManager>(() =>TokenManager(instance()));
-
-
  instance.registerLazySingleton<ProjectDataSource>(
          () => ProjectRemoteDataSource(instance()));
  instance.registerLazySingleton<ProjectRepository>(
@@ -41,7 +41,10 @@ initAppModule() async {
   initSignInModule();
   initSignupModule();
   initHomeModule();
+  initDashboard() ;
   intAddProject();
+
+  
 }
 
 
@@ -53,6 +56,12 @@ initHomeModule() {
 intAddProject(){
     instance.registerFactory<AddProjectViewModel>(() => AddProjectViewModel(instance(),instance()));
     instance.registerFactory<AddProjectUseCase>(() => AddProjectUseCase(instance()));
+}
+initDashboard() {
+  if (!GetIt.I.isRegistered<GetMyProjectsUseCase>()) {
+    instance.registerFactory<GetMyProjectsUseCase>(() => GetMyProjectsUseCase(instance()));
+    instance.registerFactory<DashBoardViewModel>(() => DashBoardViewModel(instance() ,instance()) );
+  }
 }
 
 initSignupModule() {

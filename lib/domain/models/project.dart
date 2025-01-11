@@ -20,7 +20,6 @@ class Project {
       );
 
   Project.request(this.name, this.description, this.endDate);
-
   factory Project.fromJson(Map<String, dynamic> json) {
     return Project(
       json['id'],
@@ -32,6 +31,7 @@ class Project {
       json['createdBy'] != null ? User.fromJson(json['createdBy']) : null,
     );
   }
+
 
   Map<String, dynamic> toJson() {
     return {

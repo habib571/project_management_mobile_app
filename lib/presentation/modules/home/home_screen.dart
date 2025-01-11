@@ -56,9 +56,9 @@ class HomeNavBar extends StatelessWidget {
 
   List<Widget> _buildScreens() {
     return [
-      const DashboardScreen(),
-      const DashboardScreen(),
-      const DashboardScreen(),
+       DashboardScreen(),
+       DashboardScreen(),
+       DashboardScreen(),
     ];
   }
 

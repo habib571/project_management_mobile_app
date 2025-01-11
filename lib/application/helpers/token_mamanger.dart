@@ -6,7 +6,7 @@ import 'package:project_management_app/application/constants/constants.dart';
 
 
 class TokenManager {
-  //final AuthService _authService; // Service responsable de gérer le token
+
   final StreamController<bool> _tokenValidityController = StreamController<bool>.broadcast();
   Timer? _timer;
 
@@ -17,7 +17,7 @@ class TokenManager {
 
   void startTokenMonitoring() {
     _checkTokenValidity();
-    _timer = Timer.periodic(Duration(seconds: 10), (_) {
+    _timer = Timer.periodic(const Duration(seconds: 10), (_) {
       _checkTokenValidity();
     });
   }
@@ -29,7 +29,7 @@ class TokenManager {
 
   DateTime getTokenExpiry(){
     DateTime createdtAtDate = DateTime.parse(_getStorage.read('logedInAt')) ;
-    Duration expiresIn =    Duration(milliseconds: _getStorage.read('expiresIn'));
+    Duration expiresIn =  Duration(milliseconds: _getStorage.read('expiresIn'));
     DateTime epireDate = createdtAtDate.add(expiresIn);
     return epireDate;
   }
@@ -47,7 +47,10 @@ class TokenManager {
       'expiresIn': expiresIn,
       'logedInAt': DateTime.now().toIso8601String(),
     };
-    datatosave.entries.map((entry)=>_getStorage.write(entry.key, entry.value));
+    datatosave.entries.forEach((entry) {
+      _getStorage.write(entry.key, entry.value);
+    });
+
   }
 
   Future<void> clearAuthTokenProprities()async{
