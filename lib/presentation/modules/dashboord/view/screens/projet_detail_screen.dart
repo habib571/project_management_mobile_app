@@ -98,11 +98,26 @@ class ProjectDetailScreen extends StatelessWidget {
         children:   [
          ...List.generate(14, (index) {
             return const ImagePlaceHolder(
-                radius: 15,
+                radius: 17,
                 imageUrl:
                 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80');
           }) ,
-          IconButton(onPressed: () {}, icon: Icon(Icons.add_circle_outline) ,iconSize: 30,)
+          GestureDetector(
+            onTap: () {
+              // Your onPressed functionality
+            },
+            child: Container(
+              height: 34,
+              width: 34,
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.primary, width: 2 ) ,
+                shape: BoxShape.circle,
+              ),
+              child: const Center(
+                child: Icon(Icons.add, size: 25 ,color: AppColors.primary), // Adjust size if needed
+              ),
+            ),
+          )
         ]
     );
   }
