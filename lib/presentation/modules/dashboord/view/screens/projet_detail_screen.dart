@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
+import 'package:project_management_app/application/navigation/routes_constants.dart';
 import 'package:project_management_app/domain/models/project.dart';
+import 'package:project_management_app/presentation/modules/dashboord/view/screens/members_screen.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/members_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/project_detail_card.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
@@ -47,6 +50,7 @@ class ProjectDetailScreen extends StatelessWidget {
                         Text('Members',
                             style: robotoSemiBold.copyWith(fontSize: 16)),
                         GestureDetector(
+                          onTap: () => Get.to(()=> const MembersScreen()) ,
                           child: Text(
                             'View members details ',
                             style: robotoRegular.copyWith(
@@ -104,7 +108,6 @@ class ProjectDetailScreen extends StatelessWidget {
           }) ,
           GestureDetector(
             onTap: () {
-              // Your onPressed functionality
             },
             child: Container(
               height: 34,
