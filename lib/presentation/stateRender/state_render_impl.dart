@@ -16,10 +16,10 @@ class LoadingState extends FlowState {
   StateRendererType stateRendererType;
   String? message;
 
-  LoadingState({required this.stateRendererType, String message = "loading.."});
+  LoadingState({required this.stateRendererType, String message = ""});
 
   @override
-  String getMessage() => message ?? "loading";
+  String getMessage() => message ?? "";
 
   @override
   StateRendererType getStateRendererType() => stateRendererType;
