@@ -9,6 +9,7 @@ import '../../../domain/models/project.dart';
 abstract class ProjectDataSource {
   Future<ApiResponse> addProject( Project request );
   Future<ApiResponse> getProjects() ;
+  Future<ApiResponse> getProjectMember() ;
 }
 
  class ProjectRemoteDataSource implements ProjectDataSource{
@@ -37,8 +38,15 @@ abstract class ProjectDataSource {
         });
   }
 
-    
-    
+  @override
+  Future<ApiResponse> getProjectMember() async {
+    return await executeGetRequest(
+        apiUrl: "/project/my_projects",
+        bearerToken: _localStorage.getAuthToken(),
+        onRequestResponse: (response, statusCode) {
+          return ApiResponse(response as List<dynamic> , statusCode);
+        });
+  }
 
 }
 
