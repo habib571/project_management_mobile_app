@@ -10,6 +10,7 @@ import 'package:project_management_app/data/network/requests/auth_requests.dart'
 import 'package:project_management_app/data/responses/api_response.dart';
 
 import 'package:project_management_app/data/responses/auth_response.dart';
+import 'package:project_management_app/domain/models/user.dart';
 
 import '../../domain/repository/auth_repo.dart';
 import '../network/internet_checker.dart';
@@ -52,6 +53,26 @@ class AuthRepositoryImpl implements AuthRepository {
         }
       } catch (error) {
         log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
+  @override
+  Future<Either<Failure,User>> getCurrentUserInfo()async{
+    if(await _networkInfo.isConnected){
+      try{
+        final responce = await _authRemoteDataSource.getCurrentUserInfo();
+        if(responce.statusCode == 200){
+          return Right(User.fromJson(responce.data));
+        }
+        else {
+          return Left(Failure.fromJson(responce.data));
+        }
+      }
+      catch (error){
+        log(error.toString());
         return Left(ErrorHandler.handle(error).failure);
       }
     }
