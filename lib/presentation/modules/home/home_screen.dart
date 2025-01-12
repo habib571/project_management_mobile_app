@@ -84,6 +84,9 @@ class HomeNavBar extends StatelessWidget {
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.person),
         title: ("Profile"),
+        onPressed: (context){
+          Get.toNamed(AppRoutes.userProfile);
+        },
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,
