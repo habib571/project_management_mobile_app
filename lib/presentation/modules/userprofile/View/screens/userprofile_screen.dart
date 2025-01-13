@@ -11,10 +11,21 @@ import '../../../../utils/colors.dart';
 import '../../../../utils/styles.dart';
 import '../widgets/custum_list_title.dart';
 
-class UserProfileScreen extends StatelessWidget {
-   UserProfileScreen({super.key}){ _viewModel.start();}
+class UserProfileScreen extends StatefulWidget {
+   const UserProfileScreen({super.key});
+
+  @override
+  State<UserProfileScreen> createState() => _UserProfileScreenState();
+}
+
+class _UserProfileScreenState extends State<UserProfileScreen> {
   final UserProfileViewModel _viewModel = instance<UserProfileViewModel>();
 
+  @override
+  void initState() {
+    _viewModel.start();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +56,8 @@ class UserProfileScreen extends StatelessWidget {
             SizedBox(
               height: 40.h,
             ),
-            _userNameSection(_viewModel.fullName),
-            _userEmailSection(_viewModel.email),
+            _userNameSection(_viewModel.user?.fullName?? "Loading..."),
+            _userEmailSection(_viewModel.user?.email?? "Loading..."),
             SizedBox(
               height: 25.h,
             ),
@@ -81,12 +92,6 @@ class UserProfileScreen extends StatelessWidget {
       ),
     );
   }*/
-
-
-
-
-
-
   Widget _userNameSection(String username) {
     return Text(username, style: robotoBold.copyWith(fontSize: 18),);
   }
@@ -104,10 +109,8 @@ class UserProfileScreen extends StatelessWidget {
   }
 
   Widget _logoutSection() {
-    return CustomListTitle(icon: Icons.logout_outlined ,title: "Logout",onTap:(){} );
+    return CustomListTitle(icon: Icons.logout_outlined ,title: "Logout",onTap:(){
+      _viewModel.logOut();
+    } );
   }
-
-
-
-
 }
