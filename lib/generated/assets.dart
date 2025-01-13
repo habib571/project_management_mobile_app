@@ -32,6 +32,7 @@ class Assets {
   static const String networkFailure = 'lib/data/network/failure.dart';
   static const String networkInternetChecker = 'lib/data/network/internet_checker.dart';
   static const String projectAddprojectUseCase = 'lib/domain/usecases/project/addproject-use-case.dart';
+  static const String projectGetMembers = 'lib/domain/usecases/project/get_members.dart';
   static const String projectMyprojectsUsecase = 'lib/domain/usecases/project/myprojects_usecase.dart';
   static const String remoteDataSourceAuthRemoteDataSource = 'lib/data/dataSource/remoteDataSource/auth_remote_data_source.dart';
   static const String remoteDataSourceProjectDataSource = 'lib/data/dataSource/remoteDataSource/project_data_source.dart';
@@ -60,6 +61,7 @@ class Assets {
   static const String viewAddProjectScreen = 'lib/presentation/modules/addproject/view/add-project_screen.dart';
   static const String viewmodelAddProjectViewModel = 'lib/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
   static const String viewmodelDashboardViewModel = 'lib/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
+  static const String viewmodelProjectDetailViewModel = 'lib/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
   static const String viewmodelSigninViewModel = 'lib/presentation/modules/auth/viewmodel/signin-view_model.dart';
   static const String viewmodelSignupViewModel = 'lib/presentation/modules/auth/viewmodel/signup_view_model.dart';
   static const String widgetsAnimatedIndicator = 'lib/presentation/modules/dashboord/view/widgets/animated_indicator.dart';

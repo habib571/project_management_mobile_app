@@ -1,24 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/navigation/routes_constants.dart';
 import 'package:project_management_app/domain/models/project.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/members_screen.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/members_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/project_detail_card.dart';
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
+import 'package:project_management_app/presentation/stateRender/state_render_impl.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 
-class ProjectDetailScreen extends StatelessWidget {
-  const ProjectDetailScreen({super.key, required this.project});
-  // final DashBoardViewModel _viewModel = instance<DashBoardViewModel>();
-  final Project project;
+class ProjectDetailScreen extends StatefulWidget {
+  const ProjectDetailScreen({super.key, });
+
+
+  @override
+  State<ProjectDetailScreen> createState() => _ProjectDetailScreenState();
+}
+
+class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
+  @override
+  void initState() {
+     _viewModel.start() ;
+    super.initState();
+  }
+  final ProjectDetailViewModel _viewModel = instance<ProjectDetailViewModel>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor : AppColors.scaffold ,
+        backgroundColor: AppColors.scaffold,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -35,7 +50,7 @@ class ProjectDetailScreen extends StatelessWidget {
                       height: 50.h,
                     ),
                     ProjectDetailCard(
-                      project: project,
+                      project: _viewModel.project,
                     ),
                     SizedBox(
                       height: 30.h,
@@ -50,7 +65,7 @@ class ProjectDetailScreen extends StatelessWidget {
                         Text('Members',
                             style: robotoSemiBold.copyWith(fontSize: 16)),
                         GestureDetector(
-                          onTap: () => Get.to(()=> const MembersScreen()) ,
+                          onTap: () => Get.to(() =>  MembersScreen()),
                           child: Text(
                             'View members details ',
                             style: robotoRegular.copyWith(
@@ -62,7 +77,13 @@ class ProjectDetailScreen extends StatelessWidget {
                     const SizedBox(
                       height: 15,
                     ),
-                    _showMembers()
+                    StreamBuilder<FlowState>(
+                        stream: _viewModel.outputState,
+                        builder: (context, snapshot) {
+                          return snapshot.data?.getScreenWidget(
+                                  context, _showMembers(), () {}) ??
+                              _showMembers();
+                        })
                   ],
                 ),
               ),
@@ -88,7 +109,7 @@ class ProjectDetailScreen extends StatelessWidget {
             height: 15,
           ),
           Text(
-            project.description!,
+            _viewModel.project.description!,
             style: robotoMedium.copyWith(
                 color: AppColors.secondaryTxt, fontSize: 13),
           )
@@ -98,30 +119,28 @@ class ProjectDetailScreen extends StatelessWidget {
   }
 
   Widget _showMembers() {
-    return MembersCard(
-        children:   [
-         ...List.generate(14, (index) {
-            return const ImagePlaceHolder(
-                radius: 17,
-                imageUrl:
+    return MembersCard(children: [
+      ...List.generate(_viewModel.projectMember.length, (index) {
+        return const ImagePlaceHolder(
+            radius: 17,
+            imageUrl:
                 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80');
-          }) ,
-          GestureDetector(
-            onTap: () {
-            },
-            child: Container(
-              height: 34,
-              width: 34,
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.primary, width: 2 ) ,
-                shape: BoxShape.circle,
-              ),
-              child: const Center(
-                child: Icon(Icons.add, size: 25 ,color: AppColors.primary), // Adjust size if needed
-              ),
-            ),
-          )
-        ]
-    );
+      }),
+      GestureDetector(
+        onTap: () {},
+        child: Container(
+          height: 34,
+          width: 34,
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.primary, width: 2),
+            shape: BoxShape.circle,
+          ),
+          child: const Center(
+            child: Icon(Icons.add,
+                size: 25, color: AppColors.primary), // Adjust size if needed
+          ),
+        ),
+      )
+    ]);
   }
 }

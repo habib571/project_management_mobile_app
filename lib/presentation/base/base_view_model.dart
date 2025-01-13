@@ -13,12 +13,12 @@ import '../stateRender/state_render_impl.dart';
 abstract class BaseViewModel extends  ChangeNotifier implements BaseViewModelInputs ,
      BaseViewModelOutputs {
   late Stream<FlowState> _stateStream;
-  final stateController = StreamController<FlowState>();
+  final stateController = StreamController<FlowState>.broadcast();
   final TokenManager _tokenManager;
   bool startTokenMonitoringOnInit;
 
   BaseViewModel(this._tokenManager,{this.startTokenMonitoringOnInit = true}) {
-    _stateStream = stateController.stream.asBroadcastStream();
+    _stateStream = stateController.stream.asBroadcastStream() ;
     if (startTokenMonitoringOnInit) {
       startTokenMonitoring();
     }
@@ -35,7 +35,7 @@ abstract class BaseViewModel extends  ChangeNotifier implements BaseViewModelInp
 
   @override
   void start() {
-    _stateStream = stateController.stream.asBroadcastStream();
+    _stateStream = stateController.stream;
   }
 
   @override

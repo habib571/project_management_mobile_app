@@ -9,7 +9,7 @@ class GetMembersUseCase {
 
   GetMembersUseCase(this._projectRepository);
 
-  Future<Either<Failure,List<ProjectMember>>> getMyProjects(int projectId) async {
+  Future<Either<Failure,List<ProjectMember>>> getProjectMembers(int projectId) async {
     return await _projectRepository.getProjectMembers(projectId) ;
   }
 }

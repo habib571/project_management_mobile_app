@@ -4,20 +4,20 @@ import 'package:project_management_app/presentation/sharedwidgets/image_widget.d
 import 'package:project_management_app/presentation/utils/styles.dart';
 
 class MemberLisTile extends StatelessWidget {
-  const MemberLisTile({super.key});
+  const MemberLisTile({super.key, required this.projectMember});
 
- // final ProjectMember projectMember;
+  final ProjectMember projectMember;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: const EdgeInsets.all(15),
       title: Text(
-           "habib rouatbi",
+            projectMember.user!.fullName ,
           style: robotoBold.copyWith(fontSize: 14)
       ),
       subtitle: Text(
-          "Manger", style: robotoRegular.copyWith(fontSize: 12),),
+           projectMember.role! , style: robotoRegular.copyWith(fontSize: 12),),
       leading: const ImagePlaceHolder(radius: 30,
           imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80'),
     );

@@ -35,10 +35,10 @@ class DashboardTasCard extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.calendar_today_rounded,
-                  color: AppColors.primary,
+                  color: AppColors.secondaryTxt,
                 ),
                 Text('12/02/2025',
-                    style: robotoMedium.copyWith(color: AppColors.primary))
+                    style: robotoMedium.copyWith(color: AppColors.secondaryTxt))
               ],
             )
           ],

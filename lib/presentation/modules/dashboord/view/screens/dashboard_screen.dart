@@ -97,7 +97,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           return ProjectCard(
             project: _viewModel.projectList[index],
             onTap: ()  {
-               Get.to(()=> ProjectDetailScreen(project: _viewModel.projectList[index],)) ;
+               Get.to(()=> ProjectDetailScreen()) ;
 
             },
           );
