@@ -63,12 +63,12 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure,User>> getCurrentUserInfo()async{
     if(await _networkInfo.isConnected){
       try{
-        final responce = await _authRemoteDataSource.getCurrentUserInfo();
-        if(responce.statusCode == 200){
-          return Right(User.fromJson(responce.data));
+        final response = await _authRemoteDataSource.getCurrentUserInfo();
+        if(response.statusCode == 200){
+          return Right(User.fromJson(response.data));
         }
         else {
-          return Left(Failure.fromJson(responce.data));
+          return Left(Failure.fromJson(response.data));
         }
       }
       catch (error){
@@ -78,4 +78,24 @@ class AuthRepositoryImpl implements AuthRepository {
     }
     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
   }
+
+  @override
+  Future<Either<Failure, bool>> logOut() async{
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _authRemoteDataSource.logOut() ;
+        if (response.statusCode == 200) {
+          return const Right(true);
+        } else {
+
+          return Left(Failure.fromJson(response.data));
+        }
+      } catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
 }

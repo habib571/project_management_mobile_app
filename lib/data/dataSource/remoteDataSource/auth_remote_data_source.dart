@@ -10,6 +10,7 @@ abstract class AuthRemoteDataSource {
   Future<ApiResponse> signup(RegisterRequest request);
   Future<ApiResponse> sigIn(SignInRequest request);
   Future<ApiResponse> getCurrentUserInfo();
+  Future<ApiResponse> logOut();
 
 }
 
@@ -45,4 +46,16 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
           return ApiResponse(response , statusCode);
         });
   }
+
+  @override
+  Future<ApiResponse> logOut() async{
+    return await executePostRequest(
+        apiUrl: "/auth/logout",
+        bearerToken: _localStorage.getAuthToken(),
+        onRequestResponse: (response, statusCode) {
+          return ApiResponse(response, statusCode);
+        });
+  }
+
 }
+

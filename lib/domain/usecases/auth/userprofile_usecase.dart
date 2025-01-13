@@ -12,5 +12,8 @@ class UserProfileUseCase {
   Future<Either<Failure,User>> getCurrentUserInfo() async {
     return await _repository.getCurrentUserInfo();
   }
+  Future<Either<Failure,bool>> logOut() async {
+    return await _repository.logOut();
+  }
 }
 

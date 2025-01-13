@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:dartz/dartz.dart';
 
 import '../../data/network/failure.dart';
@@ -9,5 +11,6 @@ abstract class AuthRepository {
   Future<Either<Failure, AuthResponse>> signup(RegisterRequest loginRequest);
   Future<Either<Failure, AuthResponse>> signIn(SignInRequest loginRequest);
   Future<Either<Failure, User>> getCurrentUserInfo();
+  Future<Either<Failure, bool>> logOut();
 
 }
