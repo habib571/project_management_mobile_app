@@ -85,7 +85,7 @@ initSignInModule() {
 initUserProfileModule() {
   if (!GetIt.I.isRegistered<UserProfileViewModel>()) {
     instance.registerLazySingleton<UserProfileUseCase>(() => UserProfileUseCase(instance()));
-    instance.registerLazySingleton<UserProfileViewModel>(() => UserProfileViewModel(instance(),instance()));
+    instance.registerLazySingleton<UserProfileViewModel>(() => UserProfileViewModel(instance(),instance(),instance()));
   }
 }
 
