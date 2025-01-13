@@ -12,7 +12,7 @@ class CustomListTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTileTheme(
       data:const ListTileThemeData(
-        tileColor:  AppColors.White ,
+        tileColor:  Colors.white ,
       ),
       child: ListTile(
         leading: CircleAvatar(backgroundColor: AppColors.scaffold,child: Icon(icon,color: AppColors.primary ),) ,
