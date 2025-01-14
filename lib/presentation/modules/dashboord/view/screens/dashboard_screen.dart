@@ -97,7 +97,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           return ProjectCard(
             project: _viewModel.projectList[index],
             onTap: ()  {
-               Get.to(()=> ProjectDetailScreen()) ;
+              _viewModel.setProject(_viewModel.projectList[index]) ;
+               Get.to(()=> const ProjectDetailScreen()) ;
 
             },
           );
@@ -106,7 +107,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       options: CarouselOptions(
         height: 150.h,
         onPageChanged: (index, reason) {
-          _viewModel.setProject(_viewModel.projectList[index]);
           context.read<DashBoardViewModel>().setCurrentProject(index);
         },
       ),
