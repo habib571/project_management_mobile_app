@@ -6,10 +6,15 @@ import 'package:project_management_app/data/repositoryImp/auth_repo_impl.dart';
 import 'package:project_management_app/data/repositoryImp/project_repo_impl.dart';
 import 'package:project_management_app/domain/repository/auth_repo.dart';
 import 'package:project_management_app/domain/repository/project_repo.dart';
+import 'package:project_management_app/domain/usecases/project/get_members.dart';
 import 'package:project_management_app/domain/usecases/project/myprojects_usecase.dart';
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
+
 import 'package:project_management_app/presentation/modules/userprofile/viewmodel/userprofile_view_model.dart';
+
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
+
 
 import '../../data/dataSource/remoteDataSource/auth_remote_data_source.dart';
 import '../../data/dataSource/remoteDataSource/project_data_source.dart';
@@ -43,15 +48,13 @@ initAppModule() async {
   initSignInModule();
   initSignupModule();
   initHomeModule();
-  initDashboard() ;
+  initDashboard();
   intAddProject();
+
  initUserProfileModule();
+  initProject() ;
 
-  
 }
-
-
-
 initHomeModule() {
     instance.registerLazySingleton<HomeViewModel>(() => HomeViewModel(instance()));
 }
@@ -63,7 +66,13 @@ intAddProject(){
 initDashboard() {
   if (!GetIt.I.isRegistered<GetMyProjectsUseCase>()) {
     instance.registerFactory<GetMyProjectsUseCase>(() => GetMyProjectsUseCase(instance()));
-    instance.registerFactory<DashBoardViewModel>(() => DashBoardViewModel(instance() ,instance()) );
+    instance.registerLazySingleton<DashBoardViewModel>(() => DashBoardViewModel(instance() ,instance()) );
+  }
+}
+initProject() {
+  if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
+    instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
+    instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance()) );
   }
 }
 
