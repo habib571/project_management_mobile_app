@@ -52,7 +52,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             SizedBox(
               height: 40.h,
             ),
-            const ImagePlaceHolder(radius: 80, imageUrl: Constants.userProfileImage,),
+            ImagePlaceHolder(radius: 80.w, imageUrl: Constants.userProfileImageUrl,),
             SizedBox(
               height: 40.h,
             ),
