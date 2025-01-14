@@ -4,6 +4,8 @@ import 'package:dartz/dartz.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:project_management_app/application/constants/constants.dart';
 
+import '../../data/responses/auth_response.dart';
+
 
 class TokenManager {
 
@@ -28,8 +30,9 @@ class TokenManager {
   }
 
   DateTime getTokenExpiry(){
-    DateTime createdtAtDate = DateTime.parse(_getStorage.read('logedInAt')) ;
-    Duration expiresIn =  Duration(milliseconds: _getStorage.read('expiresIn'));
+    DateTime createdtAtDate = DateTime.parse(_getStorage.read('logedInAt') ) ;
+    AuthResponse userDetails = AuthResponse.fromJson(_getStorage.read('userDetails'));
+    Duration expiresIn =  Duration(milliseconds: userDetails.expiresIn );
     DateTime epireDate = createdtAtDate.add(expiresIn);
     return epireDate;
   }
@@ -40,23 +43,9 @@ class TokenManager {
     _tokenValidityController.add(isTokenValid);
   }
 
-
-  void saveTokenRelatedProprities(String token, int expiresIn) {
-    final datatosave = {
-      'Token': token,
-      'expiresIn': expiresIn,
-      'logedInAt': DateTime.now().toIso8601String(),
-    };
-    datatosave.entries.forEach((entry) {
-      _getStorage.write(entry.key, entry.value);
-    });
-
-  }
-
-  Future<void> clearAuthTokenProprities()async{
+  Future<void> clearUserDetails()async{
     Future.wait([
-      _getStorage.remove('Token'),
-      _getStorage.remove('logedInAt')
+      _getStorage.remove('userDetails'),
     ]);
   }
 
