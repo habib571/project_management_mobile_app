@@ -8,14 +8,14 @@ import '../../../stateRender/state_render.dart';
 import '../../../stateRender/state_render_impl.dart';
 
 class DashBoardViewModel extends BaseViewModel {
+  final GetMyProjectsUseCase _getMyProjectsUseCase;
+  DashBoardViewModel(super.tokenManager, this._getMyProjectsUseCase);
+
   @override
   void start() {
     getMyProjects();
     super.start();
   }
-
-  final GetMyProjectsUseCase _getMyProjectsUseCase;
-  DashBoardViewModel(super.tokenManager, this._getMyProjectsUseCase);
 
   int _currentProject = 0;
   int get currentProject => _currentProject;
@@ -47,6 +47,7 @@ class DashBoardViewModel extends BaseViewModel {
   setProjectList(List<Project> value) {
     _projectList = value;
   }
+
 
   getMyProjects() async {
     updateState(LoadingState(
