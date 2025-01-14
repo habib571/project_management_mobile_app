@@ -46,7 +46,7 @@ class SignInViewModel extends BaseViewModel {
           );
         },
         (data) {
-           _localStorage.saveAuthToken(data.token,data.expiresIn);
+           _localStorage.saveUserDetail(data);
             Get.offAllNamed(AppRoutes.home) ;
         },
       );
