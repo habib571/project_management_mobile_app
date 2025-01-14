@@ -1,13 +1,13 @@
 import '../../domain/models/project.dart';
 
-class ProjectResponse{
-  Project project ;
+class ProjectResponse {
+  List<Project> projects;
 
-  ProjectResponse(this.project);
+  ProjectResponse(this.projects);
 
-  factory ProjectResponse.fromJson(Map<String, dynamic> json) {
+  factory ProjectResponse.fromJson(List<dynamic> json) {
     return ProjectResponse(
-      Project.fromJson(json['project'] as Map<String, dynamic>),
+      json.map((projectJson) => Project.fromJson(projectJson as Map<String, dynamic>)).toList(),
     );
   }
 }

@@ -8,6 +8,8 @@ import '../../../domain/models/project.dart';
 
 abstract class ProjectDataSource {
   Future<ApiResponse> addProject( Project request );
+  Future<ApiResponse> getProjects() ;
+  Future<ApiResponse> getProjectMember(int projectId) ;
 }
 
  class ProjectRemoteDataSource implements ProjectDataSource{
@@ -19,11 +21,32 @@ abstract class ProjectDataSource {
   Future<ApiResponse> addProject(Project request) async{
       return await executePostRequest(
           apiUrl: "/project/add_project",
-          bearerToken:  _localStorage.getAuthToken() ,
+          bearerToken: _localStorage.getAuthToken() ,
           body: request.toJson(),
           onRequestResponse: (response, statusCode) {
             return ApiResponse(response, statusCode);
           });
     }
+
+  @override
+  Future<ApiResponse> getProjects() async{  
+    return await executeGetRequest(
+        apiUrl: "/project/my_projects",
+        bearerToken:  _localStorage.getAuthToken() ,
+        onRequestResponse: (response, statusCode) {
+          return ApiResponse(response as List<dynamic> , statusCode);
+        });
+  }
+
+  @override
+  Future<ApiResponse> getProjectMember(int projectId) async {
+    return await executeGetRequest(
+        apiUrl: "/project/members/$projectId",
+        bearerToken: _localStorage.getAuthToken(),
+        onRequestResponse: (response, statusCode) {
+          return ApiResponse(response , statusCode);
+        });
+  }
+
 }
 
