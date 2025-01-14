@@ -1,3 +1,4 @@
+import 'package:project_management_app/application/helpers/get_storage.dart';
 import 'package:project_management_app/domain/models/project_member.dart';
 import 'package:project_management_app/domain/usecases/project/get_members.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
@@ -9,7 +10,8 @@ import 'dashboard_view_model.dart';
 
 class ProjectDetailViewModel extends BaseViewModel {
   final GetMembersUseCase _useCase ;
-  ProjectDetailViewModel(super.tokenManager, this._useCase);
+  final LocalStorage _localStorage ;
+  ProjectDetailViewModel(super.tokenManager, this._useCase, this._localStorage);
 
   @override
   void start() {
@@ -36,4 +38,8 @@ class ProjectDetailViewModel extends BaseViewModel {
     ) ;
 
   }
+  bool isManger() => project.createdBy!.id == _localStorage.getUser().id ;
+
+
+
 }

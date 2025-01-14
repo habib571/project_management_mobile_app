@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/member_listile.dart';
 
@@ -8,7 +11,7 @@ import '../../viewmodel/project_detail_view_model.dart';
 
 class MembersScreen extends StatelessWidget {
    MembersScreen({super.key}) ;
-  final ProjectDetailViewModel _viewModel = instance<ProjectDetailViewModel>();
+  final _viewModel = Get.arguments ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

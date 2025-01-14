@@ -51,5 +51,6 @@ class MyApp extends StatelessWidget {
           initialRoute: AppRoutes.login,
           getPages: routes,
         ));
+
   }
 }

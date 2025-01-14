@@ -9,6 +9,7 @@ import 'package:project_management_app/presentation/modules/dashboord/view/widge
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/project_detail_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
+import 'package:project_management_app/presentation/sharedwidgets/custom_button.dart';
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
 import 'package:project_management_app/presentation/stateRender/state_render_impl.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
@@ -28,8 +29,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
      _viewModel.start() ;
     super.initState();
   }
-  final ProjectDetailViewModel _viewModel = instance<ProjectDetailViewModel>();
-
+  final ProjectDetailViewModel _viewModel = instance.get<ProjectDetailViewModel>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +65,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                         Text('Members',
                             style: robotoSemiBold.copyWith(fontSize: 16)),
                         GestureDetector(
-                          onTap: () => Get.to(() =>  MembersScreen()),
+                          onTap: () => Get.to(() =>  MembersScreen() ,arguments: _viewModel),
                           child: Text(
                             'View members details ',
                             style: robotoRegular.copyWith(
@@ -83,7 +83,10 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                           return snapshot.data?.getScreenWidget(
                                   context, _showMembers(), () {}) ??
                               _showMembers();
-                        })
+                        }) ,
+                    SizedBox(height: 180.h,) ,
+                    _viewModel.isManger() ? _showCreateTaskButton() : const SizedBox.shrink()
+
                   ],
                 ),
               ),
@@ -143,4 +146,15 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
       )
     ]);
   }
+ Widget _showCreateTaskButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20) ,
+      child: CustomButton(
+          onPressed: () {},
+          text: 'Create new Task'
+      ),
+    ) ;
+
+  }
+
 }

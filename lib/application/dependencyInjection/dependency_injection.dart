@@ -72,7 +72,7 @@ initDashboard() {
 initProject() {
   if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
     instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
-    instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance()) );
+    instance.registerFactory<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance()) );
   }
 }
 
