@@ -47,7 +47,6 @@ class AddProjectScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                 children: [
-
                   _addProjectNameSection(),
                   SizedBox(
                     height: 40.h,
@@ -127,13 +126,13 @@ class AddProjectScreen extends StatelessWidget {
       ),
     );
   }
-
    Widget _showButton() {
      return CustomButton(
          onPressed: () {
            _viewModel.addProject();
          },
-         text: 'Add the project');
+         text: 'Add the project'
+     );
    }
 }
 

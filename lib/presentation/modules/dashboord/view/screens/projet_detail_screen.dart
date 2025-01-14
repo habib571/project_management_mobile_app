@@ -4,6 +4,7 @@ import 'package:project_management_app/application/dependencyInjection/dependenc
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/navigation/routes_constants.dart';
 import 'package:project_management_app/domain/models/project.dart';
+import 'package:project_management_app/presentation/modules/dashboord/view/screens/create_task_screen.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/members_screen.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/members_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/project_detail_card.dart';
@@ -150,7 +151,9 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20) ,
       child: CustomButton(
-          onPressed: () {},
+          onPressed: () {
+            Get.to(()=>const CreateTaskScreen()) ;
+          },
           text: 'Create new Task'
       ),
     ) ;
