@@ -10,12 +10,17 @@ import 'package:project_management_app/domain/usecases/project/get_members.dart'
 import 'package:project_management_app/domain/usecases/project/myprojects_usecase.dart';
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
+
+import 'package:project_management_app/presentation/modules/userprofile/viewmodel/userprofile_view_model.dart';
+
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
+
 
 import '../../data/dataSource/remoteDataSource/auth_remote_data_source.dart';
 import '../../data/dataSource/remoteDataSource/project_data_source.dart';
 import '../../data/network/internet_checker.dart';
 import '../../domain/usecases/auth/signup_usecase.dart';
+import '../../domain/usecases/auth/userprofile_usecase.dart';
 import '../../domain/usecases/project/addproject-use-case.dart';
 import '../../presentation/modules/addproject/view/add-project_screen.dart';
 import '../helpers/token_mamanger.dart';
@@ -31,7 +36,7 @@ initAppModule() async {
  instance.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(InternetConnectionChecker()));
   instance.registerLazySingleton<AuthRemoteDataSource>(
-      () => AuthRemoteDataSourceImp());
+      () => AuthRemoteDataSourceImp(instance()));
   instance.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(instance(), instance()));
  instance.registerLazySingleton<ProjectDataSource>(
@@ -45,7 +50,10 @@ initAppModule() async {
   initHomeModule();
   initDashboard();
   intAddProject();
+
+ initUserProfileModule();
   initProject() ;
+
 }
 initHomeModule() {
     instance.registerLazySingleton<HomeViewModel>(() => HomeViewModel(instance()));
@@ -80,6 +88,13 @@ initSignInModule() {
     instance.registerFactory<SignInUseCase>(() => SignInUseCase(instance()));
     instance.registerFactory<SignInViewModel>(
         () => SignInViewModel(instance() ,instance(),instance()));
+  }
+}
+
+initUserProfileModule() {
+  if (!GetIt.I.isRegistered<UserProfileViewModel>()) {
+    instance.registerLazySingleton<UserProfileUseCase>(() => UserProfileUseCase(instance()));
+    instance.registerLazySingleton<UserProfileViewModel>(() => UserProfileViewModel(instance(),instance(),instance()));
   }
 }
 

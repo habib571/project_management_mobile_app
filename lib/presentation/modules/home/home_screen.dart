@@ -7,6 +7,7 @@ import 'package:project_management_app/application/navigation/routes_constants.d
 import 'package:project_management_app/presentation/modules/addproject/view/add-project_screen.dart';
 
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/dashboard_screen.dart';
+import 'package:project_management_app/presentation/modules/userprofile/View/screens/userprofile_screen.dart';
 
 
 import '../../stateRender/state_render_impl.dart';
@@ -57,8 +58,8 @@ class HomeNavBar extends StatelessWidget {
   List<Widget> _buildScreens() {
     return [
        DashboardScreen(),
-       DashboardScreen(),
-       DashboardScreen(),
+       AddProjectScreen(),
+       UserProfileScreen(),
     ];
   }
 
@@ -74,9 +75,6 @@ class HomeNavBar extends StatelessWidget {
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.add,),
         title: ("Add"),
-        onPressed: (context){
-          Get.toNamed(AppRoutes.addproject);
-        },
         activeColorPrimary: AppColors.accent,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,

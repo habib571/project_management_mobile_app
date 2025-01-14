@@ -10,6 +10,7 @@ import 'package:project_management_app/data/network/requests/auth_requests.dart'
 import 'package:project_management_app/data/responses/api_response.dart';
 
 import 'package:project_management_app/data/responses/auth_response.dart';
+import 'package:project_management_app/domain/models/user.dart';
 
 import '../../domain/repository/auth_repo.dart';
 import '../network/internet_checker.dart';
@@ -57,4 +58,44 @@ class AuthRepositoryImpl implements AuthRepository {
     }
     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
   }
+
+  @override
+  Future<Either<Failure,User>> getCurrentUserInfo()async{
+    if(await _networkInfo.isConnected){
+      try{
+        final response = await _authRemoteDataSource.getCurrentUserInfo();
+        if(response.statusCode == 200){
+          return Right(User.fromJson(response.data));
+        }
+        else {
+          return Left(Failure.fromJson(response.data));
+        }
+      }
+      catch (error){
+        log(error.toString());
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
+  @override
+  Future<Either<Failure, bool>> logOut() async{
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _authRemoteDataSource.logOut() ;
+        if (response.statusCode == 200) {
+          return const Right(true);
+        } else {
+
+          return Left(Failure.fromJson(response.data));
+        }
+      } catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
 }
