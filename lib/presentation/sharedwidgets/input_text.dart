@@ -15,6 +15,7 @@ class InputText extends StatelessWidget {
         this.validator,
         this.onChanged,
         this.suffixIcon,
+        this.prefixIcon,
         this.obscureText = false,
         this.maxLines = 1,
         this.onTap
@@ -29,6 +30,7 @@ class InputText extends StatelessWidget {
   void Function(String)? onChanged ;
   void Function()? onTap;
   Widget? suffixIcon;
+  Widget? prefixIcon ;
   int maxLines;
 
 
@@ -43,6 +45,7 @@ class InputText extends StatelessWidget {
       style: robotoRegular.copyWith(fontSize: 13),
       decoration: InputDecoration(
           suffixIcon: suffixIcon,
+          prefixIcon: prefixIcon,
           filled: true,
           fillColor: Colors.white,
           hintText: hintText,
