@@ -6,9 +6,10 @@ class CustumListTitle extends StatelessWidget {
   final Widget? leading;
   final String title;
   final Widget? subtitle;
+  final Widget? trailing;
   final void Function()? onTap;
 
-  const CustumListTitle({super.key,  required this.leading,required this. title,required this.onTap,this.subtitle});
+  const CustumListTitle({super.key,  required this.leading,required this. title,required this.onTap,this.subtitle,this.trailing});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class CustumListTitle extends StatelessWidget {
         child: ListTile(
           leading: leading,
           //CircleAvatar(backgroundColor: AppColors.scaffold,child: Icon(icon,color: AppColors.primary ),) ,
-          trailing: const Icon(Icons.arrow_forward_ios ,color: AppColors.accent,size: 13, ),
+          trailing: trailing,
           subtitle: subtitle,
           title: Text(title),
           onTap: onTap,

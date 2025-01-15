@@ -102,11 +102,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   Widget _settingsSection() {
-    return CustumListTitle(leading: const Icon(Icons.settings_outlined,color: AppColors.primary) ,title: "Settings",onTap:(){}, );
+    return CustumListTitle(leading: const Icon(Icons.settings_outlined,color: AppColors.primary), trailing: const Icon(Icons.arrow_forward_ios ,color: AppColors.accent,size: 13, ) ,title: "Settings",onTap:(){}, );
   }
 
   Widget _changePasswordSection() {
-    return CustumListTitle(leading: const Icon(Icons.security ,color: AppColors.primary) , title: "Change password",onTap:(){} );
+    return CustumListTitle(leading: const Icon(Icons.security ,color: AppColors.primary), trailing: const Icon(Icons.arrow_forward_ios ,color: AppColors.accent,size: 13, ), title: "Change password",onTap:(){} );
   }
 
   Widget _logoutSection() {
