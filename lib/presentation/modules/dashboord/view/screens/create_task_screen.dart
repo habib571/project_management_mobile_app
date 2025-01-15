@@ -51,6 +51,7 @@ class CreateTaskScreen extends StatelessWidget {
   }
   Widget _descriptionSection(){
     return InputText(
+      borderRadius: 15,
       validator: (val) => val.isEmptyInput() ,
       controller: TextEditingController() ,
       hintText: "Enter The Task description",
