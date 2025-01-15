@@ -14,6 +14,9 @@ import 'package:project_management_app/presentation/stateRender/state_render_imp
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 
+import '../../../../sharedwidgets/custom_button.dart';
+import '../../../../sharedwidgets/custum_search_delegate.dart';
+
 class ProjectDetailScreen extends StatefulWidget {
   const ProjectDetailScreen({super.key, });
 
@@ -77,6 +80,9 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                     const SizedBox(
                       height: 15,
                     ),
+                    CustomButton(text: 'Add member',onPressed: () {
+                      showSearch(context: context, delegate: CustomSearchDelegate("find users ...."));
+                    }, ),
                     StreamBuilder<FlowState>(
                         stream: _viewModel.outputState,
                         builder: (context, snapshot) {
