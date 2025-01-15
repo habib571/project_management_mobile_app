@@ -44,7 +44,7 @@ class SigninScreen extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: SvgPicture.asset('assets/Shape.svg')),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
+              padding: EdgeInsets.symmetric(horizontal: 25.w),
               child: Column(
                 children: [
                   SizedBox(
@@ -70,8 +70,8 @@ class SigninScreen extends StatelessWidget {
                     height: 40.h,
                   ),
                   _showButton(),
-                  const SizedBox(
-                    height: 20,
+                   SizedBox(
+                    height: 20.h,
                   ),
                   _showSignupText()
                 ],
