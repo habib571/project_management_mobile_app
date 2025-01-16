@@ -41,7 +41,6 @@ class DashBoardViewModel extends BaseViewModel {
   }
 
   List<Project> _projectList = [];
-
   List<Project> get projectList => _projectList;
 
   setProjectList(List<Project> value) {
