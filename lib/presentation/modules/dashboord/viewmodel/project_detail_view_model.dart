@@ -9,9 +9,10 @@ import '../../../stateRender/state_render_impl.dart';
 import 'dashboard_view_model.dart';
 
 class ProjectDetailViewModel extends BaseViewModel {
+ final DashBoardViewModel dashBoardViewModel ;
   final GetMembersUseCase _useCase ;
   final LocalStorage _localStorage ;
-  ProjectDetailViewModel(super.tokenManager, this._useCase, this._localStorage);
+  ProjectDetailViewModel(super.tokenManager, this._useCase, this._localStorage, this.dashBoardViewModel);
 
   @override
   void start() {
@@ -19,7 +20,7 @@ class ProjectDetailViewModel extends BaseViewModel {
     getProjectMembers();
   }
 
-  final Project project= instance<DashBoardViewModel>().project ;
+  //final Project project= instance<DashBoardViewModel>().project ;
 
   List<ProjectMember> _projectMember  = [];
   List<ProjectMember> get projectMember => _projectMember ;
@@ -27,7 +28,7 @@ class ProjectDetailViewModel extends BaseViewModel {
     updateState(LoadingState(
         stateRendererType: StateRendererType.fullScreenLoadingState));
 
-    (await _useCase.getProjectMembers(project.id!)).fold(
+    (await _useCase.getProjectMembers(dashBoardViewModel.project.id!)).fold(
         (failure) {
           updateState(ErrorState(StateRendererType.fullScreenErrorState, failure.message));
         },
@@ -38,7 +39,7 @@ class ProjectDetailViewModel extends BaseViewModel {
     ) ;
 
   }
-  bool isManger() => project.createdBy!.id == _localStorage.getUser().id ;
+  bool isManger() =>dashBoardViewModel.project.createdBy!.id == _localStorage.getUser().id ;
 
 
 
