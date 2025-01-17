@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../utils/colors.dart';
 
-class CustumListTitle extends StatelessWidget {
+class CustumListTile extends StatelessWidget {
   final Widget? leading;
   final String title;
-  final Widget? subtitle;
+  final String? subtitle;
   final Widget? trailing;
   final void Function()? onTap;
 
-  const CustumListTitle({super.key,  required this.leading,required this. title,required this.onTap,this.subtitle,this.trailing});
+  const CustumListTile({super.key,  required this.leading,required this. title,required this.onTap,this.subtitle,this.trailing});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +19,8 @@ class CustumListTitle extends StatelessWidget {
         ),
         child: ListTile(
           leading: leading,
-          //CircleAvatar(backgroundColor: AppColors.scaffold,child: Icon(icon,color: AppColors.primary ),) ,
           trailing: trailing,
-          subtitle: subtitle,
+          subtitle: Text(subtitle??""),
           title: Text(title),
           onTap: onTap,
           shape: RoundedRectangleBorder(

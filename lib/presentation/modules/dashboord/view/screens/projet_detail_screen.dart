@@ -81,7 +81,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                       height: 15,
                     ),
                     CustomButton(text: 'Add member',onPressed: () {
-                      showSearch(context: context, delegate: CustomSearchDelegate("find users ...."));
+                      showSearch(context: context ,delegate: CustomSearchDelegate(_viewModel));
                     }, ),
                     StreamBuilder<FlowState>(
                         stream: _viewModel.outputState,
