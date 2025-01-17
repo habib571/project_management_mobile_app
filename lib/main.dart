@@ -8,6 +8,7 @@ import 'package:project_management_app/presentation/modules/auth/view/screens/si
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signin-view_model.dart';
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signup_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
 import 'package:provider/provider.dart';
 
 import 'application/dependencyInjection/dependency_injection.dart';
@@ -40,7 +41,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<AddProjectViewModel>(
             lazy: true,
               create: (_) => GetIt.instance<AddProjectViewModel>()),
-        ],
+          ChangeNotifierProvider(create: (_) => GetIt.instance<AddTaskViewModel>())
+        ], 
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
