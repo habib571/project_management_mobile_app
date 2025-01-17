@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../utils/colors.dart';
 
-class CustumListTile extends StatelessWidget {
+class CustomListTile extends StatelessWidget {
   final Widget? leading;
   final String title;
   final String? subtitle;
   final Widget? trailing;
   final void Function()? onTap;
 
-  const CustumListTile({super.key,  required this.leading,required this. title,required this.onTap,this.subtitle,this.trailing});
+  const CustomListTile({super.key,  required this.leading,required this. title,required this.onTap,this.subtitle,this.trailing});
 
   @override
   Widget build(BuildContext context) {

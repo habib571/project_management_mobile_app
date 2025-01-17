@@ -1,5 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:project_management_app/application/extensions/screen_config_extension.dart';
+
+import '../utils/colors.dart';
 
 class ImagePlaceHolder extends StatelessWidget {
   const ImagePlaceHolder({super.key, required this.radius, required this.imageUrl});
@@ -13,6 +16,7 @@ class ImagePlaceHolder extends StatelessWidget {
         imageUrl: imageUrl,
         imageBuilder: (context, imageProvider) => Container(
           decoration: BoxDecoration(
+            border: Border.all(color: AppColors.primary,width: 2.w,),
             shape: BoxShape.circle,
             image: DecorationImage(
               image: imageProvider,

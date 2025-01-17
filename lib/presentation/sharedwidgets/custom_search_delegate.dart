@@ -8,7 +8,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/presentation/modules/addmember/view/screens/add_member_screen.dart';
-import 'package:project_management_app/presentation/sharedwidgets/custum_listtile.dart';
+import 'package:project_management_app/presentation/sharedwidgets/custom_listtile.dart';
 import 'package:provider/provider.dart';
 
 import '../../application/constants/constants.dart';
@@ -16,12 +16,15 @@ import '../../domain/models/user.dart';
 import '../modules/dashboord/viewmodel/project_detail_view_model.dart';
 import '../stateRender/state_render_impl.dart';
 import 'image_widget.dart';
+import 'input_text.dart';
 
 
 class CustomSearchDelegate extends SearchDelegate {
   final ProjectDetailViewModel viewModel;
 
   CustomSearchDelegate(this.viewModel);
+
+
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -100,11 +103,9 @@ class CustomSearchDelegate extends SearchDelegate {
 
                 final member = members[index];
                 return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 28.0),
-                  child: CustumListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(member.imageUrl ?? ''),
-                    ),
+                  padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 8.0),
+                  child: CustomListTile(
+                    leading:ImagePlaceHolder(radius: 25, imageUrl: member.imageUrl,),
                     title: member.fullName,
                     subtitle: member.email,
                     onTap: () {
