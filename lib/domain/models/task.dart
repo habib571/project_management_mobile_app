@@ -1,27 +1,31 @@
+import 'package:project_management_app/domain/models/project.dart';
 import 'package:project_management_app/domain/models/user.dart';
 
-class Task {
+class TaskModel {
   int? id;
   String? name;
   String? description;
   String? deadline;
   String? priority;
+  String? status ;
   User? assignedUser;
   int? assignedUserId;
+  Project? project ;
 
-  Task(this.id, this.name, this.description, this.deadline, this.priority, this.assignedUser);
+  TaskModel(this.id, this.name, this.description, this.deadline, this.priority, this.assignedUser ,this.status,this.project);
+  TaskModel.request(this.name, this.description,this.deadline, this.priority ,this.assignedUserId, );
 
-
-  Task.request(this.name, this.description, this.assignedUserId, this.deadline, this.priority);
-
-  factory Task.fromJson(Map<String, dynamic> json) {
-    return Task(
+  factory TaskModel.fromJson(Map<String, dynamic> json) {
+    return TaskModel(
       json['id'] ,
       json['name'] ,
       json['description'],
       json['deadline'] ,
       json['priority'] ,
-      json['assignedUser'] != null ? User.fromJson(json['assignedUser']) : null,
+      json['assignedUser'] != null ? User.fromJson(json['assignedUser']) : null ,
+      json['status'],
+      json['project' ]!= null ? Project.fromJson(json['project']) : null ,
+
     );
   }
 
@@ -29,7 +33,7 @@ class Task {
     return {
       'name': name,
       'description': description,
-      'assignedUserId': assignedUserId,
+      'assignedTo': assignedUserId,
       'deadline': deadline,
       'priority': priority,
     };
