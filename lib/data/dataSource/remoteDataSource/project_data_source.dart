@@ -10,6 +10,7 @@ abstract class ProjectDataSource {
   Future<ApiResponse> addProject( Project request );
   Future<ApiResponse> getProjects() ;
   Future<ApiResponse> getProjectMember(int projectId) ;
+  Future<ApiResponse> getMemberByName(String name ,int page , int size) ;
 }
 
  class ProjectRemoteDataSource implements ProjectDataSource{
@@ -45,6 +46,16 @@ abstract class ProjectDataSource {
         bearerToken: _localStorage.getAuthToken(),
         onRequestResponse: (response, statusCode) {
           return ApiResponse(response , statusCode);
+        });
+  }
+
+  @override
+  Future<ApiResponse> getMemberByName(String name ,int page , int size ) async {
+    return await executeGetRequest(
+        apiUrl: "/users/$name?page=$page&size=$size",
+        bearerToken:  _localStorage.getAuthToken() ,
+        onRequestResponse: (response, statusCode) {
+          return ApiResponse(response as List<dynamic> , statusCode);
         });
   }
 
