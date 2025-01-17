@@ -160,7 +160,6 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
           })
     ]);
   }
-
   Widget _showButton() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
