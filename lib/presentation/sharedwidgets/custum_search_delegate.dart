@@ -99,16 +99,19 @@ class CustomSearchDelegate extends SearchDelegate {
                 }
 
                 final member = members[index];
-                return CustumListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(member.imageUrl ?? ''),
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 28.0),
+                  child: CustumListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(member.imageUrl ?? ''),
+                    ),
+                    title: member.fullName,
+                    subtitle: member.email,
+                    onTap: () {
+                      Get.to(AddMemberScreen(user: member)) ;
+                      //close(context, member);
+                    },
                   ),
-                  title: member.fullName,
-                  subtitle: member.email,
-                  onTap: () {
-                    Get.to(AddMemberScreen(user: member)) ;
-                    //close(context, member);
-                  },
                 );
               },
             ),
