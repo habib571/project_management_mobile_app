@@ -10,11 +10,11 @@ import 'package:project_management_app/domain/usecases/project/get_members.dart'
 import 'package:project_management_app/domain/usecases/project/myprojects_usecase.dart';
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
 
 import 'package:project_management_app/presentation/modules/userprofile/viewmodel/userprofile_view_model.dart';
 
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
-
 
 import '../../data/dataSource/remoteDataSource/auth_remote_data_source.dart';
 import '../../data/dataSource/remoteDataSource/project_data_source.dart';
@@ -31,76 +31,92 @@ import '../../presentation/modules/home/home-viewmodel.dart';
 
 GetIt instance = GetIt.instance;
 initAppModule() async {
- await initGetStorageModule() ;
- instance.registerLazySingleton<TokenManager>(() =>TokenManager(instance()));
- instance.registerLazySingleton<NetworkInfo>(
+  await initGetStorageModule();
+  instance.registerLazySingleton<TokenManager>(() => TokenManager(instance()));
+  instance.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(InternetConnectionChecker()));
   instance.registerLazySingleton<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImp(instance()));
   instance.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(instance(), instance()));
- instance.registerLazySingleton<ProjectDataSource>(
-         () => ProjectRemoteDataSource(instance()));
- instance.registerLazySingleton<ProjectRepository>(
-         () => ProjectRepositoryImpl(instance(), instance()));
-
+  instance.registerLazySingleton<ProjectDataSource>(
+      () => ProjectRemoteDataSource(instance()));
+  instance.registerLazySingleton<ProjectRepository>(
+      () => ProjectRepositoryImpl(instance(), instance()));
 
   initSignInModule();
   initSignupModule();
   initHomeModule();
   initDashboard();
   intAddProject();
-
- initUserProfileModule();
-  initProject() ;
+  initUserProfileModule();
+  initProject();
+  initTask();
 
 }
+
 initHomeModule() {
-    instance.registerLazySingleton<HomeViewModel>(() => HomeViewModel(instance()));
+  instance
+      .registerLazySingleton<HomeViewModel>(() => HomeViewModel(instance()));
 }
 
-intAddProject(){
-    instance.registerFactory<AddProjectViewModel>(() => AddProjectViewModel(instance(),instance()));
-    instance.registerFactory<AddProjectUseCase>(() => AddProjectUseCase(instance()));
+intAddProject() {
+  instance.registerFactory<AddProjectViewModel>(
+      () => AddProjectViewModel(instance(), instance()));
+  instance
+      .registerFactory<AddProjectUseCase>(() => AddProjectUseCase(instance()));
 }
+
 initDashboard() {
   if (!GetIt.I.isRegistered<GetMyProjectsUseCase>()) {
-    instance.registerFactory<GetMyProjectsUseCase>(() => GetMyProjectsUseCase(instance()));
-    instance.registerLazySingleton<DashBoardViewModel>(() => DashBoardViewModel(instance() ,instance()) );
-  }
-}
-initProject() {
-  if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
-    instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
-    instance.registerFactory<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance()) );
+    instance.registerFactory<GetMyProjectsUseCase>(
+        () => GetMyProjectsUseCase(instance()));
+    instance.registerLazySingleton<DashBoardViewModel>(
+        () => DashBoardViewModel(instance(), instance()));
   }
 }
 
+initProject() {
+  if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
+    instance.registerFactory<GetMembersUseCase>(
+        () => GetMembersUseCase(instance()));
+    instance.registerLazySingleton<ProjectDetailViewModel>(
+        () => ProjectDetailViewModel(instance(), instance(), instance() ,instance()));
+  }
+}
+
+initTask() {
+  instance.registerLazySingleton<AddTaskViewModel>(
+      () => AddTaskViewModel(instance(), instance()));
+}
 initSignupModule() {
   if (!GetIt.I.isRegistered<SignupUseCase>()) {
     instance.registerFactory<SignupUseCase>(() => SignupUseCase(instance()));
-    instance.registerFactory<SignupViewModel>(() => SignupViewModel(instance() ,instance(),instance()));
+    instance.registerFactory<SignupViewModel>(
+        () => SignupViewModel(instance(), instance(), instance()));
   }
 }
-
 initSignInModule() {
   if (!GetIt.I.isRegistered<SignInViewModel>()) {
     instance.registerFactory<SignInUseCase>(() => SignInUseCase(instance()));
     instance.registerFactory<SignInViewModel>(
-        () => SignInViewModel(instance() ,instance(),instance()));
+        () => SignInViewModel(instance(), instance(), instance()));
   }
 }
 
 initUserProfileModule() {
   if (!GetIt.I.isRegistered<UserProfileViewModel>()) {
-    instance.registerLazySingleton<UserProfileUseCase>(() => UserProfileUseCase(instance()));
-    instance.registerLazySingleton<UserProfileViewModel>(() => UserProfileViewModel(instance(),instance(),instance()));
+    instance.registerLazySingleton<UserProfileUseCase>(
+        () => UserProfileUseCase(instance()));
+    instance.registerLazySingleton<UserProfileViewModel>(
+        () => UserProfileViewModel(instance(), instance(), instance()));
   }
 }
 
-initGetStorageModule() async {
-    await GetStorage.init();
-    instance.registerLazySingleton<GetStorage>(() => GetStorage());
-    instance.registerLazySingleton<LocalStorage>(() =>LocalStorageImp(instance(), instance()));
 
+initGetStorageModule() async {
+  await GetStorage.init();
+  instance.registerLazySingleton<GetStorage>(() => GetStorage());
+  instance.registerLazySingleton<LocalStorage>(
+      () => LocalStorageImp(instance(), instance()));
 }
