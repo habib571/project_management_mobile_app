@@ -38,8 +38,7 @@ class ProjectDetailViewModel extends BaseViewModel {
   bool get isLoadingMore => _isLoadingMore;
 
   bool hasMore = true;
-
-  final int _pageSize = 11;
+  final int _pageSize = 9;
 
   final ValueNotifier<FlowState> _stateNotifier = ValueNotifier(ContentState());
   ValueNotifier<FlowState> get stateNotifier => _stateNotifier;
@@ -54,14 +53,12 @@ class ProjectDetailViewModel extends BaseViewModel {
               StateRendererType.fullScreenErrorState, failure.message));
         },
             (data) {
-          notifyListeners();
           updateState(ContentState());
         }
     );
   }
 
-
-  Future<void> addMember(String name, {int page = 0}) async {
+  Future<void> getMemberByName(String name, {int page = 0}) async {
     if (_isLoadingMore || !hasMore) return;
 
     if (page == 0) {
@@ -75,16 +72,14 @@ class ProjectDetailViewModel extends BaseViewModel {
 
     (await _useCase.getMemberByName(name, page, _pageSize)).fold(
           (failure) {
-        _stateNotifier.value = ErrorState(StateRendererType.fullScreenErrorState, failure.message);
+        _stateNotifier.value =ErrorState(StateRendererType.fullScreenErrorState, failure.message);
       },
           (data) {
-            final filteredData = data.where((user) =>user.fullName.toLowerCase()
-                .contains(name.toLowerCase())).toList();
-            if (filteredData.length < _pageSize) {
-              hasMore = false;
-              }
+        if (data.length < _pageSize) {
+          hasMore = false;
+        }
 
-        _memberToAdd.addAll(filteredData) ;
+        _memberToAdd.addAll(data);
         _currentPage = page + 1;
         _stateNotifier.value = ContentState();
       },
@@ -93,48 +88,3 @@ class ProjectDetailViewModel extends BaseViewModel {
     _isLoadingMore = false;
   }
 }
-
-
-
-
-
-
-
-
-
-
-/*
-
-  Future<void> addMember(String name, {int page = 0}) async {
-    if (_isLoadingMore || !hasMore) return;
-
-    if (page == 0) {
-      // New search, reset state.
-      _memberToAdd.clear();
-      _currentPage = 0;
-      hasMore = true;
-      _stateNotifier.value = ContentState();
-    }
-
-    _isLoadingMore = true;
-
-    (await _useCase.getMemberByName(name, page, _pageSize)).fold(
-          (failure) {
-        _stateNotifier.value = ErrorState(StateRendererType.fullScreenErrorState, failure.message);
-      },
-          (data) {
-            final filteredData = data.where((user) =>user.fullName.toLowerCase()
-                .contains(name.toLowerCase())).toList();
-            if (filteredData.length < _pageSize) {
-              hasMore = false; // No more data to fetch.
-              }
-
-        _memberToAdd.addAll(filteredData) ;
-        _currentPage = page + 1;
-        _stateNotifier.value = ContentState();
-      },
-    );
-
-    _isLoadingMore = false;
-  }
- */
