@@ -3,6 +3,7 @@
 import '../../../application/functions/cruds_functions.dart';
 import '../../../application/helpers/get_storage.dart';
 import '../../../domain/models/project.dart';
+import '../../network/requests/add_member_request.dart';
 
 
 
@@ -11,6 +12,7 @@ abstract class ProjectDataSource {
   Future<ApiResponse> getProjects() ;
   Future<ApiResponse> getProjectMember(int projectId) ;
   Future<ApiResponse> getMemberByName(String name ,int page , int size) ;
+  Future<ApiResponse> addMember(AddMemberRequest request) ;
 }
 
  class ProjectRemoteDataSource implements ProjectDataSource{
@@ -58,6 +60,17 @@ abstract class ProjectDataSource {
           return ApiResponse(response as List<dynamic> , statusCode);
         });
   }
+
+   @override
+   Future<ApiResponse> addMember(AddMemberRequest request) async{
+     return await executePostRequest(
+         apiUrl: "/project/add_member",
+         body: request.toJson(),
+         bearerToken: _localStorage.getAuthToken(),
+         onRequestResponse: (response, statusCode) {
+           return ApiResponse(response, statusCode);
+         });
+   }
 
 }
 

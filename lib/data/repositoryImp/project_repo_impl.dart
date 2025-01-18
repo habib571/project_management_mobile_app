@@ -12,6 +12,7 @@ import '../../domain/repository/project_repo.dart';
 import '../dataSource/remoteDataSource/project_data_source.dart';
 import '../network/error_handler.dart';
 import '../network/internet_checker.dart';
+import '../network/requests/add_member_request.dart';
 
 class ProjectRepositoryImpl implements ProjectRepository{
   final NetworkInfo _networkInfo;
@@ -99,6 +100,27 @@ class ProjectRepositoryImpl implements ProjectRepository{
         }
       }
       catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
+  @override
+  Future<Either<Failure, ProjectMember>> addMember (AddMemberRequest addMemberRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _projectDataSource.addMember(addMemberRequest) ;
+        if (response.statusCode == 200) {
+          print("----200000");
+          return Right(ProjectMember.fromJson(response.data));
+        } else {
+          return Left(Failure.fromJson(response.data));
+        }
+      }
+      catch (error) {
+        print("---- Error");
         log(error.toString()) ;
         return Left(ErrorHandler.handle(error).failure);
       }
