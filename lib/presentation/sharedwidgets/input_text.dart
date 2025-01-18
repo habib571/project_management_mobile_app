@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../utils/colors.dart';
-import '../utils/styles.dart';
+import 'package:project_management_app/presentation/utils/styles.dart';
 
 
 class InputText extends StatelessWidget {

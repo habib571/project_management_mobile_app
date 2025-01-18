@@ -6,8 +6,10 @@ import 'package:project_management_app/data/repositoryImp/auth_repo_impl.dart';
 import 'package:project_management_app/data/repositoryImp/project_repo_impl.dart';
 import 'package:project_management_app/domain/repository/auth_repo.dart';
 import 'package:project_management_app/domain/repository/project_repo.dart';
+import 'package:project_management_app/domain/usecases/project/add_member_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/get_members.dart';
 import 'package:project_management_app/domain/usecases/project/myprojects_usecase.dart';
+import 'package:project_management_app/presentation/modules/addmember/viewmodel/add_member_viewmodel.dart';
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
 
@@ -72,9 +74,12 @@ initDashboard() {
 initProject() {
   if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
     instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
-    instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance()) );
+    instance.registerFactory<AddMemberUseCase>(() => AddMemberUseCase(instance()));
+    instance.registerFactory<AddMemberViewModel>(() => AddMemberViewModel(instance() ,instance()) );
+    instance.registerFactory<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance()) );
   }
 }
+
 
 initSignupModule() {
   if (!GetIt.I.isRegistered<SignupUseCase>()) {

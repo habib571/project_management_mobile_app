@@ -56,7 +56,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 alignment: Alignment.topLeft,
                 child: SvgPicture.asset('assets/Shape.svg')),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
+              padding:  EdgeInsets.symmetric(horizontal: 25.w),
               child: Column(
                 children: [
                   SizedBox(
