@@ -25,7 +25,7 @@ class ProjectDetailViewModel extends BaseViewModel {
 
   final Project project = instance<DashBoardViewModel>().project;
 
-  final List<ProjectMember> _projectMember = [];
+   List<ProjectMember> _projectMember = [];
   List<ProjectMember> get projectMember => _projectMember;
 
   final List<User> _memberToAdd = [];
@@ -33,6 +33,8 @@ class ProjectDetailViewModel extends BaseViewModel {
 
   int _currentPage = 0;
   int get currentPage => _currentPage;
+
+  bool isLoading =false;
 
   bool _isLoadingMore = false;
   bool get isLoadingMore => _isLoadingMore;
@@ -53,6 +55,7 @@ class ProjectDetailViewModel extends BaseViewModel {
               StateRendererType.fullScreenErrorState, failure.message));
         },
             (data) {
+              _projectMember = data ;
           updateState(ContentState());
         }
     );
@@ -75,6 +78,7 @@ class ProjectDetailViewModel extends BaseViewModel {
         _stateNotifier.value =ErrorState(StateRendererType.fullScreenErrorState, failure.message);
       },
           (data) {
+        _isLoadingMore = false;
         if (data.length < _pageSize) {
           hasMore = false;
         }

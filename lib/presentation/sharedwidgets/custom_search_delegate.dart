@@ -7,7 +7,9 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
+import 'package:project_management_app/application/navigation/routes_constants.dart';
 import 'package:project_management_app/presentation/modules/addmember/view/screens/add_member_screen.dart';
+import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_listtile.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +26,8 @@ class CustomSearchDelegate extends SearchDelegate {
 
   CustomSearchDelegate(this.viewModel);
 
+  @override
+  String? get searchFieldLabel => "Find Member";
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -38,6 +42,7 @@ class CustomSearchDelegate extends SearchDelegate {
       ),
     ];
   }
+
 
   @override
   Widget? buildLeading(BuildContext context) {
@@ -94,7 +99,7 @@ class CustomSearchDelegate extends SearchDelegate {
               itemCount: members.length + 1,
               itemBuilder: (context, index) {
                 if (index == members.length) {
-                  return viewModel.hasMore
+                  return viewModel.isLoadingMore
                       ? const Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Center(child: CircularProgressIndicator()),
@@ -105,12 +110,11 @@ class CustomSearchDelegate extends SearchDelegate {
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 5.h),
                   child: CustomListTile(
-                    leading: ImagePlaceHolder(
-                      radius: 25, imageUrl: member.imageUrl,),
+                    leading: ImagePlaceHolder(imgBorder: true,radius: 25, imageUrl: member.imageUrl,),
                     title: member.fullName,
                     subtitle: member.email,
                     onTap: () {
-                      Get.to(AddMemberScreen(user: member));
+                      Get.toNamed(AppRoutes.addMemberScreen,arguments: member);
                       //close(context, member);
                     },
                   ),

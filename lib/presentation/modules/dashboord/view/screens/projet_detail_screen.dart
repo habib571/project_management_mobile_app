@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
@@ -80,9 +82,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                     const SizedBox(
                       height: 15,
                     ),
-                    CustomButton(text: 'Add member',onPressed: () {
-                      showSearch(context: context ,delegate: CustomSearchDelegate(_viewModel));
-                    }, ),
+
                     StreamBuilder<FlowState>(
                         stream: _viewModel.outputState,
                         builder: (context, snapshot) {
@@ -127,13 +127,16 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   Widget _showMembers() {
     return MembersCard(children: [
       ...List.generate(_viewModel.projectMember.length, (index) {
+        log(_viewModel.projectMember.length.toString());
         return const ImagePlaceHolder(
+            imgBorder: true,
             radius: 17,
-            imageUrl:
-                'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80');
+            imageUrl:'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80');
       }),
       GestureDetector(
-        onTap: () {},
+        onTap: () {
+          showSearch(context: context ,delegate: CustomSearchDelegate(_viewModel));
+        },
         child: Container(
           height: 34,
           width: 34,
