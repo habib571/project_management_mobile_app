@@ -90,10 +90,8 @@ class ProjectRepositoryImpl implements ProjectRepository{
         final response = await _projectDataSource.getMemberByName(name,page,size) ;
 
         if (response.statusCode == 200) {
-          print("-------------20000");
           final List<Map<String, dynamic>> responseData = List<Map<String, dynamic>>.from(response.data);
           final members = responseData.map((memberJson) => User.fromJson(memberJson)).toList();
-          print(members[0].fullName);
           return Right(members);
         } else {
           return Left(Failure.fromJson(response.data));
@@ -113,14 +111,12 @@ class ProjectRepositoryImpl implements ProjectRepository{
       try {
         final response = await _projectDataSource.addMember(addMemberRequest) ;
         if (response.statusCode == 200) {
-          print("----200000");
           return Right(ProjectMember.fromJson(response.data));
         } else {
           return Left(Failure.fromJson(response.data));
         }
       }
       catch (error) {
-        print("---- Error");
         log(error.toString()) ;
         return Left(ErrorHandler.handle(error).failure);
       }
