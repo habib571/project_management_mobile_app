@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
+import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_listtile.dart';
 
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
@@ -14,9 +17,8 @@ import '../../../../utils/colors.dart';
 import '../../viewmodel/add_member_viewmodel.dart';
 
 class AddMemberScreen extends StatefulWidget {
-  final User user;
 
-   const AddMemberScreen({super.key, required this.user});
+   const AddMemberScreen({super.key,});
 
   @override
   State<AddMemberScreen> createState() => _AddMemberScreenState();
@@ -25,6 +27,7 @@ class AddMemberScreen extends StatefulWidget {
 class _AddMemberScreenState extends State<AddMemberScreen> {
 
   final AddMemberViewModel _viewModel = instance<AddMemberViewModel>();
+  final User user = Get.arguments;
 
   @override
   void initState() {
@@ -56,6 +59,10 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+             SizedBox(
+                 height: 25.h,
+             ),
+             const CustomAppBar(title: "Add Member"),
             SizedBox(
               height: 50.h,
             ),
@@ -77,7 +84,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
   Widget _showMemberSection() {
     return Card(
       color: Colors.white,
-      elevation: 6,
+      elevation: 3,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
@@ -87,22 +94,10 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: 70.w,
-              height: 70.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: AppColors.primary,
-                  width: 2.w,
-                ),
-              ),
-              child: ClipOval(
-                child: ImagePlaceHolder(
-                  radius: 35.w,
-                  imageUrl: widget.user.imageUrl,
-                ),
-              ),
+            ImagePlaceHolder(
+              imgBorder: true,
+              radius: 35.w,
+              imageUrl: user.imageUrl ,
             ),
             SizedBox(width: 20.w),
 
@@ -115,7 +110,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                       Icon(Icons.person, color: AppColors.primary, size: 18.w),
                       SizedBox(width: 8.w),
                       Text(
-                        widget.user.fullName,
+                        user.fullName,
                         style:const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -130,7 +125,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                       Icon(Icons.email, color: AppColors.primary, size: 18.w),
                       SizedBox(width: 8.w),
                       Text(
-                        widget.user.email,
+                        user.email,
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey[700],
@@ -163,7 +158,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
   Widget _addMemberButtonSuction() {
     return CustomButton(
         onPressed: () {
-          _viewModel.addMember( widget.user.id  );
+          _viewModel.addMember( user.id  );
         },
         text: 'Add member');
   }

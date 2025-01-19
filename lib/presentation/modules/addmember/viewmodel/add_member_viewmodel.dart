@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_common/get_reset.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:project_management_app/application/navigation/routes_constants.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
+import 'package:project_management_app/presentation/modules/dashboord/view/screens/projet_detail_screen.dart';
 
 import '../../../../application/dependencyInjection/dependency_injection.dart';
 import '../../../../data/network/requests/add_member_request.dart';
@@ -36,6 +41,7 @@ class AddMemberViewModel extends BaseViewModel{
         },
             (data) {
               updateState(ContentState());
+              Get.to(ProjectDetailScreen());
             },
       );
     }
