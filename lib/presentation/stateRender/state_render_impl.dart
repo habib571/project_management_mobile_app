@@ -194,6 +194,7 @@ extension FlowStateExtension on FlowState {
       case ContentState _:
         {
           // dismissDialog(context);
+          dismissOverlay(context);
 
           return contentScreenWidget;
         }
@@ -209,7 +210,7 @@ extension FlowStateExtension on FlowState {
         }
       default:
         {
-          //dismissDialog(context);
+          dismissOverlay(context);
           return contentScreenWidget;
         }
     }
