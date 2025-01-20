@@ -1,6 +1,4 @@
 import 'dart:developer';
-import 'dart:js_interop';
-
 import 'package:dartz/dartz.dart';
 import 'package:project_management_app/data/dataSource/remoteDataSource/task_remote_data_source.dart';
 import 'package:project_management_app/data/network/failure.dart';
@@ -17,14 +15,13 @@ class TaskRepositoryImpl implements TaskRepository {
   TaskRepositoryImpl(this._networkInfo, this._taskRemoteDataSource);
 
   @override
-  Future<Either<Failure, TaskModel>> addTask(TaskModel request) async{
+  Future<Either<Failure, TaskModel>> addTask(TaskModel request , int projectId) async{
     if (await _networkInfo.isConnected) {
       try {
-        final response = await _taskRemoteDataSource.addTask(request) ;
+        final response = await _taskRemoteDataSource.addTask(request ,projectId) ;
         if (response.statusCode == 200) {
           return Right(TaskModel.fromJson(response.data)) ;
         } else {
-
           return Left(Failure.fromJson(response.data));
         }
       }
@@ -35,5 +32,4 @@ class TaskRepositoryImpl implements TaskRepository {
     }
     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
   }
-
 }

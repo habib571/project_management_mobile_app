@@ -4,7 +4,7 @@ import '../../../domain/models/task.dart';
 import '../../responses/api_response.dart';
 
 abstract class TaskRemoteDataSource {
-  Future<ApiResponse> addTask(TaskModel task) ;
+  Future<ApiResponse> addTask(TaskModel task ,int projectId) ;
 
 }
 class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
@@ -12,9 +12,9 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   TaskRemoteDataSourceImpl(this._localStorage);
 
   @override
-  Future<ApiResponse> addTask(TaskModel request)async {
+  Future<ApiResponse> addTask(TaskModel request ,int projectId)async {
     return await executePostRequest(
-        apiUrl: "/project/add_project",
+        apiUrl: "/task/add-task/$projectId",
         bearerToken: _localStorage.getAuthToken() ,
         body: request.toJson(),
         onRequestResponse: (response, statusCode) {
