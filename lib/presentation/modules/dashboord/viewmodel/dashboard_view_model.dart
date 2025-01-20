@@ -47,7 +47,6 @@ class DashBoardViewModel extends BaseViewModel {
     _projectList = value;
   }
 
-
   getMyProjects() async {
     updateState(LoadingState(
         stateRendererType: StateRendererType.fullScreenLoadingState));

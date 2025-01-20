@@ -20,14 +20,11 @@ class ProjectDetailViewModel extends BaseViewModel {
     getProjectMembers();
   }
 
-  //final Project project= instance<DashBoardViewModel>().project ;
-
   List<ProjectMember> _projectMember  = [];
   List<ProjectMember> get projectMember => _projectMember ;
   getProjectMembers() async {
     updateState(LoadingState(
         stateRendererType: StateRendererType.fullScreenLoadingState));
-
     (await _useCase.getProjectMembers(dashBoardViewModel.project.id!)).fold(
         (failure) {
           updateState(ErrorState(StateRendererType.fullScreenErrorState, failure.message));
@@ -37,10 +34,10 @@ class ProjectDetailViewModel extends BaseViewModel {
           updateState(ContentState()) ;
         }
     ) ;
-
   }
-  bool isManger() =>dashBoardViewModel.project.createdBy!.id == _localStorage.getUser().id ;
 
+
+  bool isManger() =>dashBoardViewModel.project.createdBy!.id == _localStorage.getUser().id ;
 
 
 }
