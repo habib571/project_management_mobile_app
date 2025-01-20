@@ -7,5 +7,6 @@ class AppRoutes {
   static const String userProfile = "/userProfile" ;
   static const String membersScreen ="/membersScreen" ;
   static const String addMemberScreen ="/addMemberScreen" ;
+  static const String reportIssueScreen ="/reportIssueScreen" ;
 
 }

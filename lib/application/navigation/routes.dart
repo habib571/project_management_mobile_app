@@ -8,6 +8,7 @@ import 'package:project_management_app/presentation/modules/auth/view/screens/si
 import 'package:project_management_app/presentation/modules/auth/view/screens/signup_screen.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/members_screen.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/projet_detail_screen.dart';
+import 'package:project_management_app/presentation/modules/dashboord/view/screens/report_issue_screen.dart';
 import 'package:project_management_app/presentation/modules/home/home_screen.dart';
 import 'package:project_management_app/presentation/modules/userprofile/View/screens/userprofile_screen.dart';
 
@@ -20,6 +21,7 @@ List<GetPage<dynamic>>? routes = [  GetPage(name: AppRoutes.login, page:()=> Sig
   GetPage(name: AppRoutes.userProfile, page:()=>  const UserProfileScreen()),
   //GetPage(name: AppRoutes.projectDetails, page:()=>   const ProjectDetailScreen()),
   GetPage(name: AppRoutes.membersScreen, page: ()=>  MembersScreen()),
-  GetPage(name: AppRoutes.addMemberScreen, page: ()=>  const AddMemberScreen())
+  GetPage(name: AppRoutes.addMemberScreen, page: ()=>  const AddMemberScreen()),
+  GetPage(name: AppRoutes.addMemberScreen, page: ()=>  const ReportIssueScreen())
 
 ] ;
