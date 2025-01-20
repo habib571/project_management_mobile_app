@@ -13,6 +13,7 @@ import 'package:project_management_app/presentation/utils/styles.dart';
 import 'package:provider/provider.dart';
 import '../../../../sharedwidgets/custom_button.dart';
 import '../../../../sharedwidgets/input_text.dart';
+import '../../../../stateRender/state_render_impl.dart';
 
 class CreateTaskScreen extends StatefulWidget {
   const CreateTaskScreen({super.key});
@@ -27,9 +28,16 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: _showBody(context),
-      ),
-    );
+        child: StreamBuilder<FlowState>(
+          stream: _viewModel.outputState,
+          builder: (context, snapshot) {
+            return snapshot.data
+                ?.getScreenWidget(context, _showBody(context), () {}) ??
+                _showBody(context);
+          },
+        ))
+      );
+
   }
 
   Widget _showBody(BuildContext context) {
@@ -91,7 +99,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
     return InputText(
       readOnly: true,
       validator: (val) => val.isEmptyInput(),
-      controller: _viewModel.taskDescription ,
+      controller: _viewModel.taskDeadline,
       hintText: " Choose Task Deadline",
       suffixIcon: const Icon(Icons.calendar_month_outlined),
       onTap: () async {
@@ -163,7 +171,9 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   Widget _showButton() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
-      child: CustomButton(onPressed: () {}, text: 'Add Task'),
+      child: CustomButton(onPressed: () {
+        _viewModel.addTask() ;
+      }, text: 'Add Task'),
     );
   }
 }

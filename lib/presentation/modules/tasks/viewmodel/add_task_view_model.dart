@@ -2,14 +2,27 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:project_management_app/domain/models/project_member.dart';
+import 'package:project_management_app/domain/usecases/task/add_task_user_case.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/view/widget/task_priority_chip.dart';
+import 'package:project_management_app/presentation/stateRender/state_render.dart';
+
+import '../../../../domain/models/task.dart';
+import '../../../stateRender/state_render_impl.dart';
 
 class AddTaskViewModel extends BaseViewModel{
   final ProjectDetailViewModel _projectDetailViewModel ;
   ProjectDetailViewModel get projectViewModel => _projectDetailViewModel ;
 
-  AddTaskViewModel(super.tokenManager, this._projectDetailViewModel);
+  final AddTaskUseCase _addTaskUseCase ;
+  AddTaskViewModel(super.tokenManager, this._projectDetailViewModel, this._addTaskUseCase);
+
+  @override
+  void start() {
+    updateState(ContentState()) ;
+    super.start();
+  }
 
   ProjectMember? _projectMember ;
   ProjectMember get projectMember => _projectMember! ;
@@ -54,6 +67,27 @@ class AddTaskViewModel extends BaseViewModel{
       taskDeadline.text = "${pickedDate.day.toString().padLeft(2, '0')}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.year}";
     }
   }
+   addTask() async { 
+    updateState(LoadingState(stateRendererType: StateRendererType.overlayLoadingState)) ;
+    TaskModel taskRequest =
+    TaskModel.request(
+        taskName.text,
+        taskDescription.text,
+        taskDeadline.text, 
+        chipTexts[_selectedIndex] ,
+        projectMember.user!.id
+    ) ;
+     (await _addTaskUseCase.addTask(taskRequest ,projectMember.project!.id! )).fold(
+         (failure) {
+           updateState(ErrorState(StateRendererType.snackbarState, failure.message)) ;
+         },
+         (success) {  
+           updateState(ContentState()) ;
+           
+         }
+     ) ;
+
+   }
 
 
 }

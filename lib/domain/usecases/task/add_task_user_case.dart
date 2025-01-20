@@ -7,6 +7,6 @@ import '../../../data/network/failure.dart';
 class AddTaskUseCase {
   final TaskRepository _taskRepository ;
   AddTaskUseCase(this._taskRepository);
-  Future<Either<Failure,TaskModel>> addTask(TaskModel request) async  => _taskRepository.addTask(request) ;
+  Future<Either<Failure,TaskModel>> addTask(TaskModel request , int projectId) async  => _taskRepository.addTask(request ,projectId) ;
 
 }
