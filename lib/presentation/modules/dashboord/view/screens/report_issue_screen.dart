@@ -4,14 +4,13 @@ import 'package:project_management_app/application/extensions/screen_config_exte
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/sharedwidgets/input_text.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
+import 'package:project_management_app/presentation/utils/colors.dart';
 
 import '../../../../sharedwidgets/custom_add_button.dart';
 import '../../../../sharedwidgets/custom_button.dart';
 import '../../../../sharedwidgets/image_widget.dart';
-import '../../../../utils/colors.dart';
 import '../../../../utils/styles.dart';
-import '../widgets/assigned_memberchip.dart';
-import '../widgets/assigned_taskchip.dart';
+import '../widgets/assigning_chip.dart';
 
 
 class ReportIssueScreen extends StatelessWidget{
@@ -59,6 +58,7 @@ class ReportIssueScreen extends StatelessWidget{
       //controller: ,
       hintText: "Type the issue",
       prefixIcon: const Icon(Icons.report_problem_outlined),
+      borderSide: const BorderSide(color: Colors.black),
 
     );
   }
@@ -70,6 +70,8 @@ class ReportIssueScreen extends StatelessWidget{
       hintText: "Enter the issue description",
       maxLines: 3,
       prefixIcon: const Icon(Icons.description_outlined),
+      borderRadius: 20,
+      borderSide: const BorderSide(color: Colors.black),
     );
   }
 
@@ -84,10 +86,10 @@ class ReportIssueScreen extends StatelessWidget{
             runSpacing: 8,
             spacing: 8,
             children: [
-              AssignedMemberChip(imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80', userName: "Ahmed", onDeleted: (){}),
-              AssignedMemberChip(imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80', userName: "Ahmed", onDeleted: (){}),
-              AssignedMemberChip(imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80', userName: "Ahmed", onDeleted: (){}),
-              AssignedMemberChip(imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80', userName: "Ahmed", onDeleted: (){}),
+              AssigningChip(avatar:const ImagePlaceHolder(radius: 30, imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80') , objectName: "Ahmed", onDeleted: (){}),
+              AssigningChip(avatar:const ImagePlaceHolder(radius: 30, imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80') , objectName: "Ahmed", onDeleted: (){}),
+              AssigningChip(avatar:const ImagePlaceHolder(radius: 30, imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80') , objectName: "Ahmed", onDeleted: (){}),
+              AssigningChip(avatar:const ImagePlaceHolder(radius: 30, imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80') , objectName: "Ahmed", onDeleted: (){}),
               CustomAddButton(onTap: (){},)
             ]
         ),
@@ -106,10 +108,10 @@ class ReportIssueScreen extends StatelessWidget{
             runSpacing: 8,
             spacing: 8,
             children: [
-              AssignedTaskChip(taskName : "Task 1", onDeleted: (){}),
-              AssignedTaskChip(taskName : "Task 2", onDeleted: (){}),
-              AssignedTaskChip(taskName : "Task 3", onDeleted: (){}),
-              AssignedTaskChip(taskName : "Task 4", onDeleted: (){}),
+              AssigningChip(objectName : "Task 1", onDeleted: (){}, backgroundColor: AppColors.orangeAccent ,avatar: const Icon(Icons.task_outlined),),
+              AssigningChip(objectName : "Task 2", onDeleted: (){}, backgroundColor: AppColors.orangeAccent ,avatar: const Icon(Icons.task_outlined),),
+              AssigningChip(objectName : "Task 3", onDeleted: (){}, backgroundColor: AppColors.orangeAccent ,avatar: const Icon(Icons.task_outlined),),
+              AssigningChip(objectName : "Task 4", onDeleted: (){}, backgroundColor: AppColors.orangeAccent ,avatar: const Icon(Icons.task_outlined),),
               CustomAddButton(onTap: (){},)
             ]
         ),

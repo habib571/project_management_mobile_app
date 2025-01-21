@@ -18,20 +18,22 @@ class InputText extends StatelessWidget {
         this.prefixIcon,
         this.obscureText = false,
         this.maxLines = 1,
-        this.onTap
+        this.onTap,
+        this.borderSide = BorderSide.none ,
       });
   final bool readOnly;
   final bool obscureText;
   final TextEditingController? controller;
   final TextInputType textInputType;
   final String hintText;
-  final double borderRadius;
+  double borderRadius;
   final String? Function(String? s)? validator;
   void Function(String)? onChanged ;
   void Function()? onTap;
   Widget? suffixIcon;
   Widget? prefixIcon ;
   int maxLines;
+  BorderSide borderSide  ;
 
 
   @override
@@ -51,7 +53,7 @@ class InputText extends StatelessWidget {
           hintText: hintText,
           hintStyle: robotoRegular.copyWith(color: AppColors.secondaryTxt),
           border: OutlineInputBorder(
-            borderSide: BorderSide.none,
+            borderSide: borderSide,
             borderRadius: BorderRadius.circular(borderRadius),
           )),
       validator: validator,
@@ -63,3 +65,4 @@ class InputText extends StatelessWidget {
     );
   }
 }
+
