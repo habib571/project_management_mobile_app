@@ -4,8 +4,8 @@ import '../utils/colors.dart';
 
 class CustomListTile extends StatelessWidget {
   final Widget? leading;
-  final String title;
-  final String? subtitle;
+  final Widget? title;
+  final Widget? subtitle;
   final Widget? trailing;
   final void Function()? onTap;
 
@@ -20,8 +20,8 @@ class CustomListTile extends StatelessWidget {
         child: ListTile(
           leading: leading,
           trailing: trailing,
-          subtitle: Text(subtitle??""),
-          title: Text(title),
+          subtitle: subtitle, //Text(subtitle??""),
+          title: title,
           onTap: onTap,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),

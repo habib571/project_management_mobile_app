@@ -111,8 +111,8 @@ class CustomSearchDelegate extends SearchDelegate {
                   padding: EdgeInsets.symmetric(vertical: 5.h),
                   child: CustomListTile(
                     leading: ImagePlaceHolder(imgBorder: true,radius: 25, imageUrl: member.imageUrl,),
-                    title: member.fullName,
-                    subtitle: member.email,
+                    title: Text(member.fullName),
+                    subtitle: Text(member.email),
                     onTap: () {
                       Get.toNamed(AppRoutes.addMemberScreen,arguments: member);
                       //close(context, member);
