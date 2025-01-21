@@ -112,6 +112,13 @@ class ReportIssueScreen extends StatelessWidget{
               AssigningChip(objectName : "Task 2", onDeleted: (){}, backgroundColor: AppColors.orangeAccent ,avatar: const Icon(Icons.task_outlined),),
               AssigningChip(objectName : "Task 3", onDeleted: (){}, backgroundColor: AppColors.orangeAccent ,avatar: const Icon(Icons.task_outlined),),
               AssigningChip(objectName : "Task 4", onDeleted: (){}, backgroundColor: AppColors.orangeAccent ,avatar: const Icon(Icons.task_outlined),),
+              /*ListView.builder(
+                itemCount: ,
+                itemBuilder: (context , index){
+                  return AssigningChip(avatar: index. .avatar, objectName: objectName, onDeleted: onDeleted)
+                },
+
+              ),*/
               CustomAddButton(onTap: (){},)
             ]
         ),
