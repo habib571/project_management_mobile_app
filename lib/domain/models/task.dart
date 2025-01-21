@@ -12,6 +12,7 @@ class TaskModel {
   int? assignedUserId;
   Project? project ;
 
+
   TaskModel(this.id, this.name, this.description, this.deadline, this.priority, this.assignedUser ,this.status,this.project);
   TaskModel.request(this.name, this.description,this.deadline, this.priority ,this.assignedUserId, );
 
