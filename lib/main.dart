@@ -30,19 +30,17 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<SignupViewModel>(
-              lazy: true,
-              create: (_) => GetIt.instance<SignupViewModel>()),
+              lazy: true, create: (_) => GetIt.instance<SignupViewModel>()),
           ChangeNotifierProvider<SignInViewModel>(
-              lazy: true,
-              create: (_) => GetIt.instance<SignInViewModel>()),
+              lazy: true, create: (_) => GetIt.instance<SignInViewModel>()),
           ChangeNotifierProvider<DashBoardViewModel>(
-              lazy: true,
-              create: (_) => GetIt.instance<DashBoardViewModel>()),
+              lazy: true, create: (_) => GetIt.instance<DashBoardViewModel>()),
           ChangeNotifierProvider<AddProjectViewModel>(
-            lazy: true,
-              create: (_) => GetIt.instance<AddProjectViewModel>()),
-          ChangeNotifierProvider(create: (_) => GetIt.instance<AddTaskViewModel>())
-        ], 
+              lazy: true, create: (_) => GetIt.instance<AddProjectViewModel>()),
+          ChangeNotifierProvider(
+              lazy: true, create: (_) => GetIt.instance<AddTaskViewModel>()
+          )
+        ],
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
@@ -53,6 +51,5 @@ class MyApp extends StatelessWidget {
           initialRoute: AppRoutes.login,
           getPages: routes,
         ));
-
   }
 }

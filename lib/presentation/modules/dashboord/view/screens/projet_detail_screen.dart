@@ -9,6 +9,7 @@ import 'package:project_management_app/presentation/modules/dashboord/view/scree
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/members_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/project_detail_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/view/screens/task_detail_screen.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_button.dart';
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
@@ -152,7 +153,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 20) ,
       child: CustomButton(
           onPressed: () {
-            Get.to(()=> CreateTaskScreen()) ;
+          //  Get.to(()=> CreateTaskScreen()) ;
+            Get.to(()=>const TaskDetailScreen()) ;
           },
           text: 'Create new Task'
       ),
