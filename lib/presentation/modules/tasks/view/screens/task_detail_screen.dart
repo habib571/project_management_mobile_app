@@ -19,7 +19,7 @@ class TaskDetailScreen extends StatelessWidget {
   Widget _showBody() {
     return Column(
       children: [
-        SizedBox(height: 25,) ,
+        const SizedBox(height: 25,) ,
         const CustomAppBar(title: "Task Details"),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -38,6 +38,10 @@ class TaskDetailScreen extends StatelessWidget {
                     height: 20,
                   ),
                   _showTaskCreator(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  _showAssignedTo() ,
                   const SizedBox(
                     height: 20,
                   ),
@@ -118,6 +122,34 @@ class TaskDetailScreen extends StatelessWidget {
       ],
     );
   }
+  Widget _showAssignedTo() {
+    return Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: Text(
+            "Assigned To",
+            style: robotoRegular.copyWith(fontSize: 14 ,color: AppColors.secondaryTxt),
+          ),
+        ),
+        Expanded(
+          flex: 4,
+          child: Row(
+            children: [
+              const ImagePlaceHolder(
+                  radius: 10, imageUrl: Constants.userProfileImageUrl),
+              const SizedBox(
+                width: 5,
+              ),
+              Text("Habib rouatbi",style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),)
+            ],
+          ),
+        ),
+      ],
+    );
+
+  }
+
 
   Widget _showStatus() {
     return Row(
