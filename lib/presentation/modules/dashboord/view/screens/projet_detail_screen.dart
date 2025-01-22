@@ -11,11 +11,13 @@ import 'package:project_management_app/presentation/modules/dashboord/view/widge
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/project_detail_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
+import 'package:project_management_app/presentation/sharedwidgets/custom_listtile.dart';
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
 import 'package:project_management_app/presentation/stateRender/state_render_impl.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 
+import '../../../../sharedwidgets/custom_add_button.dart';
 import '../../../../sharedwidgets/custom_button.dart';
 import '../../../../sharedwidgets/custom_search_delegate.dart';
 
@@ -89,7 +91,20 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                           return snapshot.data?.getScreenWidget(
                                   context, _showMembers(), () {}) ??
                               _showMembers();
-                        })
+                        }),
+                    SizedBox(
+                      height: 25.h,
+                    ),
+                    _reportIssueSection(),
+                    SizedBox(
+                      height: 25.h,
+                    ),
+                    _tasksSection(),
+                    SizedBox(
+                      height: 25.h,
+                    ),
+                    _addIssueButton()
+
                   ],
                 ),
               ),
@@ -133,23 +148,52 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
             radius: 17,
             imageUrl:'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80');
       }),
-      GestureDetector(
-        onTap: () {
-          showSearch(context: context ,delegate: CustomSearchDelegate(_viewModel));
-        },
-        child: Container(
-          height: 34,
-          width: 34,
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.primary, width: 2),
-            shape: BoxShape.circle,
-          ),
-          child: const Center(
-            child: Icon(Icons.add,
-                size: 25, color: AppColors.primary), // Adjust size if needed
-          ),
-        ),
-      )
+      CustomAddButton(onTap: () { showSearch(context: context ,delegate: CustomSearchDelegate(_viewModel));  },),
     ]);
   }
+
+  Widget _reportIssueSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Report Issue', style: robotoSemiBold.copyWith(fontSize: 16)),
+        const SizedBox(
+          height: 15,
+        ),
+        CustomListTile(
+            leading: const Icon(Icons.report_problem_outlined,color: AppColors.primary),
+            trailing: const Icon(Icons.arrow_forward_ios,color: AppColors.accent,size: 13,),
+            title: const Text("View issues"),
+            onTap: () {
+              Get.toNamed(AppRoutes.issuesScreen);
+            })
+      ],
+    );
+  }
+  Widget _tasksSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Tasks', style: robotoSemiBold.copyWith(fontSize: 16)),
+        const SizedBox(
+          height: 15,
+        ),
+        CustomListTile(
+            leading: const Icon(Icons.task_outlined,color: AppColors.primary),
+            trailing: const Icon(Icons.arrow_forward_ios,color: AppColors.accent,size: 13,),
+            title: const Text("View tasks"),
+            onTap: () {})
+      ],
+    );
+  }
+
+  Widget _addIssueButton() {
+    return CustomButton(
+        buttonColor: AppColors.accent,
+        onPressed: () {
+          Get.toNamed(AppRoutes.reportIssueScreen);
+        },
+        text: 'Report an Issue');
+  }
+
 }
