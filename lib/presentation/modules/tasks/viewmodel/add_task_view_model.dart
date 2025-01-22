@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:project_management_app/domain/models/project_member.dart';
 import 'package:project_management_app/domain/usecases/task/add_task_user_case.dart';
@@ -31,6 +32,12 @@ class AddTaskViewModel extends BaseViewModel{
       log(projectMember.user!.fullName) ;
       notifyListeners() ;
   }
+  TaskModel? _task ;
+  TaskModel get task => _task! ;
+   setTask(TaskModel task) {
+      _task = task ;
+   }
+
   bool _isUserAdded =false;
   bool get isUserAdded => _isUserAdded ;
 
@@ -81,8 +88,9 @@ class AddTaskViewModel extends BaseViewModel{
          (failure) {
            updateState(ErrorState(StateRendererType.snackbarState, failure.message)) ;
          },
-         (success) {  
+         (data) {
            updateState(ContentState()) ;
+           _task = data ;
            
          }
      ) ;
