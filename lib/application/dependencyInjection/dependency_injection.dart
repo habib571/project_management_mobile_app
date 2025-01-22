@@ -13,6 +13,7 @@ import 'package:project_management_app/domain/usecases/task/add_task_user_case.d
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/task_detail_view_model.dart';
 
 import 'package:project_management_app/presentation/modules/userprofile/viewmodel/userprofile_view_model.dart';
 
@@ -49,10 +50,10 @@ initAppModule() async {
       () => ProjectRemoteDataSource(instance()));
   instance.registerLazySingleton<ProjectRepository>(
       () => ProjectRepositoryImpl(instance(), instance()));
-
-  instance.registerLazySingleton<TaskRemoteDataSource>(()=>TaskRemoteDataSourceImpl(instance())) ;
+  instance.registerLazySingleton<TaskRemoteDataSource>(
+      () => TaskRemoteDataSourceImpl(instance()));
   instance.registerLazySingleton<TaskRepository>(
-          () => TaskRepositoryImpl(instance(), instance()));
+      () => TaskRepositoryImpl(instance(), instance()));
 
   initSignInModule();
   initSignupModule();
@@ -62,7 +63,6 @@ initAppModule() async {
   initUserProfileModule();
   initProject();
   initTask();
-
 }
 
 initHomeModule() {
@@ -90,19 +90,22 @@ initProject() {
   if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
     instance.registerFactory<GetMembersUseCase>(
         () => GetMembersUseCase(instance()));
-    instance.registerLazySingleton<ProjectDetailViewModel>(
-        () => ProjectDetailViewModel(instance(), instance(), instance() ,instance()));
+    instance.registerLazySingleton<ProjectDetailViewModel>(() =>
+        ProjectDetailViewModel(instance(), instance(), instance(), instance()));
   }
 }
 
 initTask() {
-  if(!GetIt.I.isRegistered<AddTaskUseCase>()) {
-    instance.registerFactory<AddTaskUseCase>(()=> AddTaskUseCase(instance())) ;
-    instance.registerLazySingleton<AddTaskViewModel>(
-            () => AddTaskViewModel(instance(), instance() ,instance()));
+  instance.registerLazySingleton<TaskDetailsViewModel>(
+      () => TaskDetailsViewModel(instance(), instance()));
 
+  if (!GetIt.I.isRegistered<AddTaskUseCase>()) {
+    instance.registerFactory<AddTaskUseCase>(() => AddTaskUseCase(instance()));
+    instance.registerLazySingleton<AddTaskViewModel>(
+        () => AddTaskViewModel(instance(), instance(), instance()));
   }
 }
+
 initSignupModule() {
   if (!GetIt.I.isRegistered<SignupUseCase>()) {
     instance.registerFactory<SignupUseCase>(() => SignupUseCase(instance()));
@@ -110,6 +113,7 @@ initSignupModule() {
         () => SignupViewModel(instance(), instance(), instance()));
   }
 }
+
 initSignInModule() {
   if (!GetIt.I.isRegistered<SignInViewModel>()) {
     instance.registerFactory<SignInUseCase>(() => SignInUseCase(instance()));

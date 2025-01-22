@@ -153,8 +153,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 20) ,
       child: CustomButton(
           onPressed: () {
-          //  Get.to(()=> CreateTaskScreen()) ;
-            Get.to(()=>const TaskDetailScreen()) ;
+            Get.to(()=> CreateTaskScreen()) ;
+            //Get.to(()=> TaskDetailScreen()) ;
           },
           text: 'Create new Task'
       ),

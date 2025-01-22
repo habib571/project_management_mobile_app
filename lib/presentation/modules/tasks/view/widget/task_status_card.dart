@@ -27,7 +27,7 @@ final TaskStatusModel taskStatusModel ;
   TaskStatusModel(this.textColor, this.backgroundColor, this.statusName);
   factory TaskStatusModel.type( String statusName) {
     switch(statusName) {
-      case "To-do" :
+      case "To-Do" :
         return TaskStatusModel(statusTextColors[0], statusBackgroundColor[0], statusTypes[0]) ;
       case "In progress" :
         return TaskStatusModel(statusTextColors[1], statusBackgroundColor[1], statusTypes[1]) ;

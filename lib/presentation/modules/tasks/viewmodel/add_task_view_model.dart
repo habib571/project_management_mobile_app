@@ -2,10 +2,12 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:project_management_app/domain/models/project_member.dart';
 import 'package:project_management_app/domain/usecases/task/add_task_user_case.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/view/screens/task_detail_screen.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task_priority_chip.dart';
 import 'package:project_management_app/presentation/stateRender/state_render.dart';
 
@@ -88,10 +90,11 @@ class AddTaskViewModel extends BaseViewModel{
          (failure) {
            updateState(ErrorState(StateRendererType.snackbarState, failure.message)) ;
          },
-         (data) {
+         (data) async{
            updateState(ContentState()) ;
-           _task = data ;
-           
+            setTask(data) ;
+              Get.to(()=>const TaskDetailScreen()) ;
+
          }
      ) ;
 

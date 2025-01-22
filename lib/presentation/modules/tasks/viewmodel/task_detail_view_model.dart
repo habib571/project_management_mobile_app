@@ -25,9 +25,8 @@ class TaskDetailsViewModel extends BaseViewModel {
     setTask(_addTaskViewModel.task) ;
 
     if(_task !=null) {
-       updateState(ContentState()) ;
+       updateState(ContentState());
     }
-
   }
 
 

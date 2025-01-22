@@ -19,7 +19,7 @@ class TaskModel {
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
       json['id'] ,
-      json['name'] ,
+      json['title'] ,
       json['description'],
       json['deadline'] ,
       json['priority'] ,
