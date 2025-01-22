@@ -54,7 +54,7 @@ class TaskDetailScreen extends StatelessWidget {
                   Text("Description", style: robotoBold.copyWith(fontSize: 16)),
                   SizedBox(height:15 ) ,
                   Text(
-                      "bla bla bla bla bla blabla bla bla bla bla bla"
+                      "bla bla bla bla bla bla bla bla bla bla bla bla"
                           " bla bla bla,bla bla bla bla bla bla bla bla bla "
                           "bla bla bla bla bla bla,bla bla bla,bla bla blabla bla bla" ,
                      style: robotoMedium.copyWith(color: AppColors.secondaryTxt),
