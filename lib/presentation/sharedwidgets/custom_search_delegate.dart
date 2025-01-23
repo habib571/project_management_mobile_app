@@ -14,17 +14,18 @@ import 'package:project_management_app/presentation/sharedwidgets/custom_listtil
 import 'package:provider/provider.dart';
 
 import '../../application/constants/constants.dart';
+import '../../application/dependencyInjection/dependency_injection.dart';
 import '../../domain/models/user.dart';
 import '../modules/dashboord/viewmodel/project_detail_view_model.dart';
+import '../modules/dashboord/viewmodel/search_member_view_model.dart';
 import '../stateRender/state_render_impl.dart';
 import 'image_widget.dart';
 import 'input_text.dart';
 
 
 class CustomSearchDelegate extends SearchDelegate {
-  final ProjectDetailViewModel viewModel;
-
-  CustomSearchDelegate(this.viewModel);
+  final SearchViewModel _viewModel = instance<SearchViewModel>();
+  CustomSearchDelegate();
 
   @override
   String? get searchFieldLabel => "Find Member";
@@ -36,7 +37,7 @@ class CustomSearchDelegate extends SearchDelegate {
         icon: const Icon(Icons.clear),
         onPressed: () {
           query = '';
-          viewModel.memberToAdd.clear();
+          _viewModel.memberToAdd.clear();
           showSuggestions(context);
         },
       ),
@@ -65,22 +66,22 @@ class CustomSearchDelegate extends SearchDelegate {
       );
     }
 
-    // Call the addMember function each time the query changes
-    viewModel.getMemberByName(query, page: 0);
-    viewModel.hasMore = true;
+    // call the addMember function each time the query changes
+    _viewModel.getMemberByName(query, page: 0);
+    _viewModel.hasMore = true;
     return _buildResultList();
   }
 
   Widget _buildResultList() {
     return ValueListenableBuilder<FlowState>(
-      valueListenable: viewModel.stateNotifier,
+      valueListenable: _viewModel.stateNotifier,
       builder: (context, state, child) {
-        if (state is LoadingState && viewModel.memberToAdd.isEmpty) {
+        if (state is LoadingState && _viewModel.memberToAdd.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is ErrorState) {
           return Center(child: Text(state.message));
         } else if (state is ContentState) {
-          final members = viewModel.memberToAdd;
+          final members = _viewModel.memberToAdd;
           if (members.isEmpty) {
             return const Center(child: Text("No members found"));
           }
@@ -89,9 +90,9 @@ class CustomSearchDelegate extends SearchDelegate {
             onNotification: (scrollInfo) {
               if (scrollInfo.metrics.pixels >=
                   scrollInfo.metrics.maxScrollExtent &&
-                  !viewModel.isLoadingMore) {
+                  !_viewModel.isLoadingMore) {
                 // Fetch next page.
-                viewModel.getMemberByName(query, page: viewModel.currentPage);
+                _viewModel.getMemberByName(query, page: _viewModel.currentPage);
               }
               return false;
             },
@@ -99,7 +100,7 @@ class CustomSearchDelegate extends SearchDelegate {
               itemCount: members.length + 1,
               itemBuilder: (context, index) {
                 if (index == members.length) {
-                  return viewModel.isLoadingMore
+                  return _viewModel.isLoadingMore
                       ? const Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Center(child: CircularProgressIndicator()),

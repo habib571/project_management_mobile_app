@@ -5,18 +5,19 @@ import 'package:project_management_app/presentation/modules/dashboord/view/widge
 import 'package:project_management_app/presentation/utils/colors.dart';
 
 import '../../domain/models/user.dart';
-import '../modules/dashboord/view/widgets/members_card.dart';
 import '../utils/styles.dart';
 import 'image_widget.dart';
 
 class IssueCard extends StatelessWidget {
   final String title;
   final String description;
-  final String taskReference;
+  final String taskReference; //task object
   final List<User> taggedUsers;
   final User createdBy;
   final bool isResolved;
   final VoidCallback onMarkResolved;
+  final int currentUserId ;
+
 
   const IssueCard({
     Key? key,
@@ -25,6 +26,7 @@ class IssueCard extends StatelessWidget {
     required this.taskReference,
     required this.taggedUsers,
     required this.createdBy,
+    required this.currentUserId,
     this.isResolved = false,
     required this.onMarkResolved,
   }) : super(key: key);
@@ -107,50 +109,11 @@ class IssueCard extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 11.h),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Tagged Member :',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 8.h),
-                    SizedBox(
-                      height: 60.h,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          ...List.generate(taggedUsers.length, (index) {
-                            return Row(
-                              children: [
-                                AssignedMemberChip(
-                                  imageUrl: taggedUsers[index].imageUrl,
-                                  userName: taggedUsers[index].fullName,
-                                  onDeleted: () {},
-                                ),
-                                SizedBox(width: 5.w,)
-                              ],
-                            );
-                          }),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-
+                _taggedMembersSection(taggedUsers),
                 const SizedBox(height: 12),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: ElevatedButton(
-                    onPressed: isResolved ? null : onMarkResolved,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: isResolved ? Colors.grey : AppColors.primary,
-                    ),
-                    child: Text(
-                      isResolved ? 'Resolved' : 'Mark as Resolved',
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ),
+                  child: _issueCardButton(createdBy, currentUserId)
                 ),
               ],
             ),
@@ -159,4 +122,51 @@ class IssueCard extends StatelessWidget {
       ),
     );
   }
+}
+
+
+Widget _issueCardButton(User createdBy,int currentUserId ){
+  return ElevatedButton(
+    onPressed: (){},
+    style: ElevatedButton.styleFrom(
+      backgroundColor: AppColors.primary,
+    ),
+    child:Text(
+      createdBy.id == currentUserId ?  "Delete Issue" : "Mark as Resolved" ,
+      style: const TextStyle(color: Colors.white),
+    ),
+  );
+}
+
+Widget _taggedMembersSection(List<User> taggedUsers){
+  return taggedUsers.isNotEmpty ? Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        'Tagged Member :',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      SizedBox(height: 8.h),
+      SizedBox(
+        height: 60.h,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: [
+            ...List.generate(taggedUsers.length, (index) {
+              return Row(
+                children: [
+                  AssignedMemberChip(
+                    imageUrl: taggedUsers[index].imageUrl,
+                    userName: taggedUsers[index].fullName,
+                    onDeleted: () {},
+                  ),
+                  SizedBox(width: 5.w,)
+                ],
+              );
+            }),
+          ],
+        ),
+      ),
+    ],
+  ) : const SizedBox.shrink() ;
 }

@@ -12,6 +12,8 @@ import 'package:project_management_app/domain/usecases/project/myprojects_usecas
 import 'package:project_management_app/presentation/modules/addmember/viewmodel/add_member_viewmodel.dart';
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/search_member_view_model.dart';
 
 import 'package:project_management_app/presentation/modules/userprofile/viewmodel/userprofile_view_model.dart';
 
@@ -53,10 +55,26 @@ initAppModule() async {
   initDashboard();
   intAddProject();
 
- initUserProfileModule();
+  initUserProfileModule();
   initProject() ;
+  initSearchModule();
+  initReportIssueModule();
 
 }
+
+initReportIssueModule() {
+  if (!GetIt.I.isRegistered<ReportIssueViewModel>()) {
+    instance.registerFactory<ReportIssueViewModel>(() => ReportIssueViewModel(instance()));
+  }
+}
+
+initSearchModule() {
+  if (!GetIt.I.isRegistered<SearchViewModel>()) {
+    instance.registerLazySingleton<SearchViewModel>(() => SearchViewModel(instance(),instance()));
+  }
+}
+
+
 initHomeModule() {
     instance.registerLazySingleton<HomeViewModel>(() => HomeViewModel(instance()));
 }
@@ -65,12 +83,14 @@ intAddProject(){
     instance.registerFactory<AddProjectViewModel>(() => AddProjectViewModel(instance(),instance()));
     instance.registerFactory<AddProjectUseCase>(() => AddProjectUseCase(instance()));
 }
+
 initDashboard() {
   if (!GetIt.I.isRegistered<GetMyProjectsUseCase>()) {
     instance.registerFactory<GetMyProjectsUseCase>(() => GetMyProjectsUseCase(instance()));
     instance.registerLazySingleton<DashBoardViewModel>(() => DashBoardViewModel(instance() ,instance()) );
   }
 }
+
 initProject() {
   if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
     instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
