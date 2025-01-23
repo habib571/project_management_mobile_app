@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/sharedwidgets/input_text.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 
+import '../../../../../application/dependencyInjection/dependency_injection.dart';
 import '../../../../sharedwidgets/custom_add_button.dart';
 import '../../../../sharedwidgets/custom_button.dart';
+import '../../../../sharedwidgets/custom_search_delegate.dart';
 import '../../../../sharedwidgets/image_widget.dart';
 import '../../../../utils/styles.dart';
 import '../widgets/assigned_memberchip.dart';
@@ -15,7 +18,10 @@ import '../widgets/assigned_taskchip.dart';
 
 
 class ReportIssueScreen extends StatelessWidget{
-  const ReportIssueScreen({super.key});
+   ReportIssueScreen({super.key});
+
+  final ReportIssueViewModel _viewModel = instance<ReportIssueViewModel>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +32,9 @@ class ReportIssueScreen extends StatelessWidget{
   }
 
 
-
   Widget _showBody(BuildContext context) {
     return Form(
+        key:_viewModel.formkey ,
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -57,7 +63,7 @@ class ReportIssueScreen extends StatelessWidget{
   Widget _issueInputTextSection(){
     return InputText(
       validator: (val) => val.isEmptyInput() ,
-      //controller: ,
+      controller: _viewModel.issueTitle,
       hintText: "Type the issue",
       prefixIcon: const Icon(Icons.report_problem_outlined),
       borderSide: const BorderSide(color: Colors.black),
@@ -68,7 +74,7 @@ class ReportIssueScreen extends StatelessWidget{
   Widget _issueDescriptionInputTextSection(){
     return InputText(
       validator: (val) => val.isEmptyInput() ,
-      //controller: ,
+      controller: _viewModel.issueDescription,
       hintText: "Enter the issue description",
       maxLines: 3,
       prefixIcon: const Icon(Icons.description_outlined),
@@ -92,7 +98,9 @@ class ReportIssueScreen extends StatelessWidget{
               AssignedMemberChip(imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80', userName: "Ahmed", onDeleted: (){}),
               AssignedMemberChip(imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80', userName: "Ahmed", onDeleted: (){}),
               AssignedMemberChip(imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80', userName: "Ahmed", onDeleted: (){}),
-              CustomAddButton(onTap: (){},)
+              CustomAddButton(onTap: (){
+               // showSearch(context: context ,delegate: CustomSearchDelegate(_viewModel)
+              },)
             ]
         ),
       ],
@@ -126,8 +134,6 @@ class ReportIssueScreen extends StatelessWidget{
         onPressed: () {},
         text: 'Report issue');
   }
-
-
 }
 
 

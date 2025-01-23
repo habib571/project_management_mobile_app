@@ -7,4 +7,11 @@ import '../view/widgets/assigned_memberchip.dart';
 class ReportIssueViewModel extends BaseViewModel{
   ReportIssueViewModel(super.tokenManager);
 
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  TextEditingController issueTitle = TextEditingController();
+  TextEditingController issueDescription = TextEditingController();
+
+
+  GlobalKey<FormState> get formkey => _formkey;
+
 }
