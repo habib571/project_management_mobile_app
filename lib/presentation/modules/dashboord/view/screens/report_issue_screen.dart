@@ -10,7 +10,7 @@ import 'package:project_management_app/presentation/utils/colors.dart';
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
 import '../../../../sharedwidgets/custom_add_button.dart';
 import '../../../../sharedwidgets/custom_button.dart';
-import '../../../../sharedwidgets/custom_search_delegate.dart';
+import '../../../searchmember/view/custom_search_delegate.dart';
 import '../../../../sharedwidgets/image_widget.dart';
 import '../../../../utils/styles.dart';
 import '../widgets/assigned_memberchip.dart';

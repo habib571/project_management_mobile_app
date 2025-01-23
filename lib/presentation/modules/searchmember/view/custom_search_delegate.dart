@@ -13,14 +13,14 @@ import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.
 import 'package:project_management_app/presentation/sharedwidgets/custom_listtile.dart';
 import 'package:provider/provider.dart';
 
-import '../../application/constants/constants.dart';
-import '../../application/dependencyInjection/dependency_injection.dart';
-import '../../domain/models/user.dart';
-import '../modules/dashboord/viewmodel/project_detail_view_model.dart';
-import '../modules/dashboord/viewmodel/search_member_view_model.dart';
-import '../stateRender/state_render_impl.dart';
-import 'image_widget.dart';
-import 'input_text.dart';
+import '../../../../application/constants/constants.dart';
+import '../../../../application/dependencyInjection/dependency_injection.dart';
+import '../../../../domain/models/user.dart';
+import '../../dashboord/viewmodel/project_detail_view_model.dart';
+import '../viewmodel/search_member_view_model.dart';
+import '../../../stateRender/state_render_impl.dart';
+import '../../../sharedwidgets/image_widget.dart';
+import '../../../sharedwidgets/input_text.dart';
 
 
 class CustomSearchDelegate extends SearchDelegate {

@@ -13,7 +13,7 @@ import 'package:project_management_app/presentation/modules/addmember/viewmodel/
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
-import 'package:project_management_app/presentation/modules/dashboord/viewmodel/search_member_view_model.dart';
+import 'package:project_management_app/presentation/modules/searchmember/viewmodel/search_member_view_model.dart';
 
 import 'package:project_management_app/presentation/modules/userprofile/viewmodel/userprofile_view_model.dart';
 

@@ -19,7 +19,7 @@ import 'package:project_management_app/presentation/utils/styles.dart';
 
 import '../../../../sharedwidgets/custom_add_button.dart';
 import '../../../../sharedwidgets/custom_button.dart';
-import '../../../../sharedwidgets/custom_search_delegate.dart';
+import '../../../searchmember/view/custom_search_delegate.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
   const ProjectDetailScreen({super.key, });
