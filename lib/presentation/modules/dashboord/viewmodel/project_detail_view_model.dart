@@ -61,7 +61,7 @@ class ProjectDetailViewModel extends BaseViewModel {
     );
   }
 
-  Future<void> getMemberByName(String name, {int page = 0}) async {
+  /*Future<void> getMemberByName(String name, {int page = 0}) async {
     if (_isLoadingMore || !hasMore) return;
 
     if (page == 0) {
@@ -90,5 +90,5 @@ class ProjectDetailViewModel extends BaseViewModel {
     );
 
     _isLoadingMore = false;
-  }
+  }*/
 }
