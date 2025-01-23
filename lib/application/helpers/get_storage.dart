@@ -10,6 +10,7 @@ abstract class LocalStorage {
   Future<void> saveUserDetail(AuthResponse userDetails);
   String? getAuthToken();
   bool get isUserLoggedIn;
+  int getCurrentUserId();
 }
 
 class LocalStorageImp implements LocalStorage {
@@ -27,14 +28,19 @@ class LocalStorageImp implements LocalStorage {
 
   @override
   String? getAuthToken() {
-    AuthResponse userDetails = AuthResponse.fromJson(_getStorage.read('userDetails'))   ;
+    AuthResponse userDetails = AuthResponse.fromJson(_getStorage.read('userDetails'))  ;
     return userDetails.token ;
   }
 
   bool isUserLogged() {
     return _getStorage.hasData('userDetails') &&  _tokenManager.getTokenExpiry().isAfter(DateTime.now()) ;
   }
-
   @override
   bool get isUserLoggedIn => isUserLogged();
+
+  @override
+  int getCurrentUserId() {
+    AuthResponse userDetails = AuthResponse.fromJson(_getStorage.read('userDetails')) ;
+    return userDetails.user.id ;
+  }
 }
