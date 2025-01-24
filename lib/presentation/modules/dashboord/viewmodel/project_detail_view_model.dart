@@ -30,7 +30,6 @@ class ProjectDetailViewModel extends BaseViewModel {
 
 
 
-
   getProjectMembers() async {
     updateState(LoadingState(
         stateRendererType: StateRendererType.fullScreenLoadingState));
@@ -42,7 +41,7 @@ class ProjectDetailViewModel extends BaseViewModel {
         },
             (data) {
               _projectMember = data ;
-          updateState(ContentState());
+              updateState(ContentState());
         }
     );
   }
