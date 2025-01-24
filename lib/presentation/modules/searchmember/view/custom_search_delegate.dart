@@ -25,7 +25,8 @@ import '../../../sharedwidgets/input_text.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   final SearchViewModel _viewModel = instance<SearchViewModel>();
-  CustomSearchDelegate();
+  final void Function(User member)? afterSelectingUser;
+  CustomSearchDelegate({required this.afterSelectingUser});
 
   @override
   String? get searchFieldLabel => "Find Member";
@@ -114,9 +115,8 @@ class CustomSearchDelegate extends SearchDelegate {
                     leading: ImagePlaceHolder(imgBorder: true,radius: 25, imageUrl: member.imageUrl,),
                     title: Text(member.fullName),
                     subtitle: Text(member.email),
-                    onTap: () {
-                      Get.toNamed(AppRoutes.addMemberScreen,arguments: member);
-                      //close(context, member);
+                    onTap:(){
+                      afterSelectingUser!(member);
                     },
                   ),
                 );
