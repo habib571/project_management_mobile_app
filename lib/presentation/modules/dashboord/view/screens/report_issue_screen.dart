@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
+import 'package:project_management_app/application/navigation/routes_constants.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/sharedwidgets/input_text.dart';
@@ -17,11 +20,15 @@ import '../widgets/assigned_memberchip.dart';
 import '../widgets/assigned_taskchip.dart';
 
 
-class ReportIssueScreen extends StatelessWidget{
+class ReportIssueScreen extends StatefulWidget{
    ReportIssueScreen({super.key});
 
-  final ReportIssueViewModel _viewModel = instance<ReportIssueViewModel>();
+  @override
+  State<ReportIssueScreen> createState() => _ReportIssueScreenState();
+}
 
+class _ReportIssueScreenState extends State<ReportIssueScreen> {
+  final ReportIssueViewModel _viewModel = instance<ReportIssueViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +38,6 @@ class ReportIssueScreen extends StatelessWidget{
     );
   }
 
-
   Widget _showBody(BuildContext context) {
     return Form(
         key:_viewModel.formkey ,
@@ -39,6 +45,7 @@ class ReportIssueScreen extends StatelessWidget{
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 25.w),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 25.h,),
                 const CustomAppBar(title: "Report issue"),
@@ -57,8 +64,6 @@ class ReportIssueScreen extends StatelessWidget{
           ),
     ));
   }
-
-
 
   Widget _issueInputTextSection(){
     return InputText(
@@ -85,7 +90,7 @@ class ReportIssueScreen extends StatelessWidget{
 
   Widget _membersChipSection(BuildContext context){
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:CrossAxisAlignment.start ,
       children: [
         Text("Tag members", style: robotoBold.copyWith(fontSize: 18),),
         SizedBox(height: 10.h,),
@@ -94,16 +99,26 @@ class ReportIssueScreen extends StatelessWidget{
             runSpacing: 8,
             spacing: 8,
             children: [
-              AssignedMemberChip(imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80', userName: "Ahmed", onDeleted: (){}),
-              AssignedMemberChip(imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80', userName: "Ahmed", onDeleted: (){}),
-              AssignedMemberChip(imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80', userName: "Ahmed", onDeleted: (){}),
-              AssignedMemberChip(imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80', userName: "Ahmed", onDeleted: (){}),
-              CustomAddButton(onTap: (){
-               // showSearch(context: context ,delegate: CustomSearchDelegate(_viewModel)
-              },)
+              ...List.generate(_viewModel.taggedMembers.length, (index){
+                final member = _viewModel.taggedMembers[index];
+                return AssignedMemberChip(imageUrl: member.imageUrl , userName: member.fullName, onDeleted: (){},);
+              }),
+              CustomAddButton(onTap: () {
+                showSearch(
+                  context: context,
+                  delegate: CustomSearchDelegate(
+                    afterSelectingUser: (selectedMember) {
+                        _viewModel.taggedMembers.add(selectedMember);
+                      Get.toNamed(AppRoutes.reportIssueScreen);
+                      print(_viewModel.taggedMembers.length);
+                    },
+                  ),
+                );
+              }),
+
             ]
         ),
-      ],
+      ]
     );
   }
 
