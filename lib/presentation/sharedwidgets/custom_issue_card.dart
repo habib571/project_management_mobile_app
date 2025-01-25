@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
-import 'package:project_management_app/presentation/modules/dashboord/view/widgets/assigned_memberchip.dart';
-import 'package:project_management_app/presentation/modules/dashboord/view/widgets/assigned_taskchip.dart';
+import 'package:project_management_app/presentation/modules/dashboord/view/widgets/custom_chips/assigned_memberchip.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 
 import '../../domain/models/user.dart';
+import '../modules/dashboord/view/widgets/custom_chips/assigned_taskchip.dart';
 import '../utils/styles.dart';
 import 'image_widget.dart';
 
@@ -12,7 +12,7 @@ class IssueCard extends StatelessWidget {
   final String title;
   final String description;
   final String taskReference; //task object
-  final List<User> taggedUsers;
+  final User? taggedUser;
   final User createdBy;
   final bool isResolved;
   final VoidCallback onMarkResolved;
@@ -24,7 +24,7 @@ class IssueCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.taskReference,
-    required this.taggedUsers,
+    required this.taggedUser,
     required this.createdBy,
     required this.currentUserId,
     this.isResolved = false,
@@ -35,7 +35,7 @@ class IssueCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white,
-      elevation: 3,
+      elevation:0,
       margin: const EdgeInsets.all(8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -51,7 +51,7 @@ class IssueCard extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
                 maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                //overflow: TextOverflow.ellipsis,
               ),
             ),
             Icon(
@@ -109,7 +109,7 @@ class IssueCard extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 11.h),
-                _taggedMembersSection(taggedUsers),
+                _taggedMembersSection(taggedUser),
                 const SizedBox(height: 12),
                 Align(
                   alignment: Alignment.centerRight,
@@ -138,8 +138,8 @@ Widget _issueCardButton(User createdBy,int currentUserId ){
   );
 }
 
-Widget _taggedMembersSection(List<User> taggedUsers){
-  return taggedUsers.isNotEmpty ? Column(
+Widget _taggedMembersSection(User? taggedUser){
+  return taggedUser != null ? Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       const Text(
@@ -149,22 +149,10 @@ Widget _taggedMembersSection(List<User> taggedUsers){
       SizedBox(height: 8.h),
       SizedBox(
         height: 60.h,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: [
-            ...List.generate(taggedUsers.length, (index) {
-              return Row(
-                children: [
-                  AssignedMemberChip(
-                    imageUrl: taggedUsers[index].imageUrl,
-                    userName: taggedUsers[index].fullName,
-                    onDeleted: () {},
-                  ),
-                  SizedBox(width: 5.w,)
-                ],
-              );
-            }),
-          ],
+        child: AssignedMemberChip(
+          imageUrl: taggedUser.imageUrl,
+          userName: taggedUser.fullName,
+          onDeleted: () {},
         ),
       ),
     ],

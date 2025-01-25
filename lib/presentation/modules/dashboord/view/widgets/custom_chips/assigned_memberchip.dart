@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../sharedwidgets/image_widget.dart';
-import '../../../../utils/colors.dart';
-import '../../../../utils/styles.dart';
+import '../../../../../sharedwidgets/image_widget.dart';
+import '../../../../../utils/colors.dart';
+import '../../../../../utils/styles.dart';
 
 
 
