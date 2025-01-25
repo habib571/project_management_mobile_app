@@ -15,10 +15,29 @@ class ReportIssueViewModel extends BaseViewModel{
 
   GlobalKey<FormState> get formkey => _formkey;
 
-  List<User> _taggedMembers =[
-    //User(22, "Ahmed", "ahmed@gmail.com", "https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" ),
-  ];
-  List<User> get taggedMembers => _taggedMembers ;
+  User? taggedMember ;//= User(22, "Ahmed", "ahmed@gmail.com", "https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" );
+  //User? get taggedMember => _taggedMember ;
+
+  bool _isUserAdded = false;
+  bool get isUserAdded => _isUserAdded ;
+
+  void toggleIsUserAdded() {
+    print(_isUserAdded);
+    _isUserAdded = !_isUserAdded;
+    notifyListeners();
+  }
+
+  /*void updatetaggedMember(User newuser) {
+    print(_isUserAdded);
+    taggedMember = newuser ;
+    notifyListeners();
+  }*/
+
+  void updatetaggedMember(User newuser) {
+    taggedMember = newuser;
+    _isUserAdded = true; // Mettez à jour cette variable
+    notifyListeners();
+  }
 
 
 }

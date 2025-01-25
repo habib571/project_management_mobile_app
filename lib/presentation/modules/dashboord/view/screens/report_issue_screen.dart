@@ -9,8 +9,10 @@ import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.
 import 'package:project_management_app/presentation/sharedwidgets/input_text.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
+import '../../../../../domain/models/user.dart';
 import '../../../../sharedwidgets/custom_add_button.dart';
 import '../../../../sharedwidgets/custom_button.dart';
 import '../../../searchmember/view/custom_search_delegate.dart';
@@ -54,7 +56,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                 SizedBox(height: 35.h,),
                 _issueDescriptionInputTextSection(),
                 SizedBox(height: 35.h,),
-                _membersChipSection(context),
+                _membersChipSection(),
                 SizedBox(height: 35.h,),
                 _tasksChipSection(context),
                 SizedBox(height: 85.h,),
@@ -88,38 +90,102 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
     );
   }
 
-  Widget _membersChipSection(BuildContext context){
+  /*Widget _membersChipSection(BuildContext context){
     return Column(
       crossAxisAlignment:CrossAxisAlignment.start ,
       children: [
-        Text("Tag members", style: robotoBold.copyWith(fontSize: 18),),
+        Text("Tag a member", style: robotoBold.copyWith(fontSize: 18),),
         SizedBox(height: 10.h,),
-        Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            runSpacing: 8,
-            spacing: 8,
-            children: [
-              ...List.generate(_viewModel.taggedMembers.length, (index){
-                final member = _viewModel.taggedMembers[index];
-                return AssignedMemberChip(imageUrl: member.imageUrl , userName: member.fullName, onDeleted: (){},);
-              }),
+
+        _viewModel.taggedMember != null ?
+              AssignedMemberChip(
+                  imageUrl: _viewModel.taggedMember!.imageUrl,
+                  userName: _viewModel.taggedMember!.fullName,
+                  onDeleted: (){}
+              ) :
               CustomAddButton(onTap: () {
                 showSearch(
                   context: context,
                   delegate: CustomSearchDelegate(
                     afterSelectingUser: (selectedMember) {
-                        _viewModel.taggedMembers.add(selectedMember);
                       Get.toNamed(AppRoutes.reportIssueScreen);
-                      print(_viewModel.taggedMembers.length);
                     },
                   ),
                 );
               }),
 
-            ]
-        ),
       ]
     );
+  }*/
+
+  Widget _membersChipSection() {
+    return Row(children: [
+      Image.asset(
+        "assets/user_outline.png",
+        height: 40,
+      ),
+      const SizedBox(
+        width: 10,
+      ),
+      /*Selector<ReportIssueViewModel, bool >(
+          selector: (_, viewModel) => viewModel.isUserAdded ,
+          builder: (context, isUserAdded, _) {
+            return isUserAdded && _viewModel.taggedMember != null
+                ? AssignedMemberChip(
+              imageUrl: context.read<ReportIssueViewModel>().taggedMember!.imageUrl ,
+              userName:context.read<ReportIssueViewModel>().taggedMember!.fullName,
+              onDeleted: () {
+                context.read<ReportIssueViewModel>().toggleIsUserAdded();
+              },
+            )
+              : InkWell(
+              onTap: () {
+                 context.read<ReportIssueViewModel>().toggleIsUserAdded();
+                 showSearch(
+                   context: context,
+                   delegate: CustomSearchDelegate(
+                     afterSelectingUser: (selectedMember) {
+                       context.read<ReportIssueViewModel>().updatetaggedMember(selectedMember);
+                       Get.toNamed(AppRoutes.reportIssueScreen);
+                     },
+                   ),
+                 );
+                //Get.to(() => MembersScreen(),arguments: _viewModel.projectViewModel);
+              },
+              child: Image.asset("assets/add_filled.png", height: 40),
+            );
+          })*/
+
+      Selector<ReportIssueViewModel, bool>(
+  selector: (_, viewModel) => viewModel.isUserAdded && viewModel.taggedMember != null,
+  builder: (context, isUserAdded, _) {
+    return isUserAdded
+        ? AssignedMemberChip(
+            imageUrl: context.read<ReportIssueViewModel>().taggedMember!.imageUrl,
+            userName: context.read<ReportIssueViewModel>().taggedMember!.fullName,
+            onDeleted: () {
+              context.read<ReportIssueViewModel>().toggleIsUserAdded();
+            },
+          )
+        : InkWell(
+            onTap: () {
+              showSearch(
+                context: context,
+                delegate: CustomSearchDelegate(
+                  afterSelectingUser: (selectedMember) {
+                    context.read<ReportIssueViewModel>().updatetaggedMember(selectedMember);
+                    Get.toNamed(AppRoutes.reportIssueScreen);
+                  },
+                ),
+              );
+            },
+            child: Image.asset("assets/add_filled.png", height: 40),
+          );
+  },
+)
+
+
+    ]);
   }
 
   Widget _tasksChipSection(BuildContext context){
