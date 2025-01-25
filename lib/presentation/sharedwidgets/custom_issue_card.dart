@@ -38,64 +38,67 @@ class IssueCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      child: ExpansionTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Text(
-                title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
+      child: Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            Icon(
-              isResolved ? Icons.check_circle : Icons.error,
-              color: isResolved ? Colors.green : Colors.red,
-            ),
-          ],
-        ),
-        subtitle: RichText(
-          text: TextSpan(
-            children: [
-               TextSpan(
-                text: 'Reported by: ',
-                style:robotoSemiBold.copyWith(fontSize: 13)
-              ),
-              TextSpan(
-                text: createdBy.fullName,
-                style:robotoRegular.copyWith(fontSize: 14)
+              Icon(
+                isResolved ? Icons.check_circle : Icons.error,
+                color: isResolved ? Colors.green : Colors.red,
               ),
             ],
           ),
-        ),
-        leading: ImagePlaceHolder(radius: 20, imageUrl: createdBy.imageUrl),
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          subtitle: RichText(
+            text: TextSpan(
               children: [
-                Text(
-                  description,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                 TextSpan(
+                  text: 'Reported by: ',
+                  style:robotoSemiBold.copyWith(fontSize: 13)
                 ),
-                const SizedBox(height: 12),
-                _taggedTaskSection(taskReference),
-                SizedBox(height: 11.h),
-                _taggedMembersSection(taggedUser),
-                const SizedBox(height: 12),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: _issueCardButton(createdBy, currentUserId)
+                TextSpan(
+                  text: createdBy.fullName,
+                  style:robotoRegular.copyWith(fontSize: 14)
                 ),
               ],
             ),
           ),
-        ],
+          leading: ImagePlaceHolder(radius: 20, imageUrl: createdBy.imageUrl),
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    description,
+                    style: robotoRegular.copyWith(fontSize: 15),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 12),
+                  _taggedTaskSection(taskReference),
+                  SizedBox(height: 11.h),
+                  _taggedMembersSection(taggedUser),
+                  const SizedBox(height: 12),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: _issueCardButton(createdBy, currentUserId)
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -136,11 +139,11 @@ Widget _taggedMembersSection(User? taggedUser){
             border: Border.all(color: Colors.black)
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ImagePlaceHolder(radius: 8, imageUrl: taggedUser.imageUrl),
+              ImagePlaceHolder(radius: 10, imageUrl: taggedUser.imageUrl),
               SizedBox(width: 5.w,),
               Text(taggedUser.fullName)
             ],
@@ -167,7 +170,7 @@ Widget _taggedTaskSection(TaskModel? taggedTask){
             border: Border.all(color: Colors.black)
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
