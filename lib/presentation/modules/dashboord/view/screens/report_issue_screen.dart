@@ -1,26 +1,29 @@
-import 'package:flutter/cupertino.dart';
+
+
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
-import 'package:project_management_app/application/navigation/routes_constants.dart';
-import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
-import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
-import 'package:project_management_app/presentation/sharedwidgets/input_text.dart';
-import 'package:project_management_app/application/extensions/string_extension.dart';
-import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:provider/provider.dart';
+import 'package:project_management_app/application/extensions/string_extension.dart';
+
 
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
+import '../../../../../application/navigation/routes_constants.dart';
+import '../../../../../domain/models/task.dart';
 import '../../../../../domain/models/user.dart';
-import '../../../../sharedwidgets/custom_add_button.dart';
+import '../../../../sharedwidgets/custom_appbar.dart';
 import '../../../../sharedwidgets/custom_button.dart';
-import '../../../searchmember/view/custom_search_delegate.dart';
-import '../../../../sharedwidgets/image_widget.dart';
+import '../../../../sharedwidgets/input_text.dart';
+import '../../../../utils/colors.dart';
 import '../../../../utils/styles.dart';
-import '../widgets/assigned_memberchip.dart';
-import '../widgets/assigned_taskchip.dart';
-
+import '../../../searchmember/view/custom_search_delegate.dart';
+import '../../viewmodel/report_issue_viewmodel.dart';
+import '../widgets/custom_chips/assigned_memberchip.dart';
+import '../widgets/custom_chips/assigned_taskchip.dart';
 
 class ReportIssueScreen extends StatefulWidget{
    ReportIssueScreen({super.key});
@@ -58,7 +61,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                 SizedBox(height: 35.h,),
                 _membersChipSection(),
                 SizedBox(height: 35.h,),
-                _tasksChipSection(context),
+                _tasksChipSection(),
                 SizedBox(height: 85.h,),
                 _showButton()
               ],
@@ -66,6 +69,8 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
           ),
     ));
   }
+
+
 
   Widget _issueInputTextSection(){
     return InputText(
@@ -90,122 +95,129 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
     );
   }
 
-  /*Widget _membersChipSection(BuildContext context){
+
+  Widget _membersChipSection() {
     return Column(
-      crossAxisAlignment:CrossAxisAlignment.start ,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("Tag a member", style: robotoBold.copyWith(fontSize: 18),),
         SizedBox(height: 10.h,),
+        Row(children: [
+          Image.asset(
+            "assets/user_outline.png",
+            height: 40,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
 
-        _viewModel.taggedMember != null ?
+          Selector<ReportIssueViewModel, Map<String,dynamic>>(
+            selector: (_, viewModel) => {
+              "isUserAdded" : viewModel.isUserAdded ,
+              "taggedMember" : viewModel.taggedMember
+            } ,
+            builder: (context, data, _) {
+              final bool isUserAdded = data['isUserAdded'] as bool;
+              final User? taggedMember = data['taggedMember'] as User?;
+
+              return isUserAdded && taggedMember != null ?
               AssignedMemberChip(
-                  imageUrl: _viewModel.taggedMember!.imageUrl,
-                  userName: _viewModel.taggedMember!.fullName,
-                  onDeleted: (){}
-              ) :
-              CustomAddButton(onTap: () {
-                showSearch(
-                  context: context,
-                  delegate: CustomSearchDelegate(
-                    afterSelectingUser: (selectedMember) {
-                      Get.toNamed(AppRoutes.reportIssueScreen);
-                    },
-                  ),
-                );
-              }),
-
-      ]
-    );
-  }*/
-
-  Widget _membersChipSection() {
-    return Row(children: [
-      Image.asset(
-        "assets/user_outline.png",
-        height: 40,
-      ),
-      const SizedBox(
-        width: 10,
-      ),
-      /*Selector<ReportIssueViewModel, bool >(
-          selector: (_, viewModel) => viewModel.isUserAdded ,
-          builder: (context, isUserAdded, _) {
-            return isUserAdded && _viewModel.taggedMember != null
-                ? AssignedMemberChip(
-              imageUrl: context.read<ReportIssueViewModel>().taggedMember!.imageUrl ,
-              userName:context.read<ReportIssueViewModel>().taggedMember!.fullName,
-              onDeleted: () {
-                context.read<ReportIssueViewModel>().toggleIsUserAdded();
-              },
-            )
-              : InkWell(
-              onTap: () {
-                 context.read<ReportIssueViewModel>().toggleIsUserAdded();
-                 showSearch(
-                   context: context,
-                   delegate: CustomSearchDelegate(
-                     afterSelectingUser: (selectedMember) {
-                       context.read<ReportIssueViewModel>().updatetaggedMember(selectedMember);
-                       Get.toNamed(AppRoutes.reportIssueScreen);
-                     },
-                   ),
-                 );
-                //Get.to(() => MembersScreen(),arguments: _viewModel.projectViewModel);
-              },
-              child: Image.asset("assets/add_filled.png", height: 40),
-            );
-          })*/
-
-      Selector<ReportIssueViewModel, bool>(
-  selector: (_, viewModel) => viewModel.isUserAdded && viewModel.taggedMember != null,
-  builder: (context, isUserAdded, _) {
-    return isUserAdded
-        ? AssignedMemberChip(
-            imageUrl: context.read<ReportIssueViewModel>().taggedMember!.imageUrl,
-            userName: context.read<ReportIssueViewModel>().taggedMember!.fullName,
-            onDeleted: () {
-              context.read<ReportIssueViewModel>().toggleIsUserAdded();
-            },
-          )
-        : InkWell(
-            onTap: () {
-              showSearch(
-                context: context,
-                delegate: CustomSearchDelegate(
-                  afterSelectingUser: (selectedMember) {
-                    context.read<ReportIssueViewModel>().updatetaggedMember(selectedMember);
-                    Get.toNamed(AppRoutes.reportIssueScreen);
-                  },
-                ),
+                imageUrl: taggedMember.imageUrl,
+                userName: taggedMember.fullName,
+                onDeleted: () {
+                  context.read<ReportIssueViewModel>().toggleIsUserAdded();
+                },
+              )
+                  : InkWell(
+                onTap: () {
+                  showSearch(
+                    context: context,
+                    delegate: CustomSearchDelegate(
+                      afterSelectingUser: (selectedMember) {
+                        context.read<ReportIssueViewModel>().updatetaggedMember(selectedMember);
+                        Get.toNamed(AppRoutes.reportIssueScreen);
+                      },
+                    ),
+                  );
+                },
+                child: Image.asset("assets/add_filled.png", height: 40),
               );
             },
-            child: Image.asset("assets/add_filled.png", height: 40),
-          );
-  },
-)
+          )
 
 
-    ]);
+
+    /*Selector<ReportIssueViewModel, bool>(
+        selector: (_, viewModel) => viewModel.isUserAdded ,
+        builder: (context, isUserAdded, _) {
+          return isUserAdded
+              ? AssignedMemberChip(
+                  imageUrl: context.read<ReportIssueViewModel>().taggedMember!.imageUrl,
+                  userName: context.read<ReportIssueViewModel>().taggedMember!.fullName,
+                  onDeleted: () {
+                    context.read<ReportIssueViewModel>().toggleIsUserAdded();
+                  },
+                )
+              : InkWell(
+                  onTap: () {
+                    showSearch(
+                      context: context,
+                      delegate: CustomSearchDelegate(
+                        afterSelectingUser: (selectedMember) {
+                          context.read<ReportIssueViewModel>().updatetaggedMember(selectedMember);
+                          Get.toNamed(AppRoutes.reportIssueScreen);
+                        },
+                      ),
+                    );
+                  },
+                  child: Image.asset("assets/add_filled.png", height: 40),
+                );
+              },
+            )*/
+          ]
+        ),
+      ],
+    );
   }
 
-  Widget _tasksChipSection(BuildContext context){
+  Widget _tasksChipSection(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("Mark a task", style: robotoBold.copyWith(fontSize: 18),),
         SizedBox(height: 10.h,),
-        Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            runSpacing: 8,
-            spacing: 8,
-            children: [
-              AssignedTaskChip(taskName : "Task 1", onDeleted: (){}, ),
-              AssignedTaskChip(taskName : "Task 2", onDeleted: (){}, ),
-              AssignedTaskChip(taskName : "Task 3", onDeleted: (){}, ),
-              AssignedTaskChip(taskName : "Task 4", onDeleted: (){}, ),
-              CustomAddButton(onTap: (){},)
-            ]
-        ),
+
+        Row(
+          children: [
+            const Icon(Icons.assignment_outlined,size: 50,color: Colors.grey),
+             SizedBox(
+              width: 10.w,
+            ),
+            Selector<ReportIssueViewModel , Map<String,dynamic>>(
+              selector: (_ , viewModel) => {
+                "isTaskAdded" : viewModel.isTaskAdded ,
+                "taggedTask" : viewModel.taggedTask
+              } ,
+              builder: (context, data, _){
+                final bool isTaskAdded = data["isTaskAdded"] ;
+                final TaskModel ? taggedTask = data["taggedTask"] ;
+
+                return isTaskAdded && taggedTask != null ?
+                  AssignedTaskChip(
+                    taskName : taggedTask.name as String, onDeleted: (){
+                    context.read<ReportIssueViewModel>().toggleIsTaskAdded();
+                    },
+                  )
+                    : InkWell(
+                      onTap: () {
+                        context.read<ReportIssueViewModel>().updatetaggedTask(TaskModel.taggedTask(22, "API"));
+                      },
+                      child: Image.asset("assets/add_filled.png", height: 40),
+                );
+
+                }, ),
+          ],
+        )
       ],
     );
   }
@@ -217,5 +229,25 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
   }
 }
 
-
+/*Widget _tasksChipSection(BuildContext context){
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text("Mark a task", style: robotoBold.copyWith(fontSize: 18),),
+      SizedBox(height: 10.h,),
+      Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          runSpacing: 8,
+          spacing: 8,
+          children: [
+            AssignedTaskChip(taskName : "Task 1", onDeleted: (){}, ),
+            AssignedTaskChip(taskName : "Task 2", onDeleted: (){}, ),
+            AssignedTaskChip(taskName : "Task 3", onDeleted: (){}, ),
+            AssignedTaskChip(taskName : "Task 4", onDeleted: (){}, ),
+            CustomAddButton(onTap: (){},)
+          ]
+      ),
+    ],
+  );
+}*/
 

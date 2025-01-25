@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
-import 'package:project_management_app/presentation/modules/dashboord/view/widgets/custom_chips/assigned_memberchip.dart';
+import 'package:project_management_app/domain/models/task.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
-
 import '../../domain/models/user.dart';
-import '../modules/dashboord/view/widgets/custom_chips/assigned_taskchip.dart';
 import '../utils/styles.dart';
 import 'image_widget.dart';
 
 class IssueCard extends StatelessWidget {
   final String title;
   final String description;
-  final String taskReference; //task object
+  final TaskModel? taskReference;
   final User? taggedUser;
   final User createdBy;
   final bool isResolved;
@@ -50,8 +48,6 @@ class IssueCard extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
-                maxLines: 1,
-                //overflow: TextOverflow.ellipsis,
               ),
             ),
             Icon(
@@ -70,7 +66,6 @@ class IssueCard extends StatelessWidget {
               TextSpan(
                 text: createdBy.fullName,
                 style:robotoRegular.copyWith(fontSize: 14)
-
               ),
             ],
           ),
@@ -89,25 +84,7 @@ class IssueCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 12),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Reported Task :',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Wrap(
-                        runSpacing: 8,
-                        spacing: 8,
-                        children: [
-                          AssignedTaskChip(taskName: "Task 1", onDeleted: () {}),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                _taggedTaskSection(taskReference),
                 SizedBox(height: 11.h),
                 _taggedMembersSection(taggedUser),
                 const SizedBox(height: 12),
@@ -125,6 +102,8 @@ class IssueCard extends StatelessWidget {
 }
 
 
+
+
 Widget _issueCardButton(User createdBy,int currentUserId ){
   return ElevatedButton(
     onPressed: (){},
@@ -138,6 +117,9 @@ Widget _issueCardButton(User createdBy,int currentUserId ){
   );
 }
 
+
+
+
 Widget _taggedMembersSection(User? taggedUser){
   return taggedUser != null ? Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,14 +129,55 @@ Widget _taggedMembersSection(User? taggedUser){
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       SizedBox(height: 8.h),
-      SizedBox(
-        height: 60.h,
-        child: AssignedMemberChip(
-          imageUrl: taggedUser.imageUrl,
-          userName: taggedUser.fullName,
-          onDeleted: () {},
+      Container(
+        decoration: BoxDecoration(
+            color: AppColors.accent,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.black)
         ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ImagePlaceHolder(radius: 8, imageUrl: taggedUser.imageUrl),
+              SizedBox(width: 5.w,),
+              Text(taggedUser.fullName)
+            ],
+          ),
+        ),
+      )
+    ],
+  ) : const SizedBox.shrink() ;
+}
+
+Widget _taggedTaskSection(TaskModel? taggedTask){
+  return taggedTask != null ? Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        'Tagged Member :',
+        style: TextStyle(fontWeight: FontWeight.bold),
       ),
+      SizedBox(height: 8.h),
+      Container(
+        decoration: BoxDecoration(
+            color: AppColors.orangeAccent,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.black)
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.task_outlined),
+              SizedBox(width: 5.w,),
+              Text(taggedTask.name as String)
+            ],
+          ),
+        ),
+      )
     ],
   ) : const SizedBox.shrink() ;
 }
