@@ -8,6 +8,7 @@ import 'package:project_management_app/domain/repository/auth_repo.dart';
 import 'package:project_management_app/domain/repository/project_repo.dart';
 import 'package:project_management_app/domain/usecases/project/add_member_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/get_members.dart';
+import 'package:project_management_app/domain/usecases/project/issue_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/myprojects_usecase.dart';
 import 'package:project_management_app/presentation/modules/addmember/viewmodel/add_member_viewmodel.dart';
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
@@ -64,7 +65,9 @@ initAppModule() async {
 
 initReportIssueModule() {
   if (!GetIt.I.isRegistered<ReportIssueViewModel>()) {
-    instance.registerFactory<ReportIssueViewModel>(() => ReportIssueViewModel(instance()));
+    instance.registerFactory<IssueUseCase>(() => IssueUseCase(instance()));
+    instance.registerFactory<ReportIssueViewModel>(() => ReportIssueViewModel(instance(),instance()));
+
   }
 }
 

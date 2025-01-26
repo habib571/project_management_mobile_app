@@ -4,6 +4,7 @@ import '../../../application/functions/cruds_functions.dart';
 import '../../../application/helpers/get_storage.dart';
 import '../../../domain/models/project.dart';
 import '../../network/requests/add_member_request.dart';
+import '../../network/requests/report_issue_request.dart';
 
 
 
@@ -13,6 +14,8 @@ abstract class ProjectDataSource {
   Future<ApiResponse> getProjectMember(int projectId) ;
   Future<ApiResponse> getMemberByName(String name ,int page , int size) ;
   Future<ApiResponse> addMember(AddMemberRequest request) ;
+  Future<ApiResponse> reportIssue(ReportIssueRequest request) ;
+  Future<ApiResponse> getAllIssues() ;
 }
 
  class ProjectRemoteDataSource implements ProjectDataSource{
@@ -72,5 +75,25 @@ abstract class ProjectDataSource {
          });
    }
 
-}
+   @override
+   Future<ApiResponse> reportIssue(ReportIssueRequest request) async{
+     return await executePostRequest(
+         apiUrl: "/issue/add-issue/${request.projectId}",
+         body: request.toJson(),
+         bearerToken: _localStorage.getAuthToken(),
+         onRequestResponse: (response, statusCode) {
+           return ApiResponse(response, statusCode);
+         });
+   }
 
+   @override
+   Future<ApiResponse> getAllIssues() async {
+     return await executeGetRequest(
+         apiUrl: "",
+         bearerToken:  _localStorage.getAuthToken() ,
+         onRequestResponse: (response, statusCode) {
+           return ApiResponse(response as List<dynamic> , statusCode);
+         });
+   }
+
+}

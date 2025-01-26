@@ -4,7 +4,9 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 
 import 'package:project_management_app/data/network/failure.dart';
+import 'package:project_management_app/data/network/requests/report_issue_request.dart';
 import 'package:project_management_app/data/responses/project_responce.dart';
+import 'package:project_management_app/domain/models/issue.dart';
 import 'package:project_management_app/domain/models/project_member.dart';
 import 'package:project_management_app/domain/models/user.dart';
 import '../../domain/models/project.dart';
@@ -112,6 +114,49 @@ class ProjectRepositoryImpl implements ProjectRepository{
         final response = await _projectDataSource.addMember(addMemberRequest) ;
         if (response.statusCode == 200) {
           return Right(ProjectMember.fromJson(response.data));
+        } else {
+          return Left(Failure.fromJson(response.data));
+        }
+      }
+      catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
+  @override
+  Future<Either<Failure, Issue>> reportIssue (ReportIssueRequest reportIssueRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _projectDataSource.reportIssue(reportIssueRequest);
+        if (response.statusCode == 200) {
+          log("200");
+          return Right(Issue.fromJson(response.data));
+        } else {
+          return Left(Failure.fromJson(response.data));
+        }
+      }
+      catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
+  @override
+  Future<Either<Failure, List<Issue>>> getAllIssues() async{
+    if (await _networkInfo.isConnected) {
+      try {
+
+        final response = await _projectDataSource.getAllIssues() ;
+
+        if (response.statusCode == 200) {
+          final List<Map<String, dynamic>> responseData = List<Map<String, dynamic>>.from(response.data);
+          final issues = responseData.map((issueJson) => Issue.fromJson(issueJson)).toList();
+          return Right(issues);
         } else {
           return Left(Failure.fromJson(response.data));
         }
