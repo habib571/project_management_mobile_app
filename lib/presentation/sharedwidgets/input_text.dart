@@ -33,7 +33,7 @@ class InputText extends StatelessWidget {
   Widget? suffixIcon;
   Widget? prefixIcon ;
   int maxLines;
-  BorderSide borderSide  ;
+  BorderSide borderSide ;
 
 
   @override
@@ -60,7 +60,6 @@ class InputText extends StatelessWidget {
       onChanged: onChanged,
       onTap: onTap,
       obscureText: obscureText,
-
 
     );
   }
