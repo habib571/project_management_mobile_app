@@ -12,7 +12,7 @@ class IssueUseCase {
   Future<Either<Failure, Issue>> reportIssue (ReportIssueRequest reportIssueRequest) async {
     return await _projectRepository.reportIssue(reportIssueRequest);
   }
-  Future<Either<Failure, List<Issue>>> getAllIssues () async {
-    return await _projectRepository.getAllIssues();
+  Future<Either<Failure, List<Issue>>> getAllIssues (int projectId) async {
+    return await _projectRepository.getAllIssues(projectId);
   }
 }
