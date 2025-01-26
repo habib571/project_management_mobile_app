@@ -36,7 +36,6 @@ class ProjectDetailViewModel extends BaseViewModel {
     ) ;
   }
 
-
   bool isManger() =>dashBoardViewModel.project.createdBy!.id == _localStorage.getUser().id ;
 
 

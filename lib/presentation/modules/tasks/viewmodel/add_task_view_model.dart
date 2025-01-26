@@ -10,7 +10,6 @@ import 'package:project_management_app/presentation/modules/dashboord/viewmodel/
 import 'package:project_management_app/presentation/modules/tasks/view/screens/task_detail_screen.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task_priority_chip.dart';
 import 'package:project_management_app/presentation/stateRender/state_render.dart';
-
 import '../../../../domain/models/task.dart';
 import '../../../stateRender/state_render_impl.dart';
 
@@ -49,6 +48,7 @@ class AddTaskViewModel extends BaseViewModel{
   }
   int _selectedIndex = -1;
   int get selectedIndex => _selectedIndex;
+
   void selectChip(int index) {
     if (_selectedIndex == index) {
       _selectedIndex = -1;
@@ -57,6 +57,7 @@ class AddTaskViewModel extends BaseViewModel{
     }
     notifyListeners();
   }
+
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   TextEditingController taskName = TextEditingController();
   TextEditingController taskDescription = TextEditingController();
@@ -86,19 +87,17 @@ class AddTaskViewModel extends BaseViewModel{
         chipTexts[_selectedIndex] ,
         projectMember.user!.id
     ) ;
-     (await _addTaskUseCase.addTask(taskRequest ,projectMember.project!.id! )).fold(
+    (await _addTaskUseCase.addTask(taskRequest ,projectMember.project!.id! )).fold(
          (failure) {
            updateState(ErrorState(StateRendererType.snackbarState, failure.message)) ;
          },
-         (data) async{
+         (data)
+        async {
            updateState(ContentState()) ;
             setTask(data) ;
-              Get.to(()=>const TaskDetailScreen()) ;
-
+            Get.to(()=>const TaskDetailScreen()) ;
          }
      ) ;
-
    }
-
 
 }
