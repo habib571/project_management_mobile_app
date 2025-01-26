@@ -15,7 +15,7 @@ abstract class ProjectDataSource {
   Future<ApiResponse> getMemberByName(String name ,int page , int size) ;
   Future<ApiResponse> addMember(AddMemberRequest request) ;
   Future<ApiResponse> reportIssue(ReportIssueRequest request) ;
-  Future<ApiResponse> getAllIssues() ;
+  Future<ApiResponse> getAllIssues(int projectId) ;
 }
 
  class ProjectRemoteDataSource implements ProjectDataSource{
@@ -87,9 +87,9 @@ abstract class ProjectDataSource {
    }
 
    @override
-   Future<ApiResponse> getAllIssues() async {
+   Future<ApiResponse> getAllIssues(int projectId) async {
      return await executeGetRequest(
-         apiUrl: "",
+         apiUrl: "/issue/get-all/$projectId",
          bearerToken:  _localStorage.getAuthToken() ,
          onRequestResponse: (response, statusCode) {
            return ApiResponse(response as List<dynamic> , statusCode);

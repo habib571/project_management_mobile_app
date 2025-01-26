@@ -147,13 +147,14 @@ class ProjectRepositoryImpl implements ProjectRepository{
   }
 
   @override
-  Future<Either<Failure, List<Issue>>> getAllIssues() async{
+  Future<Either<Failure, List<Issue>>> getAllIssues(int projectId) async{
     if (await _networkInfo.isConnected) {
       try {
 
-        final response = await _projectDataSource.getAllIssues() ;
+        final response = await _projectDataSource.getAllIssues(projectId) ;
 
         if (response.statusCode == 200) {
+          print("200");
           final List<Map<String, dynamic>> responseData = List<Map<String, dynamic>>.from(response.data);
           final issues = responseData.map((issueJson) => Issue.fromJson(issueJson)).toList();
           return Right(issues);

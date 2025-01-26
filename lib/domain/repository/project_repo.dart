@@ -15,5 +15,5 @@ abstract class ProjectRepository {
   Future<Either<Failure, List<User>>> getMemberByName(String name ,int page , int size) ;
   Future<Either<Failure, ProjectMember>> addMember (AddMemberRequest addMemberRequest) ;
   Future<Either<Failure, Issue>> reportIssue (ReportIssueRequest reportIssueRequest) ;
-  Future<Either<Failure, List<Issue>>> getAllIssues() ;
+  Future<Either<Failure, List<Issue>>> getAllIssues(int projectId) ;
 }
