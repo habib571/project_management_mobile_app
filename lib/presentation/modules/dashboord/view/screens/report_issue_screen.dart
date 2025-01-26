@@ -18,6 +18,7 @@ import '../../../../../domain/models/user.dart';
 import '../../../../sharedwidgets/custom_appbar.dart';
 import '../../../../sharedwidgets/custom_button.dart';
 import '../../../../sharedwidgets/input_text.dart';
+import '../../../../stateRender/state_render_impl.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/styles.dart';
 import '../../../searchmember/view/custom_search_delegate.dart';
@@ -39,7 +40,14 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffold,
-      body: _showBody(context),
+      body:StreamBuilder<FlowState>(
+        stream: _viewModel.outputState,
+        builder: (context, snapshot) {
+          return snapshot.data
+              ?.getScreenWidget(context, _showBody(context), () {}) ??
+              _showBody(context);
+        },
+      )
     );
   }
 
@@ -110,8 +118,37 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
           const SizedBox(
             width: 10,
           ),
+          Selector<ReportIssueViewModel, bool>(
+            selector: (_, viewModel) => viewModel.isUserAdded ,
+            builder: (context, isUserAdded, _) {
+              return isUserAdded
+                  ? AssignedMemberChip(
+                imageUrl: context.read<ReportIssueViewModel>().taggedMember!.imageUrl,
+                userName: context.read<ReportIssueViewModel>().taggedMember!.fullName,
+                onDeleted: () {
+                  context.read<ReportIssueViewModel>().toggleIsUserAdded();
+                },
+              )
+                  : InkWell(
+                onTap: () {
+                  context.read<ReportIssueViewModel>().updatetaggedMember(User(203, "fullName", "email", "imageUrl"));
+                  /*showSearch(
+                    context: context,
+                    delegate: CustomSearchDelegate(
+                      afterSelectingUser: (selectedMember) {
+                        context.read<ReportIssueViewModel>().updatetaggedMember(selectedMember);
+                        Get.toNamed(AppRoutes.reportIssueScreen);
+                      },
+                    ),
+                  );*/
+                },
+                child: Image.asset("assets/add_filled.png", height: 40),
+              );
+            },
+          )
 
-          Selector<ReportIssueViewModel, Map<String,dynamic>>(
+
+          /*Selector<ReportIssueViewModel, Map<String,dynamic>>(
             selector: (_, viewModel) => {
               "isUserAdded" : viewModel.isUserAdded ,
               "taggedMember" : viewModel.taggedMember
@@ -135,7 +172,8 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                     delegate: CustomSearchDelegate(
                       afterSelectingUser: (selectedMember) {
                         context.read<ReportIssueViewModel>().updatetaggedMember(selectedMember);
-                        Get.toNamed(AppRoutes.reportIssueScreen);
+                        print(context.read<ReportIssueViewModel>().taggedMember!.id);
+                        print(context.read<ReportIssueViewModel>().taggedMember!.fullName);                        Get.toNamed(AppRoutes.reportIssueScreen);
                       },
                     ),
                   );
@@ -143,37 +181,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                 child: Image.asset("assets/add_filled.png", height: 40),
               );
             },
-          )
-
-
-
-    /*Selector<ReportIssueViewModel, bool>(
-        selector: (_, viewModel) => viewModel.isUserAdded ,
-        builder: (context, isUserAdded, _) {
-          return isUserAdded
-              ? AssignedMemberChip(
-                  imageUrl: context.read<ReportIssueViewModel>().taggedMember!.imageUrl,
-                  userName: context.read<ReportIssueViewModel>().taggedMember!.fullName,
-                  onDeleted: () {
-                    context.read<ReportIssueViewModel>().toggleIsUserAdded();
-                  },
-                )
-              : InkWell(
-                  onTap: () {
-                    showSearch(
-                      context: context,
-                      delegate: CustomSearchDelegate(
-                        afterSelectingUser: (selectedMember) {
-                          context.read<ReportIssueViewModel>().updatetaggedMember(selectedMember);
-                          Get.toNamed(AppRoutes.reportIssueScreen);
-                        },
-                      ),
-                    );
-                  },
-                  child: Image.asset("assets/add_filled.png", height: 40),
-                );
-              },
-            )*/
+          )*/
           ]
         ),
       ],
@@ -210,7 +218,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                   )
                     : InkWell(
                       onTap: () {
-                        context.read<ReportIssueViewModel>().updatetaggedTask(TaskModel.taggedTask(22, "API"));
+                        context.read<ReportIssueViewModel>().updatetaggedTask(TaskModel.taggedTask( 22, "API"));
                       },
                       child: Image.asset("assets/add_filled.png", height: 40),
                 );
@@ -224,7 +232,9 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
 
   Widget _showButton() {
     return CustomButton(
-        onPressed: () {},
+        onPressed: () {
+          _viewModel.reportIssue();
+        },
         text: 'Report issue');
   }
 }
