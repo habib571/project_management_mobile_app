@@ -8,7 +8,8 @@ import 'package:project_management_app/domain/repository/auth_repo.dart';
 import 'package:project_management_app/domain/repository/project_repo.dart';
 import 'package:project_management_app/domain/usecases/project/add_member_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/get_members.dart';
-import 'package:project_management_app/domain/usecases/project/issue_use_case.dart';
+import 'package:project_management_app/domain/usecases/project/issue/get_allissues_use_case.dart';
+import 'package:project_management_app/domain/usecases/project/issue/report_issue_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/myprojects_usecase.dart';
 import 'package:project_management_app/presentation/modules/addmember/viewmodel/add_member_viewmodel.dart';
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
@@ -28,6 +29,7 @@ import '../../domain/usecases/auth/signup_usecase.dart';
 import '../../domain/usecases/auth/userprofile_usecase.dart';
 import '../../domain/usecases/project/addproject-use-case.dart';
 import '../../presentation/modules/addproject/view/add-project_screen.dart';
+import '../../presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
 import '../helpers/token_mamanger.dart';
 import '../../domain/usecases/auth/signin_usecase.dart';
 import '../../presentation/modules/auth/viewmodel/signin-view_model.dart';
@@ -60,13 +62,22 @@ initAppModule() async {
   initProject() ;
   initSearchModule();
   initReportIssueModule();
+ initGetAllIssuesModule();
 
 }
 
 initReportIssueModule() {
   if (!GetIt.I.isRegistered<ReportIssueViewModel>()) {
-    instance.registerFactory<IssueUseCase>(() => IssueUseCase(instance()));
+    instance.registerFactory<ReportIssueUseCase>(() => ReportIssueUseCase(instance()));
     instance.registerFactory<ReportIssueViewModel>(() => ReportIssueViewModel(instance(),instance()));
+
+  }
+}
+
+initGetAllIssuesModule() {
+  if (!GetIt.I.isRegistered<GetAllIssuesViewModel>()) {
+    instance.registerFactory<GetAllIssuesUseCase>(() => GetAllIssuesUseCase(instance()));
+    instance.registerFactory<GetAllIssuesViewModel>(() => GetAllIssuesViewModel(instance(),instance()));
 
   }
 }

@@ -9,6 +9,7 @@ import 'package:project_management_app/presentation/modules/auth/viewmodel/signi
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signup_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 import 'application/dependencyInjection/dependency_injection.dart';
@@ -44,6 +45,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<ProjectDetailViewModel>(
               lazy: true,
               create: (_) => GetIt.instance<ProjectDetailViewModel>()),
+          ChangeNotifierProvider<ReportIssueViewModel>(
+              lazy: true,
+              create: (_) => GetIt.instance<ReportIssueViewModel>()),
         ],
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
