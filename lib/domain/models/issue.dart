@@ -7,7 +7,7 @@ class Issue {
   final String issueDescription;
   final User? taggedUser;
   final TaskModel? taggedTask;
-  final bool isSolved;
+  bool isSolved;
 
   Issue({
     required this.issueId,

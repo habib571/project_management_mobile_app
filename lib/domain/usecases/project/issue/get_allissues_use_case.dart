@@ -11,4 +11,9 @@ class GetAllIssuesUseCase {
   Future<Either<Failure, List<Issue>>> getAllIssues (int projectId) async {
     return await _projectRepository.getAllIssues(projectId);
   }
+
+  Future<Either<Failure,Issue>> updateIssueStatus(int issueId) async {
+    return await _projectRepository.updateIssueStatus(issueId);
+  }
+
 }

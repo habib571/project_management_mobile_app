@@ -13,11 +13,11 @@ class IssueCard extends StatelessWidget {
   final User? taggedUser;
   final User createdBy;
   final bool isResolved;
-  final VoidCallback onMarkResolved;
+  void Function()? onMarkResolved;
   final int currentUserId ;
 
 
-  const IssueCard({
+   IssueCard({
     Key? key,
     required this.title,
     required this.description,
@@ -92,7 +92,7 @@ class IssueCard extends StatelessWidget {
                   const SizedBox(height: 12),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: _issueCardButton(createdBy, currentUserId)
+                    child: _issueCardButton(createdBy, currentUserId , onMarkResolved)
                   ),
                 ],
               ),
@@ -107,9 +107,11 @@ class IssueCard extends StatelessWidget {
 
 
 
-Widget _issueCardButton(User createdBy,int currentUserId ){
+Widget _issueCardButton(User createdBy,int currentUserId , Function()? onMarkResolved ){
   return ElevatedButton(
-    onPressed: (){},
+    onPressed: (){
+      onMarkResolved!();
+    },
     style: ElevatedButton.styleFrom(
       backgroundColor: AppColors.primary,
     ),
