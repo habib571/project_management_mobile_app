@@ -1,18 +1,9 @@
 
-
-
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:provider/provider.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
-
-
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
-import '../../../../../application/navigation/routes_constants.dart';
 import '../../../../../domain/models/task.dart';
 import '../../../../../domain/models/user.dart';
 import '../../../../sharedwidgets/custom_appbar.dart';
@@ -21,7 +12,6 @@ import '../../../../sharedwidgets/input_text.dart';
 import '../../../../stateRender/state_render_impl.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/styles.dart';
-import '../../../searchmember/view/custom_search_delegate.dart';
 import '../../viewmodel/report_issue_viewmodel.dart';
 import '../widgets/custom_chips/assigned_memberchip.dart';
 import '../widgets/custom_chips/assigned_taskchip.dart';
@@ -34,7 +24,7 @@ class ReportIssueScreen extends StatefulWidget{
 }
 
 class _ReportIssueScreenState extends State<ReportIssueScreen> {
-  final ReportIssueViewModel _viewModel = instance<ReportIssueViewModel>();
+  final ReportIssueViewModel _viewModel = instance.get<ReportIssueViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -123,15 +113,17 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
             builder: (context, isUserAdded, _) {
               return isUserAdded
                   ? AssignedMemberChip(
-                imageUrl: context.read<ReportIssueViewModel>().taggedMember!.imageUrl,
-                userName: context.read<ReportIssueViewModel>().taggedMember!.fullName,
+                imageUrl: _viewModel.taggedMember!.imageUrl,
+                userName: _viewModel.taggedMember!.fullName,
                 onDeleted: () {
                   context.read<ReportIssueViewModel>().toggleIsUserAdded();
                 },
               )
                   : InkWell(
                 onTap: () {
-                  context.read<ReportIssueViewModel>().updatetaggedMember(User(203, "fullName", "email", "imageUrl"));
+                    // To modify and Get From All members
+                    _viewModel.updatetaggedMember(User(204, "fullName", "email", "imageUrl"));
+                    context.read<ReportIssueViewModel>().toggleIsUserAdded() ;
                   /*showSearch(
                     context: context,
                     delegate: CustomSearchDelegate(
@@ -146,42 +138,6 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
               );
             },
           )
-
-
-          /*Selector<ReportIssueViewModel, Map<String,dynamic>>(
-            selector: (_, viewModel) => {
-              "isUserAdded" : viewModel.isUserAdded ,
-              "taggedMember" : viewModel.taggedMember
-            } ,
-            builder: (context, data, _) {
-              final bool isUserAdded = data['isUserAdded'] as bool;
-              final User? taggedMember = data['taggedMember'] as User?;
-
-              return isUserAdded && taggedMember != null ?
-              AssignedMemberChip(
-                imageUrl: taggedMember.imageUrl,
-                userName: taggedMember.fullName,
-                onDeleted: () {
-                  context.read<ReportIssueViewModel>().toggleIsUserAdded();
-                },
-              )
-                  : InkWell(
-                onTap: () {
-                  showSearch(
-                    context: context,
-                    delegate: CustomSearchDelegate(
-                      afterSelectingUser: (selectedMember) {
-                        context.read<ReportIssueViewModel>().updatetaggedMember(selectedMember);
-                        print(context.read<ReportIssueViewModel>().taggedMember!.id);
-                        print(context.read<ReportIssueViewModel>().taggedMember!.fullName);                        Get.toNamed(AppRoutes.reportIssueScreen);
-                      },
-                    ),
-                  );
-                },
-                child: Image.asset("assets/add_filled.png", height: 40),
-              );
-            },
-          )*/
           ]
         ),
       ],
@@ -201,29 +157,26 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
              SizedBox(
               width: 10.w,
             ),
-            Selector<ReportIssueViewModel , Map<String,dynamic>>(
-              selector: (_ , viewModel) => {
-                "isTaskAdded" : viewModel.isTaskAdded ,
-                "taggedTask" : viewModel.taggedTask
-              } ,
-              builder: (context, data, _){
-                final bool isTaskAdded = data["isTaskAdded"] ;
-                final TaskModel ? taggedTask = data["taggedTask"] ;
 
-                return isTaskAdded && taggedTask != null ?
-                  AssignedTaskChip(
-                    taskName : taggedTask.name as String, onDeleted: (){
+            Selector<ReportIssueViewModel, bool>(
+              selector: (_, viewModel) => viewModel.isTaskAdded ,
+              builder: (context, isTaskAdded, _) {
+                return isTaskAdded
+                    ? AssignedTaskChip(
+                  taskName: _viewModel.taggedTask!.name,
+                  onDeleted: () {
                     context.read<ReportIssueViewModel>().toggleIsTaskAdded();
-                    },
-                  )
+                  },
+                )
                     : InkWell(
-                      onTap: () {
-                        context.read<ReportIssueViewModel>().updatetaggedTask(TaskModel.taggedTask( 22, "API"));
-                      },
-                      child: Image.asset("assets/add_filled.png", height: 40),
+                  onTap: () {
+                    _viewModel.updatetaggedTask(TaskModel.taggedTask( 22, "API"));
+                    context.read<ReportIssueViewModel>().toggleIsTaskAdded() ;
+                  },
+                  child: Image.asset("assets/add_filled.png", height: 40),
                 );
-
-                }, ),
+              },
+            ),
           ],
         )
       ],
@@ -238,26 +191,4 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
         text: 'Report issue');
   }
 }
-
-/*Widget _tasksChipSection(BuildContext context){
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text("Mark a task", style: robotoBold.copyWith(fontSize: 18),),
-      SizedBox(height: 10.h,),
-      Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          runSpacing: 8,
-          spacing: 8,
-          children: [
-            AssignedTaskChip(taskName : "Task 1", onDeleted: (){}, ),
-            AssignedTaskChip(taskName : "Task 2", onDeleted: (){}, ),
-            AssignedTaskChip(taskName : "Task 3", onDeleted: (){}, ),
-            AssignedTaskChip(taskName : "Task 4", onDeleted: (){}, ),
-            CustomAddButton(onTap: (){},)
-          ]
-      ),
-    ],
-  );
-}*/
 

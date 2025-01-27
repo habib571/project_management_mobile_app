@@ -7,7 +7,7 @@ import 'package:project_management_app/presentation/stateRender/state_render.dar
 import 'package:project_management_app/presentation/stateRender/state_render_impl.dart';
 
 import '../../../../domain/models/project_member.dart';
-import '../../../../domain/usecases/project/issue_use_case.dart';
+import '../../../../domain/usecases/project/issue/report_issue_use_case.dart';
 import '../../../utils/colors.dart';
 import '../view/widgets/custom_chips/assigned_memberchip.dart';
 
@@ -19,7 +19,7 @@ class ReportIssueViewModel extends BaseViewModel{
     super.start();
   }
 
-  final IssueUseCase _useCase ;
+  final ReportIssueUseCase _useCase ;
   ReportIssueViewModel(super.tokenManager, this._useCase);
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -51,10 +51,6 @@ class ReportIssueViewModel extends BaseViewModel{
 
   void updatetaggedMember(User member) {
     _taggedMember = member;
-    print("----${_taggedMember!.fullName}");
-    print("----${_taggedMember!.id}");
-    toggleIsUserAdded();
-    notifyListeners();
   }
 
   void toggleIsTaskAdded() {
@@ -64,21 +60,17 @@ class ReportIssueViewModel extends BaseViewModel{
 
   void updatetaggedTask(TaskModel task) {
     _taggedTask = task;
-    toggleIsTaskAdded();
-    notifyListeners();
   }
 
 
   reportIssue()async {
-    print("--Member ID : ${_taggedMember?.id}");
     if (formkey.currentState!.validate()) {
       updateState(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
-      print("id : ------${_taggedMember?.id }");
       (await _useCase.reportIssue(
           ReportIssueRequest(
               title: _issueTitle.text.trim(),
               description: _issueDescription.text.trim(),
-              memberId: taggedMember?.id ??203  ,
+              memberId: taggedMember?.id ??333  ,
               taskId:_taggedTask?.id,
               projectId: 64
           )
