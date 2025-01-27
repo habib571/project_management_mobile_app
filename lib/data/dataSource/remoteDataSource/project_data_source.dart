@@ -16,6 +16,7 @@ abstract class ProjectDataSource {
   Future<ApiResponse> addMember(AddMemberRequest request) ;
   Future<ApiResponse> reportIssue(ReportIssueRequest request) ;
   Future<ApiResponse> getAllIssues(int projectId) ;
+  Future<ApiResponse> updateIssueStatus(int issueId) ;
 }
 
  class ProjectRemoteDataSource implements ProjectDataSource{
@@ -93,6 +94,17 @@ abstract class ProjectDataSource {
          bearerToken:  _localStorage.getAuthToken() ,
          onRequestResponse: (response, statusCode) {
            return ApiResponse(response as List<dynamic> , statusCode);
+         });
+   }
+
+   @override
+   Future<ApiResponse> updateIssueStatus(int issueId) async{
+     return await executePatchRequest(
+         apiUrl: "/issue/mark-as-solved/$issueId",
+         body: {},
+         bearerToken: _localStorage.getAuthToken(),
+         onRequestResponse: (response, statusCode) {
+           return ApiResponse(response, statusCode);
          });
    }
 
