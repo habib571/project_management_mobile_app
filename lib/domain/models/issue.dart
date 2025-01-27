@@ -5,7 +5,7 @@ class Issue {
   final int issueId;
   final String issueTitle;
   final String issueDescription;
-  final TagedUser? taggedUser;
+  final User? taggedUser;
   final TaskModel? taggedTask;
   final bool isSolved;
 
@@ -23,40 +23,9 @@ class Issue {
       issueId: json["id"] ,
       issueTitle: json["name"] ,
       issueDescription: json["description"] ,
-      taggedUser: json["tagedUserDto"] != null ? TagedUser.fromJson(json["tagedUserDto"]) : null,
+      taggedUser: json["tagedUserDto"] != null ? User.taggedUserFromJson(json["tagedUserDto"]) : null,
       taggedTask: json["tagedTaskDto"] != null ? TaskModel.fromJson(json["tagedTaskDto"]) : null,
       isSolved: json["solved"] as bool,
     );
-  }
-}
-
-
-
-
-class TagedUser {
-  final int userId;
-  final String? name;
-  final String? imageUrl;
-
-  TagedUser({
-    required this.userId,
-    this.name,
-    this.imageUrl,
-  });
-
-  factory TagedUser.fromJson(Map<String, dynamic> json) {
-    return TagedUser(
-      userId: json['user_id'],
-      name: json['name'],
-      imageUrl: json['imageUrl'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'user_id': userId,
-      'name': name,
-      'imageUrl': imageUrl,
-    };
   }
 }
