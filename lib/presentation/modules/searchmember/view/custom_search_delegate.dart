@@ -1,26 +1,15 @@
 
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
-import 'package:project_management_app/application/navigation/routes_constants.dart';
-import 'package:project_management_app/presentation/modules/addmember/view/screens/add_member_screen.dart';
-import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_listtile.dart';
-import 'package:provider/provider.dart';
-
-import '../../../../application/constants/constants.dart';
 import '../../../../application/dependencyInjection/dependency_injection.dart';
+
 import '../../../../domain/models/user.dart';
-import '../../dashboord/viewmodel/project_detail_view_model.dart';
 import '../viewmodel/search_member_view_model.dart';
 import '../../../stateRender/state_render_impl.dart';
 import '../../../sharedwidgets/image_widget.dart';
-import '../../../sharedwidgets/input_text.dart';
+
 
 
 class CustomSearchDelegate extends SearchDelegate {
