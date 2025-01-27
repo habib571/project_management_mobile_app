@@ -24,18 +24,18 @@ import '../../../searchmember/view/custom_search_delegate.dart';
 class ProjectDetailScreen extends StatefulWidget {
   const ProjectDetailScreen({super.key, });
 
-
   @override
   State<ProjectDetailScreen> createState() => _ProjectDetailScreenState();
 }
-
 class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
+
+  final ProjectDetailViewModel _viewModel = instance<ProjectDetailViewModel>();
+
   @override
   void initState() {
      _viewModel.start() ;
     super.initState();
   }
-  final ProjectDetailViewModel _viewModel = instance<ProjectDetailViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +81,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                         )
                       ],
                     ),
-                    const SizedBox(
-                      height: 15,
+                     SizedBox(
+                      height: 15.h,
                     ),
 
                     StreamBuilder<FlowState>(
@@ -97,7 +97,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                     ),
                     _reportIssueSection(),
                     SizedBox(
-                      height: 25.h,
+                      height: 20.h,
                     ),
                     _tasksSection(),
                     SizedBox(
@@ -165,8 +165,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Report Issue', style: robotoSemiBold.copyWith(fontSize: 16)),
-        const SizedBox(
-          height: 15,
+         SizedBox(
+          height: 15.h,
         ),
         CustomListTile(
             leading: const Icon(Icons.report_problem_outlined,color: AppColors.primary),
@@ -183,8 +183,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Tasks', style: robotoSemiBold.copyWith(fontSize: 16)),
-        const SizedBox(
-          height: 15,
+         SizedBox(
+          height: 15.h,
         ),
         CustomListTile(
             leading: const Icon(Icons.task_outlined,color: AppColors.primary),

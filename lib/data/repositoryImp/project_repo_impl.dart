@@ -1,8 +1,6 @@
 
 import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
-
 import 'package:project_management_app/data/network/failure.dart';
 import 'package:project_management_app/data/network/requests/report_issue_request.dart';
 import 'package:project_management_app/data/responses/project_responce.dart';
@@ -132,7 +130,6 @@ class ProjectRepositoryImpl implements ProjectRepository{
       try {
         final response = await _projectDataSource.reportIssue(reportIssueRequest);
         if (response.statusCode == 200) {
-          log("200");
           return Right(Issue.fromJson(response.data));
         } else {
           return Left(Failure.fromJson(response.data));
@@ -154,7 +151,6 @@ class ProjectRepositoryImpl implements ProjectRepository{
         final response = await _projectDataSource.getAllIssues(projectId) ;
 
         if (response.statusCode == 200) {
-          print("200");
           final List<Map<String, dynamic>> responseData = List<Map<String, dynamic>>.from(response.data);
           final issues = responseData.map((issueJson) => Issue.fromJson(issueJson)).toList();
           return Right(issues);
