@@ -29,7 +29,6 @@ class _IssuesScreenState extends State<IssuesScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +65,10 @@ Widget _showBody(GetAllIssuesViewModel viewModel){
               taggedUser: viewModel.issuesList[index].taggedUser ,
               createdBy:User(1, "Nabil", "nabil@gmail.com",'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80'),
               isResolved: viewModel.issuesList[index].isSolved,
-              onMarkResolved: () {},
+              onMarkResolved: () {
+                print("----Test");
+                viewModel.updateIssueStatus(viewModel.issuesList[index].issueId);
+              },
             );
           },
         ),

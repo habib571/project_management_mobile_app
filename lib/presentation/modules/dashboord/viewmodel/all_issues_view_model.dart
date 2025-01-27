@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:project_management_app/domain/models/issue.dart';
 import 'package:project_management_app/domain/usecases/project/issue/get_allissues_use_case.dart';
-
-import '../../../../domain/usecases/project/issue/report_issue_use_case.dart';
 import '../../../base/base_view_model.dart';
 import '../../../stateRender/state_render.dart';
 import '../../../stateRender/state_render_impl.dart';
@@ -31,6 +29,22 @@ class GetAllIssuesViewModel extends BaseViewModel{
             (data) {
           issuesList.addAll(data) ;
           updateState(ContentState());
+        }
+    );
+  }
+
+  updateIssueStatus(int issueId) async {
+    updateState(LoadingState(
+        stateRendererType: StateRendererType.fullScreenLoadingState));
+
+    (await _useCase.updateIssueStatus(issueId)).fold(
+            (failure) {
+          updateState(ErrorState(StateRendererType.fullScreenErrorState, failure.message));
+        },
+            (data) {
+               Issue issue = issuesList.firstWhere((element) => element.issueId == issueId);
+              issue.isSolved = !issue.isSolved;
+              updateState(ContentState());
         }
     );
   }
