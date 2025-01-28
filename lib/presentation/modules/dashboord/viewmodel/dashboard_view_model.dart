@@ -11,11 +11,13 @@ class DashBoardViewModel extends BaseViewModel {
   final GetMyProjectsUseCase _getMyProjectsUseCase;
   DashBoardViewModel(super.tokenManager, this._getMyProjectsUseCase);
 
+
   @override
   void start() {
     getMyProjects();
     super.start();
   }
+
 
   int _currentProject = 0;
   int get currentProject => _currentProject;
@@ -41,11 +43,13 @@ class DashBoardViewModel extends BaseViewModel {
   }
 
   List<Project> _projectList = [];
+
   List<Project> get projectList => _projectList;
 
   setProjectList(List<Project> value) {
     _projectList = value;
   }
+
 
   getMyProjects() async {
     updateState(LoadingState(

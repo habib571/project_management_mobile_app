@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<SignupViewModel>(
+
               lazy: true, create: (_) => GetIt.instance<SignupViewModel>()),
           ChangeNotifierProvider<SignInViewModel>(
               lazy: true, create: (_) => GetIt.instance<SignInViewModel>()),
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               lazy: true, create: (_) => GetIt.instance<AddTaskViewModel>()
           )
+
         ],
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,

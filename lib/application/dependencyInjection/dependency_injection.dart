@@ -9,15 +9,18 @@ import 'package:project_management_app/domain/repository/auth_repo.dart';
 import 'package:project_management_app/domain/repository/project_repo.dart';
 import 'package:project_management_app/domain/usecases/project/get_members.dart';
 import 'package:project_management_app/domain/usecases/project/myprojects_usecase.dart';
+
 import 'package:project_management_app/domain/usecases/task/add_task_user_case.dart';
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/task_detail_view_model.dart';
 
+
 import 'package:project_management_app/presentation/modules/userprofile/viewmodel/userprofile_view_model.dart';
 
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
+
 
 import '../../data/dataSource/remoteDataSource/auth_remote_data_source.dart';
 import '../../data/dataSource/remoteDataSource/project_data_source.dart';
@@ -36,6 +39,7 @@ import '../../presentation/modules/home/home-viewmodel.dart';
 
 GetIt instance = GetIt.instance;
 initAppModule() async {
+
   await initGetStorageModule();
   instance.registerLazySingleton<TokenManager>(() => TokenManager(instance()));
   instance.registerLazySingleton<NetworkInfo>(
@@ -45,6 +49,7 @@ initAppModule() async {
       () => AuthRemoteDataSourceImp(instance()));
   instance.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(instance(), instance()));
+
 
   instance.registerLazySingleton<ProjectDataSource>(
       () => ProjectRemoteDataSource(instance()));
@@ -60,6 +65,7 @@ initAppModule() async {
   initHomeModule();
   initDashboard();
   intAddProject();
+
   initUserProfileModule();
   initProject();
   initTask();
@@ -84,6 +90,7 @@ initDashboard() {
     instance.registerLazySingleton<DashBoardViewModel>(
         () => DashBoardViewModel(instance(), instance()));
   }
+
 }
 
 initProject() {
@@ -105,6 +112,18 @@ initTask() {
         () => AddTaskViewModel(instance(), instance(), instance()));
   }
 }
+initDashboard() {
+  if (!GetIt.I.isRegistered<GetMyProjectsUseCase>()) {
+    instance.registerFactory<GetMyProjectsUseCase>(() => GetMyProjectsUseCase(instance()));
+    instance.registerLazySingleton<DashBoardViewModel>(() => DashBoardViewModel(instance() ,instance()) );
+  }
+}
+initProject() {
+  if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
+    instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
+    instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance()) );
+  }
+}
 
 initSignupModule() {
   if (!GetIt.I.isRegistered<SignupUseCase>()) {
@@ -124,12 +143,14 @@ initSignInModule() {
 
 initUserProfileModule() {
   if (!GetIt.I.isRegistered<UserProfileViewModel>()) {
+
     instance.registerLazySingleton<UserProfileUseCase>(
         () => UserProfileUseCase(instance()));
     instance.registerLazySingleton<UserProfileViewModel>(
         () => UserProfileViewModel(instance(), instance(), instance()));
   }
 }
+
 
 initGetStorageModule() async {
   await GetStorage.init();

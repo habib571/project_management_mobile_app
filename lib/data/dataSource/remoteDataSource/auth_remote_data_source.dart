@@ -11,6 +11,7 @@ abstract class AuthRemoteDataSource {
   Future<ApiResponse> sigIn(SignInRequest request);
   Future<ApiResponse> getCurrentUserInfo();
   Future<ApiResponse> logOut(); 
+
 }
 
 class AuthRemoteDataSourceImp implements AuthRemoteDataSource {

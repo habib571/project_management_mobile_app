@@ -1,3 +1,4 @@
+
 # project_management_app
 🗂️ Project Management App
 An efficient and user-friendly project management application designed to help users manage their projects effectively.
@@ -34,6 +35,7 @@ Visualize project progress with an intuitive design, enhancing the user experien
 # 🤝 Team Collaboration
 ## Role Assignments
 Improve communication and clarity by assigning roles to each member, ensuring everyone knows their responsibilities.
+
 
 
 
