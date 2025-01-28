@@ -58,6 +58,9 @@ class StateRenderer extends StatelessWidget {
           _getMessage(message)
         ]);
       case StateRendererType.fullScreenErrorState:
+        if (Loader.isShown) {
+          Loader.hide();
+        }
         return _getItemsColumn([
           _getAnimatedImage('assets/json/error.json'),
           _getMessage(message),

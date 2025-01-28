@@ -1,14 +1,19 @@
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/member_listile.dart';
-
-import '../../../../../application/dependencyInjection/dependency_injection.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
 import '../../../../sharedwidgets/custom_appbar.dart';
-import '../../viewmodel/project_detail_view_model.dart';
 
 class MembersScreen extends StatelessWidget {
    MembersScreen({super.key}) ;
-  final ProjectDetailViewModel _viewModel = instance<ProjectDetailViewModel>();
+  final _viewModel = Get.arguments ;
+  final AddTaskViewModel _addTaskViewModel  =  instance.get<AddTaskViewModel>() ;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +30,13 @@ class MembersScreen extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context ,index) {
                  return MemberLisTile(
-                   projectMember: _viewModel.projectMember[index],
+                     onTap: (){
+                      _addTaskViewModel.setProjectMember(_viewModel.projectMember[index]) ;
+                      _addTaskViewModel.toggleIsUserAdded() ;
+                       Get.back() ;
+                    },
+                    projectMember: _viewModel.projectMember[index],
+
                  );
               }
             )

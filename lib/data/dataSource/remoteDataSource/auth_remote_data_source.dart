@@ -10,7 +10,7 @@ abstract class AuthRemoteDataSource {
   Future<ApiResponse> signup(RegisterRequest request);
   Future<ApiResponse> sigIn(SignInRequest request);
   Future<ApiResponse> getCurrentUserInfo();
-  Future<ApiResponse> logOut();
+  Future<ApiResponse> logOut(); 
 
 }
 

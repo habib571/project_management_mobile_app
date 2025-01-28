@@ -1,7 +1,5 @@
 
-
-
-import 'package:flutter/material.dart';
+import 'package:project_management_app/application/helpers/get_storage.dart';
 import 'package:project_management_app/domain/models/project_member.dart';
 import 'package:project_management_app/domain/models/user.dart';
 import 'package:project_management_app/domain/usecases/project/get_members.dart';
@@ -13,9 +11,12 @@ import '../../../stateRender/state_render_impl.dart';
 import 'dashboard_view_model.dart';
 
 class ProjectDetailViewModel extends BaseViewModel {
-  final GetMembersUseCase _useCase;
 
-  ProjectDetailViewModel(super.tokenManager, this._useCase);
+ final DashBoardViewModel dashBoardViewModel ;
+  final GetMembersUseCase _useCase ;
+  final LocalStorage _localStorage ;
+  ProjectDetailViewModel(super.tokenManager, this._useCase, this._localStorage, this.dashBoardViewModel);
+
 
   @override
   void start() {
@@ -23,27 +24,30 @@ class ProjectDetailViewModel extends BaseViewModel {
     getProjectMembers();
   }
 
-  final Project project = instance<DashBoardViewModel>().project;
-
-   List<ProjectMember> _projectMember = [];
+  List<ProjectMember> _projectMember = [];
   List<ProjectMember> get projectMember => _projectMember;
-
 
 
   getProjectMembers() async {
     updateState(LoadingState(
         stateRendererType: StateRendererType.fullScreenLoadingState));
 
-    (await _useCase.getProjectMembers(project.id!)).fold(
-            (failure) {
-          updateState(ErrorState(
-              StateRendererType.fullScreenErrorState, failure.message));
+    (await _useCase.getProjectMembers(dashBoardViewModel.project.id!)).fold(
+        (failure) {
+          updateState(ErrorState(StateRendererType.fullScreenErrorState, failure.message));
+
         },
             (data) {
               _projectMember = data ;
               updateState(ContentState());
         }
-    );
+
+    ) ;
   }
 
+  bool isManger() =>dashBoardViewModel.project.createdBy!.id == _localStorage.getUser().id ;
+
+
+
 }
+

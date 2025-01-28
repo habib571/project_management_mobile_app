@@ -17,6 +17,7 @@ class TaskModel {
   TaskModel.request(this.name, this.description,this.deadline, this.priority ,this.assignedUserId, );
   TaskModel.taggedTask(this.id, this.name);
 
+
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
       json['id'] ,
@@ -40,5 +41,8 @@ class TaskModel {
       'priority': priority,
     };
   }
+
 }
+
+
 

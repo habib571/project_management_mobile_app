@@ -11,11 +11,13 @@ class DashBoardViewModel extends BaseViewModel {
   final GetMyProjectsUseCase _getMyProjectsUseCase;
   DashBoardViewModel(super.tokenManager, this._getMyProjectsUseCase);
 
+
   @override
   void start() {
     getMyProjects();
     super.start();
   }
+
 
   int _currentProject = 0;
   int get currentProject => _currentProject;
