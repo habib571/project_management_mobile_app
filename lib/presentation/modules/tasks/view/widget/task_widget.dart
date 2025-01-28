@@ -45,7 +45,6 @@ class TaskWidget extends StatelessWidget {
                      ],
                    ),
                    TaskStatusCard(taskStatusModel: TaskStatusModel.type(task.status!))
-
                  ],
                ) ,
                Row(
