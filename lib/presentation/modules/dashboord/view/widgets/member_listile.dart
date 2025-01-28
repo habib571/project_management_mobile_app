@@ -4,13 +4,21 @@ import 'package:project_management_app/presentation/sharedwidgets/image_widget.d
 import 'package:project_management_app/presentation/utils/styles.dart';
 
 class MemberLisTile extends StatelessWidget {
-  const MemberLisTile({super.key, required this.projectMember});
+
+  const MemberLisTile({super.key, required this.projectMember, required this.onTap});
 
   final ProjectMember projectMember;
+  final Function onTap ;
+
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+
+       onTap: () {
+         onTap() ;
+       },
+
       contentPadding: const EdgeInsets.all(15),
       title: Text(
             projectMember.user!.fullName ,

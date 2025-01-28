@@ -4,11 +4,17 @@ import 'package:project_management_app/application/dependencyInjection/dependenc
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/navigation/routes_constants.dart';
 import 'package:project_management_app/domain/models/project.dart';
+import 'package:project_management_app/presentation/modules/tasks/view/screens/create_task_screen.dart';
+
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/members_screen.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/members_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/project_detail_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
+
+import 'package:project_management_app/presentation/modules/tasks/view/screens/task_detail_screen.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
+import 'package:project_management_app/presentation/sharedwidgets/custom_button.dart';
+
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
 import 'package:project_management_app/presentation/stateRender/state_render_impl.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
@@ -28,7 +34,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
      _viewModel.start() ;
     super.initState();
   }
-  final ProjectDetailViewModel _viewModel = instance<ProjectDetailViewModel>();
+
+  final ProjectDetailViewModel _viewModel = instance.get<ProjectDetailViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +57,9 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                       height: 50.h,
                     ),
                     ProjectDetailCard(
-                      project: _viewModel.project,
+
+                      project: _viewModel.dashBoardViewModel.project,
+
                     ),
                     SizedBox(
                       height: 30.h,
@@ -65,7 +74,9 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                         Text('Members',
                             style: robotoSemiBold.copyWith(fontSize: 16)),
                         GestureDetector(
-                          onTap: () => Get.to(() =>  MembersScreen()),
+
+                          onTap: () => Get.to(() =>  MembersScreen() ,arguments: _viewModel),
+
                           child: Text(
                             'View members details ',
                             style: robotoRegular.copyWith(
@@ -83,7 +94,12 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                           return snapshot.data?.getScreenWidget(
                                   context, _showMembers(), () {}) ??
                               _showMembers();
-                        })
+
+                        }) ,
+                    SizedBox(height: 180.h,) ,
+                    _viewModel.isManger() ? _showCreateTaskButton() : const SizedBox.shrink()
+
+
                   ],
                 ),
               ),
@@ -109,7 +125,9 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
             height: 15,
           ),
           Text(
-            _viewModel.project.description!,
+
+            _viewModel.dashBoardViewModel.project.description!,
+
             style: robotoMedium.copyWith(
                 color: AppColors.secondaryTxt, fontSize: 13),
           )
@@ -143,4 +161,20 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
       )
     ]);
   }
+
+ Widget _showCreateTaskButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20) ,
+      child: CustomButton(
+          onPressed: () {
+            Get.to(()=> CreateTaskScreen()) ;
+            //Get.to(()=> TaskDetailScreen()) ;
+          },
+          text: 'Create new Task'
+      ),
+    ) ;
+
+  }
+
+
 }

@@ -18,7 +18,6 @@ class Project {
       this.progress,
       this.createdBy,
       );
-
   Project.request(this.name, this.description, this.endDate);
   factory Project.fromJson(Map<String, dynamic> json) {
     return Project(

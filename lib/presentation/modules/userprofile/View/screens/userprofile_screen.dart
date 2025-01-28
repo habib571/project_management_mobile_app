@@ -76,22 +76,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     );
   }
 
-/*  Widget _profilePictureSection() {
-    return ClipOval(
-      child: CachedNetworkImage(
-        imageUrl: 'https://imaxcges.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
-        placeholder: (context, url) {
-          return Image.network(
-            'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
-            fit: BoxFit.cover,
-          );
-        },
-        fit: BoxFit.cover,
-        width: 140.w,
-        height: 140.h,
-      ),
-    );
-  }*/
+
   Widget _userNameSection(String username) {
     return Text(username, style: robotoBold.copyWith(fontSize: 18),);
   }

@@ -29,7 +29,7 @@ class UserProfileViewModel extends BaseViewModel {
     (await _userprofileUseCase.getCurrentUserInfo()).fold((failure){
       updateState(ErrorState(StateRendererType.snackbarState, failure.message));
     }, (data){
-      _user=User(data.id,data.fullName, data.email);
+      _user = data ;
       updateState(ContentState());
     }
     );
