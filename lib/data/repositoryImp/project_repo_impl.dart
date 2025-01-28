@@ -1,16 +1,18 @@
 
 import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
-
 import 'package:project_management_app/data/network/failure.dart';
+import 'package:project_management_app/data/network/requests/report_issue_request.dart';
 import 'package:project_management_app/data/responses/project_responce.dart';
+import 'package:project_management_app/domain/models/issue.dart';
 import 'package:project_management_app/domain/models/project_member.dart';
+import 'package:project_management_app/domain/models/user.dart';
 import '../../domain/models/project.dart';
 import '../../domain/repository/project_repo.dart';
 import '../dataSource/remoteDataSource/project_data_source.dart';
 import '../network/error_handler.dart';
 import '../network/internet_checker.dart';
+import '../network/requests/add_member_request.dart';
 
 class ProjectRepositoryImpl implements ProjectRepository{
   final NetworkInfo _networkInfo;
@@ -70,6 +72,110 @@ class ProjectRepositoryImpl implements ProjectRepository{
           return Right(members) ;
         } else {
           return Left(Failure.fromJson(response.data));
+        }
+      }
+      catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
+  @override
+  Future<Either<Failure, List<User>>> getMemberByName(String name, int page, int size) async{
+    if (await _networkInfo.isConnected) {
+      try {
+
+        final response = await _projectDataSource.getMemberByName(name,page,size) ;
+
+        if (response.statusCode == 200) {
+          final List<Map<String, dynamic>> responseData = List<Map<String, dynamic>>.from(response.data);
+          final members = responseData.map((memberJson) => User.fromJson(memberJson)).toList();
+          return Right(members);
+        } else {
+          return Left(Failure.fromJson(response.data));
+        }
+      }
+      catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
+  @override
+  Future<Either<Failure, ProjectMember>> addMember (AddMemberRequest addMemberRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _projectDataSource.addMember(addMemberRequest) ;
+        if (response.statusCode == 200) {
+          return Right(ProjectMember.fromJson(response.data));
+        } else {
+          return Left(Failure.fromJson(response.data));
+        }
+      }
+      catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
+  @override
+  Future<Either<Failure, Issue>> reportIssue (ReportIssueRequest reportIssueRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _projectDataSource.reportIssue(reportIssueRequest);
+        if (response.statusCode == 200) {
+          return Right(Issue.fromJson(response.data));
+        } else {
+          return Left(Failure.fromJson(response.data));
+        }
+      }
+      catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
+  @override
+  Future<Either<Failure, List<Issue>>> getAllIssues(int projectId) async{
+    if (await _networkInfo.isConnected) {
+      try {
+
+        final response = await _projectDataSource.getAllIssues(projectId) ;
+
+        if (response.statusCode == 200) {
+          final List<Map<String, dynamic>> responseData = List<Map<String, dynamic>>.from(response.data);
+          final issues = responseData.map((issueJson) => Issue.fromJson(issueJson)).toList();
+          return Right(issues);
+        } else {
+          return Left(Failure.fromJson(response.data));
+        }
+      }
+      catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
+  @override
+  Future<Either<Failure, Issue>> updateIssueStatus (int issueId) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _projectDataSource.updateIssueStatus(issueId);
+        if (response.statusCode == 200) {
+          return Right(Issue.fromJson(response.data));
+        } else {
+          return Left(Failure.fromJson(response.data));
+
         }
       }
       catch (error) {

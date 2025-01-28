@@ -5,11 +5,12 @@ import 'package:project_management_app/presentation/modules/userprofile/viewmode
 
 import '../../../../../application/constants/constants.dart';
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
+import '../../../../sharedwidgets/custom_listtile.dart';
 import '../../../../sharedwidgets/image_widget.dart';
 import '../../../../stateRender/state_render_impl.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/styles.dart';
-import '../widgets/custum_list_title.dart';
+import '../widgets/userprofile_list_title.dart';
 
 class UserProfileScreen extends StatefulWidget {
    const UserProfileScreen({super.key});
@@ -86,15 +87,15 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   Widget _settingsSection() {
-    return CustomListTitle(icon: Icons.settings_outlined ,title: "Settings",onTap:(){}, );
+    return CustomListTile(leading: const Icon(Icons.settings_outlined,color: AppColors.primary), trailing: const Icon(Icons.arrow_forward_ios ,color: AppColors.accent,size: 13, ) ,title: const Text("Settings"),onTap:(){}, );
   }
 
   Widget _changePasswordSection() {
-    return CustomListTitle(icon: Icons.security ,title: "Change password",onTap:(){} );
+    return CustomListTile(leading: const Icon(Icons.security ,color: AppColors.primary), trailing: const Icon(Icons.arrow_forward_ios ,color: AppColors.accent,size: 13, ), title: const Text("Change password"),onTap:(){} );
   }
 
   Widget _logoutSection() {
-    return CustomListTitle(icon: Icons.logout_outlined ,title: "Logout",onTap:(){
+    return CustomListTile( leading: const Icon(Icons.logout_outlined ,color: AppColors.primary) , title: const Text("Logout"),onTap:(){
       _viewModel.logOut();
     } );
   }

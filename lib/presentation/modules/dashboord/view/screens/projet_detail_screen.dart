@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
@@ -10,9 +12,9 @@ import 'package:project_management_app/presentation/modules/dashboord/view/scree
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/members_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/project_detail_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
-
 import 'package:project_management_app/presentation/modules/tasks/view/screens/task_detail_screen.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
+import 'package:project_management_app/presentation/sharedwidgets/custom_listtile.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_button.dart';
 
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
@@ -20,15 +22,20 @@ import 'package:project_management_app/presentation/stateRender/state_render_imp
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 
+import '../../../../sharedwidgets/custom_add_button.dart';
+import '../../../../sharedwidgets/custom_button.dart';
+import '../../../searchmember/view/custom_search_delegate.dart';
+
 class ProjectDetailScreen extends StatefulWidget {
   const ProjectDetailScreen({super.key, });
-
 
   @override
   State<ProjectDetailScreen> createState() => _ProjectDetailScreenState();
 }
-
 class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
+
+  final ProjectDetailViewModel _viewModel = instance<ProjectDetailViewModel>();
+
   @override
   void initState() {
      _viewModel.start() ;
@@ -36,6 +43,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   }
 
   final ProjectDetailViewModel _viewModel = instance.get<ProjectDetailViewModel>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,9 +93,10 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                         )
                       ],
                     ),
-                    const SizedBox(
-                      height: 15,
+                     SizedBox(
+                      height: 15.h,
                     ),
+
                     StreamBuilder<FlowState>(
                         stream: _viewModel.outputState,
                         builder: (context, snapshot) {
@@ -95,9 +104,19 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                                   context, _showMembers(), () {}) ??
                               _showMembers();
 
-                        }) ,
-                    SizedBox(height: 180.h,) ,
-                    _viewModel.isManger() ? _showCreateTaskButton() : const SizedBox.shrink()
+                        }),
+                    SizedBox(
+                      height: 25.h,
+                    ),
+                    _reportIssueSection(),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    _tasksSection(),
+                    SizedBox(
+                      height: 25.h,
+                    ),
+                    _addIssueButton()
 
 
                   ],
@@ -139,28 +158,69 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   Widget _showMembers() {
     return MembersCard(children: [
       ...List.generate(_viewModel.projectMember.length, (index) {
+        log(_viewModel.projectMember.length.toString());
         return const ImagePlaceHolder(
+            imgBorder: true,
             radius: 17,
-            imageUrl:
-                'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80');
+            imageUrl:'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80');
       }),
-      GestureDetector(
-        onTap: () {},
-        child: Container(
-          height: 34,
-          width: 34,
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.primary, width: 2),
-            shape: BoxShape.circle,
-          ),
-          child: const Center(
-            child: Icon(Icons.add,
-                size: 25, color: AppColors.primary), // Adjust size if needed
-          ),
-        ),
-      )
+
+      CustomAddButton(onTap: () {
+        showSearch(context: context ,delegate: CustomSearchDelegate(
+            afterSelectingUser: (selectedMember){
+              Get.toNamed(AppRoutes.addMemberScreen,arguments: selectedMember);
+            }
+        ));
+        },
+      ),
     ]);
   }
+
+
+  Widget _reportIssueSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Report Issue', style: robotoSemiBold.copyWith(fontSize: 16)),
+         SizedBox(
+          height: 15.h,
+        ),
+        CustomListTile(
+            leading: const Icon(Icons.report_problem_outlined,color: AppColors.primary),
+            trailing: const Icon(Icons.arrow_forward_ios,color: AppColors.accent,size: 13,),
+            title: const Text("View issues"),
+            onTap: () {
+              Get.toNamed(AppRoutes.issuesScreen);
+            })
+      ],
+    );
+  }
+  Widget _tasksSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Tasks', style: robotoSemiBold.copyWith(fontSize: 16)),
+         SizedBox(
+          height: 15.h,
+        ),
+        CustomListTile(
+            leading: const Icon(Icons.task_outlined,color: AppColors.primary),
+            trailing: const Icon(Icons.arrow_forward_ios,color: AppColors.accent,size: 13,),
+            title: const Text("View tasks"),
+            onTap: () {})
+      ],
+    );
+  }
+
+  Widget _addIssueButton() {
+    return CustomButton(
+        buttonColor: AppColors.accent,
+        onPressed: () {
+          Get.toNamed(AppRoutes.reportIssueScreen);
+        },
+        text: 'Report an Issue');
+  }
+
 
  Widget _showCreateTaskButton() {
     return Padding(
@@ -175,6 +235,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
     ) ;
 
   }
+
 
 
 }

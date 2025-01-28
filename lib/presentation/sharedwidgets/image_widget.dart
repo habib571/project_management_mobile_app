@@ -1,10 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:project_management_app/application/extensions/screen_config_extension.dart';
+
+import '../utils/colors.dart';
 
 class ImagePlaceHolder extends StatelessWidget {
-  const ImagePlaceHolder({super.key, required this.radius, required this.imageUrl});
+  const ImagePlaceHolder({super.key, required this.radius, required this.imageUrl , this.imgBorder = false});
+
  final double radius ;
  final String imageUrl ;
+ final bool imgBorder  ;
+
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
@@ -13,6 +19,7 @@ class ImagePlaceHolder extends StatelessWidget {
         imageUrl: imageUrl,
         imageBuilder: (context, imageProvider) => Container(
           decoration: BoxDecoration(
+            border: imgBorder ? Border.all(color: AppColors.primary,width: 1,) : null,
             shape: BoxShape.circle,
             image: DecorationImage(
               image: imageProvider,

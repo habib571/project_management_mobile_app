@@ -1,7 +1,7 @@
 
 import 'package:project_management_app/application/helpers/get_storage.dart';
-
 import 'package:project_management_app/domain/models/project_member.dart';
+import 'package:project_management_app/domain/models/user.dart';
 import 'package:project_management_app/domain/usecases/project/get_members.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
 import '../../../../application/dependencyInjection/dependency_injection.dart';
@@ -17,15 +17,17 @@ class ProjectDetailViewModel extends BaseViewModel {
   final LocalStorage _localStorage ;
   ProjectDetailViewModel(super.tokenManager, this._useCase, this._localStorage, this.dashBoardViewModel);
 
+
   @override
   void start() {
     super.start();
     getProjectMembers();
   }
 
+  List<ProjectMember> _projectMember = [];
+  List<ProjectMember> get projectMember => _projectMember;
 
-  List<ProjectMember> _projectMember  = [];
-  List<ProjectMember> get projectMember => _projectMember ;
+
   getProjectMembers() async {
     updateState(LoadingState(
         stateRendererType: StateRendererType.fullScreenLoadingState));
@@ -33,11 +35,13 @@ class ProjectDetailViewModel extends BaseViewModel {
     (await _useCase.getProjectMembers(dashBoardViewModel.project.id!)).fold(
         (failure) {
           updateState(ErrorState(StateRendererType.fullScreenErrorState, failure.message));
+
         },
-        (data) {
-          _projectMember = data ;
-          updateState(ContentState()) ;
+            (data) {
+              _projectMember = data ;
+              updateState(ContentState());
         }
+
     ) ;
   }
 
@@ -46,3 +50,4 @@ class ProjectDetailViewModel extends BaseViewModel {
 
 
 }
+

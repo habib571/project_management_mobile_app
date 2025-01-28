@@ -3,10 +3,13 @@ import 'package:project_management_app/application/dependencyInjection/dependenc
 import 'package:project_management_app/application/helpers/get_storage.dart';
 import 'package:project_management_app/application/navigation/middelware.dart';
 import 'package:project_management_app/application/navigation/routes_constants.dart';
+import 'package:project_management_app/presentation/modules/addmember/view/screens/add_member_screen.dart';
 import 'package:project_management_app/presentation/modules/auth/view/screens/signin_screen.dart';
 import 'package:project_management_app/presentation/modules/auth/view/screens/signup_screen.dart';
+import 'package:project_management_app/presentation/modules/dashboord/view/screens/issues_screen.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/members_screen.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/projet_detail_screen.dart';
+import 'package:project_management_app/presentation/modules/dashboord/view/screens/report_issue_screen.dart';
 import 'package:project_management_app/presentation/modules/home/home_screen.dart';
 import 'package:project_management_app/presentation/modules/userprofile/View/screens/userprofile_screen.dart';
 
@@ -16,8 +19,11 @@ List<GetPage<dynamic>>? routes = [  GetPage(name: AppRoutes.login, page:()=> Sig
   GetPage(name: AppRoutes.signup, page:()=> const SignupScreen()) ,
   GetPage(name: AppRoutes.home, page:()=>  HomeNavBar()),
   GetPage(name: AppRoutes.addproject, page:()=> AddProjectScreen()),
-  GetPage(name: AppRoutes.userProfile, page:()=>  UserProfileScreen()),
- // GetPage(name: AppRoutes.projectDetails, page:()=>   ProjectDetailScreen()),
-  GetPage(name: AppRoutes.membersScreen, page: ()=>  MembersScreen())
+  GetPage(name: AppRoutes.userProfile, page:()=>  const UserProfileScreen()),
+  //GetPage(name: AppRoutes.projectDetails, page:()=>   const ProjectDetailScreen()),
+  GetPage(name: AppRoutes.membersScreen, page: ()=>  MembersScreen()),
+  GetPage(name: AppRoutes.addMemberScreen, page: ()=>  const AddMemberScreen()),
+  GetPage(name: AppRoutes.reportIssueScreen, page: ()=>   ReportIssueScreen()),
+  GetPage(name: AppRoutes.issuesScreen, page: ()=>  const IssuesScreen())
 
 ] ;

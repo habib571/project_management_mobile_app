@@ -8,9 +8,10 @@ import 'package:project_management_app/presentation/modules/auth/view/screens/si
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signin-view_model.dart';
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signup_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
 import 'package:provider/provider.dart';
-
 import 'application/dependencyInjection/dependency_injection.dart';
 import 'application/helpers/screen_configuraton.dart';
 import 'application/navigation/routes_constants.dart';
@@ -29,18 +30,32 @@ class MyApp extends StatelessWidget {
     screenUtility.initialize(context);
     return MultiProvider(
         providers: [
+          
           ChangeNotifierProvider<SignupViewModel>(
-
               lazy: true, create: (_) => GetIt.instance<SignupViewModel>()),
+          
           ChangeNotifierProvider<SignInViewModel>(
               lazy: true, create: (_) => GetIt.instance<SignInViewModel>()),
+          
           ChangeNotifierProvider<DashBoardViewModel>(
               lazy: true, create: (_) => GetIt.instance<DashBoardViewModel>()),
+          
           ChangeNotifierProvider<AddProjectViewModel>(
-              lazy: true, create: (_) => GetIt.instance<AddProjectViewModel>()),
+            lazy: true,
+              create: (_) => GetIt.instance<AddProjectViewModel>()),
+          
+          ChangeNotifierProvider<ProjectDetailViewModel>(
+              lazy: true,
+              create: (_) => GetIt.instance<ProjectDetailViewModel>()),
+          
+          ChangeNotifierProvider<ReportIssueViewModel>(
+              lazy: true,
+              create: (_) => GetIt.instance<ReportIssueViewModel>()),
+
           ChangeNotifierProvider(
               lazy: true, create: (_) => GetIt.instance<AddTaskViewModel>()
           )
+
 
         ],
         child: GetMaterialApp(
