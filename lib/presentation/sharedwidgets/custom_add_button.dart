@@ -13,8 +13,8 @@ class CustomAddButton extends StatelessWidget{
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 34.h,
-        width: 33.w,
+        height: 34,
+        width: 33,
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.primary, width: 2),
           shape: BoxShape.circle,

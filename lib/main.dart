@@ -55,8 +55,6 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               lazy: true, create: (_) => GetIt.instance<AddTaskViewModel>()
           )
-
-
         ],
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,

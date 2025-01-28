@@ -17,7 +17,7 @@ import 'package:project_management_app/presentation/modules/addmember/viewmodel/
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
-import 'package:project_management_app/presentation/modules/searchmember/viewmodel/search_member_view_model.dart';
+import 'package:project_management_app/presentation/modules/addmember/viewmodel/search_member_view_model.dart';
 
 
 import 'package:project_management_app/presentation/modules/userprofile/viewmodel/userprofile_view_model.dart';
@@ -33,8 +33,11 @@ import '../../domain/repository/task_repo.dart';
 import '../../domain/usecases/auth/signup_usecase.dart';
 import '../../domain/usecases/auth/userprofile_usecase.dart';
 import '../../domain/usecases/project/addproject-use-case.dart';
+import '../../domain/usecases/task/add_task_user_case.dart';
 import '../../presentation/modules/addproject/view/add-project_screen.dart';
 import '../../presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
+import '../../presentation/modules/tasks/viewmodel/add_task_view_model.dart';
+import '../../presentation/modules/tasks/viewmodel/task_detail_view_model.dart';
 import '../helpers/token_mamanger.dart';
 import '../../domain/usecases/auth/signin_usecase.dart';
 import '../../presentation/modules/auth/viewmodel/signin-view_model.dart';
@@ -69,9 +72,8 @@ initAppModule() async {
   initHomeModule();
   initDashboard();
   intAddProject();
-
+  initTask() ;
   initUserProfileModule();
-
   initProject() ;
   initSearchModule();
   initReportIssueModule();
@@ -86,6 +88,7 @@ initReportIssueModule() {
 
   }
 }
+
 
 initGetAllIssuesModule() {
   if (!GetIt.I.isRegistered<GetAllIssuesViewModel>()) {
@@ -125,39 +128,25 @@ initDashboard() {
 
 }
 
-initProject() {
-  if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
-    instance.registerFactory<GetMembersUseCase>(
-        () => GetMembersUseCase(instance()));
-    instance.registerLazySingleton<ProjectDetailViewModel>(() =>
-        ProjectDetailViewModel(instance(), instance(), instance(), instance()));
-  }
-}
+
 
 initTask() {
   instance.registerLazySingleton<TaskDetailsViewModel>(
       () => TaskDetailsViewModel(instance(), instance()));
-
-  if (!GetIt.I.isRegistered<AddTaskUseCase>()) {
     instance.registerFactory<AddTaskUseCase>(() => AddTaskUseCase(instance()));
     instance.registerLazySingleton<AddTaskViewModel>(
         () => AddTaskViewModel(instance(), instance(), instance()));
-  }
+
 }
 
-initDashboard() {
-  if (!GetIt.I.isRegistered<GetMyProjectsUseCase>()) {
-    instance.registerFactory<GetMyProjectsUseCase>(() => GetMyProjectsUseCase(instance()));
-    instance.registerLazySingleton<DashBoardViewModel>(() => DashBoardViewModel(instance() ,instance()) );
-  }
-}
+
 
 initProject() {
   if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
     instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
     instance.registerFactory<AddMemberUseCase>(() => AddMemberUseCase(instance()));
-    instance.registerFactory<AddMemberViewModel>(() => AddMemberViewModel(instance() ,instance()) );
-    instance.registerFactory<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance()) );
+    instance.registerFactory<AddMemberViewModel>(() => AddMemberViewModel(instance() ,instance() ,instance()) );
+    instance.registerFactory<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance() ,instance()) );
   }
 }
 

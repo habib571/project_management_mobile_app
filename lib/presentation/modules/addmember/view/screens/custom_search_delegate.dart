@@ -3,12 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_listtile.dart';
-import '../../../../application/dependencyInjection/dependency_injection.dart';
 
-import '../../../../domain/models/user.dart';
-import '../viewmodel/search_member_view_model.dart';
-import '../../../stateRender/state_render_impl.dart';
-import '../../../sharedwidgets/image_widget.dart';
+import '../../../../../application/dependencyInjection/dependency_injection.dart';
+import '../../../../../domain/models/user.dart';
+import '../../../../sharedwidgets/image_widget.dart';
+import '../../../../stateRender/state_render_impl.dart';
+import '../../viewmodel/search_member_view_model.dart';
 
 
 
@@ -96,7 +96,6 @@ class CustomSearchDelegate extends SearchDelegate {
                     child: Center(child: CircularProgressIndicator()),
                   ) : const SizedBox.shrink();
                 }
-
                 final member = members[index];
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 5.h),
@@ -113,7 +112,6 @@ class CustomSearchDelegate extends SearchDelegate {
             ),
           );
         }
-
         return const SizedBox.shrink();
       },
     );

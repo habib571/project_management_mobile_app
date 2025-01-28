@@ -1,12 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
-import 'package:project_management_app/presentation/sharedwidgets/custom_listtile.dart';
-
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
 import '../../../../../domain/models/user.dart';
 import '../../../../sharedwidgets/custom_button.dart';
@@ -54,7 +50,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
       key: _viewModel.formkey ,
       child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -88,7 +84,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
-      margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 0),
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
       child: Padding(
         padding: EdgeInsets.all(16.w),
         child: Row(
@@ -96,10 +92,10 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
           children: [
             ImagePlaceHolder(
               imgBorder: true,
-              radius: 35.w,
+              radius: 35,
               imageUrl: user.imageUrl ,
             ),
-            SizedBox(width: 20.w),
+            const SizedBox(width: 20),
 
             Expanded(
               child: Column(
@@ -107,8 +103,8 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.person, color: AppColors.primary, size: 18.w),
-                      SizedBox(width: 8.w),
+                      const Icon(Icons.person, color: AppColors.primary, size: 18),
+                      const SizedBox(width: 8),
                       Text(
                         user.fullName,
                         style:const TextStyle(
@@ -119,11 +115,11 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 6.h),
+                  const SizedBox(height: 6),
                   Row(
                     children: [
-                      Icon(Icons.email, color: AppColors.primary, size: 18.w),
-                      SizedBox(width: 8.w),
+                      const Icon(Icons.email, color: AppColors.primary, size: 18),
+                      const SizedBox(width: 8),
                       Text(
                         user.email,
                         style: TextStyle(
@@ -147,9 +143,9 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
     return InputText(
       validator: (val) => val.isEmptyInput(),
       controller: _viewModel.role ,
-      prefixIcon: Padding(
-        padding:  EdgeInsetsDirectional.only(end: 12.w),
-        child: const Icon(Icons.badge)
+      prefixIcon: const Padding(
+        padding:  EdgeInsetsDirectional.only(end: 12),
+        child: Icon(Icons.badge)
       ),
       hintText: "Add member role",
     );

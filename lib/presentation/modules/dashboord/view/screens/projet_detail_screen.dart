@@ -24,7 +24,7 @@ import 'package:project_management_app/presentation/utils/styles.dart';
 
 import '../../../../sharedwidgets/custom_add_button.dart';
 import '../../../../sharedwidgets/custom_button.dart';
-import '../../../searchmember/view/custom_search_delegate.dart';
+import '../../../addmember/view/screens/custom_search_delegate.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
   const ProjectDetailScreen({super.key, });
@@ -42,7 +42,6 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
     super.initState();
   }
 
-  final ProjectDetailViewModel _viewModel = instance.get<ProjectDetailViewModel>();
 
 
   @override
@@ -227,7 +226,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 20) ,
       child: CustomButton(
           onPressed: () {
-            Get.to(()=> CreateTaskScreen()) ;
+            Get.to(()=> const CreateTaskScreen()) ;
             //Get.to(()=> TaskDetailScreen()) ;
           },
           text: 'Create new Task'
