@@ -17,9 +17,7 @@ import '../network/requests/add_member_request.dart';
 class ProjectRepositoryImpl implements ProjectRepository{
   final NetworkInfo _networkInfo;
   final ProjectDataSource _projectDataSource ;
-
   ProjectRepositoryImpl(this._networkInfo,this._projectDataSource);
-
   @override
   Future<Either<Failure, Project>> addProject (Project projectRequest) async {
     if (await _networkInfo.isConnected) {
@@ -64,7 +62,6 @@ class ProjectRepositoryImpl implements ProjectRepository{
   Future<Either<Failure, List<ProjectMember>>> getProjectMembers(int projectId) async{
     if (await _networkInfo.isConnected) {
       try {
-
         final response = await _projectDataSource.getProjectMember(projectId) ;
         if (response.statusCode == 200) {
           final List<Map<String, dynamic>> responseData = List<Map<String, dynamic>>.from(response.data);
@@ -97,6 +94,7 @@ class ProjectRepositoryImpl implements ProjectRepository{
           return Left(Failure.fromJson(response.data));
         }
       }
+
       catch (error) {
         log(error.toString()) ;
         return Left(ErrorHandler.handle(error).failure);
