@@ -27,22 +27,22 @@ import '../../../../sharedwidgets/custom_button.dart';
 import '../../../addmember/view/screens/custom_search_delegate.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
-  const ProjectDetailScreen({super.key, });
+  const ProjectDetailScreen({
+    super.key,
+  });
 
   @override
   State<ProjectDetailScreen> createState() => _ProjectDetailScreenState();
 }
-class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
 
+class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   final ProjectDetailViewModel _viewModel = instance<ProjectDetailViewModel>();
 
   @override
   void initState() {
-     _viewModel.start() ;
+    _viewModel.start();
     super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -61,19 +61,17 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 50.h,
+                      height: 20.h,
                     ),
                     ProjectDetailCard(
-
                       project: _viewModel.dashBoardViewModel.project,
-
                     ),
-                    SizedBox(
-                      height: 30.h,
+                    const SizedBox(
+                      height: 30,
                     ),
                     _showProjectDescription(),
-                    SizedBox(
-                      height: 30.h,
+                    const SizedBox(
+                      height: 30,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,9 +79,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                         Text('Members',
                             style: robotoSemiBold.copyWith(fontSize: 16)),
                         GestureDetector(
-
-                          onTap: () => Get.to(() =>  MembersScreen() ,arguments: _viewModel),
-
+                          onTap: () => Get.to(() => MembersScreen(),
+                              arguments: _viewModel),
                           child: Text(
                             'View members details ',
                             style: robotoRegular.copyWith(
@@ -92,32 +89,37 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                         )
                       ],
                     ),
-                     SizedBox(
-                      height: 15.h,
+                    const SizedBox(
+                      height: 15,
                     ),
-
                     StreamBuilder<FlowState>(
                         stream: _viewModel.outputState,
                         builder: (context, snapshot) {
                           return snapshot.data?.getScreenWidget(
                                   context, _showMembers(), () {}) ??
                               _showMembers();
-
                         }),
-                    SizedBox(
-                      height: 25.h,
+                    const SizedBox(
+                      height: 25,
                     ),
                     _reportIssueSection(),
-                    SizedBox(
-                      height: 20.h,
+                    const SizedBox(
+                      height: 20,
                     ),
                     _tasksSection(),
-                    SizedBox(
-                      height: 25.h,
+                    const SizedBox(
+                      height: 25,
                     ),
-                    _addIssueButton()
-
-
+                    _viewModel.isManger()
+                        ? _showCreateTaskButton()
+                        : const SizedBox.shrink(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    _addIssueButton() ,
+                    const SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),
@@ -143,9 +145,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
             height: 15,
           ),
           Text(
-
             _viewModel.dashBoardViewModel.project.description!,
-
             style: robotoMedium.copyWith(
                 color: AppColors.secondaryTxt, fontSize: 13),
           )
@@ -161,32 +161,39 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
         return const ImagePlaceHolder(
             imgBorder: true,
             radius: 17,
-            imageUrl:'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80');
+            imageUrl:
+                'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80');
       }),
-
-      CustomAddButton(onTap: () {
-        showSearch(context: context ,delegate: CustomSearchDelegate(
-            afterSelectingUser: (selectedMember){
-              Get.toNamed(AppRoutes.addMemberScreen,arguments: selectedMember);
-            }
-        ));
+      CustomAddButton(
+        onTap: () {
+          showSearch(
+              context: context,
+              delegate:
+                  CustomSearchDelegate(afterSelectingUser: (selectedMember) {
+                Get.toNamed(AppRoutes.addMemberScreen,
+                    arguments: selectedMember);
+              }));
         },
       ),
     ]);
   }
-
 
   Widget _reportIssueSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Report Issue', style: robotoSemiBold.copyWith(fontSize: 16)),
-         SizedBox(
+        SizedBox(
           height: 15.h,
         ),
         CustomListTile(
-            leading: const Icon(Icons.report_problem_outlined,color: AppColors.primary),
-            trailing: const Icon(Icons.arrow_forward_ios,color: AppColors.accent,size: 13,),
+            leading: const Icon(Icons.report_problem_outlined,
+                color: AppColors.primary),
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
+              color: AppColors.accent,
+              size: 13,
+            ),
             title: const Text("View issues"),
             onTap: () {
               Get.toNamed(AppRoutes.issuesScreen);
@@ -194,17 +201,22 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
       ],
     );
   }
+
   Widget _tasksSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Tasks', style: robotoSemiBold.copyWith(fontSize: 16)),
-         SizedBox(
+        SizedBox(
           height: 15.h,
         ),
         CustomListTile(
-            leading: const Icon(Icons.task_outlined,color: AppColors.primary),
-            trailing: const Icon(Icons.arrow_forward_ios,color: AppColors.accent,size: 13,),
+            leading: const Icon(Icons.task_outlined, color: AppColors.primary),
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
+              color: AppColors.accent,
+              size: 13,
+            ),
             title: const Text("View tasks"),
             onTap: () {})
       ],
@@ -212,29 +224,30 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   }
 
   Widget _addIssueButton() {
-    return CustomButton(
-        buttonColor: AppColors.accent,
-        onPressed: () {
-          Get.toNamed(AppRoutes.reportIssueScreen);
-        },
-        text: 'Report an Issue');
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: CustomButton(
+          widget: const Icon(
+            Icons.report_gmailerrorred,
+            color: Colors.white,
+          ),
+          buttonColor: Colors.red.shade300,
+          onPressed: () {
+            Get.toNamed(AppRoutes.reportIssueScreen);
+          },
+          text: 'Report an Issue'),
+    );
   }
 
-
- Widget _showCreateTaskButton() {
+  Widget _showCreateTaskButton() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20) ,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: CustomButton(
           onPressed: () {
-            Get.to(()=> const CreateTaskScreen()) ;
+            Get.to(() => const CreateTaskScreen());
             //Get.to(()=> TaskDetailScreen()) ;
           },
-          text: 'Create new Task'
-      ),
-    ) ;
-
+          text: 'Create new Task'),
+    );
   }
-
-
-
 }
