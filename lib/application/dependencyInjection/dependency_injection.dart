@@ -146,7 +146,7 @@ initProject() {
     instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
     instance.registerFactory<AddMemberUseCase>(() => AddMemberUseCase(instance()));
     instance.registerFactory<AddMemberViewModel>(() => AddMemberViewModel(instance() ,instance() ,instance()) );
-    instance.registerFactory<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance() ,instance()) );
+    instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance() ,instance()) );
   }
 }
 
