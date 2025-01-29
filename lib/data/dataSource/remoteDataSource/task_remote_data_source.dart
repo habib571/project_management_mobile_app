@@ -1,3 +1,5 @@
+import 'package:project_management_app/data/network/requests/pagination.dart';
+
 import '../../../application/functions/cruds_functions.dart';
 import '../../../application/helpers/get_storage.dart';
 import '../../../domain/models/task.dart';
@@ -5,6 +7,7 @@ import '../../responses/api_response.dart';
 
 abstract class TaskRemoteDataSource {
   Future<ApiResponse> addTask(TaskModel task ,int projectId) ;
+  Future<ApiResponse> getAllTasks(int projectId ,Pagination pagination ) ;
 
 }
 class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
@@ -20,6 +23,16 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
         onRequestResponse: (response, statusCode) {
           return ApiResponse(response, statusCode);
         });
+  }
+  @override
+  Future<ApiResponse> getAllTasks(int projectId, Pagination pagination) async{
+    return await executeGetRequest(
+        apiUrl: "task/project-tasks/$projectId?page=${pagination.page}&size=${pagination.size}",
+        bearerToken: _localStorage.getAuthToken() ,
+        onRequestResponse: (response, statusCode) {
+          return ApiResponse(response, statusCode);
+        });
+
   }
 
 }
