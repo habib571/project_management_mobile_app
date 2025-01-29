@@ -44,6 +44,7 @@ class CustomButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   widget,
+                  SizedBox(width: 10,) ,
                   Text(
                     text,
                     style: robotoMedium.copyWith(color: textColor, fontSize: 16) ,
