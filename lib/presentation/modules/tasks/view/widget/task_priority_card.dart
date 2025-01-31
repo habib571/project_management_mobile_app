@@ -8,8 +8,11 @@ class TaskPriorityCard extends StatelessWidget {
  final TaskPriorityModel taskPriorityModel ;
   @override
   Widget build(BuildContext context) {
-    return  Card(
-      color: taskPriorityModel.backgroundColor ,
+    return  Container(
+      decoration: BoxDecoration(
+         borderRadius: BorderRadius.circular(20) ,
+        color: taskPriorityModel.backgroundColor ,
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 9 ,vertical: 5),
         child: Row(
