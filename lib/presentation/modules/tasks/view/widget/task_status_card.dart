@@ -8,8 +8,11 @@ class TaskStatusCard extends StatelessWidget {
 final TaskStatusModel taskStatusModel ;
   @override
   Widget build(BuildContext context) {
-     return Card(
-       color: taskStatusModel.backgroundColor ,
+     return Container(
+       decoration: BoxDecoration(
+           color: taskStatusModel.backgroundColor ,
+          borderRadius: BorderRadius.circular(20)
+       ),
        child: Padding(
            padding: const EdgeInsets.symmetric(horizontal: 9 ,vertical: 5),
           child: Text(
