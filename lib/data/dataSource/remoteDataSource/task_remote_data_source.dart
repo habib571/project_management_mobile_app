@@ -7,7 +7,7 @@ import '../../responses/api_response.dart';
 
 abstract class TaskRemoteDataSource {
   Future<ApiResponse> addTask(TaskModel task ,int projectId) ;
-  Future<ApiResponse> getAllTasks(int projectId ,Pagination pagination ) ;
+  Future<ApiResponse> getProjectTasks(int projectId ,Pagination pagination ) ;
 
 }
 class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
@@ -25,9 +25,9 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
         });
   }
   @override
-  Future<ApiResponse> getAllTasks(int projectId, Pagination pagination) async{
+  Future<ApiResponse> getProjectTasks(int projectId, Pagination pagination) async{
     return await executeGetRequest(
-        apiUrl: "task/project-tasks/$projectId?page=${pagination.page}&size=${pagination.size}",
+        apiUrl: "/task/project-tasks/$projectId?page=${pagination.page}&size=${pagination.size}",
         bearerToken: _localStorage.getAuthToken() ,
         onRequestResponse: (response, statusCode) {
           return ApiResponse(response, statusCode);

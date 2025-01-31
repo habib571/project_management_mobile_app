@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
     screenUtility.initialize(context);
     return MultiProvider(
         providers: [
-          
           ChangeNotifierProvider<SignupViewModel>(
               lazy: true, create: (_) => GetIt.instance<SignupViewModel>()),
           

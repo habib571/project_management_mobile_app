@@ -95,7 +95,7 @@ extension FlowStateExtension on FlowState {
   Widget getScreenWidget(BuildContext context, Widget contentScreenWidget,
       Function() retryActionFunction) {
     switch (runtimeType) {
-      case LoadingState:
+      case LoadingState _:
         {
           dismissOverlay(context);
           if (getStateRendererType() == StateRendererType.popupLoadingState) {
@@ -122,7 +122,7 @@ extension FlowStateExtension on FlowState {
                 retryActionFunction: retryActionFunction);
           }
         }
-      case ErrorState:
+      case ErrorState _:
         {
           dismissOverlay(context);
           if (getStateRendererType() == StateRendererType.popupErrorState) {

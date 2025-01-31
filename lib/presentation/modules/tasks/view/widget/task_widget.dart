@@ -31,6 +31,7 @@ class TaskWidget extends StatelessWidget {
                  style: robotoBold.copyWith(fontSize: 14),
                ) , 
                TaskPriorityCard(taskPriorityModel: TaskPriorityModel.type(task.priority!)),
+               ]),
                Row(
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
@@ -39,7 +40,7 @@ class TaskWidget extends StatelessWidget {
                        Image.asset("assets/calendar.png"),
                        const SizedBox(width: 5,),
                        Text(
-                        task.deadline!,
+                        task.deadline?? "02/05/2025",
                          style: robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),
                        )
                      ],
@@ -61,8 +62,7 @@ class TaskWidget extends StatelessWidget {
              ],
            ) ,
 
-         ]
-       ) ,
+
     ) ;
   }
 }

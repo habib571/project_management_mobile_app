@@ -47,7 +47,7 @@ abstract class BaseViewModel extends  ChangeNotifier implements BaseViewModelInp
     _tokenManager.startTokenMonitoring();
     _tokenManager.tokenValidityStream.listen((isTokenValid){
       if(!isTokenValid){
-         updateState(ErrorState(StateRendererType.snackbarState, "Tek expired"),);
+         updateState(ErrorState(StateRendererType.snackbarState, "Session expired"),);
         Get.offAllNamed(AppRoutes.login) ;
       }
     });

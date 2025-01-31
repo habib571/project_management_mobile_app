@@ -12,6 +12,7 @@ import 'package:project_management_app/presentation/modules/dashboord/view/scree
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/members_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/project_detail_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/view/screens/project_tasks_screens.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/screens/task_detail_screen.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_listtile.dart';
@@ -107,8 +108,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                       height: 20,
                     ),
                     _tasksSection(),
-                    const SizedBox(
-                      height: 25,
+                     SizedBox(
+                      height: 40.h,
                     ),
                     _viewModel.isManger()
                         ? _showCreateTaskButton()
@@ -179,48 +180,32 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   }
 
   Widget _reportIssueSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Report Issue', style: robotoSemiBold.copyWith(fontSize: 16)),
-        SizedBox(
-          height: 15.h,
+    return CustomListTile(
+        leading: const Icon(Icons.report_problem_outlined,
+            color: AppColors.primary),
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          color: AppColors.accent,
+          size: 13,
         ),
-        CustomListTile(
-            leading: const Icon(Icons.report_problem_outlined,
-                color: AppColors.primary),
-            trailing: const Icon(
-              Icons.arrow_forward_ios,
-              color: AppColors.accent,
-              size: 13,
-            ),
-            title: const Text("View issues"),
-            onTap: () {
-              Get.toNamed(AppRoutes.issuesScreen);
-            })
-      ],
-    );
+        title: const Text("View issues"),
+        onTap: () {
+          Get.toNamed(AppRoutes.issuesScreen);
+        });
   }
 
   Widget _tasksSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Tasks', style: robotoSemiBold.copyWith(fontSize: 16)),
-        SizedBox(
-          height: 15.h,
+    return CustomListTile(
+        leading: const Icon(Icons.task_outlined, color: AppColors.primary),
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          color: AppColors.accent,
+          size: 13,
         ),
-        CustomListTile(
-            leading: const Icon(Icons.task_outlined, color: AppColors.primary),
-            trailing: const Icon(
-              Icons.arrow_forward_ios,
-              color: AppColors.accent,
-              size: 13,
-            ),
-            title: const Text("View tasks"),
-            onTap: () {})
-      ],
-    );
+        title: const Text("View tasks"),
+        onTap: () {
+          Get.to(()=>ProjectTasksScreens()) ;
+        });
   }
 
   Widget _addIssueButton() {

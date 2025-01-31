@@ -32,11 +32,10 @@ class SearchViewModel extends BaseViewModel{
 
   Future<void> getMemberByName(String name, {int page = 0}) async {
     if (_isLoadingMore || !hasMore) return;
-
     if (page == 0) {
       _memberToAdd.clear();
       _currentPage = 0;
-      hasMore = true;
+       hasMore = true;
       _stateNotifier.value = ContentState();
     }
 
@@ -51,7 +50,6 @@ class SearchViewModel extends BaseViewModel{
         if (data.length < _pageSize) {
           hasMore = false;
         }
-
         _memberToAdd.addAll(data);
         _currentPage = page + 1;
         _stateNotifier.value = ContentState();

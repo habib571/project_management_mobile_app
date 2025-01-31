@@ -12,12 +12,14 @@ import 'package:project_management_app/domain/usecases/project/get_members.dart'
 import 'package:project_management_app/domain/usecases/project/issue/get_allissues_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/issue/report_issue_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/myprojects_usecase.dart';
+import 'package:project_management_app/domain/usecases/task/get_all_tasks.dart';
 
 import 'package:project_management_app/presentation/modules/addmember/viewmodel/add_member_viewmodel.dart';
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
 import 'package:project_management_app/presentation/modules/addmember/viewmodel/search_member_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/prject_tasks_view_model.dart';
 
 
 import 'package:project_management_app/presentation/modules/userprofile/viewmodel/userprofile_view_model.dart';
@@ -136,6 +138,9 @@ initTask() {
     instance.registerFactory<AddTaskUseCase>(() => AddTaskUseCase(instance()));
     instance.registerLazySingleton<AddTaskViewModel>(
         () => AddTaskViewModel(instance(), instance(), instance()));
+  instance.registerFactory<GetProjectTasksUseCase>(() => GetProjectTasksUseCase(instance()));
+  instance.registerLazySingleton<ProjectTasksViewModel>(
+          () => ProjectTasksViewModel(instance(), instance(), instance()));
 
 }
 
