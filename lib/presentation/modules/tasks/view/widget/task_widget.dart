@@ -15,7 +15,7 @@ class TaskWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
          padding: const EdgeInsets.all(15),
-         height: 180,
+         height: 160,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(17) ,
           color: Colors.white
@@ -32,6 +32,7 @@ class TaskWidget extends StatelessWidget {
                ) , 
                TaskPriorityCard(taskPriorityModel: TaskPriorityModel.type(task.priority!)),
                ]),
+               const SizedBox(height: 15,)  ,
                Row(
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
@@ -48,6 +49,8 @@ class TaskWidget extends StatelessWidget {
                    TaskStatusCard(taskStatusModel: TaskStatusModel.type(task.status!))
                  ],
                ) ,
+           const SizedBox(height: 15,)  ,
+
                Row(
                  children: [
                    const ImagePlaceHolder(
