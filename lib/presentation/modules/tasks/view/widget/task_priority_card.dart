@@ -11,13 +11,13 @@ class TaskPriorityCard extends StatelessWidget {
     return  Card(
       color: taskPriorityModel.backgroundColor ,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12 ,vertical: 7),
+        padding: const EdgeInsets.symmetric(horizontal: 9 ,vertical: 5),
         child: Row(
           children: [
-            Icon(Icons.outlined_flag_rounded ,color:taskPriorityModel.textColor ) ,
+            Icon(Icons.outlined_flag_rounded ,color:taskPriorityModel.textColor ,size: 15,) ,
             Text(
               taskPriorityModel.text ,
-              style: robotoMedium.copyWith(color: taskPriorityModel.textColor) ,
+              style: robotoMedium.copyWith(color: taskPriorityModel.textColor ,fontSize: 12) ,
             ),
           ],
         ),
