@@ -139,12 +139,10 @@ initTask() {
     instance.registerLazySingleton<AddTaskViewModel>(
         () => AddTaskViewModel(instance(), instance(), instance()));
   instance.registerFactory<GetProjectTasksUseCase>(() => GetProjectTasksUseCase(instance()));
-  instance.registerLazySingleton<ProjectTasksViewModel>(
+  instance.registerFactory<ProjectTasksViewModel>(
           () => ProjectTasksViewModel(instance(), instance(), instance()));
 
 }
-
-
 
 initProject() {
   if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
