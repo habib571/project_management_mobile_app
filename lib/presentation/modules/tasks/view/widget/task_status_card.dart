@@ -11,10 +11,10 @@ final TaskStatusModel taskStatusModel ;
      return Card(
        color: taskStatusModel.backgroundColor ,
        child: Padding(
-           padding: const EdgeInsets.symmetric(horizontal: 12 ,vertical: 7),
+           padding: const EdgeInsets.symmetric(horizontal: 9 ,vertical: 5),
           child: Text(
              taskStatusModel.statusName ,
-             style: robotoMedium.copyWith(color: taskStatusModel.textColor) ,
+             style: robotoMedium.copyWith(color: taskStatusModel.textColor ,fontSize: 12) ,
           ),
        ),
      ) ;
