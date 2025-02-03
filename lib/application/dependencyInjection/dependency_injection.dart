@@ -19,6 +19,7 @@ import 'package:project_management_app/presentation/modules/addproject/viewmodel
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
 import 'package:project_management_app/presentation/modules/addmember/viewmodel/search_member_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/prject_tasks_view_model.dart';
 
 
@@ -135,6 +136,8 @@ initDashboard() {
 initTask() {
   instance.registerLazySingleton<TaskDetailsViewModel>(
       () => TaskDetailsViewModel(instance(), instance()));
+  instance.registerLazySingleton<AllTasksViewModel>(
+          () => AllTasksViewModel(instance()));
     instance.registerFactory<AddTaskUseCase>(() => AddTaskUseCase(instance()));
     instance.registerLazySingleton<AddTaskViewModel>(
         () => AddTaskViewModel(instance(), instance(), instance()));
@@ -152,7 +155,6 @@ initProject() {
     instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance() ,instance()) );
   }
 }
-
 
 initSignupModule() {
   if (!GetIt.I.isRegistered<SignupUseCase>()) {

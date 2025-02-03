@@ -4,6 +4,7 @@ class Assets {
 
   static const String assetsAddFilled = 'assets/add_filled.png';
   static const String assetsCalendar = 'assets/calendar.png';
+  static const String assetsFilter = 'assets/filter.png';
   static const String assetsHomeAccent = 'assets/home_accent.svg';
   static const String assetsHomePrimary = 'assets/home_primary.svg';
   static const String assetsMeetingAccent = 'assets/meeting_accent.png';
@@ -70,6 +71,7 @@ class Assets {
   static const String responsesAuthResponse = 'lib/data/responses/auth_response.dart';
   static const String responsesProjectResponce = 'lib/data/responses/project_responce.dart';
   static const String screensAddMemberScreen = 'lib/presentation/modules/addmember/view/screens/add_member_screen.dart';
+  static const String screensAllTaskScreen = 'lib/presentation/modules/tasks/view/screens/all_task_screen.dart';
   static const String screensCreateTaskScreen = 'lib/presentation/modules/tasks/view/screens/create_task_screen.dart';
   static const String screensCustomSearchDelegate = 'lib/presentation/modules/addmember/view/screens/custom_search_delegate.dart';
   static const String screensDashboardScreen = 'lib/presentation/modules/dashboord/view/screens/dashboard_screen.dart';
@@ -81,6 +83,7 @@ class Assets {
   static const String screensSigninScreen = 'lib/presentation/modules/auth/view/screens/signin_screen.dart';
   static const String screensSignupScreen = 'lib/presentation/modules/auth/view/screens/signup_screen.dart';
   static const String screensTaskDetailScreen = 'lib/presentation/modules/tasks/view/screens/task_detail_screen.dart';
+  static const String screensTaskFilteringScreen = 'lib/presentation/modules/tasks/view/screens/task_filtering_screen.dart';
   static const String screensUserprofileScreen = 'lib/presentation/modules/userprofile/View/screens/userprofile_screen.dart';
   static const String sharedwidgetsCustomAddButton = 'lib/presentation/sharedwidgets/custom_add_button.dart';
   static const String sharedwidgetsCustomAppbar = 'lib/presentation/sharedwidgets/custom_appbar.dart';
@@ -100,6 +103,7 @@ class Assets {
   static const String viewmodelAddProjectViewModel = 'lib/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
   static const String viewmodelAddTaskViewModel = 'lib/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
   static const String viewmodelAllIssuesViewModel = 'lib/presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
+  static const String viewmodelAllTasksViewModel = 'lib/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
   static const String viewmodelDashboardViewModel = 'lib/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
   static const String viewmodelPrjectTasksViewModel = 'lib/presentation/modules/tasks/viewmodel/prject_tasks_view_model.dart';
   static const String viewmodelProjectDetailViewModel = 'lib/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
