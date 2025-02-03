@@ -11,6 +11,7 @@ import 'package:project_management_app/presentation/modules/dashboord/viewmodel/
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
 import 'package:provider/provider.dart';
 import 'application/dependencyInjection/dependency_injection.dart';
 import 'application/helpers/screen_configuraton.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<SignupViewModel>(
               lazy: true, create: (_) => GetIt.instance<SignupViewModel>()),
-          
+
           ChangeNotifierProvider<SignInViewModel>(
               lazy: true, create: (_) => GetIt.instance<SignInViewModel>()),
           
@@ -53,6 +54,9 @@ class MyApp extends StatelessWidget {
 
           ChangeNotifierProvider(
               lazy: true, create: (_) => GetIt.instance<AddTaskViewModel>()
+          ) ,
+          ChangeNotifierProvider<AllTasksViewModel>(
+              lazy: true, create: (_) => GetIt.instance<AllTasksViewModel>()
           )
         ],
         child: GetMaterialApp(
