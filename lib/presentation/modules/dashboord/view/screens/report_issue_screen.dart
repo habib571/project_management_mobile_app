@@ -17,7 +17,7 @@ import '../widgets/custom_chips/assigned_memberchip.dart';
 import '../widgets/custom_chips/assigned_taskchip.dart';
 
 class ReportIssueScreen extends StatefulWidget{
-   ReportIssueScreen({super.key});
+   const ReportIssueScreen({super.key});
 
   @override
   State<ReportIssueScreen> createState() => _ReportIssueScreenState();

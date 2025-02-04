@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_listtile.dart';
@@ -9,8 +7,6 @@ import '../../../../../domain/models/user.dart';
 import '../../../../sharedwidgets/image_widget.dart';
 import '../../../../stateRender/state_render_impl.dart';
 import '../../viewmodel/search_member_view_model.dart';
-
-
 
 class CustomSearchDelegate extends SearchDelegate {
   final SearchViewModel _viewModel = instance<SearchViewModel>();
@@ -33,7 +29,6 @@ class CustomSearchDelegate extends SearchDelegate {
       ),
     ];
   }
-
 
   @override
   Widget? buildLeading(BuildContext context) {
@@ -75,11 +70,10 @@ class CustomSearchDelegate extends SearchDelegate {
           if (members.isEmpty) {
             return const Center(child: Text("No members found"));
           }
-
           return NotificationListener<ScrollNotification>(
             onNotification: (scrollInfo) {
               if (scrollInfo.metrics.pixels >=
-                  scrollInfo.metrics.maxScrollExtent &&
+                      scrollInfo.metrics.maxScrollExtent &&
                   !_viewModel.isLoadingMore) {
                 // Fetch next page.
                 _viewModel.getMemberByName(query, page: _viewModel.currentPage);
@@ -92,18 +86,23 @@ class CustomSearchDelegate extends SearchDelegate {
                 if (index == members.length) {
                   return _viewModel.isLoadingMore
                       ? const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Center(child: CircularProgressIndicator()),
-                  ) : const SizedBox.shrink();
+                          padding: EdgeInsets.all(16.0),
+                          child: Center(child: CircularProgressIndicator()),
+                        )
+                      : const SizedBox.shrink();
                 }
                 final member = members[index];
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 5.h),
                   child: CustomListTile(
-                    leading: ImagePlaceHolder(imgBorder: true,radius: 25, imageUrl: member.imageUrl,),
+                    leading: ImagePlaceHolder(
+                      imgBorder: true,
+                      radius: 25,
+                      imageUrl: member.imageUrl,
+                    ),
                     title: Text(member.fullName),
                     subtitle: Text(member.email),
-                    onTap:(){
+                    onTap: () {
                       afterSelectingUser!(member);
                     },
                   ),

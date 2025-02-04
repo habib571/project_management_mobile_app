@@ -8,13 +8,16 @@ class TaskStatusCard extends StatelessWidget {
 final TaskStatusModel taskStatusModel ;
   @override
   Widget build(BuildContext context) {
-     return Card(
-       color: taskStatusModel.backgroundColor ,
+     return Container(
+       decoration: BoxDecoration(
+           color: taskStatusModel.backgroundColor ,
+          borderRadius: BorderRadius.circular(20)
+       ),
        child: Padding(
-           padding: const EdgeInsets.symmetric(horizontal: 12 ,vertical: 7),
+           padding: const EdgeInsets.symmetric(horizontal: 9 ,vertical: 5),
           child: Text(
              taskStatusModel.statusName ,
-             style: robotoMedium.copyWith(color: taskStatusModel.textColor) ,
+             style: robotoMedium.copyWith(color: taskStatusModel.textColor ,fontSize: 12) ,
           ),
        ),
      ) ;

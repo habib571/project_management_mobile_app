@@ -25,6 +25,5 @@ class ScreenConfiguration {
   }
 
   double setWidth(num value) => _screenWidth * (value / 375);
-
   double setHeight(num value) => _screenHeight * (value / 812);
 }

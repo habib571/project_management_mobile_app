@@ -7,13 +7,12 @@ import 'package:project_management_app/application/navigation/routes_constants.d
 import 'package:project_management_app/presentation/modules/addproject/view/add-project_screen.dart';
 
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/dashboard_screen.dart';
+import 'package:project_management_app/presentation/modules/tasks/view/screens/all_task_screen.dart';
 import 'package:project_management_app/presentation/modules/userprofile/View/screens/userprofile_screen.dart';
 
 
 import '../../stateRender/state_render_impl.dart';
 import '../../utils/colors.dart';
-import '../auth/view/screens/signin_screen.dart';
-import '../auth/view/screens/signup_screen.dart';
 import 'home-viewmodel.dart';
 
 class HomeNavBar extends StatelessWidget {
@@ -36,45 +35,64 @@ class HomeNavBar extends StatelessWidget {
   }
 
 
-  Widget _showBody(BuildContext context) {
-    return PersistentTabView(
-      context,
-      screens: _buildScreens(),
-      items: _navBarsItems(),
-      backgroundColor: AppColors.scaffold,
-      handleAndroidBackButtonPress: true,
-      resizeToAvoidBottomInset: true,
-      stateManagement: true,
-      navBarHeight: 60,
-      decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        colorBehindNavBar: AppColors.scaffold,
-        border: Border.all(color: AppColors.scaffold, width: 1.0),
-      ),
-      navBarStyle: NavBarStyle.style15,
-    );
-  }
+   Widget _showBody(BuildContext context) {
+     return PersistentTabView(
+       context,
+       screens: _buildScreens(),
+       items: _navBarsItems(),
+       backgroundColor: Colors.white,
+       handleAndroidBackButtonPress: true,
+       resizeToAvoidBottomInset: true,
+       stateManagement: true,
+       navBarHeight: 70,
+       decoration: NavBarDecoration(
+         borderRadius: BorderRadius.circular(30),
+         colorBehindNavBar: Colors.transparent,
+         boxShadow: [
+           BoxShadow(
+             color: Colors.black.withOpacity(0.1),
+             spreadRadius: 2,
+             blurRadius: 10,
+             offset: const Offset(0, 3),
+           ),
+         ],
+         border: Border.all(color: Colors.transparent, width: 0),
+       ),
+       padding: const EdgeInsets.all(0)  ,// Adjusts padding for floating effect
+       margin: const EdgeInsets.only(left: 20, right: 20, bottom: 8), // Lifts the navbar
+       navBarStyle: NavBarStyle.style10,
+     );
+   }
 
-  List<Widget> _buildScreens() {
-    return [
-       DashboardScreen(),
+   List<Widget> _buildScreens() {
+     return [
+       const DashboardScreen(),
+       AllTasksScreen(),
        AddProjectScreen(),
-       UserProfileScreen(),
-    ];
-  }
+       const UserProfileScreen(),
+     ];
+   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.home),
         title: ("Home"),
-        activeColorPrimary: Colors.blue,
+        activeColorPrimary: AppColors.accent,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,
       ),
       PersistentBottomNavBarItem(
+        icon: const Icon(Icons.task_outlined),
+        title: ("Task"),
+        activeColorPrimary: AppColors.accent,
+        inactiveColorPrimary: AppColors.accent,
+        activeColorSecondary: AppColors.primary,
+      ),
+
+      PersistentBottomNavBarItem(
         icon: const Icon(Icons.add,),
-        title: ("Add"),
+        title: "Add",
         activeColorPrimary: AppColors.accent,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,
@@ -82,7 +100,7 @@ class HomeNavBar extends StatelessWidget {
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.person),
         title: ("Profile"),
-        activeColorPrimary: Colors.blue,
+        activeColorPrimary: AppColors.accent,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,
       ),

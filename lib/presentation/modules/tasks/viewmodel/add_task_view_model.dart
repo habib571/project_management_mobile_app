@@ -25,7 +25,6 @@ class AddTaskViewModel extends BaseViewModel{
     updateState(ContentState()) ;
     super.start();
   }
-
   ProjectMember? _projectMember ;
   ProjectMember get projectMember => _projectMember! ;
   void setProjectMember(ProjectMember projectMember) {

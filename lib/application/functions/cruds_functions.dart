@@ -68,4 +68,5 @@ Future<ApiResponse> executePatchRequest<ApiResponse>({
   final jsonResult = jsonDecode(response.body);
   int statusCode = response.statusCode;
   return onRequestResponse(jsonResult ,statusCode);
+
 }

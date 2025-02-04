@@ -15,7 +15,6 @@ class TaskWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
          padding: const EdgeInsets.all(15),
-         height: 180,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(17) ,
           color: Colors.white
@@ -28,18 +27,36 @@ class TaskWidget extends StatelessWidget {
              children: [
                Text(
                  task.name! ,
-                 style: robotoBold.copyWith(fontSize: 14),
+                 style: robotoBold.copyWith(fontSize: 14, color: AppColors.secondaryTxt),
                ) , 
                TaskPriorityCard(taskPriorityModel: TaskPriorityModel.type(task.priority!)),
+               ]),
+               const SizedBox(height: 15,)  ,
+           Row(
+             children: [
+               Text(
+                   "Assigned to :" ,
+                   style: robotoSemiBold.copyWith(color: AppColors.secondaryTxt ,fontSize: 14),
+               ),
+
+               const ImagePlaceHolder(
+                   radius: 10, imageUrl: Constants.userProfileImageUrl),
+               const SizedBox(
+                 width: 5,
+               ),
+               Text(task.assignedUser!.fullName,style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),)
+             ],
+           ),
+               const SizedBox(height: 15,) ,
                Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 mainAxisAlignment:  MainAxisAlignment.spaceBetween,
                  children: [
                    Row(
                      children: [
                        Image.asset("assets/calendar.png"),
                        const SizedBox(width: 5,),
                        Text(
-                        task.deadline!,
+                        task.deadline?? "02/05/2025",
                          style: robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),
                        )
                      ],
@@ -47,22 +64,13 @@ class TaskWidget extends StatelessWidget {
                    TaskStatusCard(taskStatusModel: TaskStatusModel.type(task.status!))
                  ],
                ) ,
-               Row(
-                 children: [
-                   const ImagePlaceHolder(
-                           radius: 10, imageUrl: Constants.userProfileImageUrl),
-                       const SizedBox(
-                         width: 5,
-                       ),
-                       Text(task.assignedUser!.fullName,style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),)
-                 ],
-               )
+
+
 
              ],
            ) ,
 
-         ]
-       ) ,
+
     ) ;
   }
 }
