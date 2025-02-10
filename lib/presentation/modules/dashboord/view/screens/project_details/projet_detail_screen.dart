@@ -11,7 +11,7 @@ import 'package:project_management_app/presentation/modules/tasks/view/screens/c
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/members_screen.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/members_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/project_detail_card.dart';
-import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/screens/project_tasks_screens.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/screens/task_detail_screen.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
@@ -22,6 +22,7 @@ import 'package:project_management_app/presentation/sharedwidgets/image_widget.d
 import 'package:project_management_app/presentation/stateRender/state_render_impl.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../sharedwidgets/custom_add_button.dart';
 import '../../../../../sharedwidgets/custom_button.dart';
@@ -47,6 +48,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("**** ALL");
     return Scaffold(
         backgroundColor: AppColors.scaffold,
         body: SingleChildScrollView(
@@ -64,9 +66,23 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    ProjectDetailCard(
-                      project: _viewModel.dashBoardViewModel.project,
+                    Selector<ProjectDetailViewModel,Project>(
+                      selector: (context, ProjectDetailViewModel) => ProjectDetailViewModel.dashBoardViewModel.project ,
+                      builder:  (context, data, child){
+                        print("**** REBUILD *****");
+                        return ProjectDetailCard(
+                          project: _viewModel.dashBoardViewModel.project,
+                        );
+                      }
                     ),
+                    /*Consumer<ProjectDetailViewModel>(
+                      builder: (context, ProjectDetailViewModel, child){
+                        print("**** REBUILD *****");
+                        return ProjectDetailCard(
+                          project: _viewModel.dashBoardViewModel.project,
+                        );
+                      } ,
+                    ),*/
                     const SizedBox(
                       height: 30,
                     ),
