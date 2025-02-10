@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
-import 'package:project_management_app/presentation/modules/dashboord/view/screens/projet_detail_screen.dart';
+import 'package:project_management_app/presentation/modules/dashboord/view/screens/project_details/projet_detail_screen.dart';
 import '../../../../data/network/requests/add_member_request.dart';
 import '../../../../domain/usecases/project/add_member_use_case.dart';
 import '../../../stateRender/state_render.dart';

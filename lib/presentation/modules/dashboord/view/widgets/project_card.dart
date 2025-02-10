@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/navigation/routes_constants.dart';
-import 'package:project_management_app/presentation/modules/dashboord/view/screens/projet_detail_screen.dart';
+import 'package:project_management_app/presentation/modules/dashboord/view/screens/project_details/projet_detail_screen.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_button.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';

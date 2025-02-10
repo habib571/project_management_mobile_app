@@ -19,12 +19,18 @@ class ProjectDetailCard extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(17), color: Colors.white),
       child: Row(
+        crossAxisAlignment:CrossAxisAlignment.start ,
         children: [
           _showTitles(),
           const SizedBox(
             width: 15,
           ),
-          _showContent()
+          _showContent(),
+          const Spacer(),
+          IconButton(
+              icon :const Icon(Icons.edit_outlined ),
+              onPressed: (){}
+          ),
         ],
       ),
     );
