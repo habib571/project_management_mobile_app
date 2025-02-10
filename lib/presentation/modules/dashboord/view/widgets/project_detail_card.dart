@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:project_management_app/application/navigation/routes_constants.dart';
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
@@ -29,7 +32,9 @@ class ProjectDetailCard extends StatelessWidget {
           const Spacer(),
           IconButton(
               icon :const Icon(Icons.edit_outlined ),
-              onPressed: (){}
+              onPressed: (){
+                Get.toNamed(AppRoutes.editProjectDetailsScreen);
+              }
           ),
         ],
       ),

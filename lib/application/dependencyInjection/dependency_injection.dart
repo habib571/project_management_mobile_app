@@ -25,7 +25,7 @@ import 'package:project_management_app/presentation/modules/tasks/viewmodel/prje
 
 import 'package:project_management_app/presentation/modules/userprofile/viewmodel/userprofile_view_model.dart';
 
-import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
 
 
 import '../../data/dataSource/remoteDataSource/auth_remote_data_source.dart';
@@ -39,6 +39,7 @@ import '../../domain/usecases/project/addproject-use-case.dart';
 import '../../domain/usecases/task/add_task_user_case.dart';
 import '../../presentation/modules/addproject/view/add-project_screen.dart';
 import '../../presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
+import '../../presentation/modules/dashboord/viewmodel/project_details_view_models/edit_project_details_view_model.dart';
 import '../../presentation/modules/tasks/viewmodel/add_task_view_model.dart';
 import '../../presentation/modules/tasks/viewmodel/task_detail_view_model.dart';
 import '../helpers/token_mamanger.dart';
@@ -81,6 +82,7 @@ initAppModule() async {
   initSearchModule();
   initReportIssueModule();
  initGetAllIssuesModule();
+  initEditProjectDetails();
 
 }
 
@@ -152,8 +154,14 @@ initProject() {
     instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
     instance.registerFactory<AddMemberUseCase>(() => AddMemberUseCase(instance()));
     instance.registerFactory<AddMemberViewModel>(() => AddMemberViewModel(instance() ,instance() ,instance()) );
-    instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance() ,instance()) );
+    instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance() ,instance(),instance()) );
   }
+}
+
+initEditProjectDetails() {
+
+    instance.registerLazySingleton<EditProjectDetailsViewModel>(() => EditProjectDetailsViewModel(instance(),instance()) );
+
 }
 
 initSignupModule() {

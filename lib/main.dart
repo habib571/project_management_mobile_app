@@ -8,7 +8,8 @@ import 'package:project_management_app/presentation/modules/auth/view/screens/si
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signin-view_model.dart';
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signup_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
-import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_detail_view_model.dart';
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/edit_project_details_view_model.dart';
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
@@ -57,6 +58,9 @@ class MyApp extends StatelessWidget {
           ) ,
           ChangeNotifierProvider<AllTasksViewModel>(
               lazy: true, create: (_) => GetIt.instance<AllTasksViewModel>()
+          ),
+          ChangeNotifierProvider<EditProjectDetailsViewModel>(
+              lazy: true, create: (_) => GetIt.instance<EditProjectDetailsViewModel>()
           )
         ],
         child: GetMaterialApp(
