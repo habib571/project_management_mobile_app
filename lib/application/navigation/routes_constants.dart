@@ -9,5 +9,6 @@ class AppRoutes {
   static const String addMemberScreen ="/addMemberScreen" ;
   static const String reportIssueScreen ="/reportIssueScreen" ;
   static const String issuesScreen ="/issuesScreen" ;
+  static const String editProjectDetailsScreen ="/editProjectDetailsScreen" ;
 
 }
