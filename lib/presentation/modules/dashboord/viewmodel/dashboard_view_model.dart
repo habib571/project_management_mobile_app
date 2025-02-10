@@ -23,6 +23,9 @@ class DashBoardViewModel extends BaseViewModel {
   int get currentProject => _currentProject;
   Project? _project;
   Project get project => _project!;
+  set project(Project newProject) {
+    _project = newProject;
+  }
 
   setProject(Project project) {
     _project = project;
