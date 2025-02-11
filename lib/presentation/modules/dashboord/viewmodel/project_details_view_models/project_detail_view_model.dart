@@ -18,7 +18,7 @@ class ProjectDetailViewModel extends BaseViewModel {
   final GetMembersUseCase _useCase ;
   final LocalStorage _localStorage ;
   ProjectDetailViewModel(super.tokenManager, this._useCase, this._localStorage, this.dashBoardViewModel, this.editProjectDetailsViewModel){
-    editProjectDetailsViewModel.addListener((){
+    dashBoardViewModel.addListener((){
       notifyListeners();
       print("----- ProjectDetailViewModel Notified");
     });

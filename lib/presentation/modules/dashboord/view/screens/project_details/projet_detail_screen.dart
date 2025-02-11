@@ -48,7 +48,6 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("**** ALL");
     return Scaffold(
         backgroundColor: AppColors.scaffold,
         body: SingleChildScrollView(
@@ -161,10 +160,21 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
           const SizedBox(
             height: 15,
           ),
-          Text(
-            _viewModel.dashBoardViewModel.project.description!,
-            style: robotoMedium.copyWith(
-                color: AppColors.secondaryTxt, fontSize: 13),
+          Selector<ProjectDetailViewModel,String>(
+            selector: (context, ProjectDetailViewModel) => ProjectDetailViewModel.dashBoardViewModel.project.description!,
+            builder: (context, data, child){
+              print("----rebuild description----");
+              return Text(
+                _viewModel.dashBoardViewModel.project.description!,
+                style: robotoMedium.copyWith(
+                    color: AppColors.secondaryTxt, fontSize: 13),
+              );
+            },
+            /*child: Text(
+              _viewModel.dashBoardViewModel.project.description!,
+              style: robotoMedium.copyWith(
+                  color: AppColors.secondaryTxt, fontSize: 13),
+            ),*/
           )
         ],
       ),
