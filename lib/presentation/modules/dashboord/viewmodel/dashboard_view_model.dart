@@ -21,15 +21,18 @@ class DashBoardViewModel extends BaseViewModel {
 
   int _currentProject = 0;
   int get currentProject => _currentProject;
+
   Project? _project;
   Project get project => _project!;
-  set project(Project newProject) {
-    _project = newProject;
-  }
 
   setProject(Project project) {
     _project = project;
     log(_project!.endDate.toString()) ;
+    // to update the dashboard current project
+    int index = _projectList.indexWhere((p)=> p.id == project.id);
+    _projectList[index] = project;
+    // to update listners (ProjectDetailViewModel + selector in the view)
+    notifyListeners();
   }
 
   setCurrentProject(int value) {
