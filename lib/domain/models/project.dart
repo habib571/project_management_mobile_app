@@ -41,6 +41,15 @@ class Project {
     };
   }
 
+  Map<String, dynamic> updateToJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'endDate': endDate,
+    };
+  }
+
   Project copyWith({
     int? id,
     String? name,
@@ -60,5 +69,8 @@ class Project {
       createdBy ?? this.createdBy,
     );
   }
+
+
+
 
 }
