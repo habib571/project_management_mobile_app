@@ -101,7 +101,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               print("**** REBUILD dahsbord*****");
               return ProjectCard(
                 project: _viewModel.projectList[index],
-                onTap: ()  {
+                onTap: () {
                   _viewModel.setProject(_viewModel.projectList[index]) ;
                   Get.to(()=> const ProjectDetailScreen()) ;
                 },
