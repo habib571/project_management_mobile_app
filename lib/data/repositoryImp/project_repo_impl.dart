@@ -184,5 +184,26 @@ class ProjectRepositoryImpl implements ProjectRepository{
     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
   }
 
+  @override
+  //we dont need the returned project
+  Future<Either<Failure, Project>> updateProject (Project projectRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _projectDataSource.updateProjectDetails(projectRequest) ;
+        if (response.statusCode == 200) {
+          return Right(Project.fromJson(response.data));
+        } else {
+
+          return Left(Failure.fromJson(response.data));
+        }
+      }
+      catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
 
 }

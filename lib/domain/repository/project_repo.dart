@@ -17,4 +17,5 @@ abstract class ProjectRepository {
   Future<Either<Failure, Issue>> reportIssue (ReportIssueRequest reportIssueRequest) ;
   Future<Either<Failure, List<Issue>>> getAllIssues(int projectId) ;
   Future<Either<Failure, Issue>> updateIssueStatus (int issueId) ;
+  Future<Either<Failure, Project>> updateProject (Project projectRequest) ;
 }
