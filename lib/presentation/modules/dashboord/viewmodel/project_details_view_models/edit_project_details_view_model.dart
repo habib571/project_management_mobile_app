@@ -53,13 +53,14 @@ class EditProjectDetailsViewModel extends BaseViewModel{
   }
 
 
-  editDetails(String projectTitle){
+  editDetails(){
     if(_formkey.currentState!.validate()){
-      (dashBoardViewModel.setProject ( dashBoardViewModel.project.copyWith(
+      Project updatedProject = dashBoardViewModel.project.copyWith(
           name: _projectTitle.text.trim(),
           description: _projectDescription.text.trim(),
           endDate: _projectEndDate.text.trim()
-      ))).fold(
+      );
+      (dashBoardViewModel.setProject (updatedProject)).fold(
       (failure) {
         updateState(ErrorState(StateRendererType.snackbarState, failure.message)) ;
       },
@@ -70,6 +71,7 @@ class EditProjectDetailsViewModel extends BaseViewModel{
         );
       }
     }
+
   }
 
 

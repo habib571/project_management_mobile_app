@@ -100,7 +100,7 @@ class EditProjectDetails extends StatelessWidget {
     return CustomButton(
         text: "Edit",
         onPressed: (){
-          _viewModel.editDetails("new Title");
+          _viewModel.editDetails();
         }
     );
   }
