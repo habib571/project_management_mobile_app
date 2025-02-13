@@ -90,6 +90,7 @@ class EditProjectDetails extends StatelessWidget {
       validator: (val) => val.isEmptyInput() ,
       controller: _viewModel.projectEndDate,
       prefixIcon:const  Icon(Icons.calendar_month_outlined),
+      borderSide: const BorderSide(color: Colors.black),
       onTap: () async {
         await _viewModel.pickProjectEndDate(context);
       },

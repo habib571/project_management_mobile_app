@@ -51,7 +51,7 @@ class AddProjectScreen extends StatelessWidget {
                   SizedBox(
                     height: 40.h,
                   ),
-                  _addProjectDesrciprionSection(),
+                  _addProjectDesrciptionSection(),
                   SizedBox(
                     height: 40.h,
                   ),
@@ -74,14 +74,16 @@ class AddProjectScreen extends StatelessWidget {
       validator: (val) => val.isEmptyInput() ,
       controller: _viewModel.projectName,
       hintText: "Enter The project name",
+      borderSide: const BorderSide(color: Colors.black),
     );
   }
 
-  Widget _addProjectDesrciprionSection(){
+  Widget _addProjectDesrciptionSection(){
     return InputText(
       validator: (val) => val.isEmptyInput() ,
       controller: _viewModel.projectDescription,
       hintText: "Enter The project description",
+      borderSide: const BorderSide(color: Colors.black),
       maxLines: 3,
     );
   }
@@ -93,6 +95,7 @@ class AddProjectScreen extends StatelessWidget {
       controller: _viewModel.projectEndDate,
       hintText: "Enter The project end date",
       suffixIcon:const  Icon(Icons.calendar_month_outlined),
+      borderSide: const BorderSide(color: Colors.black),
       onTap: () async {
         await _viewModel.pickProjectEndDate(context);
       },
