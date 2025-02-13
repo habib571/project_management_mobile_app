@@ -20,25 +20,32 @@ class ProjectDetailCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(17), color: Colors.white),
+        borderRadius: BorderRadius.circular(17),
+        color: Colors.white,
+      ),
       child: Row(
-        crossAxisAlignment:CrossAxisAlignment.start ,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _showTitles(),
-          const SizedBox(
-            width: 15,
+          Expanded(
+            child: Row(
+              children: [
+                _showTitles(),
+                const SizedBox(width: 15),
+                _showContent(),
+              ],
+            ),
           ),
-          _showContent(),
-          const Spacer(),
+
           IconButton(
-              icon :const Icon(Icons.edit_outlined ),
-              onPressed: (){
-                Get.toNamed(AppRoutes.editProjectDetailsScreen);
-              }
+            icon: const Icon(Icons.edit_outlined),
+            onPressed: () {
+              Get.toNamed(AppRoutes.editProjectDetailsScreen);
+            },
           ),
         ],
       ),
     );
+
   }
 
   Widget _showTitles() {

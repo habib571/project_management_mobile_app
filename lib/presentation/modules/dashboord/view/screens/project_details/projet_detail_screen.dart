@@ -66,7 +66,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                       height: 20.h,
                     ),
                     Selector<ProjectDetailViewModel,Project>(
-                      selector: (context, ProjectDetailViewModel) => ProjectDetailViewModel.dashBoardViewModel.project ,
+                      selector: (context, viewModel) => viewModel.dashBoardViewModel.project ,
                       builder:  (context, data, child){
                         print("**** REBUILD *****");
                         return ProjectDetailCard(
@@ -74,14 +74,6 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                         );
                       }
                     ),
-                    /*Consumer<ProjectDetailViewModel>(
-                      builder: (context, ProjectDetailViewModel, child){
-                        print("**** REBUILD *****");
-                        return ProjectDetailCard(
-                          project: _viewModel.dashBoardViewModel.project,
-                        );
-                      } ,
-                    ),*/
                     const SizedBox(
                       height: 30,
                     ),
@@ -161,7 +153,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
             height: 15,
           ),
           Selector<ProjectDetailViewModel,String>(
-            selector: (context, ProjectDetailViewModel) => ProjectDetailViewModel.dashBoardViewModel.project.description!,
+            selector: (context, viewModel) =>viewModel.dashBoardViewModel.project.description!,
             builder: (context, data, child){
               print("----rebuild description----");
               return Text(
@@ -170,11 +162,6 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                     color: AppColors.secondaryTxt, fontSize: 13),
               );
             },
-            /*child: Text(
-              _viewModel.dashBoardViewModel.project.description!,
-              style: robotoMedium.copyWith(
-                  color: AppColors.secondaryTxt, fontSize: 13),
-            ),*/
           )
         ],
       ),
