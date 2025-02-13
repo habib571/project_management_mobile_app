@@ -29,9 +29,10 @@ class DashBoardViewModel extends BaseViewModel {
     _project = project;
     log(_project!.endDate.toString()) ;
     int index = _projectList.indexWhere((p)=> p.id == project.id);
-    _projectList[index] = project;
-    // to update listners (ProjectDetailViewModel + selector in the view)
-    notifyListeners();
+    List<Project> updatedList = List.from(_projectList);
+    updatedList[index] = project;
+    _projectList = updatedList; // to change the ref
+    notifyListeners(); // to update listners (ProjectDetailViewModel + selector in the view)
   }
 
   setCurrentProject(int value) {

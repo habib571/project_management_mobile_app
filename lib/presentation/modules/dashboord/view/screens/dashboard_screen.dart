@@ -96,7 +96,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _viewModel.projectList.length,
         (index) {
           print("---Project Card ---");
-          return Consumer<DashBoardViewModel>(
+          return Selector<DashBoardViewModel, List<Project>>(
+            selector: (_, viewModel) => viewModel.projectList,
+            builder: (_, data, __) {
+              print("**** REBUILD dahsbord*****");
+              return ProjectCard(
+                project: _viewModel.projectList[index],
+                onTap: () {
+                  _viewModel.setProject(_viewModel.projectList[index]) ;
+                  Get.to(()=> const ProjectDetailScreen()) ;
+                },
+              );
+            },
+          );
+            /*Consumer<DashBoardViewModel>(
             builder: (context, DashBoardViewModel, child){
               print("**** REBUILD dahsbord*****");
               return ProjectCard(
@@ -107,7 +120,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 },
               );
             } ,
-          );
+          );*/
         },
       ),
       options: CarouselOptions(
