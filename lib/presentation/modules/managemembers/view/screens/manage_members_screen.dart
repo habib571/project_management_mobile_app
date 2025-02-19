@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
+import 'package:project_management_app/domain/models/project_member.dart';
+import 'package:project_management_app/presentation/modules/managemembers/viewmodel/update_role_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
-import '../../../../../application/dependencyInjection/dependency_injection.dart';
-import '../../../../../domain/models/user.dart';
 import '../../../../sharedwidgets/custom_button.dart';
 import '../../../../sharedwidgets/image_widget.dart';
 import '../../../../sharedwidgets/input_text.dart';
@@ -12,22 +13,31 @@ import '../../../../stateRender/state_render_impl.dart';
 import '../../../../utils/colors.dart';
 import '../../viewmodel/add_member_viewmodel.dart';
 
-class AddMemberScreen extends StatefulWidget {
+/*
+    - Screen used to Add a new member or to Update a specific member Role depends on the viewModelType value
+    - Get the viewModelType and use it to get the needed MemberManagementInterface implementations
+ */
 
-   const AddMemberScreen({super.key,});
+class ManageMembersScreen extends StatefulWidget {
+
+  final String viewModelType;
+  const ManageMembersScreen({super.key, required this.viewModelType});
 
   @override
-  State<AddMemberScreen> createState() => _AddMemberScreenState();
+  State<ManageMembersScreen> createState() => _AddMemberScreenState();
 }
 
-class _AddMemberScreenState extends State<AddMemberScreen> {
-
-  final AddMemberViewModel _viewModel = instance<AddMemberViewModel>();
-  final User user = Get.arguments;
-
+class _AddMemberScreenState extends State<ManageMembersScreen> {
+  late MemberManagementInterface _viewModel ;
+  final ProjectMember member = Get.arguments ;
+  
   @override
   void initState() {
     super.initState();
+    _viewModel = GetIt.instance<MemberManagementInterface>(instanceName: widget.viewModelType);
+    if (member.role != null && member.role!.isNotEmpty) {
+      _viewModel.role.text = member.role!;
+    }
   }
 
   @override
@@ -93,7 +103,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
             ImagePlaceHolder(
               imgBorder: true,
               radius: 35,
-              imageUrl: user.imageUrl ,
+              imageUrl: member.user!.imageUrl ,
             ),
             const SizedBox(width: 20),
 
@@ -106,7 +116,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                       const Icon(Icons.person, color: AppColors.primary, size: 18),
                       const SizedBox(width: 8),
                       Text(
-                        user.fullName,
+                        member.user!.fullName,
                         style:const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -121,7 +131,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
                       const Icon(Icons.email, color: AppColors.primary, size: 18),
                       const SizedBox(width: 8),
                       Text(
-                        user.email,
+                        member.user!.email,
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey[700],
@@ -142,7 +152,7 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
   Widget _addMemberRoleSection() {
     return InputText(
       validator: (val) => val.isEmptyInput(),
-      controller: _viewModel.role ,
+      controller: _viewModel.role,
       prefixIcon: const Padding(
         padding:  EdgeInsetsDirectional.only(end: 12),
         child: Icon(Icons.badge)
@@ -154,8 +164,9 @@ class _AddMemberScreenState extends State<AddMemberScreen> {
   Widget _addMemberButtonSuction() {
     return CustomButton(
         onPressed: () {
-          _viewModel.addMember( user.id  );
+          _viewModel.manageMember( member.user!.id  );
         },
-        text: 'Add member');
+        text: widget.viewModelType == 'AddMember' ? 'Add Member' : 'Update Role',
+    );
   }
 }
