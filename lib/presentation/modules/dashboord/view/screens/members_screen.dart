@@ -38,7 +38,7 @@ class MembersScreen extends StatelessWidget {
                       _addTaskViewModel.toggleIsUserAdded() ;
                        Get.back() ;
                     },
-                    projectMember: _viewModel.projectMember[index],
+                    projectMember:   _viewModel.projectMember[index],
 
                  );
               }

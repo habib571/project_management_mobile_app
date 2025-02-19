@@ -2,10 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/navigation/routes_constants.dart';
 import 'package:project_management_app/domain/models/project.dart';
+import 'package:project_management_app/domain/models/project_member.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/screens/create_task_screen.dart';
 
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/members_screen.dart';
@@ -26,7 +28,9 @@ import 'package:provider/provider.dart';
 
 import '../../../../../sharedwidgets/custom_add_button.dart';
 import '../../../../../sharedwidgets/custom_button.dart';
-import '../../../../addmember/view/screens/custom_search_delegate.dart';
+import '../../../../managemembers/view/screens/manage_members_screen.dart';
+import '../../../../managemembers/view/screens/custom_search_delegate.dart';
+import '../../../../managemembers/viewmodel/add_member_viewmodel.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
   const ProjectDetailScreen({
@@ -87,8 +91,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                         Text('Members',
                             style: robotoSemiBold.copyWith(fontSize: 16)),
                         GestureDetector(
-                          onTap: () => Get.to(() => MembersScreen(),
-                              arguments: _viewModel),
+                          onTap: () => Get.to(() => MembersScreen(),arguments: _viewModel),
                           child: Text(
                             'View members details ',
                             style: robotoRegular.copyWith(
@@ -182,11 +185,12 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
         onTap: () {
           showSearch(
               context: context,
-              delegate:
-                  CustomSearchDelegate(afterSelectingUser: (selectedMember) {
-                Get.toNamed(AppRoutes.addMemberScreen,
-                    arguments: selectedMember);
-              }));
+              delegate:CustomSearchDelegate(afterSelectingUser: (selectedUser) {
+                ProjectMember newMember = ProjectMember(null, null, selectedUser, null);//To add a new named constructor
+                Get.toNamed(AppRoutes.addMemberScreen,arguments: newMember );
+                }
+              )
+          );
         },
       ),
     ]);
