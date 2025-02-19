@@ -14,11 +14,10 @@ import 'package:project_management_app/domain/usecases/project/issue/report_issu
 import 'package:project_management_app/domain/usecases/project/myprojects_usecase.dart';
 import 'package:project_management_app/domain/usecases/task/get_all_tasks.dart';
 
-import 'package:project_management_app/presentation/modules/addmember/viewmodel/add_member_viewmodel.dart';
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
-import 'package:project_management_app/presentation/modules/addmember/viewmodel/search_member_view_model.dart';
+import 'package:project_management_app/presentation/modules/managemembers/viewmodel/update_role_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/prject_tasks_view_model.dart';
 
@@ -40,6 +39,8 @@ import '../../domain/usecases/task/add_task_user_case.dart';
 import '../../presentation/modules/addproject/view/add-project_screen.dart';
 import '../../presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
 import '../../presentation/modules/dashboord/viewmodel/project_details_view_models/edit_project_details_view_model.dart';
+import '../../presentation/modules/managemembers/viewmodel/add_member_viewmodel.dart';
+import '../../presentation/modules/managemembers/viewmodel/search_member_view_model.dart';
 import '../../presentation/modules/tasks/viewmodel/add_task_view_model.dart';
 import '../../presentation/modules/tasks/viewmodel/task_detail_view_model.dart';
 import '../helpers/token_mamanger.dart';
@@ -153,7 +154,8 @@ initProject() {
   if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
     instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
     instance.registerFactory<AddMemberUseCase>(() => AddMemberUseCase(instance()));
-    instance.registerFactory<AddMemberViewModel>(() => AddMemberViewModel(instance() ,instance() ,instance()) );
+    instance.registerLazySingleton<MemberManagementInterface>(() => AddMemberViewModel(instance() ,instance() ,instance()),instanceName: "AddMember" );
+    instance.registerLazySingleton<MemberManagementInterface>(() => UpdateRoleViewModel(instance() ,instance() ,instance()),instanceName:"UpdateMember"  );
     instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance() ,instance(),instance()) );
   }
 }
