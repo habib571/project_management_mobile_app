@@ -104,7 +104,7 @@ class ProjectRepositoryImpl implements ProjectRepository{
   }
 
   @override
-  Future<Either<Failure, ProjectMember>> addMember (AddMemberRequest addMemberRequest) async {
+  Future<Either<Failure, ProjectMember>> addMember (ProjectMember addMemberRequest) async {
     if (await _networkInfo.isConnected) {
       try {
         final response = await _projectDataSource.addMember(addMemberRequest) ;

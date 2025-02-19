@@ -68,7 +68,7 @@ class _AddMemberScreenState extends State<ManageMembersScreen> {
              SizedBox(
                  height: 25.h,
              ),
-             const CustomAppBar(title: "Add Member"),
+            CustomAppBar(title: widget.viewModelType == 'AddMember' ? 'Add Member' : 'Update Role'),
             SizedBox(
               height: 50.h,
             ),
@@ -164,7 +164,7 @@ class _AddMemberScreenState extends State<ManageMembersScreen> {
   Widget _addMemberButtonSuction() {
     return CustomButton(
         onPressed: () {
-          _viewModel.manageMember( member.user!.id  );
+          _viewModel.manageMember( member.user!.id ,projectId: member.projectId  );
         },
         text: widget.viewModelType == 'AddMember' ? 'Add Member' : 'Update Role',
     );

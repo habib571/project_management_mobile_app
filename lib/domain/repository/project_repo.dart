@@ -13,7 +13,7 @@ abstract class ProjectRepository {
   Future<Either<Failure, ProjectResponse>> getMyProjects();
   Future<Either<Failure, List<ProjectMember>>> getProjectMembers(int projectId) ;
   Future<Either<Failure, List<User>>> getMemberByName(String name ,int page , int size) ;
-  Future<Either<Failure, ProjectMember>> addMember (AddMemberRequest addMemberRequest) ;
+  Future<Either<Failure, ProjectMember>> addMember (ProjectMember addMemberRequest) ;
   Future<Either<Failure, Issue>> reportIssue (ReportIssueRequest reportIssueRequest) ;
   Future<Either<Failure, List<Issue>>> getAllIssues(int projectId) ;
   Future<Either<Failure, Issue>> updateIssueStatus (int issueId) ;

@@ -154,7 +154,7 @@ initProject() {
   if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
     instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
     instance.registerFactory<AddMemberUseCase>(() => AddMemberUseCase(instance()));
-    instance.registerLazySingleton<MemberManagementInterface>(() => AddMemberViewModel(instance() ,instance() ,instance()),instanceName: "AddMember" );
+    instance.registerLazySingleton<MemberManagementInterface>(() => AddMemberViewModel(instance() ,instance() ),instanceName: "AddMember" );
     instance.registerLazySingleton<MemberManagementInterface>(() => UpdateRoleViewModel(instance() ,instance() ,instance()),instanceName:"UpdateMember"  );
     instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance() ,instance(),instance()) );
   }

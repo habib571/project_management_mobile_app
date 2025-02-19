@@ -26,7 +26,7 @@ class UpdateRoleViewModel extends BaseViewModel implements MemberManagementInter
   TextEditingController role = TextEditingController();
 
   @override
-  Future<void> manageMember(int memberId) async {
+  Future<void> manageMember(int memberId,{int? projectId}) async {
     if (_formkey.currentState!.validate()) {
       return Future.delayed(const Duration(seconds: 1000), () {
         print("Updated -----");

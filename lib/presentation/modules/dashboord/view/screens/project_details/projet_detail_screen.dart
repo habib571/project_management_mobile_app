@@ -186,7 +186,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
           showSearch(
               context: context,
               delegate:CustomSearchDelegate(afterSelectingUser: (selectedUser) {
-                ProjectMember newMember = ProjectMember(null, null, selectedUser, null);//To add a new named constructor
+                ProjectMember newMember = ProjectMember(_viewModel.dashBoardViewModel.project.id, null, selectedUser, null);//To add a new named constructor
                 Get.toNamed(AppRoutes.addMemberScreen,arguments: newMember );
                 }
               )
