@@ -104,33 +104,6 @@ class AddProjectScreen extends StatelessWidget {
     );
   }
 
-  Widget _appBarSection(){
-    return Container(
-      height: 90.h,
-      color: AppColors.primary,
-      child: Column(
-        children: [
-          SizedBox(height: 35.h,),
-          Row(
-            children: [
-               SizedBox(width: 8.w),
-               IconButton(
-                  icon: const Icon(Icons.close, color: Colors.white),
-                  onPressed: (){
-                    Get.off(() => HomeNavBar(), transition: Transition.upToDown);
-                  }
-              ),
-              SizedBox(width: 90.w),
-              const Text(
-                'Add Project',
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
    Widget _showButton() {
      return CustomButton(
          onPressed: () {

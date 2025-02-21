@@ -72,7 +72,6 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                     Selector<ProjectDetailViewModel,Project>(
                       selector: (context, viewModel) => viewModel.dashBoardViewModel.project ,
                       builder:  (context, data, child){
-                        print("**** REBUILD *****");
                         return ProjectDetailCard(
                           project: _viewModel.dashBoardViewModel.project,
                         );
@@ -158,7 +157,6 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
           Selector<ProjectDetailViewModel,String>(
             selector: (context, viewModel) =>viewModel.dashBoardViewModel.project.description!,
             builder: (context, data, child){
-              print("----rebuild description----");
               return Text(
                 _viewModel.dashBoardViewModel.project.description!,
                 style: robotoMedium.copyWith(

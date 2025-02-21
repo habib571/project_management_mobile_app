@@ -95,11 +95,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       items: List.generate(  // We must use listviewBuilder for more optimisation
         _viewModel.projectList.length,
         (index) {
-          print("---Project Card ---");
           return Selector<DashBoardViewModel, List<Project>>(
             selector: (_, viewModel) => viewModel.projectList,
             builder: (_, data, __) {
-              print("**** REBUILD dahsbord*****");
               return ProjectCard(
                 project: _viewModel.projectList[index],
                 onTap: () {
