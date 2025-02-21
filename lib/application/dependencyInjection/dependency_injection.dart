@@ -40,6 +40,7 @@ import '../../presentation/modules/addproject/view/add-project_screen.dart';
 import '../../presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
 import '../../presentation/modules/dashboord/viewmodel/project_details_view_models/edit_project_details_view_model.dart';
 import '../../presentation/modules/managemembers/viewmodel/add_member_viewmodel.dart';
+import '../../presentation/modules/managemembers/viewmodel/member_managment_viewmodel_interface.dart';
 import '../../presentation/modules/managemembers/viewmodel/search_member_view_model.dart';
 import '../../presentation/modules/tasks/viewmodel/add_task_view_model.dart';
 import '../../presentation/modules/tasks/viewmodel/task_detail_view_model.dart';
@@ -154,8 +155,8 @@ initProject() {
   if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
     instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
     instance.registerFactory<AddMemberUseCase>(() => AddMemberUseCase(instance()));
-    instance.registerLazySingleton<MemberManagementInterface>(() => AddMemberViewModel(instance() ,instance() ),instanceName: "AddMember" );
-    instance.registerLazySingleton<MemberManagementInterface>(() => UpdateRoleViewModel(instance() ,instance() ,instance()),instanceName:"UpdateMember"  );
+    instance.registerFactory<MemberManagementInterface>(() => AddMemberViewModel(instance() ,instance() ),instanceName: "AddMember" );
+    instance.registerFactory<MemberManagementInterface>(() => UpdateRoleViewModel(instance() ,instance() ,instance()),instanceName:"UpdateMember"  );
     instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance() ,instance(),instance()) );
   }
 }

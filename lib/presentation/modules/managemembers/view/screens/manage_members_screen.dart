@@ -12,6 +12,7 @@ import '../../../../sharedwidgets/input_text.dart';
 import '../../../../stateRender/state_render_impl.dart';
 import '../../../../utils/colors.dart';
 import '../../viewmodel/add_member_viewmodel.dart';
+import '../../viewmodel/member_managment_viewmodel_interface.dart';
 
 /*
     - Screen used to Add a new member or to Update a specific member Role depends on the viewModelType value

@@ -12,6 +12,7 @@ import '../../../stateRender/state_render_impl.dart';
 import '../../dashboord/view/screens/project_details/projet_detail_screen.dart';
 import '../../dashboord/viewmodel/dashboard_view_model.dart';
 import 'add_member_viewmodel.dart';
+import 'member_managment_viewmodel_interface.dart';
 
 class UpdateRoleViewModel extends BaseViewModel implements MemberManagementInterface {
   final AddMemberUseCase _addMemberUseCase;
