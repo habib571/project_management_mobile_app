@@ -8,6 +8,7 @@ import 'package:project_management_app/application/extensions/string_extension.d
 import 'package:project_management_app/presentation/modules/home/home_screen.dart';
 
 import '../../../../application/dependencyInjection/dependency_injection.dart';
+import '../../../sharedwidgets/custom_appbar.dart';
 import '../../../sharedwidgets/custom_button.dart';
 import '../../../sharedwidgets/input_text.dart';
 import '../../../stateRender/state_render_impl.dart';
@@ -39,7 +40,8 @@ class AddProjectScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            _appBarSection(),
+            SizedBox(height: 25.h,),
+            const CustomAppBar(title: "Add Project"),
             SizedBox(
               height: 80.h,
             ),
