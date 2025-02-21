@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../base/base_view_model.dart';
 
-abstract class MemberManagementInterface extends BaseViewModel  {
+abstract class MemberManagementInterface  {
 
-  MemberManagementInterface(super.tokenManager);
+  MemberManagementInterface();
 
   GlobalKey<FormState> get formkey;
   TextEditingController get role;

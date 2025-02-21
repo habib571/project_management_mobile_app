@@ -6,6 +6,7 @@ import 'package:project_management_app/application/extensions/string_extension.d
 import 'package:project_management_app/domain/models/project_member.dart';
 import 'package:project_management_app/presentation/modules/managemembers/viewmodel/update_role_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
+import '../../../../base/base_view_model.dart';
 import '../../../../sharedwidgets/custom_button.dart';
 import '../../../../sharedwidgets/image_widget.dart';
 import '../../../../sharedwidgets/input_text.dart';
@@ -46,7 +47,7 @@ class _AddMemberScreenState extends State<ManageMembersScreen> {
     return Scaffold(
         backgroundColor: AppColors.scaffold,
         body: StreamBuilder<FlowState>(
-          stream: _viewModel.outputState,
+          stream: (_viewModel as BaseViewModel).outputState, //_viewModel.outputState,
           builder: (context, snapshot) {
             return snapshot.data
                 ?.getScreenWidget(context, _showBody(), () {}) ??
