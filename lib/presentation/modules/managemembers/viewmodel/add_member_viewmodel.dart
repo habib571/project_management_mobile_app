@@ -8,22 +8,7 @@ import '../../../../domain/usecases/project/add_member_use_case.dart';
 import '../../../stateRender/state_render.dart';
 import '../../../stateRender/state_render_impl.dart';
 import '../../dashboord/viewmodel/dashboard_view_model.dart';
-
-abstract class MemberManagementInterface extends BaseViewModel  {
-
-  MemberManagementInterface(super.tokenManager);
-
-  GlobalKey<FormState> get formkey;
-  TextEditingController get role;
-
-  Future<void> manageMember(int memberId,{int? projectId});
-}
-
-
-
-
-
-
+import 'member_managment_viewmodel_interface.dart';
 
 
 class AddMemberViewModel extends BaseViewModel implements MemberManagementInterface {
