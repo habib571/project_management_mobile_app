@@ -59,31 +59,37 @@ class _AddMemberScreenState extends State<ManageMembersScreen> {
   Widget _showBody() {
     return Form(
       key: _viewModel.formkey ,
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-             SizedBox(
-                 height: 25.h,
-             ),
-            CustomAppBar(title: widget.viewModelType == 'AddMember' ? 'Add Member' : 'Update Role'),
-            SizedBox(
-              height: 50.h,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 25.h,
+          ),
+          CustomAppBar(title: widget.viewModelType == 'AddMember' ? 'Add Member' : 'Update Role'),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                SizedBox(
+                  height: 50.h,
+                ),
+                _showMemberSection(),
+                SizedBox(
+                  height: 30.h,
+                ),
+                _addMemberRoleSection(),
+                SizedBox(
+                  height: 40.h,
+                ),
+                const Spacer(),
+                _addMemberButtonSuction(),
+                SizedBox(height: 35.h,),
+              ]),
             ),
-            _showMemberSection(),
-            SizedBox(
-              height: 30.h,
-            ),
-            _addMemberRoleSection(),
-            SizedBox(
-              height: 40.h,
-            ),
-            _addMemberButtonSuction(),
-          ]),
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -165,7 +171,7 @@ class _AddMemberScreenState extends State<ManageMembersScreen> {
   Widget _addMemberButtonSuction() {
     return CustomButton(
         onPressed: () {
-          _viewModel.manageMember( member.user!.id ,projectId: member.projectId  );
+          _viewModel.manageMember( member.user!.id , member.projectId!  );
         },
         text: widget.viewModelType == 'AddMember' ? 'Add Member' : 'Update Role',
     );
