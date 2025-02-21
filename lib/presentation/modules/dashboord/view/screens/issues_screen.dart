@@ -46,14 +46,14 @@ class _IssuesScreenState extends State<IssuesScreen> {
 }
 
 Widget _showBody(GetAllIssuesViewModel viewModel){
-  return  Padding(
-    padding:EdgeInsets.symmetric(horizontal: 20.w),
-    child: Column(
-      children: [
-        SizedBox(height: 25.h),
-        const CustomAppBar(title: "All Issues"),
-        SizedBox(height: 25.h),
-        ListView.builder(
+  return  Column(
+    children: [
+      SizedBox(height: 25.h),
+      const CustomAppBar(title: "All Issues"),
+      SizedBox(height: 25.h),
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: ListView.builder(
           itemCount: viewModel.issuesList.length,
           shrinkWrap: true,
           itemBuilder: (context, index) {
@@ -72,7 +72,7 @@ Widget _showBody(GetAllIssuesViewModel viewModel){
             );
           },
         ),
-      ],
-    ),
+      ),
+    ],
   );
 }

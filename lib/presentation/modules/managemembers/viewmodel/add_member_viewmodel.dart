@@ -24,7 +24,7 @@ class AddMemberViewModel extends BaseViewModel implements MemberManagementInterf
   TextEditingController role = TextEditingController();
 
   @override
-  Future<void> manageMember(int memberId,{int? projectId}) async {
+  Future<void> manageMember(int memberId,int projectId) async {
     if (_formkey.currentState!.validate()) {
       updateState(LoadingState(
           stateRendererType: StateRendererType.overlayLoadingState));

@@ -13,8 +13,9 @@ import 'package:project_management_app/application/extensions/string_extension.d
 
 
 class EditProjectDetails extends StatelessWidget {
-  @override
   final EditProjectDetailsViewModel _viewModel = instance<EditProjectDetailsViewModel>();
+
+   EditProjectDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
