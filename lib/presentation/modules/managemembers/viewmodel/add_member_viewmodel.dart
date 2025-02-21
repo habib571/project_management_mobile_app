@@ -45,7 +45,7 @@ class AddMemberViewModel extends BaseViewModel implements MemberManagementInterf
           stateRendererType: StateRendererType.overlayLoadingState));
 
       (await _addMemberUseCase.addMember(
-          ProjectMember.request( memberId,role.text.trim(),2/*ProjectId*/)
+          ProjectMember.request( memberId ,role.text.trim(),projectId)
       ))
           .fold(
         (failure) {

@@ -47,8 +47,8 @@ class MemberLisTile extends StatelessWidget {
               title: const Text("Edit role"),
               onTap: () {
                 Navigator.pop(context);
-                ProjectMember newMember = ProjectMember(null, null, member.user, member.role); //to refactor
-                Get.toNamed(AppRoutes.updateMemberRoleScreen ,arguments: newMember , );
+                ProjectMember newMember = ProjectMember.selectedMemberToBeUpdated(member.user, member.project!.id, member.role);
+                Get.toNamed(AppRoutes.updateMemberRoleScreen ,arguments: newMember, );
               },
             ),
             ListTile(

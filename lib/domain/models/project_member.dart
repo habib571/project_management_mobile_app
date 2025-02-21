@@ -10,7 +10,9 @@ class ProjectMember {
   int? userId;
 
   ProjectMember(this.id, this.project, this.user, this.role);
-  ProjectMember.request(this.userId, String this.role, this.projectId);
+  ProjectMember.request(this.userId, this.role, this.projectId); //ProjectMember.request(this.userId, String this.role, this.projectId);
+  ProjectMember.selectedMemberToBeAdded(this.user, this.projectId);
+  ProjectMember.selectedMemberToBeUpdated(this.user, this.projectId, this.role);
 
   factory ProjectMember.fromJson(Map<String, dynamic> json) {
     return ProjectMember(
