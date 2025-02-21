@@ -23,8 +23,9 @@ class UpdateRoleViewModel extends BaseViewModel implements MemberManagementInter
   @override
   GlobalKey<FormState> get formkey => _formkey;
 
+  final TextEditingController _role = TextEditingController();
   @override
-  TextEditingController role = TextEditingController();
+  TextEditingController get role => _role;
 
   @override
   Future<void> manageMember(int memberId,int projectId) async {
