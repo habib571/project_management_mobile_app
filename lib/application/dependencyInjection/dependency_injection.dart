@@ -12,6 +12,7 @@ import 'package:project_management_app/domain/usecases/project/get_members.dart'
 import 'package:project_management_app/domain/usecases/project/issue/get_allissues_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/issue/report_issue_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/myprojects_usecase.dart';
+import 'package:project_management_app/domain/usecases/project/update_member_role_use_case.dart';
 import 'package:project_management_app/domain/usecases/task/get_all_tasks.dart';
 
 import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
@@ -155,16 +156,15 @@ initProject() {
   if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
     instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
     instance.registerFactory<AddMemberUseCase>(() => AddMemberUseCase(instance()));
+    instance.registerFactory<UpdateMemberRoleUseCase>(() => UpdateMemberRoleUseCase(instance()));
     instance.registerFactory<MemberManagementInterface>(() => AddMemberViewModel(instance() ,instance() ),instanceName: "AddMember" );
-    instance.registerFactory<MemberManagementInterface>(() => UpdateRoleViewModel(instance() ,instance() ,instance()),instanceName:"UpdateMember"  );
+    instance.registerFactory<MemberManagementInterface>(() => UpdateRoleViewModel(instance() ,instance()),instanceName:"UpdateMember"  );
     instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance() ,instance(),instance()) );
   }
 }
 
 initEditProjectDetails() {
-
     instance.registerLazySingleton<EditProjectDetailsViewModel>(() => EditProjectDetailsViewModel(instance(),instance()) );
-
 }
 
 initSignupModule() {
