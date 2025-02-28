@@ -11,6 +11,7 @@ class ProjectMember {
 
   ProjectMember(this.id, this.project, this.user, this.role);
   ProjectMember.request(this.userId, this.role, this.projectId); //ProjectMember.request(this.userId, String this.role, this.projectId);
+  ProjectMember.updateRoleRequest(this.projectId,this.role);
   ProjectMember.selectedMemberToBeAdded(this.user, this.projectId);
   ProjectMember.selectedMemberToBeUpdated(this.user, this.projectId, this.role);
 
