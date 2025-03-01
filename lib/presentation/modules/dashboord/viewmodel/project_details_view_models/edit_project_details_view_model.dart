@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:project_management_app/domain/models/project.dart';
+import 'package:project_management_app/domain/usecases/project/issue/updae_project_use_case.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
@@ -11,19 +12,14 @@ import '../../../../stateRender/state_render_impl.dart';
 
 class EditProjectDetailsViewModel extends BaseViewModel{
 
-  EditProjectDetailsViewModel(super.tokenManager, this.dashBoardViewModel){
+  EditProjectDetailsViewModel(super.tokenManager, this.dashBoardViewModel, this.updateProjectUseCase){
     _projectTitle.text = dashBoardViewModel.project.name! ;
     _projectDescription.text = dashBoardViewModel.project.description! ;
     _projectEndDate.text = dashBoardViewModel.project.endDate! ;
   }
 
-  @override
-  void start() {
-    updateState(ContentState());
-    super.start();
-  }
-
   final DashBoardViewModel dashBoardViewModel ;
+  final UpdateProjectUseCase updateProjectUseCase ;
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   GlobalKey<FormState> get formkey => _formkey;
@@ -39,6 +35,12 @@ class EditProjectDetailsViewModel extends BaseViewModel{
 
   String? _selectedDate;
 
+  @override
+  void start() {
+    updateState(ContentState());
+    super.start();
+  }
+
   pickProjectEndDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -53,18 +55,25 @@ class EditProjectDetailsViewModel extends BaseViewModel{
   }
 
 
-  editDetails(){
-    if(_formkey.currentState!.validate()){
-      Project updatedProject = dashBoardViewModel.project.copyWith(
-          name: _projectTitle.text.trim(),
-          description: _projectDescription.text.trim(),
-          endDate: _projectEndDate.text.trim()
-      );
-      (dashBoardViewModel.setProject (updatedProject)).fold(
+  editDetails() async {
+    if(_formkey.currentState!.validate()) {
+      (await updateProjectUseCase.updateProject(Project.updateProjectRequest(
+          dashBoardViewModel.project.id ,
+          dashBoardViewModel.project.name,
+          dashBoardViewModel.project.description,
+          dashBoardViewModel.project.endDate)
+        )
+      ).fold(
       (failure) {
         updateState(ErrorState(StateRendererType.snackbarState, failure.message)) ;
       },
       (success) {
+        Project updatedProject = dashBoardViewModel.project.copyWith(
+            name: _projectTitle.text.trim(),
+            description: _projectDescription.text.trim(),
+            endDate: _projectEndDate.text.trim()
+        );
+        dashBoardViewModel.setProject (updatedProject);
         log(dashBoardViewModel.project.name! );
         notifyListeners();
          }
@@ -74,21 +83,3 @@ class EditProjectDetailsViewModel extends BaseViewModel{
 
   }
 
-
-
-/*
-  editDetails(String projectTitle){
-    //dashBoardViewModel.project.name = projectTitle ;
-    dashBoardViewModel.setProject ( Project(
-        dashBoardViewModel.project.id,
-        dashBoardViewModel.project.name,
-        dashBoardViewModel.project.description,
-        dashBoardViewModel.project.startDate,
-        dashBoardViewModel.project.endDate,
-        dashBoardViewModel.project.progress,
-        dashBoardViewModel.project.createdBy
-    ));
-    log(dashBoardViewModel.project.name = projectTitle);
-    notifyListeners();
-  }
- */

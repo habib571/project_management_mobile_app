@@ -34,6 +34,15 @@ class ProjectDetailViewModel extends BaseViewModel {
   List<ProjectMember> _projectMember = [];
   List<ProjectMember> get projectMember => _projectMember;
 
+  // Function called by UpdateRoleViewModel to change the internal state when a member role is updated
+  void updatedMember(ProjectMember member){
+    int index = _projectMember.indexWhere((m)=> m.id == member.id);
+    List<ProjectMember> updatedList = List.from(_projectMember);
+    updatedList[index] = member;
+    _projectMember = updatedList;
+    notifyListeners();
+  }
+
 
   getProjectMembers() async {
     updateState(LoadingState(

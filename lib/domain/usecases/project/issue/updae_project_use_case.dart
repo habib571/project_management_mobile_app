@@ -10,7 +10,7 @@ final ProjectRepository _projectRepository ;
 UpdateProjectUseCase(this._projectRepository);
 
 Future<Either<Failure,Project>> updateProject (Project request) async {
-  return await _projectRepository.addProject(request);
+  return await _projectRepository.updateProject(request);
   }
 }
 
