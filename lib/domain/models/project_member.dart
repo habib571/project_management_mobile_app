@@ -13,7 +13,7 @@ class ProjectMember {
   ProjectMember.request(this.userId, this.role, this.projectId); //ProjectMember.request(this.userId, String this.role, this.projectId);
   ProjectMember.updateRoleRequest(this.projectId,this.role);
   ProjectMember.selectedMemberToBeAdded(this.user, this.projectId);
-  ProjectMember.selectedMemberToBeUpdated(this.user, this.projectId, this.role);
+  ProjectMember.selectedMemberToBeUpdated(this.id,this.user, this.projectId, this.role);
 
   factory ProjectMember.fromJson(Map<String, dynamic> json) {
     return ProjectMember(
@@ -31,4 +31,19 @@ class ProjectMember {
       'role': role,
     };
   }
+
+  ProjectMember copyWith({
+    int? id,
+    Project? project,
+    User? user,
+    String? role,
+  }) {
+    return ProjectMember(
+      id ?? this.id,
+      project ?? this.project,
+      user ?? this.user,
+      role ?? this.role,
+    );
+  }
+
 }
