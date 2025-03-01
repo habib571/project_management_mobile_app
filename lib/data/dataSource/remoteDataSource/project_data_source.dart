@@ -114,7 +114,7 @@ abstract class ProjectDataSource {
    @override
    Future<ApiResponse> updateProjectDetails(Project request) async{
      return await executePatchRequest(
-         apiUrl: "/project/update_project/${request.id}",
+         apiUrl: "/project/update/${request.id}",
          body: request.toJson(),
          bearerToken: _localStorage.getAuthToken(),
          onRequestResponse: (response, statusCode) {

@@ -191,9 +191,9 @@ class ProjectRepositoryImpl implements ProjectRepository{
       try {
         final response = await _projectDataSource.updateProjectDetails(projectRequest) ;
         if (response.statusCode == 200) {
+          print("------*** 200");
           return Right(Project.fromJson(response.data));
         } else {
-
           return Left(Failure.fromJson(response.data));
         }
       }
