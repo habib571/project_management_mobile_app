@@ -25,7 +25,7 @@ class UpdateRoleViewModel extends BaseViewModel implements MemberManagementInter
 
 
   @override
-  Future<void> manageMember(int memberId,int projectId) async {
+  Future<void> manageMember(int? memberId,int projectId) async {
     if (_formkey.currentState!.validate()) {
       updateState(LoadingState(
           stateRendererType: StateRendererType.overlayLoadingState));
