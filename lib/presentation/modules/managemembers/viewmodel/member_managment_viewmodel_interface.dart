@@ -7,5 +7,5 @@ abstract class MemberManagementInterface   {
   GlobalKey<FormState> get formkey;
   TextEditingController get role;
 
-  Future<void> manageMember(int memberId,int projectId);
+  Future<void> manageMember(int? memberId,int projectId);
 }
