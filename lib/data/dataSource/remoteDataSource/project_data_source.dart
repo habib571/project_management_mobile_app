@@ -20,6 +20,7 @@ abstract class ProjectDataSource {
   Future<ApiResponse> updateIssueStatus(int issueId) ;
   Future<ApiResponse> updateProjectDetails(Project request);
   Future<ApiResponse> updateMemberRole(ProjectMember request);
+  Future<ApiResponse> deleteMember(int memberId);
 }
 
  class ProjectRemoteDataSource implements ProjectDataSource{
@@ -126,6 +127,17 @@ abstract class ProjectDataSource {
    Future<ApiResponse> updateMemberRole(ProjectMember request) async{
      return await executePatchRequest(
          apiUrl: "/project/update-member/${request.projectId}/${request.role}",
+         body: {},
+         bearerToken: _localStorage.getAuthToken(),
+         onRequestResponse: (response, statusCode) {
+           return ApiResponse(response, statusCode);
+         });
+   }
+
+   @override
+   Future<ApiResponse> deleteMember(int memberId) async{
+     return await executeDeleteRequest(
+         apiUrl: "/project/delete-member/$memberId",
          body: {},
          bearerToken: _localStorage.getAuthToken(),
          onRequestResponse: (response, statusCode) {

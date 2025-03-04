@@ -64,6 +64,7 @@ class ProjectRepositoryImpl implements ProjectRepository{
       try {
         final response = await _projectDataSource.getProjectMember(projectId) ;
         if (response.statusCode == 200) {
+          print("----- ALL MEMBERS----");
           final List<Map<String, dynamic>> responseData = List<Map<String, dynamic>>.from(response.data);
           final members = responseData.map((projectJson) => ProjectMember.fromJson(projectJson)).toList();
           return Right(members) ;
@@ -109,8 +110,10 @@ class ProjectRepositoryImpl implements ProjectRepository{
       try {
         final response = await _projectDataSource.addMember(addMemberRequest) ;
         if (response.statusCode == 200) {
+          print("----- Member added ");
           return Right(ProjectMember.fromJson(response.data));
         } else {
+          print("---error");
           return Left(Failure.fromJson(response.data));
         }
       }
@@ -213,6 +216,26 @@ class ProjectRepositoryImpl implements ProjectRepository{
         if (response.statusCode == 200) {
           print("------ 200");
           return Right(ProjectMember.fromJson(response.data));
+        } else {
+          return Left(Failure.fromJson(response.data));
+        }
+      }
+      catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
+  @override
+  Future<Either<Failure, bool>> deleteMember (int memberId) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _projectDataSource.deleteMember (memberId) ;
+        if (response.statusCode == 200) {
+          print("------ 200");
+          return const Right(true);
         } else {
           return Left(Failure.fromJson(response.data));
         }
