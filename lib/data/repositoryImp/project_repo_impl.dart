@@ -229,13 +229,14 @@ class ProjectRepositoryImpl implements ProjectRepository{
   }
 
   @override
-  Future<Either<Failure, bool>> deleteMember (int memberId) async {
+  Future<Either<Failure, String>> deleteMember (int memberId) async {
     if (await _networkInfo.isConnected) {
       try {
         final response = await _projectDataSource.deleteMember (memberId) ;
         if (response.statusCode == 200) {
-          print("------ 200");
-          return const Right(true);
+          print("--**--- Member Deleted ");
+
+          return Right(response.data);
         } else {
           return Left(Failure.fromJson(response.data));
         }

@@ -19,5 +19,5 @@ abstract class ProjectRepository {
   Future<Either<Failure, Issue>> updateIssueStatus (int issueId) ;
   Future<Either<Failure, Project>> updateProject (Project projectRequest) ;
   Future<Either<Failure, ProjectMember>> updateMemberRole (ProjectMember updateMemberRequest) ;
-  Future<Either<Failure, bool>> deleteMember (int memberId) ;
+  Future<Either<Failure, String>> deleteMember (int memberId) ;
 }
