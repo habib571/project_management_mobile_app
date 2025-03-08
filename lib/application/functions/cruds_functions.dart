@@ -73,11 +73,9 @@ Future<ApiResponse> executePatchRequest<ApiResponse>({
 
 Future<ApiResponse> executeDeleteRequest<ApiResponse>({
   required String apiUrl,
-  Map<String,dynamic>? body,
   String? bearerToken,
   required ApiResponse Function(dynamic result, int statusCode) onRequestResponse,
 }) async {
-  final requestBody = body != null ? jsonEncode(body) : null;
   final response = await http.delete(
       Uri.parse(Constants.baseUrl + apiUrl),
       headers: <String, String>{
@@ -85,9 +83,8 @@ Future<ApiResponse> executeDeleteRequest<ApiResponse>({
         'Accept': 'application/json',
         if (bearerToken != null) 'Authorization': 'Bearer $bearerToken'
       },
-      body: requestBody
   );
-  final jsonResult = jsonDecode(response.body);
+  final jsonResult = response.body;
   int statusCode = response.statusCode;
   return onRequestResponse(jsonResult ,statusCode);
 
