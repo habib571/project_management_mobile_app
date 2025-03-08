@@ -37,6 +37,7 @@ import '../../domain/repository/task_repo.dart';
 import '../../domain/usecases/auth/signup_usecase.dart';
 import '../../domain/usecases/auth/userprofile_usecase.dart';
 import '../../domain/usecases/project/addproject-use-case.dart';
+import '../../domain/usecases/project/delete_member_use_case.dart';
 import '../../domain/usecases/task/add_task_user_case.dart';
 import '../../presentation/modules/addproject/view/add-project_screen.dart';
 import '../../presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
@@ -159,9 +160,10 @@ initProject() {
     instance.registerFactory<AddMemberUseCase>(() => AddMemberUseCase(instance()));
     instance.registerFactory<UpdateProjectUseCase>(() => UpdateProjectUseCase(instance()));
     instance.registerFactory<UpdateMemberRoleUseCase>(() => UpdateMemberRoleUseCase(instance()));
+    instance.registerFactory<DeleteMemberUseCase>(() => DeleteMemberUseCase(instance()));
     instance.registerFactory<MemberManagementInterface>(() => AddMemberViewModel(instance() ,instance() ),instanceName: "AddMember" );
     instance.registerFactory<MemberManagementInterface>(() => UpdateRoleViewModel(instance() ,instance(),instance()),instanceName:"UpdateMember"  );
-    instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance() ,instance(),instance()) );
+    instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance() ,instance(),instance(),instance()) );
   }
 }
 

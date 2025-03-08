@@ -30,7 +30,7 @@ class MembersScreen extends StatelessWidget {
             Selector<ProjectDetailViewModel,List<ProjectMember>>(
               selector: (context, viewModel) => viewModel.projectMember ,
               builder:  (context, data, child) {
-                print("--- rebuild ---");
+                print("--- Rebuild ---");
                 return ListView.builder(
                     itemCount:_viewModel.projectMember.length ,
                     shrinkWrap: true,
@@ -45,6 +45,7 @@ class MembersScreen extends StatelessWidget {
                           Get.back() ;
                         },
                         projectMember: _viewModel.projectMember[index],
+                        viewModel: _viewModel,
 
                       );
                     }

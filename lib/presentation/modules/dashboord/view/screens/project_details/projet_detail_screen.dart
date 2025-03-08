@@ -69,9 +69,11 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
+                    //We must select the Project not any attribute (update the name and the due date) --to modify
                     Selector<ProjectDetailViewModel,Project>(
                       selector: (context, viewModel) => viewModel.dashBoardViewModel.project ,
                       builder:  (context, data, child){
+                        print("detailsCard");
                         return ProjectDetailCard(
                           project: _viewModel.dashBoardViewModel.project,
                         );

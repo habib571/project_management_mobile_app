@@ -2,6 +2,7 @@
 import 'package:project_management_app/application/helpers/get_storage.dart';
 import 'package:project_management_app/domain/models/project_member.dart';
 import 'package:project_management_app/domain/models/user.dart';
+import 'package:project_management_app/domain/usecases/project/delete_member_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/get_members.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
@@ -15,9 +16,10 @@ class ProjectDetailViewModel extends BaseViewModel {
 
   final EditProjectDetailsViewModel editProjectDetailsViewModel ;
  final DashBoardViewModel dashBoardViewModel ;
-  final GetMembersUseCase _useCase ;
+  final GetMembersUseCase _getMembersUseCase ;
+  final DeleteMemberUseCase _deleteMemberUseCase ;
   final LocalStorage _localStorage ;
-  ProjectDetailViewModel(super.tokenManager, this._useCase, this._localStorage, this.dashBoardViewModel, this.editProjectDetailsViewModel){
+  ProjectDetailViewModel(super.tokenManager, this._getMembersUseCase, this._localStorage, this.dashBoardViewModel, this.editProjectDetailsViewModel, this._deleteMemberUseCase){
     dashBoardViewModel.addListener((){
       notifyListeners();
       print("----- ProjectDetailViewModel Notified");
@@ -43,15 +45,34 @@ class ProjectDetailViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void deleteMember(int memberId)async {
+    updateState(LoadingState(
+        stateRendererType: StateRendererType.fullScreenLoadingState));
+
+    (await _deleteMemberUseCase.deleteMemberUseCase(memberId)).fold(
+            (failure) {
+          updateState(ErrorState(StateRendererType.fullScreenErrorState, failure.message));
+        },
+            (data) {
+          int index = _projectMember.indexWhere((m)=> m.id == memberId);
+          List<ProjectMember> updatedList = List.from(_projectMember);
+          updatedList.removeAt(index);
+          _projectMember = updatedList;
+          notifyListeners();
+          updateState(ContentState());
+        }
+
+    ) ;
+  }
+
 
   getProjectMembers() async {
     updateState(LoadingState(
         stateRendererType: StateRendererType.fullScreenLoadingState));
 
-    (await _useCase.getProjectMembers(dashBoardViewModel.project.id!)).fold(
+    (await _getMembersUseCase.getProjectMembers(dashBoardViewModel.project.id!)).fold(
         (failure) {
           updateState(ErrorState(StateRendererType.fullScreenErrorState, failure.message));
-
         },
             (data) {
               _projectMember = data ;

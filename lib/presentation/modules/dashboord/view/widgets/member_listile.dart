@@ -8,13 +8,16 @@ import 'package:project_management_app/presentation/sharedwidgets/image_widget.d
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 
+import '../../../../../application/dependencyInjection/dependency_injection.dart';
 import '../../../managemembers/view/screens/manage_members_screen.dart';
 import '../../../managemembers/viewmodel/update_role_view_model.dart';
+import '../../viewmodel/project_details_view_models/project_detail_view_model.dart';
 
 class MemberLisTile extends StatelessWidget {
 
-  const MemberLisTile({super.key, required this.projectMember, required this.onTap});
+  const MemberLisTile({super.key, required this.projectMember, required this.onTap, required this.viewModel});
 
+  final ProjectDetailViewModel viewModel ;
   final ProjectMember projectMember;
   final Function onTap ;
 
@@ -79,6 +82,8 @@ class MemberLisTile extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
+                print(projectMember.id!);
+                viewModel.deleteMember(projectMember.id!);
                 Navigator.pop(context);
               },
               child: const Text("Delete", style: TextStyle(color: Colors.red)),

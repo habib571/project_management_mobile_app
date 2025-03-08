@@ -18,7 +18,6 @@ class DashBoardViewModel extends BaseViewModel {
     super.start();
   }
 
-
   int _currentProject = 0;
   int get currentProject => _currentProject;
 

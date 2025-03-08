@@ -48,7 +48,6 @@ class AuthRepositoryImpl implements AuthRepository {
         if (response.statusCode == 200) {
           return Right(AuthResponse.fromJson(response.data));
         } else {
-
           return Left(Failure.fromJson(response.data));
         }
       } catch (error) {
@@ -84,6 +83,7 @@ class AuthRepositoryImpl implements AuthRepository {
     if (await _networkInfo.isConnected) {
       try {
         final response = await _authRemoteDataSource.logOut() ;
+        print("LOGOUT ${response.statusCode}");
         if (response.statusCode == 200) {
           return const Right(true);
         } else {
