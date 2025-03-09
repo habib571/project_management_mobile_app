@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../../data/responses/api_response.dart';
 import '../constants/constants.dart';
 
 Future<ApiResponse> executeGetRequest<ApiResponse>({
