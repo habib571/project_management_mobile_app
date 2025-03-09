@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
+
 import 'package:project_management_app/application/navigation/routes_constants.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/project_details/projet_detail_screen.dart';
+
 import 'package:provider/provider.dart';
 import '../../../../../domain/models/project.dart';
 import '../../../../stateRender/state_render_impl.dart';
@@ -95,6 +97,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       items: List.generate(  // We must use listviewBuilder for more optimisation
         _viewModel.projectList.length,
         (index) {
+
           return Selector<DashBoardViewModel, List<Project>>(
             selector: (_, viewModel) => viewModel.projectList,
             builder: (_, data, __) {
@@ -105,6 +108,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Get.to(()=> const ProjectDetailScreen()) ;
                 },
               );
+
             },
           );
             /*Consumer<DashBoardViewModel>(
