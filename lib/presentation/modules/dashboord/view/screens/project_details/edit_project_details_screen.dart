@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
@@ -12,11 +14,21 @@ import '../../../viewmodel/project_details_view_models/edit_project_details_view
 import 'package:project_management_app/application/extensions/string_extension.dart';
 
 
-class EditProjectDetails extends StatelessWidget {
+class EditProjectDetails extends StatefulWidget {
+
+   const EditProjectDetails({super.key});
+
+  @override
+  State<EditProjectDetails> createState() => _EditProjectDetailsState();
+}
+
+class _EditProjectDetailsState extends State<EditProjectDetails> {
   final EditProjectDetailsViewModel _viewModel = instance<EditProjectDetailsViewModel>();
-
-   EditProjectDetails({super.key});
-
+  @override
+  void initState() {
+    _viewModel.start() ;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +43,6 @@ class EditProjectDetails extends StatelessWidget {
         )
     );
   }
-
 
   Widget _showBody(BuildContext context) {
     return Form(
@@ -55,7 +66,7 @@ class EditProjectDetails extends StatelessWidget {
                     const Spacer(),
                     _editButton(),
                     SizedBox(height: 35.h,),
-              
+
                   ],
                 ),
               ),
@@ -74,6 +85,7 @@ class EditProjectDetails extends StatelessWidget {
 
     );
   }
+
   Widget _projectDescriptionInputTextSection(){
     return InputText(
       validator: (val) => val.isEmptyInput() ,

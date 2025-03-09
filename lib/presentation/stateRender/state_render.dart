@@ -29,12 +29,11 @@ class StateRenderer extends StatelessWidget {
   String title;
   Function retryActionFunction;
 
-  StateRenderer(
-      {super.key,
-      required this.stateRendererType,
-      this.message = '',
-      this.title = "",
-      required this.retryActionFunction});
+  StateRenderer({super.key,
+    required this.stateRendererType,
+    this.message = '',
+    this.title = "",
+    required this.retryActionFunction});
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +57,6 @@ class StateRenderer extends StatelessWidget {
           _getMessage(message)
         ]);
       case StateRendererType.fullScreenErrorState:
-        if (Loader.isShown) {
-          Loader.hide();
-        }
         return _getItemsColumn([
           _getAnimatedImage('assets/json/error.json'),
           _getMessage(message),
@@ -112,7 +108,7 @@ class StateRenderer extends StatelessWidget {
           }
         });
         return const SizedBox();
-      // Return empty widget as Snackbar is displayed separately
+    // Return empty widget as Snackbar is displayed separately
       default:
         return const SizedBox();
     }

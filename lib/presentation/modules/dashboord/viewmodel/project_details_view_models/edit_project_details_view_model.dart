@@ -56,6 +56,7 @@ class EditProjectDetailsViewModel extends BaseViewModel{
 
 
   editDetails() async {
+    updateState(LoadingState(stateRendererType: StateRendererType.overlayLoadingState)) ;
     if(_formkey.currentState!.validate()) {
       (await updateProjectUseCase.updateProject(Project.updateProjectRequest(
           dashBoardViewModel.project.id ,
@@ -68,6 +69,7 @@ class EditProjectDetailsViewModel extends BaseViewModel{
         updateState(ErrorState(StateRendererType.snackbarState, failure.message)) ;
       },
       (success) {
+        updateState(ContentState()) ;
         Project updatedProject = dashBoardViewModel.project.copyWith(
             name: _projectTitle.text.trim(),
             description: _projectDescription.text.trim(),

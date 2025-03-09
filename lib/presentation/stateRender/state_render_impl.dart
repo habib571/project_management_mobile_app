@@ -95,7 +95,7 @@ extension FlowStateExtension on FlowState {
   Widget getScreenWidget(BuildContext context, Widget contentScreenWidget,
       Function() retryActionFunction) {
     switch (runtimeType) {
-      case LoadingState _:
+      case LoadingState:
         {
           dismissOverlay(context);
           if (getStateRendererType() == StateRendererType.popupLoadingState) {
@@ -122,7 +122,7 @@ extension FlowStateExtension on FlowState {
                 retryActionFunction: retryActionFunction);
           }
         }
-      case ErrorState _:
+      case ErrorState:
         {
           dismissOverlay(context);
           if (getStateRendererType() == StateRendererType.popupErrorState) {
@@ -136,7 +136,7 @@ extension FlowStateExtension on FlowState {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   backgroundColor:
-                      Colors.transparent, // Set transparent to customize
+                  Colors.transparent, // Set transparent to customize
                   elevation: 0,
                   content: Container(
                     height: 100,
@@ -193,7 +193,6 @@ extension FlowStateExtension on FlowState {
         }
       case ContentState _:
         {
-          // dismissDialog(context);
           dismissOverlay(context);
 
           return contentScreenWidget;
