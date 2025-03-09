@@ -98,7 +98,7 @@ class SigninScreen extends StatelessWidget {
                   ? const Icon(Icons.visibility_off_outlined)
                   : const Icon(Icons.visibility_outlined),
               onTap: () {
-                data.hideorshowpassword();
+                data.hideOrShowPassword();
               },
             ),
           ),

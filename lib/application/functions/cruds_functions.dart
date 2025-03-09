@@ -69,3 +69,22 @@ Future<ApiResponse> executePatchRequest<ApiResponse>({
   return onRequestResponse(jsonResult ,statusCode);
 
 }
+
+Future<ApiResponse> executeDeleteRequest<ApiResponse>({
+  required String apiUrl,
+  String? bearerToken,
+  required ApiResponse Function(dynamic result, int statusCode) onRequestResponse,
+}) async {
+  final response = await http.delete(
+      Uri.parse(Constants.baseUrl + apiUrl),
+      headers: <String, String>{
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        if (bearerToken != null) 'Authorization': 'Bearer $bearerToken'
+      },
+  );
+  final jsonResult = response.body;
+  int statusCode = response.statusCode;
+  return onRequestResponse(jsonResult ,statusCode);
+
+}

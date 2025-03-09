@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:project_management_app/application/navigation/routes_constants.dart';
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
@@ -17,17 +20,32 @@ class ProjectDetailCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(17), color: Colors.white),
+        borderRadius: BorderRadius.circular(17),
+        color: Colors.white,
+      ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _showTitles(),
-          const SizedBox(
-            width: 15,
+          Expanded(
+            child: Row(
+              children: [
+                _showTitles(),
+                const SizedBox(width: 15),
+                _showContent(),
+              ],
+            ),
           ),
-          _showContent()
+
+          IconButton(
+            icon: const Icon(Icons.edit_outlined),
+            onPressed: () {
+              Get.toNamed(AppRoutes.editProjectDetailsScreen);
+            },
+          ),
         ],
       ),
     );
+
   }
 
   Widget _showTitles() {

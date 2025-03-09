@@ -8,6 +8,7 @@ import 'package:project_management_app/application/extensions/string_extension.d
 import 'package:project_management_app/presentation/modules/home/home_screen.dart';
 
 import '../../../../application/dependencyInjection/dependency_injection.dart';
+import '../../../sharedwidgets/custom_appbar.dart';
 import '../../../sharedwidgets/custom_button.dart';
 import '../../../sharedwidgets/input_text.dart';
 import '../../../stateRender/state_render_impl.dart';
@@ -39,7 +40,8 @@ class AddProjectScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            _appBarSection(),
+            SizedBox(height: 25.h,),
+            const CustomAppBar(title: "Add Project"),
             SizedBox(
               height: 80.h,
             ),
@@ -51,7 +53,7 @@ class AddProjectScreen extends StatelessWidget {
                   SizedBox(
                     height: 40.h,
                   ),
-                  _addProjectDesrciprionSection(),
+                  _addProjectDesrciptionSection(),
                   SizedBox(
                     height: 40.h,
                   ),
@@ -74,14 +76,16 @@ class AddProjectScreen extends StatelessWidget {
       validator: (val) => val.isEmptyInput() ,
       controller: _viewModel.projectName,
       hintText: "Enter The project name",
+      borderSide: const BorderSide(color: Colors.black),
     );
   }
 
-  Widget _addProjectDesrciprionSection(){
+  Widget _addProjectDesrciptionSection(){
     return InputText(
       validator: (val) => val.isEmptyInput() ,
       controller: _viewModel.projectDescription,
       hintText: "Enter The project description",
+      borderSide: const BorderSide(color: Colors.black),
       maxLines: 3,
     );
   }
@@ -93,39 +97,13 @@ class AddProjectScreen extends StatelessWidget {
       controller: _viewModel.projectEndDate,
       hintText: "Enter The project end date",
       suffixIcon:const  Icon(Icons.calendar_month_outlined),
+      borderSide: const BorderSide(color: Colors.black),
       onTap: () async {
         await _viewModel.pickProjectEndDate(context);
       },
     );
   }
 
-  Widget _appBarSection(){
-    return Container(
-      height: 90.h,
-      color: AppColors.primary,
-      child: Column(
-        children: [
-          SizedBox(height: 35.h,),
-          Row(
-            children: [
-               SizedBox(width: 8.w),
-               IconButton(
-                  icon: const Icon(Icons.close, color: Colors.white),
-                  onPressed: (){
-                    Get.off(() => HomeNavBar(), transition: Transition.upToDown);
-                  }
-              ),
-              SizedBox(width: 90.w),
-              const Text(
-                'Add Project',
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
    Widget _showButton() {
      return CustomButton(
          onPressed: () {

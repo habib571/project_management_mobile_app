@@ -19,6 +19,8 @@ class Project {
       this.createdBy,
       );
   Project.request(this.name, this.description, this.endDate);
+  Project.updateProjectRequest(this.id,this.name, this.description, this.endDate);
+
   factory Project.fromJson(Map<String, dynamic> json) {
     return Project(
       json['id'],
@@ -39,4 +41,37 @@ class Project {
       'endDate': endDate,
     };
   }
+
+  Map<String, dynamic> updateToJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'endDate': endDate,
+    };
+  }
+
+  Project copyWith({
+    int? id,
+    String? name,
+    String? description,
+    String? startDate,
+    String? endDate,
+    double? progress,
+    User? createdBy,
+  }) {
+    return Project(
+      id ?? this.id,
+      name ?? this.name,
+      description ?? this.description,
+      startDate ?? this.startDate,
+      endDate ?? this.endDate,
+      progress ?? this.progress,
+      createdBy ?? this.createdBy,
+    );
+  }
+
+
+
+
 }

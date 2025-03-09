@@ -53,7 +53,7 @@ class SignInViewModel extends BaseViewModel {
     }
   }
 
-  void hideorshowpassword() {
+  void hideOrShowPassword() {
     _isPasswordHidden = !_isPasswordHidden;
     notifyListeners();
   }

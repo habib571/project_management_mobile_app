@@ -64,6 +64,7 @@ class ProjectRepositoryImpl implements ProjectRepository{
       try {
         final response = await _projectDataSource.getProjectMember(projectId) ;
         if (response.statusCode == 200) {
+          print("----- ALL MEMBERS----");
           final List<Map<String, dynamic>> responseData = List<Map<String, dynamic>>.from(response.data);
           final members = responseData.map((projectJson) => ProjectMember.fromJson(projectJson)).toList();
           return Right(members) ;
@@ -104,13 +105,15 @@ class ProjectRepositoryImpl implements ProjectRepository{
   }
 
   @override
-  Future<Either<Failure, ProjectMember>> addMember (AddMemberRequest addMemberRequest) async {
+  Future<Either<Failure, ProjectMember>> addMember (ProjectMember addMemberRequest) async {
     if (await _networkInfo.isConnected) {
       try {
         final response = await _projectDataSource.addMember(addMemberRequest) ;
         if (response.statusCode == 200) {
+          print("----- Member added ");
           return Right(ProjectMember.fromJson(response.data));
         } else {
+          print("---error");
           return Left(Failure.fromJson(response.data));
         }
       }
@@ -174,6 +177,68 @@ class ProjectRepositoryImpl implements ProjectRepository{
         } else {
           return Left(Failure.fromJson(response.data));
 
+        }
+      }
+      catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
+  @override
+  //we dont need the returned project
+  Future<Either<Failure, Project>> updateProject (Project projectRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _projectDataSource.updateProjectDetails(projectRequest) ;
+        if (response.statusCode == 200) {
+          print("------*** 200");
+          return Right(Project.fromJson(response.data));
+        } else {
+          return Left(Failure.fromJson(response.data));
+        }
+      }
+      catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
+  @override
+  Future<Either<Failure, ProjectMember>> updateMemberRole (ProjectMember updateMemberRequest) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _projectDataSource.updateMemberRole(updateMemberRequest) ;
+        if (response.statusCode == 200) {
+          print("------ 200");
+          return Right(ProjectMember.fromJson(response.data));
+        } else {
+          return Left(Failure.fromJson(response.data));
+        }
+      }
+      catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+
+  @override
+  Future<Either<Failure, String>> deleteMember (int memberId) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _projectDataSource.deleteMember (memberId) ;
+        if (response.statusCode == 200) {
+          print("--**--- Member Deleted ");
+
+          return Right(response.data);
+        } else {
+          return Left(Failure.fromJson(response.data));
         }
       }
       catch (error) {

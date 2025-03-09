@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
-import 'package:project_management_app/presentation/modules/dashboord/view/screens/projet_detail_screen.dart';
+
+import 'package:project_management_app/application/navigation/routes_constants.dart';
+import 'package:project_management_app/presentation/modules/dashboord/view/screens/project_details/projet_detail_screen.dart';
+
 import 'package:provider/provider.dart';
+import '../../../../../domain/models/project.dart';
 import '../../../../stateRender/state_render_impl.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/styles.dart';
@@ -67,7 +71,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Text('My Workspaces (projects)',
                 style: robotoBold.copyWith(fontSize: 18)),
             const SizedBox(height: 25),
-            _showProjectsSection(),
+          _showProjectsSection(),
             SizedBox(height: 50.h),
             Text('In Progress', style: robotoBold.copyWith(fontSize: 18)),
             const SizedBox(height: 25),
@@ -90,24 +94,40 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget _showProjects() {
     return CarouselSlider(
-      items: List.generate(
+      items: List.generate(  // We must use listviewBuilder for more optimisation
         _viewModel.projectList.length,
         (index) {
-          return ProjectCard(
-            project: _viewModel.projectList[index],
-            onTap: ()  {
-              _viewModel.setProject(_viewModel.projectList[index]) ;
-               Get.to(()=> const ProjectDetailScreen()) ;
+
+          return Selector<DashBoardViewModel, List<Project>>(
+            selector: (_, viewModel) => viewModel.projectList,
+            builder: (_, data, __) {
+              return ProjectCard(
+                project: _viewModel.projectList[index],
+                onTap: () {
+                  _viewModel.setProject(_viewModel.projectList[index]) ;
+                  Get.to(()=> const ProjectDetailScreen()) ;
+                },
+              );
 
             },
           );
+            /*Consumer<DashBoardViewModel>(
+            builder: (context, DashBoardViewModel, child){
+              print("**** REBUILD dahsbord*****");
+              return ProjectCard(
+                project: _viewModel.projectList[index],
+                onTap: () {
+                  _viewModel.setProject(_viewModel.projectList[index]) ;
+                  Get.to(()=> const ProjectDetailScreen()) ;
+                },
+              );
+            } ,
+          );*/
         },
       ),
       options: CarouselOptions(
         height: 150.h,
         onPageChanged: (index, reason) {
-
-
           context.read<DashBoardViewModel>().setCurrentProject(index);
         },
       ),

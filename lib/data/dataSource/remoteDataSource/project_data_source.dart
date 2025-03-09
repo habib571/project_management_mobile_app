@@ -3,6 +3,7 @@
 import '../../../application/functions/cruds_functions.dart';
 import '../../../application/helpers/get_storage.dart';
 import '../../../domain/models/project.dart';
+import '../../../domain/models/project_member.dart';
 import '../../network/requests/add_member_request.dart';
 import '../../network/requests/report_issue_request.dart';
 
@@ -13,10 +14,13 @@ abstract class ProjectDataSource {
   Future<ApiResponse> getProjects() ;
   Future<ApiResponse> getProjectMember(int projectId) ;
   Future<ApiResponse> getMemberByName(String name ,int page , int size) ;
-  Future<ApiResponse> addMember(AddMemberRequest request) ;
+  Future<ApiResponse> addMember(ProjectMember request) ;
   Future<ApiResponse> reportIssue(ReportIssueRequest request) ;
   Future<ApiResponse> getAllIssues(int projectId) ;
   Future<ApiResponse> updateIssueStatus(int issueId) ;
+  Future<ApiResponse> updateProjectDetails(Project request);
+  Future<ApiResponse> updateMemberRole(ProjectMember request);
+  Future<ApiResponse> deleteMember(int memberId);
 }
 
  class ProjectRemoteDataSource implements ProjectDataSource{
@@ -66,7 +70,7 @@ abstract class ProjectDataSource {
   }
 
    @override
-   Future<ApiResponse> addMember(AddMemberRequest request) async{
+   Future<ApiResponse> addMember(ProjectMember request) async{
      return await executePostRequest(
          apiUrl: "/project/add_member",
          body: request.toJson(),
@@ -102,6 +106,39 @@ abstract class ProjectDataSource {
      return await executePatchRequest(
          apiUrl: "/issue/mark-as-solved/$issueId",
          body: {},
+         bearerToken: _localStorage.getAuthToken(),
+         onRequestResponse: (response, statusCode) {
+           return ApiResponse(response, statusCode);
+         });
+   }
+
+   @override
+   Future<ApiResponse> updateProjectDetails(Project request) async{
+     return await executePatchRequest(
+         apiUrl: "/project/update/${request.id}",
+         body: request.toJson(),
+         bearerToken: _localStorage.getAuthToken(),
+         onRequestResponse: (response, statusCode) {
+           return ApiResponse(response, statusCode);
+         });
+   }
+
+   @override
+   Future<ApiResponse> updateMemberRole(ProjectMember request) async{
+     return await executePatchRequest(
+         apiUrl: "/project/update-member/${request.projectId}/${request.role}",
+         body: {},
+         bearerToken: _localStorage.getAuthToken(),
+         onRequestResponse: (response, statusCode) {
+           return ApiResponse(response, statusCode);
+         });
+   }
+
+   @override
+   Future<ApiResponse> deleteMember(int memberId) async{
+     return await executeDeleteRequest(
+         apiUrl: "/project/delete-member/$memberId",
+         //body: {},
          bearerToken: _localStorage.getAuthToken(),
          onRequestResponse: (response, statusCode) {
            return ApiResponse(response, statusCode);

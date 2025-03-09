@@ -70,7 +70,7 @@ class Assets {
   static const String responsesApiResponse = 'lib/data/responses/api_response.dart';
   static const String responsesAuthResponse = 'lib/data/responses/auth_response.dart';
   static const String responsesProjectResponce = 'lib/data/responses/project_responce.dart';
-  static const String screensAddMemberScreen = 'lib/presentation/modules/addmember/view/screens/add_member_screen.dart';
+  static const String screensAddMemberScreen = 'lib/presentation/modules/addmember/view/screens/manage_members_screen.dart';
   static const String screensAllTaskScreen = 'lib/presentation/modules/tasks/view/screens/all_task_screen.dart';
   static const String screensCreateTaskScreen = 'lib/presentation/modules/tasks/view/screens/create_task_screen.dart';
   static const String screensCustomSearchDelegate = 'lib/presentation/modules/addmember/view/screens/custom_search_delegate.dart';

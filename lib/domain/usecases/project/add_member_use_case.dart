@@ -11,7 +11,7 @@ class AddMemberUseCase {
 
   AddMemberUseCase(this._projectRepository);
 
-  Future<Either<Failure, ProjectMember>> addMember (AddMemberRequest addMemberRequest) async {
+  Future<Either<Failure, ProjectMember>> addMember (ProjectMember addMemberRequest) async {
     return await _projectRepository.addMember(addMemberRequest);
   }
 
