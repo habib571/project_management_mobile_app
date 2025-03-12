@@ -36,7 +36,7 @@ import '../../data/repositoryImp/task_repo_impl.dart';
 import '../../domain/repository/task_repo.dart';
 import '../../domain/usecases/auth/signup_usecase.dart';
 import '../../domain/usecases/auth/userprofile_usecase.dart';
-import '../../domain/usecases/project/addproject-use-case.dart';
+import '../../domain/usecases/project/manageproject-use-case.dart';
 import '../../domain/usecases/project/delete_member_use_case.dart';
 import '../../domain/usecases/task/add_task_user_case.dart';
 import '../../presentation/modules/addproject/view/add-project_screen.dart';
@@ -122,10 +122,12 @@ initHomeModule() {
 }
 
 intAddProject() {
-  instance.registerFactory<AddProjectViewModel>(
-      () => AddProjectViewModel(instance(), instance()));
-  instance
-      .registerFactory<AddProjectUseCase>(() => AddProjectUseCase(instance()));
+  instance.registerFactoryParam<AddProjectViewModel,bool,void>(
+      (toEdit,_) => AddProjectViewModel(instance(), instance(),instance(),toEdit ?? false));
+  //instance.registerFactory<AddProjectViewModel>(() => AddProjectViewModel(instance(),instance(),instance(),false));
+
+
+  instance.registerFactory<ManageProjectUseCase>(() => ManageProjectUseCase(instance()));
 }
 
 initDashboard() {
@@ -163,7 +165,7 @@ initProject() {
     instance.registerFactory<DeleteMemberUseCase>(() => DeleteMemberUseCase(instance()));
     instance.registerFactory<MemberManagementInterface>(() => AddMemberViewModel(instance() ,instance() ),instanceName: "AddMember" );
     instance.registerFactory<MemberManagementInterface>(() => UpdateRoleViewModel(instance() ,instance(),instance()),instanceName:"UpdateMember"  );
-    instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance() ,instance(),instance(),instance()) );
+    instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance() ,instance(),instance()) );
   }
 }
 
