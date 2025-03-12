@@ -41,7 +41,7 @@ class AddMemberViewModel extends BaseViewModel implements MemberManagementInterf
         },
         (data) {
           updateState(ContentState());
-          Get.to(const ProjectDetailScreen());
+          Get.to( ProjectDetailScreen());
         },
       );
     }
