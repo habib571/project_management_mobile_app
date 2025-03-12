@@ -33,7 +33,7 @@ import '../../../../managemembers/view/screens/custom_search_delegate.dart';
 import '../../../../managemembers/viewmodel/add_member_viewmodel.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
-  const ProjectDetailScreen({
+   ProjectDetailScreen({
     super.key,
   });
 
@@ -42,7 +42,7 @@ class ProjectDetailScreen extends StatefulWidget {
 }
 
 class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
-  final ProjectDetailViewModel _viewModel = instance<ProjectDetailViewModel>();
+  late final ProjectDetailViewModel _viewModel = instance<ProjectDetailViewModel>();
 
   @override
   void initState() {
@@ -70,12 +70,12 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                       height: 20.h,
                     ),
                     //We must select the Project not any attribute (update the name and the due date) --to modify
-                    Selector<ProjectDetailViewModel,Project>(
+                    Selector<ProjectDetailViewModel,Project?>(
                       selector: (context, viewModel) => viewModel.dashBoardViewModel.project ,
                       builder:  (context, data, child){
                         print("detailsCard");
                         return ProjectDetailCard(
-                          project: _viewModel.dashBoardViewModel.project,
+                          project: _viewModel.dashBoardViewModel.project!,
                         );
                       }
                     ),
@@ -157,10 +157,10 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
             height: 15,
           ),
           Selector<ProjectDetailViewModel,String>(
-            selector: (context, viewModel) =>viewModel.dashBoardViewModel.project.description!,
+            selector: (context, viewModel) =>viewModel.dashBoardViewModel.project!.description!,
             builder: (context, data, child){
               return Text(
-                _viewModel.dashBoardViewModel.project.description!,
+                _viewModel.dashBoardViewModel.project!.description!,
                 style: robotoMedium.copyWith(
                     color: AppColors.secondaryTxt, fontSize: 13),
               );
@@ -186,7 +186,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
           showSearch(
               context: context,
               delegate:CustomSearchDelegate(afterSelectingUser: (selectedUser) {
-                ProjectMember newMember = ProjectMember.selectedMemberToBeAdded(selectedUser, _viewModel.dashBoardViewModel.project.id);
+                ProjectMember newMember = ProjectMember.selectedMemberToBeAdded(selectedUser, _viewModel.dashBoardViewModel.project!.id!);
                 Get.toNamed(AppRoutes.addMemberScreen,arguments: newMember );
                 }
               )

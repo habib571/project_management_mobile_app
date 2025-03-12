@@ -50,7 +50,7 @@ class ProjectTasksViewModel extends BaseViewModel {
     _isLoadingMore = true;
 
     (await _getProjectTasksUseCase.getProjectTasks(
-        _projectDetailViewModel.dashBoardViewModel.project.id!,
+        _projectDetailViewModel.dashBoardViewModel.project!.id!,
         Pagination(_currentPage ,_pageSize))
     ).fold((failure) { 
     _stateNotifier.value =ErrorState(StateRendererType.fullScreenErrorState, failure.message);
