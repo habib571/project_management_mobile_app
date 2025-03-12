@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get_it/get_it.dart';
 import 'package:project_management_app/application/navigation/routes_constants.dart';
+import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 
 import '../../../../../domain/models/project.dart';
 import '../../viewmodel/dashboard_view_model.dart';
+import '../../viewmodel/project_details_view_models/project_detail_view_model.dart';
 
 class ProjectDetailCard extends StatelessWidget {
-   const ProjectDetailCard({
+    ProjectDetailCard({
     super.key, required this.project,
   });
+    final viewModel = GetIt.instance.get<ManageProjectViewModel>(param1: true);
+
+    //AddProjectViewModel viewModel;
   final Project project;
   @override
   Widget build(BuildContext context) {
@@ -39,7 +45,10 @@ class ProjectDetailCard extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.edit_outlined),
             onPressed: () {
-              Get.toNamed(AppRoutes.editProjectDetailsScreen);
+              //viewModel.toEdit = true ;
+             // print(viewModel.toEdit);
+              Get.toNamed(AppRoutes.addproject,arguments: {"toEdit": true});
+              //Get.toNamed(AppRoutes.editProjectDetailsScreen);
             },
           ),
         ],

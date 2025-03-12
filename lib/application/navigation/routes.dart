@@ -19,7 +19,7 @@ import '../../presentation/modules/managemembers/view/screens/manage_members_scr
 List<GetPage<dynamic>>? routes = [  GetPage(name: AppRoutes.login, page:()=> SigninScreen() ,middlewares:  [AuthMiddleware()]) ,
   GetPage(name: AppRoutes.signup, page:()=> const SignupScreen()) ,
   GetPage(name: AppRoutes.home, page:()=>  HomeNavBar()),
-  GetPage(name: AppRoutes.addproject, page:()=> AddProjectScreen()),
+  GetPage(name: AppRoutes.addproject, page:()=> ManageProjectScreen()),
   GetPage(name: AppRoutes.userProfile, page:()=>  const UserProfileScreen()),
   //GetPage(name: AppRoutes.projectDetails, page:()=>   const ProjectDetailScreen()),
   GetPage(name: AppRoutes.membersScreen, page: ()=>  MembersScreen()),

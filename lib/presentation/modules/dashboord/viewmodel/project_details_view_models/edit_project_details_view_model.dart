@@ -13,9 +13,9 @@ import '../../../../stateRender/state_render_impl.dart';
 class EditProjectDetailsViewModel extends BaseViewModel{
 
   EditProjectDetailsViewModel(super.tokenManager, this.dashBoardViewModel, this.updateProjectUseCase){
-    _projectTitle.text = dashBoardViewModel.project.name! ;
-    _projectDescription.text = dashBoardViewModel.project.description! ;
-    _projectEndDate.text = dashBoardViewModel.project.endDate! ;
+    _projectTitle.text = dashBoardViewModel.project!.name! ;
+    _projectDescription.text = dashBoardViewModel.project!.description! ;
+    _projectEndDate.text = dashBoardViewModel.project!.endDate! ;
   }
 
   final DashBoardViewModel dashBoardViewModel ;
@@ -58,23 +58,23 @@ class EditProjectDetailsViewModel extends BaseViewModel{
   editDetails() async {
     if(_formkey.currentState!.validate()) {
       (await updateProjectUseCase.updateProject(Project.updateProjectRequest(
-          dashBoardViewModel.project.id ,
-          dashBoardViewModel.project.name,
-          dashBoardViewModel.project.description,
-          dashBoardViewModel.project.endDate)
+          dashBoardViewModel.project!.id ,
+          dashBoardViewModel.project!.name,
+          dashBoardViewModel.project!.description,
+          dashBoardViewModel.project!.endDate)
         )
       ).fold(
       (failure) {
         updateState(ErrorState(StateRendererType.snackbarState, failure.message)) ;
       },
       (success) {
-        Project updatedProject = dashBoardViewModel.project.copyWith(
+        Project updatedProject = dashBoardViewModel.project!.copyWith(
             name: _projectTitle.text.trim(),
             description: _projectDescription.text.trim(),
             endDate: _projectEndDate.text.trim()
         );
         dashBoardViewModel.setProject (updatedProject);
-        log(dashBoardViewModel.project.name! );
+        log(dashBoardViewModel.project!.name! );
         notifyListeners();
          }
         );

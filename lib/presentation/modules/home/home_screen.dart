@@ -68,7 +68,7 @@ class HomeNavBar extends StatelessWidget {
      return [
        const DashboardScreen(),
        AllTasksScreen(),
-       AddProjectScreen(),
+       ManageProjectScreen(),
        const UserProfileScreen(),
      ];
    }

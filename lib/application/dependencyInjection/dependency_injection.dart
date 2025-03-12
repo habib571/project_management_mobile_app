@@ -122,9 +122,9 @@ initHomeModule() {
 }
 
 intAddProject() {
-  instance.registerFactoryParam<AddProjectViewModel,bool,void>(
-      (toEdit,_) => AddProjectViewModel(instance(), instance(),instance(),toEdit ?? false));
-  //instance.registerFactory<AddProjectViewModel>(() => AddProjectViewModel(instance(),instance(),instance(),false));
+  instance.registerFactoryParam<ManageProjectViewModel,bool,void>(
+      (toEdit,_) => ManageProjectViewModel(instance(), instance(),instance(),toEdit ?? false));
+  //instance.registerFactory<ManageProjectViewModel>(() => ManageProjectViewModel(instance(),instance(),instance(),false));
 
 
   instance.registerFactory<ManageProjectUseCase>(() => ManageProjectUseCase(instance()));

@@ -41,9 +41,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<DashBoardViewModel>(
               lazy: true, create: (_) => GetIt.instance<DashBoardViewModel>()),
           
-          ChangeNotifierProvider<AddProjectViewModel>(
+          ChangeNotifierProvider<ManageProjectViewModel>(
             lazy: true,
-              create: (_) => GetIt.instance<AddProjectViewModel>()),
+              create: (_) => GetIt.instance<ManageProjectViewModel>()),
           
           ChangeNotifierProvider<ProjectDetailViewModel>(
               lazy: true,

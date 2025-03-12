@@ -50,7 +50,7 @@ class Assets {
   static const String networkFailure = 'lib/data/network/failure.dart';
   static const String networkInternetChecker = 'lib/data/network/internet_checker.dart';
   static const String projectAddMemberUseCase = 'lib/domain/usecases/project/add_member_use_case.dart';
-  static const String projectAddprojectUseCase = 'lib/domain/usecases/project/addproject-use-case.dart';
+  static const String projectAddprojectUseCase = 'lib/domain/usecases/project/manageproject-use-case.dart';
   static const String projectGetMembers = 'lib/domain/usecases/project/get_members.dart';
   static const String projectMyprojectsUsecase = 'lib/domain/usecases/project/myprojects_usecase.dart';
   static const String remoteDataSourceAuthRemoteDataSource = 'lib/data/dataSource/remoteDataSource/auth_remote_data_source.dart';
