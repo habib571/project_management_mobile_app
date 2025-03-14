@@ -49,7 +49,7 @@ class Assets {
   static const String networkErrorHandler = 'lib/data/network/error_handler.dart';
   static const String networkFailure = 'lib/data/network/failure.dart';
   static const String networkInternetChecker = 'lib/data/network/internet_checker.dart';
-  static const String projectAddMemberUseCase = 'lib/domain/usecases/project/add_member_use_case.dart';
+  static const String projectAddMemberUseCase = 'lib/domain/usecases/project/manage_members_use_case.dart';
   static const String projectAddprojectUseCase = 'lib/domain/usecases/project/manageproject-use-case.dart';
   static const String projectGetMembers = 'lib/domain/usecases/project/get_members.dart';
   static const String projectMyprojectsUsecase = 'lib/domain/usecases/project/myprojects_usecase.dart';
@@ -98,9 +98,9 @@ class Assets {
   static const String taskGetAllTasks = 'lib/domain/usecases/task/get_all_tasks.dart';
   static const String utilsColors = 'lib/presentation/utils/colors.dart';
   static const String utilsStyles = 'lib/presentation/utils/styles.dart';
-  static const String viewAddProjectScreen = 'lib/presentation/modules/addproject/view/add-project_screen.dart';
-  static const String viewmodelAddMemberViewmodel = 'lib/presentation/modules/addmember/viewmodel/add_member_viewmodel.dart';
-  static const String viewmodelAddProjectViewModel = 'lib/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
+  static const String viewAddProjectScreen = 'lib/presentation/modules/addproject/view/manage-project_screen.dart';
+  static const String viewmodelAddMemberViewmodel = 'lib/presentation/modules/addmember/viewmodel/manage_members_viewmodel.dart';
+  static const String viewmodelAddProjectViewModel = 'lib/presentation/modules/addproject/viewmodel/manage-project-view-model.dart';
   static const String viewmodelAddTaskViewModel = 'lib/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
   static const String viewmodelAllIssuesViewModel = 'lib/presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
   static const String viewmodelAllTasksViewModel = 'lib/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';

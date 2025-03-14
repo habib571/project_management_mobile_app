@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
-import 'package:project_management_app/application/navigation/routes_constants.dart';
-import 'package:project_management_app/presentation/modules/addproject/view/add-project_screen.dart';
 
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/dashboard_screen.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/screens/all_task_screen.dart';
 import 'package:project_management_app/presentation/modules/userprofile/View/screens/userprofile_screen.dart';
 
-
 import '../../stateRender/state_render_impl.dart';
 import '../../utils/colors.dart';
+import '../manageprojects/view/manage-project_screen.dart';
 import 'home-viewmodel.dart';
 
 class HomeNavBar extends StatelessWidget {
@@ -67,7 +64,7 @@ class HomeNavBar extends StatelessWidget {
    List<Widget> _buildScreens() {
      return [
        const DashboardScreen(),
-       AllTasksScreen(),
+       const AllTasksScreen(),
        ManageProjectScreen(),
        const UserProfileScreen(),
      ];

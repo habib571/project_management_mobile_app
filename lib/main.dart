@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_it/get_it.dart';
 import 'package:project_management_app/application/navigation/routes.dart';
-import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
-import 'package:project_management_app/presentation/modules/auth/view/screens/signin_screen.dart';
-import 'package:project_management_app/presentation/modules/auth/view/screens/signup_screen.dart';
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signin-view_model.dart';
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signup_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
-import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/edit_project_details_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
+import 'package:project_management_app/presentation/modules/manageprojects/viewmodel/manage-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
 import 'package:provider/provider.dart';
@@ -59,9 +56,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<AllTasksViewModel>(
               lazy: true, create: (_) => GetIt.instance<AllTasksViewModel>()
           ),
-          ChangeNotifierProvider<EditProjectDetailsViewModel>(
-              lazy: true, create: (_) => GetIt.instance<EditProjectDetailsViewModel>()
-          )
+
         ],
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,

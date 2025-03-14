@@ -30,7 +30,7 @@ import '../../../../../sharedwidgets/custom_add_button.dart';
 import '../../../../../sharedwidgets/custom_button.dart';
 import '../../../../managemembers/view/screens/manage_members_screen.dart';
 import '../../../../managemembers/view/screens/custom_search_delegate.dart';
-import '../../../../managemembers/viewmodel/add_member_viewmodel.dart';
+import '../../../../managemembers/viewmodel/manage_members_viewmodel.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
    ProjectDetailScreen({
@@ -187,7 +187,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
               context: context,
               delegate:CustomSearchDelegate(afterSelectingUser: (selectedUser) {
                 ProjectMember newMember = ProjectMember.selectedMemberToBeAdded(selectedUser, _viewModel.dashBoardViewModel.project!.id!);
-                Get.toNamed(AppRoutes.addMemberScreen,arguments: newMember );
+                Get.toNamed(AppRoutes.manageMemberScreen,arguments: {"member": newMember,"toEdit": false,},
+                );
                 }
               )
           );

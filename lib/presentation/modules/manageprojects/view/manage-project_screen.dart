@@ -14,17 +14,18 @@ import '../../../sharedwidgets/custom_button.dart';
 import '../../../sharedwidgets/input_text.dart';
 import '../../../stateRender/state_render_impl.dart';
 import '../../../utils/colors.dart';
-import '../viewmodel/add-project-view-model.dart';
+import '../viewmodel/manage-project-view-model.dart';
+
+/*
+    - Screen used to Add a new project or to Update project details depends on arguments
+ */
+
 
 class ManageProjectScreen extends StatelessWidget {
 
-  ManageProjectScreen({super.key})
-      : toEdit = Get.arguments?["toEdit"] ?? false,
-        _viewModel = instance<ManageProjectViewModel>(param1: Get.arguments?["toEdit"] ?? false);
+  ManageProjectScreen({super.key}) ;
 
-  final bool toEdit;
-  final ManageProjectViewModel _viewModel;
-
+  final ManageProjectViewModel  _viewModel = instance<ManageProjectViewModel>(param1: Get.arguments?["toEdit"] ?? false);
 
    @override
   Widget build(BuildContext context) {

@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:get_it/get_it.dart';
 import 'package:project_management_app/application/navigation/routes_constants.dart';
 import 'package:project_management_app/domain/models/project_member.dart';
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
-
-import '../../../../../application/dependencyInjection/dependency_injection.dart';
-import '../../../managemembers/view/screens/manage_members_screen.dart';
-import '../../../managemembers/viewmodel/update_role_view_model.dart';
 import '../../viewmodel/project_details_view_models/project_detail_view_model.dart';
 
 class MemberLisTile extends StatelessWidget {
@@ -51,7 +46,8 @@ class MemberLisTile extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 ProjectMember newMember = ProjectMember.selectedMemberToBeUpdated(member.id,member.user, member.project!.id, member.role);
-                Get.toNamed(AppRoutes.updateMemberRoleScreen ,arguments: newMember, );
+                Get.toNamed(AppRoutes.manageMemberScreen,arguments: {"member": newMember,"toEdit": true,});
+                //Get.toNamed(AppRoutes.updateMemberRoleScreen ,arguments: newMember, );
               },
             ),
             ListTile(

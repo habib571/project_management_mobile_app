@@ -216,9 +216,9 @@ class ProjectRepositoryImpl implements ProjectRepository{
       try {
         final response = await _projectDataSource.updateMemberRole(updateMemberRequest) ;
         if (response.statusCode == 200) {
-          print("------ 200");
           return Right(ProjectMember.fromJson(response.data));
         } else {
+          print(response.statusCode);
           return Left(Failure.fromJson(response.data));
         }
       }
