@@ -4,13 +4,26 @@ import 'package:project_management_app/presentation/modules/tasks/view/widget/ta
 import 'package:project_management_app/presentation/utils/styles.dart';
 
 import '../../../../../application/constants/constants.dart';
+import '../../../../../application/helpers/get_storage.dart';
 import '../../../../../domain/models/task.dart';
 import '../../../../sharedwidgets/image_widget.dart';
 import '../../../../utils/colors.dart';
 
-class TaskWidget extends StatelessWidget {
-  const TaskWidget({super.key, required this.task});
+class TaskWidget extends StatefulWidget {
+  const TaskWidget({super.key, required this.task, required this.isAssignedToMe, });
   final TaskModel task ;
+
+  // On va passer la boolean value depuis ici
+  final bool isAssignedToMe ;
+
+  @override
+  State<TaskWidget> createState() => _TaskWidgetState();
+}
+
+class _TaskWidgetState extends State<TaskWidget> {
+
+  String selectedStatus =  "To-do";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,10 +39,10 @@ class TaskWidget extends StatelessWidget {
              mainAxisAlignment: MainAxisAlignment.spaceBetween,
              children: [
                Text(
-                 task.name! ,
+                 widget.task.name! ,
                  style: robotoBold.copyWith(fontSize: 14, color: AppColors.secondaryTxt),
-               ) , 
-               TaskPriorityCard(taskPriorityModel: TaskPriorityModel.type(task.priority!)),
+               ) ,
+               TaskPriorityCard(taskPriorityModel: TaskPriorityModel.type(widget.task.priority!)),
                ]),
                const SizedBox(height: 15,)  ,
            Row(
@@ -44,7 +57,7 @@ class TaskWidget extends StatelessWidget {
                const SizedBox(
                  width: 5,
                ),
-               Text(task.assignedUser!.fullName,style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),)
+               Text(widget.task.assignedUser!.fullName,style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),)
              ],
            ),
                const SizedBox(height: 15,) ,
@@ -56,16 +69,17 @@ class TaskWidget extends StatelessWidget {
                        Image.asset("assets/calendar.png"),
                        const SizedBox(width: 5,),
                        Text(
-                        task.deadline?? "02/05/2025",
+                        widget.task.deadline?? "02/05/2025",
                          style: robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),
                        )
                      ],
                    ),
-                   TaskStatusCard(taskStatusModel: TaskStatusModel.type(task.status!))
+                   InkWell(
+                       child: TaskStatusCard(taskStatusModel: TaskStatusModel.type(widget.task.status!), isAssignedToMe: widget.isAssignedToMe,),
+                        onTap: (){},
+                   )
                  ],
                ) ,
-
-
 
              ],
            ) ,
@@ -74,3 +88,5 @@ class TaskWidget extends StatelessWidget {
     ) ;
   }
 }
+
+

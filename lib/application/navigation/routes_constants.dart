@@ -12,4 +12,6 @@ class AppRoutes {
   static const String issuesScreen ="/issuesScreen" ;
   static const String editProjectDetailsScreen ="/editProjectDetailsScreen" ;
 
+  static const String test ='/test' ;
+
 }

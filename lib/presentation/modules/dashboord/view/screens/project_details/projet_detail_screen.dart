@@ -1,8 +1,6 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/navigation/routes_constants.dart';
@@ -15,11 +13,9 @@ import 'package:project_management_app/presentation/modules/dashboord/view/widge
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/project_detail_card.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/screens/project_tasks_screens.dart';
-import 'package:project_management_app/presentation/modules/tasks/view/screens/task_detail_screen.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_listtile.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_button.dart';
-
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
 import 'package:project_management_app/presentation/stateRender/state_render_impl.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
@@ -27,10 +23,7 @@ import 'package:project_management_app/presentation/utils/styles.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../sharedwidgets/custom_add_button.dart';
-import '../../../../../sharedwidgets/custom_button.dart';
-import '../../../../managemembers/view/screens/manage_members_screen.dart';
 import '../../../../managemembers/view/screens/custom_search_delegate.dart';
-import '../../../../managemembers/viewmodel/manage_members_viewmodel.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
    ProjectDetailScreen({

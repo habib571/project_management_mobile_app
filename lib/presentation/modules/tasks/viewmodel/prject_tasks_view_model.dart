@@ -6,14 +6,16 @@ import 'package:project_management_app/presentation/base/base_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
 import 'package:project_management_app/presentation/stateRender/state_render.dart';
 
+import '../../../../application/helpers/get_storage.dart';
 import '../../../stateRender/state_render_impl.dart';
 
 class ProjectTasksViewModel extends BaseViewModel {
 
   final GetProjectTasksUseCase _getProjectTasksUseCase ;
   final ProjectDetailViewModel _projectDetailViewModel ;
+  final LocalStorage localStorage ;
 
-  ProjectTasksViewModel(super.tokenManager, this._getProjectTasksUseCase, this._projectDetailViewModel);
+  ProjectTasksViewModel(super.tokenManager, this._getProjectTasksUseCase, this._projectDetailViewModel, this.localStorage);
   @override
   void start() {
     getProjectTasks() ;
@@ -21,6 +23,7 @@ class ProjectTasksViewModel extends BaseViewModel {
   }
   final List<TaskModel> _tasks =[] ;
   List<TaskModel> get tasks => _tasks ;
+
 
 
   int _currentPage = 0;

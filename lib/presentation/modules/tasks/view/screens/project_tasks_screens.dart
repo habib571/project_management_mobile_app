@@ -17,8 +17,7 @@ class ProjectTasksScreens extends StatefulWidget {
 }
 
 class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
-  final ProjectTasksViewModel _viewModel =
-      instance.get<ProjectTasksViewModel>();
+  final ProjectTasksViewModel _viewModel = instance.get<ProjectTasksViewModel>();
   @override
   void initState() {
     _viewModel.start() ;
@@ -62,9 +61,7 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
           }
           return NotificationListener<ScrollNotification>(
             onNotification: (scrollInfo) {
-              if (scrollInfo.metrics.pixels >=
-                      scrollInfo.metrics.maxScrollExtent &&
-                  !_viewModel.isLoadingMore) {
+              if (scrollInfo.metrics.pixels >= scrollInfo.metrics.maxScrollExtent && !_viewModel.isLoadingMore) {
                 // Fetch next page.
                 _viewModel.getProjectTasks();
               }
@@ -86,7 +83,7 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
                 final task = tasks[index];
                 return Padding(
                   padding: const EdgeInsets.all(20),
-                  child: TaskWidget(task: task),
+                  child: TaskWidget(task: task , isAssignedToMe: _viewModel.localStorage.getUser().id == task.assignedUser!.id , ) ,
                 );
               },
             ),

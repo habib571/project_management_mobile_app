@@ -142,7 +142,7 @@ initTask() {
         () => AddTaskViewModel(instance(), instance(), instance()));
   instance.registerFactory<GetProjectTasksUseCase>(() => GetProjectTasksUseCase(instance()));
   instance.registerFactory<ProjectTasksViewModel>(
-          () => ProjectTasksViewModel(instance(), instance(), instance()));
+          () => ProjectTasksViewModel(instance(), instance(), instance(),instance()));
 
 }
 

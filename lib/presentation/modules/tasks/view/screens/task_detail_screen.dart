@@ -178,7 +178,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
           style: robotoRegular.copyWith(fontSize: 14 ,color: AppColors.secondaryTxt),
         ),
         const SizedBox(width:30,) ,
-        TaskStatusCard(taskStatusModel: TaskStatusModel.type(_viewModel.task.status!)),
+        TaskStatusCard(taskStatusModel: TaskStatusModel.type(_viewModel.task.status!) ),
       ],
     );
   }

@@ -1,7 +1,6 @@
 
 import 'package:project_management_app/application/helpers/get_storage.dart';
 import 'package:project_management_app/domain/models/project_member.dart';
-import 'package:project_management_app/domain/models/user.dart';
 import 'package:project_management_app/domain/usecases/project/delete_member_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/get_members.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
@@ -79,8 +78,6 @@ class ProjectDetailViewModel extends BaseViewModel {
   }
 
   bool isManger() =>dashBoardViewModel.project!.createdBy!.id == _localStorage.getUser().id ;
-
-
 
 }
 
