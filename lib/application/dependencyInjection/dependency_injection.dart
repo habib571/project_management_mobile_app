@@ -38,7 +38,7 @@ import '../../domain/usecases/task/add_task_user_case.dart';
 import '../../presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
 import '../../presentation/modules/managemembers/viewmodel/manage_members_viewmodel.dart';
 import '../../presentation/modules/managemembers/viewmodel/search_member_view_model.dart';
-import '../../presentation/modules/tasks/viewmodel/add_task_view_model.dart';
+import '../../presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import '../../presentation/modules/tasks/viewmodel/task_detail_view_model.dart';
 import '../helpers/token_mamanger.dart';
 import '../../domain/usecases/auth/signin_usecase.dart';
@@ -138,8 +138,8 @@ initTask() {
   instance.registerLazySingleton<AllTasksViewModel>(
           () => AllTasksViewModel(instance()));
     instance.registerFactory<AddTaskUseCase>(() => AddTaskUseCase(instance()));
-    instance.registerLazySingleton<AddTaskViewModel>(
-        () => AddTaskViewModel(instance(), instance(), instance()));
+    instance.registerFactory<ManageTaskViewModel>(
+        () => ManageTaskViewModel(instance(), instance(), instance()));
   instance.registerFactory<GetProjectTasksUseCase>(() => GetProjectTasksUseCase(instance()));
   instance.registerFactory<ProjectTasksViewModel>(
           () => ProjectTasksViewModel(instance(), instance(), instance(),instance()));

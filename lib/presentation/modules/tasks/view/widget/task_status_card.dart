@@ -59,9 +59,8 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: widget.isAssignedToMe! ? () => _showDropdownMenu(context) : null, // Désactive l'interaction
+      onTap: widget.isAssignedToMe! ? () => _showDropdownMenu(context) : null,
       borderRadius: BorderRadius.circular(20),
-      mouseCursor: widget.isAssignedToMe! ? SystemMouseCursors.click : SystemMouseCursors.basic, // Curseur adapté
       child: Container(
         decoration: BoxDecoration(
           color: selectedStatus.backgroundColor,
@@ -71,7 +70,7 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (widget.isAssignedToMe!) // Affiche l'icône seulement si modifiable
+            if (widget.isAssignedToMe!)
               const Icon(Icons.arrow_drop_down, color: Colors.black),
             if (widget.isAssignedToMe!) const SizedBox(width: 5),
             Text(
@@ -88,7 +87,7 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
   }
 
   void _showDropdownMenu(BuildContext context) async {
-    if (!widget.isAssignedToMe!) return; // Empêche l'ouverture si false
+    //if (!widget.isAssignedToMe!) return; // Empêche l'ouverture si false
 
     final RenderBox renderBox = context.findRenderObject() as RenderBox;
     final Offset offset = renderBox.localToGlobal(Offset.zero);
@@ -155,17 +154,17 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: backgroundColor, // Change dynamiquement en fonction du statut sélectionné
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(20),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: selectedStatus,
-          isDense: true, // 🔹 Réduit l'espace vertical
-          isExpanded: false, // 🔹 Évite que le bouton prenne toute la largeur
-          //iconSize: 18, // 🔹 Réduit la taille de l'icône
-          style: const TextStyle(fontSize: 12), // 🔹 Réduit la taille du texte
+          isDense: true,
+          isExpanded: false,
+          //iconSize: 18,
+          style: const TextStyle(fontSize: 12),
           icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
           dropdownColor: Colors.white,
           onChanged: (String? newValue) {
@@ -173,7 +172,7 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
               setState(() {
                 selectedStatus = newValue;
                 int index = statusTypes.indexOf(newValue);
-                backgroundColor = statusBackgroundColor[index]; // Mise à jour de la couleur de fond
+                backgroundColor = statusBackgroundColor[index];
               });
             }
           },

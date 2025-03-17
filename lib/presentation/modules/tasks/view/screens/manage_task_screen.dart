@@ -7,7 +7,7 @@ import 'package:project_management_app/application/extensions/string_extension.d
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/members_screen.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/assigned_member_chip.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task_priority_chip.dart';
-import 'package:project_management_app/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 import 'package:provider/provider.dart';
@@ -15,15 +15,15 @@ import '../../../../sharedwidgets/custom_button.dart';
 import '../../../../sharedwidgets/input_text.dart';
 import '../../../../stateRender/state_render_impl.dart';
 
-class CreateTaskScreen extends StatefulWidget {
-  const CreateTaskScreen({super.key});
+class ManageTaskScreen extends StatefulWidget {
+  const ManageTaskScreen({super.key});
 
   @override
-  State<CreateTaskScreen> createState() => _CreateTaskScreenState();
+  State<ManageTaskScreen> createState() => _ManageTaskScreenState();
 }
 
-class _CreateTaskScreenState extends State<CreateTaskScreen> {
-  final AddTaskViewModel _viewModel = instance.get<AddTaskViewModel>();
+class _ManageTaskScreenState extends State<ManageTaskScreen> {
+  final ManageTaskViewModel _viewModel = instance.get<ManageTaskViewModel>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,7 +116,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       runSpacing: 8,
       spacing: 8,
       children: List.generate(4, (index) {
-        return Selector<AddTaskViewModel, bool>(
+        return Selector<ManageTaskViewModel, bool>(
           selector: (_, provider) => provider.selectedIndex == index,
           builder: (_, isSelected, __) {
             return TaskPriorityChip(
@@ -127,7 +127,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 chipColors[index],
               ),
               onSelect: (_) {
-                Provider.of<AddTaskViewModel>(context, listen: false)
+                Provider.of<ManageTaskViewModel>(context, listen: false)
                     .selectChip(index);
               },
             );
@@ -146,7 +146,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       const SizedBox(
         width: 10,
       ),
-      Selector<AddTaskViewModel, bool>(
+      Selector<ManageTaskViewModel, bool>(
           selector: (_, viewModel) => viewModel.isUserAdded,
           builder: (context, isUserAdded, _) {
             return isUserAdded
@@ -154,7 +154,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     imageUrl: Constants.userProfileImageUrl,
                     userName: _viewModel.projectMember.user!.fullName,
                     onDeleted: () {
-                      context.read<AddTaskViewModel>().toggleIsUserAdded();
+                      context.read<ManageTaskViewModel>().toggleIsUserAdded();
                     },
                   )
                 : InkWell(

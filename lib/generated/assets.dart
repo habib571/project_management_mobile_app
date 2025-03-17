@@ -72,7 +72,7 @@ class Assets {
   static const String responsesProjectResponce = 'lib/data/responses/project_responce.dart';
   static const String screensAddMemberScreen = 'lib/presentation/modules/addmember/view/screens/manage_members_screen.dart';
   static const String screensAllTaskScreen = 'lib/presentation/modules/tasks/view/screens/all_task_screen.dart';
-  static const String screensCreateTaskScreen = 'lib/presentation/modules/tasks/view/screens/create_task_screen.dart';
+  static const String screensCreateTaskScreen = 'lib/presentation/modules/tasks/view/screens/manage_task_screen.dart';
   static const String screensCustomSearchDelegate = 'lib/presentation/modules/addmember/view/screens/custom_search_delegate.dart';
   static const String screensDashboardScreen = 'lib/presentation/modules/dashboord/view/screens/dashboard_screen.dart';
   static const String screensIssuesScreen = 'lib/presentation/modules/dashboord/view/screens/issues_screen.dart';
@@ -101,7 +101,7 @@ class Assets {
   static const String viewAddProjectScreen = 'lib/presentation/modules/addproject/view/manage-project_screen.dart';
   static const String viewmodelAddMemberViewmodel = 'lib/presentation/modules/addmember/viewmodel/manage_members_viewmodel.dart';
   static const String viewmodelAddProjectViewModel = 'lib/presentation/modules/addproject/viewmodel/manage-project-view-model.dart';
-  static const String viewmodelAddTaskViewModel = 'lib/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
+  static const String viewmodelAddTaskViewModel = 'lib/presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
   static const String viewmodelAllIssuesViewModel = 'lib/presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
   static const String viewmodelAllTasksViewModel = 'lib/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
   static const String viewmodelDashboardViewModel = 'lib/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';

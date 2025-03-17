@@ -13,12 +13,12 @@ import 'package:project_management_app/presentation/stateRender/state_render.dar
 import '../../../../domain/models/task.dart';
 import '../../../stateRender/state_render_impl.dart';
 
-class AddTaskViewModel extends BaseViewModel{
+class ManageTaskViewModel extends BaseViewModel{
   final ProjectDetailViewModel _projectDetailViewModel ;
   ProjectDetailViewModel get projectViewModel => _projectDetailViewModel ;
 
   final AddTaskUseCase _addTaskUseCase ;
-  AddTaskViewModel(super.tokenManager, this._projectDetailViewModel, this._addTaskUseCase);
+  ManageTaskViewModel(super.tokenManager, this._projectDetailViewModel, this._addTaskUseCase);
 
   @override
   void start() {

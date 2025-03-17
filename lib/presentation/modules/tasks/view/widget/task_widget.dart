@@ -11,9 +11,8 @@ import '../../../../utils/colors.dart';
 
 class TaskWidget extends StatefulWidget {
   const TaskWidget({super.key, required this.task, required this.isAssignedToMe, });
-  final TaskModel task ;
 
-  // On va passer la boolean value depuis ici
+  final TaskModel task ;
   final bool isAssignedToMe ;
 
   @override
@@ -46,18 +45,27 @@ class _TaskWidgetState extends State<TaskWidget> {
                ]),
                const SizedBox(height: 15,)  ,
            Row(
+             mainAxisAlignment: MainAxisAlignment.spaceBetween,
              children: [
-               Text(
-                   "Assigned to :" ,
-                   style: robotoSemiBold.copyWith(color: AppColors.secondaryTxt ,fontSize: 14),
-               ),
+               Row(
+                 children: [
+                   Text(
+                       "Assigned to :" ,
+                       style: robotoSemiBold.copyWith(color: AppColors.secondaryTxt ,fontSize: 14),
+                   ),
 
-               const ImagePlaceHolder(
-                   radius: 10, imageUrl: Constants.userProfileImageUrl),
-               const SizedBox(
-                 width: 5,
+                   const ImagePlaceHolder(
+                       radius: 10, imageUrl: Constants.userProfileImageUrl),
+                   const SizedBox(
+                     width: 5,
+                   ),
+                   Text(widget.task.assignedUser!.fullName,style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),)
+                 ],
                ),
-               Text(widget.task.assignedUser!.fullName,style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),)
+               IconButton(
+                onPressed:(){} ,
+                icon: const Icon(Icons.edit_outlined),
+               ) ,
              ],
            ),
                const SizedBox(height: 15,) ,
