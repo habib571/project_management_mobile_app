@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:project_management_app/presentation/modules/tasks/view/widget/task%20status/task_status_chip.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 
@@ -99,14 +100,14 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
         offset.dx, offset.dy + renderBox.size.height,
         offset.dx + renderBox.size.width, offset.dy + renderBox.size.height + 100,
       ),
-      items: List.generate(statusTypes.length, (i) {
+      items: List.generate(statusChipTexts.length, (i) {
         return PopupMenuItem(
-          value: statusTypes[i],
+          value: statusChipTexts[i],
           child: Row(
             children: [
               Icon(Icons.circle, color: statusTextColors[i], size: 12),
               const SizedBox(width: 8),
-              Text(statusTypes[i], style: TextStyle(color: statusTextColors[i])),
+              Text(statusChipTexts[i], style: TextStyle(color: statusTextColors[i])),
             ],
           ),
         );
@@ -115,87 +116,17 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
 
     if (newStatus != null) {
       setState(() {
-        int index = statusTypes.indexOf(newStatus);
+        int index = statusChipTexts.indexOf(newStatus);
         selectedStatus = TaskStatusModel(
           statusTextColors[index],
           statusBackgroundColor[index],
-          statusTypes[index],
+          statusChipTexts[index],
         );
       });
     }
   }
 }
 
-
-
-
-/*
-class TaskStatusCard extends StatefulWidget {
-  const TaskStatusCard({super.key, required this.taskStatusModel});
-
-  final TaskStatusModel taskStatusModel;
-
-  @override
-  State<TaskStatusCard> createState() => _TaskStatusCardState();
-}
-
-class _TaskStatusCardState extends State<TaskStatusCard> {
-  late String selectedStatus;
-  late Color backgroundColor;
-
-  @override
-  void initState() {
-    super.initState();
-    selectedStatus = widget.taskStatusModel.statusName;
-    backgroundColor = widget.taskStatusModel.backgroundColor;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: selectedStatus,
-          isDense: true,
-          isExpanded: false,
-          //iconSize: 18,
-          style: const TextStyle(fontSize: 12),
-          icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-          dropdownColor: Colors.white,
-          onChanged: (String? newValue) {
-            if (newValue != null) {
-              setState(() {
-                selectedStatus = newValue;
-                int index = statusTypes.indexOf(newValue);
-                backgroundColor = statusBackgroundColor[index];
-              });
-            }
-          },
-          items: List.generate(statusTypes.length, (i) {
-            return DropdownMenuItem(
-              value: statusTypes[i],
-              child: Text(
-                statusTypes[i],
-                style: TextStyle(
-                  color: statusTextColors[i],
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            );
-          }),
-        ),
-      ),
-    );
-  }
-}
-
-
-*/
 
 
 
@@ -207,18 +138,14 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
     factory TaskStatusModel.type( String statusName) {
     switch(statusName) {
       case "To-Do" :
-        return TaskStatusModel(statusTextColors[0], statusBackgroundColor[0], statusTypes[0]) ;
+        return TaskStatusModel(statusTextColors[0], statusBackgroundColor[0], statusChipTexts[0]) ;
       case "In progress" :
-        return TaskStatusModel(statusTextColors[1], statusBackgroundColor[1], statusTypes[1]) ;
+        return TaskStatusModel(statusTextColors[1], statusBackgroundColor[1], statusChipTexts[1]) ;
       default :
-        return TaskStatusModel(statusTextColors[2], statusBackgroundColor[2], statusTypes[2]) ;
+        return TaskStatusModel(statusTextColors[2], statusBackgroundColor[2], statusChipTexts[2]) ;
     }
 
   }
  }
-
-List<Color> statusTextColors = const [Color(0xff0087ff),Color(0xffff7d53) ,Color(0xff5f33e1)] ;
-List<Color> statusBackgroundColor = const [Color(0xffe3f2ff) ,Color(0xffffe9e1) ,Color(0xffede8ff)] ;
-List<String> statusTypes =["To-do" ,"In progress" ,"Done"] ;
 
 

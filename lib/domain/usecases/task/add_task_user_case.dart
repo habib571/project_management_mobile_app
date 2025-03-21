@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:project_management_app/domain/models/task.dart';
+import 'package:project_management_app/domain/models/Task/task.dart';
 import 'package:project_management_app/domain/repository/task_repo.dart';
 
 import '../../../data/network/failure.dart';

@@ -36,13 +36,13 @@ class TaskPriorityCard extends StatelessWidget {
   factory TaskPriorityModel.type(String priority) {
       switch(priority) {
         case "Low" :
-           return TaskPriorityModel(chipTexts[0], chipColors[0], textColors[0]) ;
+           return TaskPriorityModel(priorityChipTexts[0], chipColors[0], textColors[0]) ;
         case "Medium" :
-             return TaskPriorityModel(chipTexts[1], chipColors[1], textColors[1]) ;
+             return TaskPriorityModel(priorityChipTexts[1], chipColors[1], textColors[1]) ;
         case "High" :
-          return TaskPriorityModel(chipTexts[2], chipColors[2], textColors[2]) ;
+          return TaskPriorityModel(priorityChipTexts[2], chipColors[2], textColors[2]) ;
         default :
-          return TaskPriorityModel(chipTexts[3], chipColors[3], textColors[3]) ;
+          return TaskPriorityModel(priorityChipTexts[3], chipColors[3], textColors[3]) ;
 
 
       }

@@ -1,5 +1,5 @@
 import 'package:project_management_app/domain/models/project.dart';
-import 'package:project_management_app/domain/models/task.dart';
+import 'package:project_management_app/domain/models/Task/task.dart';
 
 import '../../../domain/models/user.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_management_app/data/network/requests/pagination.dart';
-import 'package:project_management_app/domain/models/task.dart';
+import 'package:project_management_app/domain/models/Task/task.dart';
 import 'package:project_management_app/domain/usecases/task/get_all_tasks.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';

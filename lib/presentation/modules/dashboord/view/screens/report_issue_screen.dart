@@ -4,7 +4,7 @@ import 'package:project_management_app/application/extensions/screen_config_exte
 import 'package:provider/provider.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
-import '../../../../../domain/models/task.dart';
+import '../../../../../domain/models/Task/task.dart';
 import '../../../../../domain/models/user.dart';
 import '../../../../sharedwidgets/custom_appbar.dart';
 import '../../../../sharedwidgets/custom_button.dart';

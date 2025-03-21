@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
-import 'package:project_management_app/domain/models/task.dart';
+import 'package:project_management_app/domain/models/Task/task.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 
 import '../../../../../application/dependencyInjection/dependency_injection.dart';

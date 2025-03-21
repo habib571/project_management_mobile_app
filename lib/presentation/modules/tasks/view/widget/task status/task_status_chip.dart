@@ -1,10 +1,12 @@
+
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:project_management_app/presentation/utils/styles.dart';
-
 import '../../../../../../domain/models/Task/task_chip.dart';
+import '../../../../../utils/styles.dart';
 
-class TaskPriorityChip extends StatelessWidget {
-  const TaskPriorityChip(
+class TaskStatusChip extends StatelessWidget {
+  const TaskStatusChip(
       {super.key, required this.chipModel, required this.onSelect});
   final ChipModel chipModel;
   final Function(bool val) onSelect;
@@ -34,18 +36,9 @@ class TaskPriorityChip extends StatelessWidget {
     );
   }
 }
-List<Color> chipColors = [
-  const Color(0xffd4eacc),
-  const Color(0xfff9e6d0),
-  const Color(0xffffccd2),
-  const Color(0xffd4d4d5)
-];
-List<Color> textColors = [
-  const Color(0xff279600),
-  const Color(0xffdf8412),
-  const Color(0xffff001f),
-  const Color(0xff292a2d)
-];
-List<String> priorityChipTexts = ["Low", "Medium", "High", "Urgent"];
 
+
+List<Color> statusTextColors = const [Color(0xff0087ff),Color(0xffff7d53) ,Color(0xff5f33e1)] ;
+List<Color> statusBackgroundColor = const [Color(0xffe3f2ff) ,Color(0xffffe9e1) ,Color(0xffede8ff)] ;
+List<String> statusChipTexts =["To-Do" ,"In progress" ,"Done"] ;
 

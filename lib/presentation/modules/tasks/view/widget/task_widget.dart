@@ -8,7 +8,7 @@ import 'package:project_management_app/presentation/utils/styles.dart';
 import '../../../../../application/constants/constants.dart';
 import '../../../../../application/helpers/get_storage.dart';
 import '../../../../../application/navigation/routes_constants.dart';
-import '../../../../../domain/models/task.dart';
+import '../../../../../domain/models/Task/task.dart';
 import '../../../../sharedwidgets/image_widget.dart';
 import '../../../../utils/colors.dart';
 import '../../viewmodel/prject_tasks_view_model.dart';

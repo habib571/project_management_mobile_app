@@ -12,11 +12,12 @@ import 'package:project_management_app/presentation/modules/tasks/viewmodel/prje
 import 'package:project_management_app/presentation/stateRender/state_render.dart';
 import 'package:provider/provider.dart';
 import '../../../../application/constants/constants.dart';
-import '../../../../domain/models/task.dart';
+import '../../../../domain/models/Task/task.dart';
 
 import '../../../../domain/models/user.dart';
 import '../../../stateRender/state_render_impl.dart';
 import '../view/widget/task priority/task_priority_chip.dart';
+import '../view/widget/task status/task_status_chip.dart';
 
 class ManageTaskViewModel extends BaseViewModel{
   final ProjectTasksViewModel _projectTasksViewModel ;
@@ -43,7 +44,8 @@ class ManageTaskViewModel extends BaseViewModel{
       taskName.text = _projectTasksViewModel.selectedTask!.name!;
       taskDescription.text = _projectTasksViewModel.selectedTask!.description!;
       taskDeadline.text = _projectTasksViewModel.selectedTask!.deadline!;
-      _selectedIndex = chipTexts.indexOf(_projectTasksViewModel.selectedTask!.priority!);
+      _selectedPriorityIndex = priorityChipTexts.indexOf(_projectTasksViewModel.selectedTask!.priority!);
+      _selectedStatusIndex = statusChipTexts.indexOf(_projectTasksViewModel.selectedTask!.status!);
       _isUserAdded = true ;
       _projectMember  = ProjectMember.taskAsseignedMember(_projectTasksViewModel.selectedTask!.assignedUser) ;
 
@@ -52,7 +54,8 @@ class ManageTaskViewModel extends BaseViewModel{
       taskName.clear();
       taskDescription.clear();
       taskDeadline.clear();
-      selectedIndex = -1 ;
+      _selectedPriorityIndex = -1 ;
+      _selectedStatusIndex = -1 ;
       _isUserAdded = false ;
       _projectMember = null ;
     }
@@ -80,17 +83,32 @@ class ManageTaskViewModel extends BaseViewModel{
     _isUserAdded = !_isUserAdded;
     notifyListeners();
   }
-  int _selectedIndex = -1;
-  int get selectedIndex => _selectedIndex;
-  set selectedIndex(int index){
-    _selectedIndex = index ;
+  int _selectedPriorityIndex = -1;
+  int get selectedPriorityIndex => _selectedPriorityIndex;
+  set selectedPriorityIndex(int index){
+    _selectedPriorityIndex = index ;
   }
 
-  void selectChip(int index) {
-    if (_selectedIndex == index) {
-      _selectedIndex = -1;
+  int _selectedStatusIndex = -1;
+  int get selectedStatusIndex => _selectedStatusIndex;
+  set selectedStatusIndex(int index){
+    _selectedStatusIndex = index ;
+  }
+
+  void selectPriorityChip(int index) {
+    if (_selectedPriorityIndex == index) {
+      _selectedPriorityIndex = -1;
     } else {
-      _selectedIndex = index;
+      _selectedPriorityIndex = index;
+    }
+    notifyListeners();
+  }
+
+  void selectStatusChip(int index) {
+    if (_selectedStatusIndex == index) {
+      _selectedStatusIndex = -1;
+    } else {
+      _selectedStatusIndex = index;
     }
     notifyListeners();
   }
@@ -120,8 +138,8 @@ class ManageTaskViewModel extends BaseViewModel{
     TaskModel.request(
         taskName.text,
         taskDescription.text,
-        taskDeadline.text, 
-        chipTexts[_selectedIndex] ,
+        taskDeadline.text,
+        priorityChipTexts[_selectedPriorityIndex] ,
         projectMember.user!.id
     ) ;
     (await _addTaskUseCase.addTask(taskRequest ,projectMember.project!.id! )).fold(
@@ -140,5 +158,9 @@ class ManageTaskViewModel extends BaseViewModel{
    // Update Task function that will call setTask() function
   // Then we must modify Tasks[i]
   // after that ProjectTaskVM will notify the TaskWidget (in ProjectTasksScreen)
+
+  updateTask(){
+    print("task Updated $taskName expira a ${taskDeadline.text}");
+  }
 
 }

@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:project_management_app/data/dataSource/remoteDataSource/task_remote_data_source.dart';
 import 'package:project_management_app/data/network/failure.dart';
 import 'package:project_management_app/data/network/requests/pagination.dart';
-import 'package:project_management_app/domain/models/task.dart';
+import 'package:project_management_app/domain/models/Task/task.dart';
 import 'package:project_management_app/domain/repository/task_repo.dart';
 
 import '../network/error_handler.dart';

@@ -2,7 +2,7 @@ import 'package:project_management_app/data/network/requests/pagination.dart';
 
 import '../../../application/functions/cruds_functions.dart';
 import '../../../application/helpers/get_storage.dart';
-import '../../../domain/models/task.dart';
+import '../../../domain/models/Task/task.dart';
 import '../../responses/api_response.dart';
 
 abstract class TaskRemoteDataSource {

@@ -5,10 +5,12 @@ import 'package:project_management_app/application/extensions/screen_config_exte
 import 'package:project_management_app/application/extensions/string_extension.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/members_screen.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/assigned_member_chip.dart';
+import 'package:project_management_app/presentation/modules/tasks/view/widget/task%20status/task_status_chip.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 import 'package:provider/provider.dart';
+import '../../../../../domain/models/Task/task_chip.dart';
 import '../../../../sharedwidgets/custom_button.dart';
 import '../../../../sharedwidgets/input_text.dart';
 import '../../../../stateRender/state_render_impl.dart';
@@ -84,6 +86,10 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
             height: 15,
           ),
           _taskPrioritySection(),
+          const SizedBox(
+            height: 15,
+          ),
+          _taskStatusSection(),
           SizedBox(height: 30.h),
           Text('Assign user ', style: robotoBold.copyWith(fontSize: 16)),
           const SizedBox(
@@ -138,20 +144,20 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
       spacing: 8,
       children: List.generate(4, (index) {
         return Selector<ManageTaskViewModel, bool>(
-          selector: (_, provider) => provider.selectedIndex == index,
+          selector: (_, provider) => provider.selectedPriorityIndex == index,
           builder: (_, isSelected, __) {
-            print("----- Selected Index Updated  ${Provider.of<ManageTaskViewModel>(context).selectedIndex}");
+            print("----- Selected Index Updated  ${Provider.of<ManageTaskViewModel>(context).selectedPriorityIndex}");
             print("----- is Selected ? :  $isSelected");
             return TaskPriorityChip(
               chipModel: ChipModel(
-                chipTexts[index],
+                priorityChipTexts[index],
                 isSelected , // Use the selected state from the provider
                 textColors[index],
                 chipColors[index],
               ),
               onSelect: (_) {
-                Provider.of<ManageTaskViewModel>(context, listen: false)
-                    .selectChip(index);
+                _viewModel.selectPriorityChip(index);
+                /*Provider.of<ManageTaskViewModel>(context, listen: false).selectChip(index);*/
               },
             );
           },
@@ -161,31 +167,38 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
   }
 
    Widget _taskStatusSection() {
-     return Wrap(
-       runSpacing: 8,
-       spacing: 8,
-       children: List.generate(4, (index) {
-         return Selector<ManageTaskViewModel, bool>(
-           selector: (_, provider) => provider.selectedIndex == index,
-           builder: (_, isSelected, __) {
-             print("----- Selected Index Updated  ${Provider.of<ManageTaskViewModel>(context).selectedIndex}");
-             print("----- is Selected ? :  $isSelected");
-             return TaskPriorityChip(
-               chipModel: ChipModel(
-                 chipTexts[index],
-                 isSelected , // Use the selected state from the provider
-                 textColors[index],
-                 chipColors[index],
-               ),
-               onSelect: (_) {
-                 Provider.of<ManageTaskViewModel>(context, listen: false)
-                     .selectChip(index);
-               },
-             );
-           },
-         );
-       }),
-     );
+     if (!_viewModel.toEdit) return const SizedBox.shrink();
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            ' Task Status',
+            style: robotoBold.copyWith(fontSize: 17),
+          ),
+          const SizedBox(height: 15,) ,
+          Wrap(
+              runSpacing: 8,
+              spacing: 8,
+              children: List.generate(3, (index) {
+                return Selector<ManageTaskViewModel, bool>(
+                  selector: (_, provider) => provider.selectedStatusIndex == index,
+                  builder: (_, isSelected, __) {
+                    return TaskStatusChip(
+                        chipModel: ChipModel(
+                          statusChipTexts[index],
+                          isSelected, // Use the selected state from the provider
+                          statusTextColors[index],
+                          statusBackgroundColor[index],
+                        ),
+                        onSelect: (_) {
+                          _viewModel.selectStatusChip(index);
+                        },
+                      );
+                  },
+                );
+              }))
+        ],
+      ) ;
    }
 
   Widget assignUserSection() {
@@ -223,7 +236,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: CustomButton(onPressed: () {
-        _viewModel.addTask() ;
+        _viewModel.toEdit ? _viewModel.updateTask() :_viewModel.addTask() ;
       }, text: _viewModel.toEdit ? 'Update Task' : 'Add Task'),
     );
   }
