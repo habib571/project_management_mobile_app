@@ -83,7 +83,7 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
                 final task = tasks[index];
                 return Padding(
                   padding: const EdgeInsets.all(20),
-                  child: TaskWidget(task: task , isAssignedToMe: _viewModel.localStorage.getUser().id == task.assignedUser!.id , ) ,
+                  child: TaskWidget(task: task , viewModel: _viewModel , ) ,
                 );
               },
             ),

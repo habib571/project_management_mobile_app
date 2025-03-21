@@ -10,7 +10,7 @@ import 'package:project_management_app/presentation/utils/styles.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../sharedwidgets/input_text.dart';
-import '../widget/task_priority_chip.dart';
+import '../widget/task priority/task_priority_chip.dart';
 
 class TaskFilteringScreen extends StatefulWidget {
   const TaskFilteringScreen({super.key});

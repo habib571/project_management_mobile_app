@@ -24,7 +24,12 @@ class ProjectTasksViewModel extends BaseViewModel {
   final List<TaskModel> _tasks =[] ;
   List<TaskModel> get tasks => _tasks ;
 
-
+  TaskModel? _selectedTask ; // Task that will be updated
+  TaskModel? get selectedTask => _selectedTask ;
+  set selectedTask(TaskModel? value) {
+      _selectedTask = value;
+      notifyListeners();
+  }
 
   int _currentPage = 0;
   int get currentPage => _currentPage;

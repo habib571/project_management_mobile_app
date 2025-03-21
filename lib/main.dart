@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_it/get_it.dart';
 import 'package:project_management_app/application/navigation/routes.dart';
@@ -8,7 +10,7 @@ import 'package:project_management_app/presentation/modules/dashboord/viewmodel/
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
 import 'package:project_management_app/presentation/modules/manageprojects/viewmodel/manage-project-view-model.dart';
-import 'package:project_management_app/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
 import 'package:provider/provider.dart';
 import 'application/dependencyInjection/dependency_injection.dart';
@@ -29,6 +31,9 @@ class MyApp extends StatelessWidget {
     screenUtility.initialize(context);
     return MultiProvider(
         providers: [
+
+          //Provider( create: (_) => GetIt.instance<ProjectDetailViewModel>()  ), For Test
+
           ChangeNotifierProvider<SignupViewModel>(
               lazy: true, create: (_) => GetIt.instance<SignupViewModel>()),
 
@@ -51,8 +56,10 @@ class MyApp extends StatelessWidget {
               create: (_) => GetIt.instance<ReportIssueViewModel>()),
 
           ChangeNotifierProvider(
-              lazy: true, create: (_) => GetIt.instance<AddTaskViewModel>()
+              lazy: true, create: (_) => GetIt.instance<ManageTaskViewModel>(param1: Get.arguments?["toEdit"] ,)
           ) ,
+
+
           ChangeNotifierProvider<AllTasksViewModel>(
               lazy: true, create: (_) => GetIt.instance<AllTasksViewModel>()
           ),
@@ -70,3 +77,6 @@ class MyApp extends StatelessWidget {
         ));
   }
 }
+
+
+

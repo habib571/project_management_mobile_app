@@ -12,6 +12,7 @@ import 'package:project_management_app/presentation/modules/userprofile/View/scr
 import '../../main.dart';
 import '../../presentation/modules/managemembers/view/screens/manage_members_screen.dart';
 import '../../presentation/modules/manageprojects/view/manage-project_screen.dart';
+import '../../presentation/modules/tasks/view/screens/manage_task_screen.dart';
 
 List<GetPage<dynamic>>? routes = [  GetPage(name: AppRoutes.login, page:()=> SigninScreen() ,middlewares:  [AuthMiddleware()]) ,
   GetPage(name: AppRoutes.signup, page:()=> const SignupScreen()) ,
@@ -23,6 +24,8 @@ List<GetPage<dynamic>>? routes = [  GetPage(name: AppRoutes.login, page:()=> Sig
   GetPage(name: AppRoutes.manageMemberScreen, page: ()=>   ManageMembersScreen()),
   GetPage(name: AppRoutes.reportIssueScreen, page: ()=>   const ReportIssueScreen()),
   GetPage(name: AppRoutes.issuesScreen, page: ()=>  const IssuesScreen()),
+  GetPage(name: AppRoutes.manageTaskScreen, page: ()=>  const ManageTaskScreen()),
+
   //GetPage(name: AppRoutes.test, page: ()=>   CustomDropdown())
 
 ] ;

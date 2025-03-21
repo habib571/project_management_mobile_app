@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_management_app/presentation/modules/tasks/view/widget/task_priority_chip.dart';
+import 'package:project_management_app/presentation/modules/tasks/view/widget/task%20priority/task_priority_chip.dart';
 
-import '../../../../utils/styles.dart';
+import '../../../../../utils/styles.dart';
 
 class TaskPriorityCard extends StatelessWidget {
   const TaskPriorityCard({super.key, required this.taskPriorityModel});

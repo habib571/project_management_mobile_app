@@ -31,29 +31,6 @@ class ManageMembersViewModel extends BaseViewModel {
 
   TextEditingController get role => _role;
 
-  /*@override
-  Future<void> manageMember(int? memberId,int projectId) async {
-    if (_formkey.currentState!.validate()) {
-      updateState(LoadingState(
-          stateRendererType: StateRendererType.overlayLoadingState));
-
-      (await _addMemberUseCase.addMember(
-          ProjectMember.request( memberId ,role.text.trim(),projectId) //userID
-      ))
-          .fold(
-        (failure) {
-          updateState(
-            ErrorState(StateRendererType.snackbarState, failure.message),
-          );
-        },
-        (data) {
-          updateState(ContentState());
-          Get.to( ProjectDetailScreen());
-        },
-      );
-    }
-  }*/
-
 
   addMember(int? memberId, int projectId) async {
     if (_formkey.currentState!.validate()) {

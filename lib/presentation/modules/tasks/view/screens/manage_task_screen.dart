@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_management_app/application/constants/constants.dart';
-import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/members_screen.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/assigned_member_chip.dart';
-import 'package:project_management_app/presentation/modules/tasks/view/widget/task_priority_chip.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
@@ -14,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../../../sharedwidgets/custom_button.dart';
 import '../../../../sharedwidgets/input_text.dart';
 import '../../../../stateRender/state_render_impl.dart';
+import '../widget/task priority/task_priority_chip.dart';
 
 class ManageTaskScreen extends StatefulWidget {
   const ManageTaskScreen({super.key});
@@ -23,10 +22,32 @@ class ManageTaskScreen extends StatefulWidget {
 }
 
 class _ManageTaskScreenState extends State<ManageTaskScreen> {
-  final ManageTaskViewModel _viewModel = instance.get<ManageTaskViewModel>();
+  //final ManageTaskViewModel _viewModel = instance<ManageTaskViewModel>(param1: Get.arguments?["toEdit"] );
+   late ManageTaskViewModel _viewModel ;
+
   @override
+  void initState() {
+    _viewModel =  Provider.of<ManageTaskViewModel>(context, listen: false) ;
+    _viewModel.start();
+    super.initState();
+  }
+
+   @override
+   void didChangeDependencies() {
+     final currentToEdit = Get.arguments?["toEdit"] ?? false;
+     if (currentToEdit != _viewModel.toEdit) {
+       //_viewModel = Provider.of<ManageTaskViewModel>(context, listen: false);
+       _viewModel.toEdit = currentToEdit;
+       _viewModel.start();
+     }
+     super.didChangeDependencies();
+   }
+
+
+
+   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+     return Scaffold(
       body: SingleChildScrollView(
         child: StreamBuilder<FlowState>(
           stream: _viewModel.outputState,
@@ -49,7 +70,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
           SizedBox(
             height: 25.h,
           ),
-          const CustomAppBar(title: 'Add Task'),
+          CustomAppBar(title: _viewModel.toEdit ? 'Update Task' : 'Add Task' ),
           SizedBox(height: 30.h),
           _taskNameSection(),
           SizedBox(height: 30.h),
@@ -57,7 +78,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
           SizedBox(height: 30.h),
           _deadlineSection(context),
           SizedBox(height: 30.h),
-          Text('Choose task priority',
+          Text( _viewModel.toEdit ? 'Update task priority' :'Choose task priority',
               style: robotoBold.copyWith(fontSize: 16)),
           const SizedBox(
             height: 15,
@@ -119,10 +140,12 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
         return Selector<ManageTaskViewModel, bool>(
           selector: (_, provider) => provider.selectedIndex == index,
           builder: (_, isSelected, __) {
+            print("----- Selected Index Updated  ${Provider.of<ManageTaskViewModel>(context).selectedIndex}");
+            print("----- is Selected ? :  $isSelected");
             return TaskPriorityChip(
               chipModel: ChipModel(
                 chipTexts[index],
-                isSelected, // Use the selected state from the provider
+                isSelected , // Use the selected state from the provider
                 textColors[index],
                 chipColors[index],
               ),
@@ -136,6 +159,34 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
       }),
     );
   }
+
+   Widget _taskStatusSection() {
+     return Wrap(
+       runSpacing: 8,
+       spacing: 8,
+       children: List.generate(4, (index) {
+         return Selector<ManageTaskViewModel, bool>(
+           selector: (_, provider) => provider.selectedIndex == index,
+           builder: (_, isSelected, __) {
+             print("----- Selected Index Updated  ${Provider.of<ManageTaskViewModel>(context).selectedIndex}");
+             print("----- is Selected ? :  $isSelected");
+             return TaskPriorityChip(
+               chipModel: ChipModel(
+                 chipTexts[index],
+                 isSelected , // Use the selected state from the provider
+                 textColors[index],
+                 chipColors[index],
+               ),
+               onSelect: (_) {
+                 Provider.of<ManageTaskViewModel>(context, listen: false)
+                     .selectChip(index);
+               },
+             );
+           },
+         );
+       }),
+     );
+   }
 
   Widget assignUserSection() {
     return Row(children: [
@@ -173,7 +224,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: CustomButton(onPressed: () {
         _viewModel.addTask() ;
-      }, text: 'Add Task'),
+      }, text: _viewModel.toEdit ? 'Update Task' : 'Add Task'),
     );
   }
 }

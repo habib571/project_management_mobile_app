@@ -8,25 +8,60 @@ import 'package:project_management_app/domain/usecases/task/add_task_user_case.d
 import 'package:project_management_app/presentation/base/base_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/screens/task_detail_screen.dart';
-import 'package:project_management_app/presentation/modules/tasks/view/widget/task_priority_chip.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/prject_tasks_view_model.dart';
 import 'package:project_management_app/presentation/stateRender/state_render.dart';
+import 'package:provider/provider.dart';
+import '../../../../application/constants/constants.dart';
 import '../../../../domain/models/task.dart';
+
+import '../../../../domain/models/user.dart';
 import '../../../stateRender/state_render_impl.dart';
+import '../view/widget/task priority/task_priority_chip.dart';
 
 class ManageTaskViewModel extends BaseViewModel{
+  final ProjectTasksViewModel _projectTasksViewModel ;
+  ProjectTasksViewModel get projectTaskViewModel => _projectTasksViewModel;
+
   final ProjectDetailViewModel _projectDetailViewModel ;
   ProjectDetailViewModel get projectViewModel => _projectDetailViewModel ;
 
   final AddTaskUseCase _addTaskUseCase ;
-  ManageTaskViewModel(super.tokenManager, this._projectDetailViewModel, this._addTaskUseCase);
+  ManageTaskViewModel(super.tokenManager, this._projectDetailViewModel, this._addTaskUseCase, this.toEdit, this._projectTasksViewModel);
 
   @override
   void start() {
     updateState(ContentState()) ;
+    _initControllers();
     super.start();
   }
+
+
+   bool toEdit ;
+  void _initControllers() {
+    _projectTasksViewModel.selectedTask?.name != null ?  print("----YES")  : print("--- null") ;
+    if (toEdit == true && _projectTasksViewModel.selectedTask != null ) {
+      taskName.text = _projectTasksViewModel.selectedTask!.name!;
+      taskDescription.text = _projectTasksViewModel.selectedTask!.description!;
+      taskDeadline.text = _projectTasksViewModel.selectedTask!.deadline!;
+      _selectedIndex = chipTexts.indexOf(_projectTasksViewModel.selectedTask!.priority!);
+      _isUserAdded = true ;
+      _projectMember  = ProjectMember.taskAsseignedMember(_projectTasksViewModel.selectedTask!.assignedUser) ;
+
+
+    }else {
+      taskName.clear();
+      taskDescription.clear();
+      taskDeadline.clear();
+      selectedIndex = -1 ;
+      _isUserAdded = false ;
+      _projectMember = null ;
+    }
+  }
+
+
   ProjectMember? _projectMember ;
   ProjectMember get projectMember => _projectMember! ;
+
   void setProjectMember(ProjectMember projectMember) {
      _projectMember = projectMember ;
       log(projectMember.user!.fullName) ;
@@ -47,6 +82,9 @@ class ManageTaskViewModel extends BaseViewModel{
   }
   int _selectedIndex = -1;
   int get selectedIndex => _selectedIndex;
+  set selectedIndex(int index){
+    _selectedIndex = index ;
+  }
 
   void selectChip(int index) {
     if (_selectedIndex == index) {
@@ -98,5 +136,9 @@ class ManageTaskViewModel extends BaseViewModel{
          }
      ) ;
    }
+
+   // Update Task function that will call setTask() function
+  // Then we must modify Tasks[i]
+  // after that ProjectTaskVM will notify the TaskWidget (in ProjectTasksScreen)
 
 }

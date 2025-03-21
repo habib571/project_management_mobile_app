@@ -11,6 +11,8 @@ class AppRoutes {
   static const String reportIssueScreen ="/reportIssueScreen" ;
   static const String issuesScreen ="/issuesScreen" ;
   static const String editProjectDetailsScreen ="/editProjectDetailsScreen" ;
+  static const String manageTaskScreen ="/manageTaskScreen" ;
+
 
   static const String test ='/test' ;
 
