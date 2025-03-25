@@ -86,7 +86,7 @@ class AllTasksViewModel extends BaseViewModel {
   searchTasks() async {
     _stateNotifier.value = LoadingState(
         stateRendererType: StateRendererType.fullScreenLoadingState);
-    //  if (_isLoadingMore || !hasMore) return;
+   //   if (_isLoadingMore || !hasMore) return;
     if (_currentPage == 0) {
       _tasks.clear();
       _currentPage = 0;
@@ -104,11 +104,14 @@ class AllTasksViewModel extends BaseViewModel {
     }, (data) {
       _stateNotifier.value = ContentState();
       _tasks.addAll(data);
-      _currentPage++;
+     // _currentPage++;
       _isLoadingMore = false;
       if (data.length < _pageSize) {
         hasMore = false;
       }
+     if(_searchQuery.isEmpty) {
+       _tasks.clear() ;
+     }
     });
     _isLoadingMore = false;
   }
