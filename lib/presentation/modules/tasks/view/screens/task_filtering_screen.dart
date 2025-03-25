@@ -20,12 +20,13 @@ class TaskFilteringScreen extends StatefulWidget {
 }
 
 class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
-  late AllTasksViewModel _viewModel ;
+  late AllTasksViewModel _viewModel;
   @override
   void initState() {
-    _viewModel = context.read<AllTasksViewModel>() ;
+    _viewModel = context.read<AllTasksViewModel>();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,17 +46,15 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 40.h),
-              _showOnlyMyTasks() ,
+              _showOnlyMyTasks(),
               SizedBox(height: 40.h),
               _statusSection(context),
               SizedBox(height: 40.h),
-              _prioritySection(context) ,
+              _prioritySection(context),
               SizedBox(height: 40.h),
-              _deadlineSection(context) ,
+              _deadlineSection(context),
               SizedBox(height: 150.h),
               _searchButton()
-
-
             ],
           ),
         ),
@@ -79,13 +78,9 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
               return Checkbox(
                   value: isChecked,
                   onChanged: (bool? value) {
-                    _viewModel.setChecked(value!) ;
-
-              }) ;
-            }
-    )
-        
-
+                    _viewModel.setChecked(value!);
+                  });
+            })
       ],
     );
   }
@@ -98,13 +93,16 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
           ' Task Status',
           style: robotoBold.copyWith(fontSize: 17),
         ),
-        const SizedBox(height: 15,) ,
+        const SizedBox(
+          height: 15,
+        ),
         Wrap(
             runSpacing: 8,
             spacing: 8,
             children: List.generate(3, (index) {
               return Selector<AllTasksViewModel, bool>(
-                selector: (_, provider) => provider.selectedStatusIndex == index,
+                selector: (_, provider) =>
+                    provider.selectedStatusIndex == index,
                 builder: (_, isSelected, __) {
                   return TaskPriorityChip(
                     chipModel: ChipModel(
@@ -114,7 +112,7 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
                       statusBackgroundColor[index],
                     ),
                     onSelect: (_) {
-                      _viewModel .selectStatus(index);
+                      _viewModel.selectStatus(index);
                     },
                   );
                 },
@@ -125,37 +123,40 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
   }
 
   Widget _prioritySection(BuildContext context) {
-     return Column(
-       crossAxisAlignment: CrossAxisAlignment.start,
-       children: [
-         Text(
-           ' Task Priority',
-           style: robotoBold.copyWith(fontSize: 17),
-         ),
-         const SizedBox(height: 15,) ,
-         Wrap(
-             runSpacing: 8,
-             spacing: 8,
-             children: List.generate(4, (index) {
-               return Selector<AllTasksViewModel, bool>(
-                 selector: (_, provider) => provider.selectedPriorityIndex == index,
-                 builder: (_, isSelected, __) {
-                   return TaskPriorityChip(
-                     chipModel: ChipModel(
-                       chipTexts[index],
-                       isSelected, // Use the selected state from the provider
-                       textColors[index],
-                       chipColors[index],
-                     ),
-                     onSelect: (_) {
-                       _viewModel .selectPriority(index) ;
-                     },
-                   );
-                 },
-               );
-             }))
-       ],
-     );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          ' Task Priority',
+          style: robotoBold.copyWith(fontSize: 17),
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        Wrap(
+            runSpacing: 8,
+            spacing: 8,
+            children: List.generate(4, (index) {
+              return Selector<AllTasksViewModel, bool>(
+                selector: (_, provider) =>
+                    provider.selectedPriorityIndex == index,
+                builder: (_, isSelected, __) {
+                  return TaskPriorityChip(
+                    chipModel: ChipModel(
+                      chipTexts[index],
+                      isSelected, // Use the selected state from the provider
+                      textColors[index],
+                      chipColors[index],
+                    ),
+                    onSelect: (_) {
+                      _viewModel.selectPriority(index);
+                    },
+                  );
+                },
+              );
+            }))
+      ],
+    );
   }
 
   Widget _deadlineSection(BuildContext context) {
@@ -166,11 +167,13 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
           ' Task Deadline',
           style: robotoBold.copyWith(fontSize: 17),
         ),
-        const SizedBox(height: 15,) ,
+        const SizedBox(
+          height: 15,
+        ),
         InputText(
           readOnly: true,
           validator: (val) => val.isEmptyInput(),
-          controller: _viewModel.taskDeadline ,
+          controller: _viewModel.taskDeadline,
           hintText: " Choose Date",
           suffixIcon: const Icon(Icons.calendar_month_outlined),
           onTap: () async {
@@ -180,14 +183,17 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
       ],
     );
   }
+
   Widget _searchButton() {
-     return Padding(
-         padding: EdgeInsets.symmetric(horizontal: 50.w) ,
-        child: CustomButton(
-             widget: const Icon(Icons.search_rounded ,color: Colors.white,),
-            onPressed: () {},
-            text: "Search"
-        ),
-     );
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 50.w),
+      child: CustomButton(
+          widget: const Icon(
+            Icons.search_rounded,
+            color: Colors.white,
+          ),
+          onPressed: () {},
+          text: "Search"),
+    );
   }
 }

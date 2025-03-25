@@ -8,6 +8,7 @@ import '../../responses/api_response.dart';
 abstract class TaskRemoteDataSource {
   Future<ApiResponse> addTask(TaskModel task ,int projectId) ;
   Future<ApiResponse> getProjectTasks(int projectId ,Pagination pagination ) ;
+  Future<ApiResponse> searchTasks(String taskName , Pagination pagination) ;
 
 }
 class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
@@ -32,7 +33,16 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
         onRequestResponse: (response, statusCode) {
           return ApiResponse(response, statusCode);
         });
+  }
 
+  @override
+  Future<ApiResponse> searchTasks(String taskName, Pagination pagination) async{
+    return await executeGetRequest(
+        apiUrl: "/task/search/$taskName?page=${pagination.page}&size=${pagination.size}",
+        bearerToken: _localStorage.getAuthToken() ,
+        onRequestResponse: (response, statusCode) {
+          return ApiResponse(response, statusCode);
+        });
   }
 
 }

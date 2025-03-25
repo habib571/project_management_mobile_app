@@ -33,16 +33,14 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
   }
 
   Widget _showBody() {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 25),
-        child: Column(
-          children: [
-            const CustomAppBar(title: "All Tasks"),
-            SizedBox(height: 15.h) ,
-            _showTaskList()
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 25),
+      child: Column(
+        children: [
+          const CustomAppBar(title: "All Tasks"),
+
+          _showTaskList()
+        ],
       ),
     );
   }
@@ -70,25 +68,26 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
               }
               return false;
             },
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: tasks.length + 1,
-              itemBuilder: (context, index) {
-                if (index == tasks.length) {
-                  return _viewModel.isLoadingMore
-                      ? const Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Center(child: CircularProgressIndicator()),
-                        )
-                      : const SizedBox.shrink();
-                }
-                final task = tasks[index];
-                return Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: TaskWidget(task: task),
-                );
-              },
+            child: Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: tasks.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == tasks.length) {
+                    return _viewModel.isLoadingMore
+                        ? const Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Center(child: CircularProgressIndicator()),
+                          )
+                        : const SizedBox.shrink();
+                  }
+                  final task = tasks[index];
+                  return Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: TaskWidget(task: task),
+                  );
+                },
+              ),
             ),
           );
         }

@@ -57,4 +57,28 @@ class TaskRepositoryImpl implements TaskRepository {
 
 
   }
+
+  @override
+  Future<Either<Failure, List<TaskModel>>> searchTasks(String taskName, Pagination pagination) async{
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _taskRemoteDataSource.searchTasks(taskName, pagination) ;
+
+        if (response.statusCode == 200) {
+          final List<Map<String, dynamic>> responseData = List<Map<String, dynamic>>.from(response.data);
+          final tasks = responseData.map((memberJson) => TaskModel.fromJson(memberJson)).toList();
+          return Right(tasks);
+        } else {
+          return Left(Failure.fromJson(response.data));
+        }
+      }
+      catch (error) {
+        log(error.toString()) ;
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+
+
+  }
 }
