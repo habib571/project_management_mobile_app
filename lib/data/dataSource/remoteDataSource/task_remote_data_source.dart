@@ -38,9 +38,10 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   @override
   Future<ApiResponse> searchTasks(String taskName, Pagination pagination) async{
     return await executeGetRequest(
-        apiUrl: "/task/search/$taskName?page=${pagination.page}&size=${pagination.size}",
+        apiUrl: "/task/search?name=$taskName&page=${pagination.page}&size=${pagination.size}",
         bearerToken: _localStorage.getAuthToken() ,
         onRequestResponse: (response, statusCode) {
+          print("/task/search?name=$taskName?page=${pagination.page}&size=${pagination.size}") ;
           return ApiResponse(response, statusCode);
         });
   }
