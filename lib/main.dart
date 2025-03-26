@@ -12,9 +12,12 @@ import 'package:project_management_app/presentation/modules/dashboord/viewmodel/
 import 'package:project_management_app/presentation/modules/manageprojects/viewmodel/manage-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/prject_tasks_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/task_detail_view_model.dart';
 import 'package:provider/provider.dart';
 import 'application/dependencyInjection/dependency_injection.dart';
 import 'application/helpers/screen_configuraton.dart';
+import 'application/helpers/token_mamanger.dart';
 import 'application/navigation/routes_constants.dart';
 
 void main() async {
@@ -56,9 +59,16 @@ class MyApp extends StatelessWidget {
               create: (_) => GetIt.instance<ReportIssueViewModel>()),
 
           ChangeNotifierProvider(
-              lazy: true, create: (_) => GetIt.instance<ManageTaskViewModel>(param1: Get.arguments?["toEdit"] ,)
+              lazy: true, create: (_) => GetIt.instance<ManageTaskViewModel>(/*param1: Get.arguments?["toEdit"]  ?? false ,*/)
           ) ,
 
+          ChangeNotifierProvider<ProjectTasksViewModel>(
+              lazy: true,
+              create: (_) => GetIt.instance<ProjectTasksViewModel>()),
+
+          ChangeNotifierProvider<TaskDetailsViewModel>(
+              lazy: true,
+              create: (_) => GetIt.instance<TaskDetailsViewModel>()),
 
           ChangeNotifierProvider<AllTasksViewModel>(
               lazy: true, create: (_) => GetIt.instance<AllTasksViewModel>()

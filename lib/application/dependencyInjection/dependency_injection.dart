@@ -34,7 +34,7 @@ import '../../domain/usecases/auth/signup_usecase.dart';
 import '../../domain/usecases/auth/userprofile_usecase.dart';
 import '../../domain/usecases/project/manageproject-use-case.dart';
 import '../../domain/usecases/project/delete_member_use_case.dart';
-import '../../domain/usecases/task/add_task_user_case.dart';
+import '../../domain/usecases/task/manage_task_user_case.dart';
 import '../../presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
 import '../../presentation/modules/managemembers/viewmodel/manage_members_viewmodel.dart';
 import '../../presentation/modules/managemembers/viewmodel/search_member_view_model.dart';
@@ -137,7 +137,7 @@ initTask() {
       () => TaskDetailsViewModel(instance(),instance(),));
   instance.registerLazySingleton<AllTasksViewModel>(
           () => AllTasksViewModel(instance()));
-    instance.registerFactory<AddTaskUseCase>(() => AddTaskUseCase(instance()));
+    instance.registerFactory<ManageTaskUseCase>(() => ManageTaskUseCase(instance()));
 
   instance.registerFactoryParam<ManageTaskViewModel,bool?,void>((toEdit,_) => ManageTaskViewModel(instance(), instance(),instance(), toEdit ?? false ,instance() ));
   //instance.registerLazySingleton<ManageTaskViewModel>(() => ManageTaskViewModel(instance(), instance(), instance(),true ,instance()));

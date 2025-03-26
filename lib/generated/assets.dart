@@ -94,7 +94,7 @@ class Assets {
   static const String sharedwidgetsInputText = 'lib/presentation/sharedwidgets/input_text.dart';
   static const String stateRenderStateRender = 'lib/presentation/stateRender/state_render.dart';
   static const String stateRenderStateRenderImpl = 'lib/presentation/stateRender/state_render_impl.dart';
-  static const String taskAddTaskUserCase = 'lib/domain/usecases/task/add_task_user_case.dart';
+  static const String taskAddTaskUserCase = 'lib/domain/usecases/task/manage_task_user_case.dart';
   static const String taskGetAllTasks = 'lib/domain/usecases/task/get_all_tasks.dart';
   static const String utilsColors = 'lib/presentation/utils/colors.dart';
   static const String utilsStyles = 'lib/presentation/utils/styles.dart';

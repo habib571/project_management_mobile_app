@@ -1,9 +1,11 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:project_management_app/domain/models/Task/task.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task%20status/task_status_chip.dart';
-import 'package:project_management_app/presentation/utils/colors.dart';
-import 'package:project_management_app/presentation/utils/styles.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
+import 'package:provider/provider.dart';
+import '../../viewmodel/prject_tasks_view_model.dart';
 
 
 
@@ -35,36 +37,49 @@ final TaskStatusModel taskStatusModel ;
 
 
 class TaskStatusCard extends StatefulWidget {
-  const TaskStatusCard({
+    TaskStatusCard({
     super.key,
-    required this.taskStatusModel,
-    this.isAssignedToMe,
+    required this.taskStatusModel,  this.viewModel, this.task,  this.isAssignedToMe,
   });
 
-  final TaskStatusModel taskStatusModel;
-  final bool? isAssignedToMe;
+   TaskStatusModel taskStatusModel;
+  final ProjectTasksViewModel? viewModel ;
+  final TaskModel? task ;
+  bool? isAssignedToMe = false ;
+
+
 
   @override
   _TaskStatusCardState createState() => _TaskStatusCardState();
 }
 
 class _TaskStatusCardState extends State<TaskStatusCard> {
-  late TaskStatusModel selectedStatus;
+  //late TaskStatusModel selectedStatus;
+  //late bool? _isAssignedToMe ;
+  late ManageTaskViewModel _manageTaskViewModel;
 
   @override
   void initState() {
     super.initState();
-    selectedStatus = widget.taskStatusModel;
+    _manageTaskViewModel = context.read<ManageTaskViewModel>();
+    if(widget.viewModel != null){
+      //print("*** ${widget.viewModel!.selectedTask?.name}");
+      print("*** ${widget.task?.name}");
+      //_isAssignedToMe = widget.viewModel!.localStorage.getUser().id == widget.viewModel!.selectedTask?.assignedUser!.id ;
+    }
+    //selectedStatus = widget.taskStatusModel;
   }
+
 
   @override
   Widget build(BuildContext context) {
+    //print(";;;;;;;;; ${widget.task!.name} / ${widget.taskStatusModel.statusName}");
     return InkWell(
       onTap: widget.isAssignedToMe! ? () => _showDropdownMenu(context) : null,
       borderRadius: BorderRadius.circular(20),
       child: Container(
         decoration: BoxDecoration(
-          color: selectedStatus.backgroundColor,
+          color: widget.taskStatusModel.backgroundColor,
           borderRadius: BorderRadius.circular(20),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
@@ -73,11 +88,11 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
           children: [
             if (widget.isAssignedToMe!)
               const Icon(Icons.arrow_drop_down, color: Colors.black),
-            if (widget.isAssignedToMe!) const SizedBox(width: 5),
+            if (!widget.isAssignedToMe!) const SizedBox(width: 5),
             Text(
-              selectedStatus.statusName,
+              widget.taskStatusModel.statusName,
               style: TextStyle(
-                color: selectedStatus.textColor,
+                color: widget.taskStatusModel.textColor,
                 fontSize: 12,
               ),
             ),
@@ -88,7 +103,7 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
   }
 
   void _showDropdownMenu(BuildContext context) async {
-    //if (!widget.isAssignedToMe!) return; // Empêche l'ouverture si false
+    //if (!widget.isAssignedToMe!) return;
 
     final RenderBox renderBox = context.findRenderObject() as RenderBox;
     final Offset offset = renderBox.localToGlobal(Offset.zero);
@@ -115,18 +130,35 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
     );
 
     if (newStatus != null) {
+      _manageTaskViewModel.updateTaskStatus(
+        task: widget.task!,
+        newStatus: newStatus,
+      );
+    }
+
+    /*if (newStatus != null) {
+      print(newStatus);
       setState(() {
         int index = statusChipTexts.indexOf(newStatus);
-        selectedStatus = TaskStatusModel(
+        widget.taskStatusModel = TaskStatusModel(
           statusTextColors[index],
           statusBackgroundColor[index],
           statusChipTexts[index],
         );
+
+        print("taskStatusModel status ${widget.taskStatusModel.statusName}");
+
+        widget.task!.status = statusChipTexts[index] ;
+        widget.viewModel!.selectedTask = widget.task ;
+        widget.viewModel!.notifyListeners();
+
+        //widget.viewModel!.selectedTask = widget.task ;
+        //widget.viewModel!.selectedTask!.status = statusChipTexts[index] ;
+        _manageTaskViewModel.updateTask();
       });
-    }
+    }*/
   }
 }
-
 
 
 

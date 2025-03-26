@@ -4,9 +4,10 @@ import 'package:project_management_app/domain/repository/task_repo.dart';
 
 import '../../../data/network/failure.dart';
 
-class AddTaskUseCase {
+class ManageTaskUseCase {
   final TaskRepository _taskRepository ;
-  AddTaskUseCase(this._taskRepository);
+  ManageTaskUseCase(this._taskRepository);
   Future<Either<Failure,TaskModel>> addTask(TaskModel request , int projectId) async  => _taskRepository.addTask(request ,projectId) ;
+  Future<Either<Failure,TaskModel>> updateTask(TaskModel request , int projectId) async  => _taskRepository.updateTask(request ,projectId) ;
 
 }

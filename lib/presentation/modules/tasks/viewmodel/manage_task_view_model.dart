@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_management_app/domain/models/project_member.dart';
-import 'package:project_management_app/domain/usecases/task/add_task_user_case.dart';
+import 'package:project_management_app/domain/usecases/task/manage_task_user_case.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/screens/task_detail_screen.dart';
@@ -26,7 +26,7 @@ class ManageTaskViewModel extends BaseViewModel{
   final ProjectDetailViewModel _projectDetailViewModel ;
   ProjectDetailViewModel get projectViewModel => _projectDetailViewModel ;
 
-  final AddTaskUseCase _addTaskUseCase ;
+  final ManageTaskUseCase _addTaskUseCase ;
   ManageTaskViewModel(super.tokenManager, this._projectDetailViewModel, this._addTaskUseCase, this.toEdit , this._projectTasksViewModel);
 
   @override
