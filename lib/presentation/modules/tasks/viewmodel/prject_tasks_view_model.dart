@@ -4,6 +4,7 @@ import 'package:project_management_app/domain/models/Task/task.dart';
 import 'package:project_management_app/domain/usecases/task/get_all_tasks.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import 'package:project_management_app/presentation/stateRender/state_render.dart';
 
 import '../../../../application/helpers/get_storage.dart';
@@ -15,12 +16,14 @@ class ProjectTasksViewModel extends BaseViewModel {
   final ProjectDetailViewModel _projectDetailViewModel ;
   final LocalStorage localStorage ;
 
-  ProjectTasksViewModel(super.tokenManager, this._getProjectTasksUseCase, this._projectDetailViewModel, this.localStorage);
+  ProjectTasksViewModel(super.tokenManager, this._getProjectTasksUseCase, this._projectDetailViewModel, this.localStorage,);
   @override
   void start() {
     getProjectTasks() ;
     super.start();
   }
+
+
   final List<TaskModel> _tasks =[] ;
   List<TaskModel> get tasks => _tasks ;
 
@@ -28,6 +31,7 @@ class ProjectTasksViewModel extends BaseViewModel {
   TaskModel? get selectedTask => _selectedTask ;
   set selectedTask(TaskModel? value) {
       _selectedTask = value;
+      print(">>>>>>>>>>>>>Notifyer Called");
       notifyListeners();
   }
 

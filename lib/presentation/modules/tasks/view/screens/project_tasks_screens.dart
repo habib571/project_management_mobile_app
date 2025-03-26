@@ -5,6 +5,7 @@ import 'package:project_management_app/domain/models/Task/task.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task_widget.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/prject_tasks_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../stateRender/state_render_impl.dart';
 import '../../../../utils/colors.dart';
@@ -17,9 +18,10 @@ class ProjectTasksScreens extends StatefulWidget {
 }
 
 class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
-  final ProjectTasksViewModel _viewModel = instance.get<ProjectTasksViewModel>();
+  late final ProjectTasksViewModel _viewModel ;//= instance.get<ProjectTasksViewModel>();
   @override
   void initState() {
+    _viewModel = context.read<ProjectTasksViewModel>() ;
     _viewModel.start() ;
     super.initState();
   }
@@ -83,7 +85,12 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
                 final task = tasks[index];
                 return Padding(
                   padding: const EdgeInsets.all(20),
-                  child: TaskWidget(task: task , viewModel: _viewModel , ) ,
+                  child: TaskWidget(
+                    task: task ,
+                    viewModel: _viewModel ,
+                    isAssignedToMe:  _viewModel.localStorage.getUser().id ==   task.assignedUser!.id
+                  )
+
                 );
               },
             ),

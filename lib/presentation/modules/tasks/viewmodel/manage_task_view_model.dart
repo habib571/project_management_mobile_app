@@ -27,7 +27,7 @@ class ManageTaskViewModel extends BaseViewModel{
   ProjectDetailViewModel get projectViewModel => _projectDetailViewModel ;
 
   final AddTaskUseCase _addTaskUseCase ;
-  ManageTaskViewModel(super.tokenManager, this._projectDetailViewModel, this._addTaskUseCase, this.toEdit, this._projectTasksViewModel);
+  ManageTaskViewModel(super.tokenManager, this._projectDetailViewModel, this._addTaskUseCase, this.toEdit , this._projectTasksViewModel);
 
   @override
   void start() {
@@ -37,7 +37,7 @@ class ManageTaskViewModel extends BaseViewModel{
   }
 
 
-   bool toEdit ;
+   bool toEdit = false ;
   void _initControllers() {
     _projectTasksViewModel.selectedTask?.name != null ?  print("----YES")  : print("--- null") ;
     if (toEdit == true && _projectTasksViewModel.selectedTask != null ) {
@@ -46,9 +46,9 @@ class ManageTaskViewModel extends BaseViewModel{
       taskDeadline.text = _projectTasksViewModel.selectedTask!.deadline!;
       _selectedPriorityIndex = priorityChipTexts.indexOf(_projectTasksViewModel.selectedTask!.priority!);
       _selectedStatusIndex = statusChipTexts.indexOf(_projectTasksViewModel.selectedTask!.status!);
+      print("+++++ ${_projectTasksViewModel.selectedTask!.name!}  / ${_projectTasksViewModel.selectedTask!.status!}");
       _isUserAdded = true ;
       _projectMember  = ProjectMember.taskAsseignedMember(_projectTasksViewModel.selectedTask!.assignedUser) ;
-
 
     }else {
       taskName.clear();
@@ -57,7 +57,7 @@ class ManageTaskViewModel extends BaseViewModel{
       _selectedPriorityIndex = -1 ;
       _selectedStatusIndex = -1 ;
       _isUserAdded = false ;
-      _projectMember = null ;
+      //_projectMember = null ;
     }
   }
 
@@ -67,11 +67,12 @@ class ManageTaskViewModel extends BaseViewModel{
 
   void setProjectMember(ProjectMember projectMember) {
      _projectMember = projectMember ;
-      log(projectMember.user!.fullName) ;
+      //log(projectMember.user!.fullName) ;
+      print("Selected Project Member -- ${projectMember.user!.fullName}");
       notifyListeners() ;
   }
   TaskModel? _task ;
-  TaskModel get task => _task! ;
+  TaskModel? get task => _task ;
    setTask(TaskModel task) {
       _task = task ;
    }
@@ -109,9 +110,15 @@ class ManageTaskViewModel extends BaseViewModel{
       _selectedStatusIndex = -1;
     } else {
       _selectedStatusIndex = index;
+      print(_projectTasksViewModel.tasks.firstWhere((t)=> t.id == _projectTasksViewModel.selectedTask!.id ).name);
+      _projectTasksViewModel.tasks.firstWhere((t)=> t.id == _projectTasksViewModel.selectedTask!.id ).status = statusChipTexts[_selectedStatusIndex];
     }
     notifyListeners();
   }
+
+
+
+
 
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   TextEditingController taskName = TextEditingController();
@@ -134,8 +141,7 @@ class ManageTaskViewModel extends BaseViewModel{
   }
    addTask() async { 
     updateState(LoadingState(stateRendererType: StateRendererType.overlayLoadingState)) ;
-    TaskModel taskRequest =
-    TaskModel.request(
+    TaskModel taskRequest = TaskModel.request(
         taskName.text,
         taskDescription.text,
         taskDeadline.text,
@@ -150,17 +156,48 @@ class ManageTaskViewModel extends BaseViewModel{
         async {
            updateState(ContentState()) ;
             setTask(data) ;
-            Get.to(()=>const TaskDetailScreen()) ;
+            //Get.back();
+            Get.to(()=>const TaskDetailScreen() , arguments:  _task ) ;
          }
      ) ;
    }
 
-   // Update Task function that will call setTask() function
-  // Then we must modify Tasks[i]
-  // after that ProjectTaskVM will notify the TaskWidget (in ProjectTasksScreen)
 
-  updateTask(){
-    print("task Updated $taskName expira a ${taskDeadline.text}");
+
+  void updateTask() {
+    print("------- task Updated ------ $_selectedStatusIndex ");
+    print("--- ${projectTaskViewModel.selectedTask!.name}");
+    final newStatus = statusChipTexts[_selectedStatusIndex];
+    final updatedTask = projectTaskViewModel.selectedTask!.copyWith(
+        name: taskName.text.trim(),
+        deadline: taskDeadline.text.trim(),
+        assignedUser: _projectMember!.user,
+        status: newStatus,
+    );
+    int index = projectTaskViewModel.tasks.indexWhere((e) => e.id == updatedTask.id);
+    if (index != -1) {
+      projectTaskViewModel.tasks[index] = updatedTask;
+      projectTaskViewModel.notifyListeners();
+    }
+    projectTaskViewModel.selectedTask = updatedTask;
+    //projectTaskViewModel.notifyListeners();
   }
+
+  void updateTaskStatus({required TaskModel task, required String newStatus}) {
+    final index = projectTaskViewModel.tasks.indexWhere((t) => t.id == task.id);
+    if (index != -1) {
+      final updatedTask = task.copyWith(
+          name: taskName.text.isNotEmpty ? taskName.text.trim() : null ,
+          deadline: taskDeadline.text.isNotEmpty ? taskDeadline.text.trim() : null ,
+          assignedUser: _projectMember?.user,
+          status: newStatus
+      );
+      projectTaskViewModel.tasks[index] = updatedTask;
+      projectTaskViewModel.selectedTask = updatedTask;
+      //projectTaskViewModel.notifyListeners();
+      // CALL THE API
+    }
+  }
+
 
 }

@@ -10,6 +10,7 @@ import 'package:project_management_app/presentation/modules/tasks/viewmodel/mana
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 import 'package:provider/provider.dart';
+import '../../../../../application/dependencyInjection/dependency_injection.dart';
 import '../../../../../domain/models/Task/task_chip.dart';
 import '../../../../sharedwidgets/custom_button.dart';
 import '../../../../sharedwidgets/input_text.dart';
@@ -97,7 +98,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
           ),
           assignUserSection(),
           SizedBox(
-            height: 120.h,
+            height: _viewModel.toEdit ? 90.h :120.h,
           ),
           _showButton()
         ],
@@ -183,6 +184,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
                 return Selector<ManageTaskViewModel, bool>(
                   selector: (_, provider) => provider.selectedStatusIndex == index,
                   builder: (_, isSelected, __) {
+                    print("----- taskStatusSection Updated");
                     return TaskStatusChip(
                         chipModel: ChipModel(
                           statusChipTexts[index],
@@ -224,8 +226,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
                 : InkWell(
                     onTap: () {
                       // context.read<AddTaskViewModel>().toggleIsUserAdded();
-                      Get.to(() => MembersScreen(),
-                          arguments: _viewModel.projectViewModel);
+                      Get.to(() => MembersScreen(),arguments: _viewModel.projectViewModel);
                     },
                     child: Image.asset("assets/add_filled.png", height: 40),
                   );

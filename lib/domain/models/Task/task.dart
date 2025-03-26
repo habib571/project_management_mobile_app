@@ -15,6 +15,7 @@ class TaskModel {
   TaskModel(this.id, this.name, this.description, this.deadline, this.priority, this.assignedUser ,this.status,this.project);
   TaskModel.request(this.name, this.description,this.deadline, this.priority ,this.assignedUserId, );
   TaskModel.taggedTask(this.id, this.name);
+  TaskModel.taskToUpdate(this.id, this.name, this.description, this.deadline, this.priority, this.status, this.assignedUserId,);
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
@@ -39,6 +40,32 @@ class TaskModel {
       'priority': priority,
     };
   }
+
+  Map<String, dynamic> updateToJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'assignedTo': assignedUserId,
+      'deadline': deadline,
+      'priority': priority,
+      'status':status
+    };
+  }
+
+  TaskModel copyWith({String? name,String? deadline , User? assignedUser ,String? status}) {
+    return TaskModel(
+      id,
+      name?? this.name,
+      description,
+      deadline ?? this.deadline,
+      priority,
+      assignedUser ?? this.assignedUser,
+      status ?? this.status,
+      project,
+    );
+  }
+
 
 }
 
