@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:project_management_app/application/constants/constants.dart';
+import 'package:project_management_app/domain/models/Task/task.dart';
+import 'package:project_management_app/main.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task_status_card.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/task_detail_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
+import 'package:provider/provider.dart';
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
 import '../../../../stateRender/state_render_impl.dart';
 import '../widget/task priority/task_priority_card.dart';
@@ -18,24 +23,31 @@ class TaskDetailScreen extends StatefulWidget {
 }
 
 class _TaskDetailScreenState extends State<TaskDetailScreen> {
-  final TaskDetailsViewModel _viewModel = instance.get<TaskDetailsViewModel>();
+  //late final TaskDetailsViewModel _viewModel ; //= instance.get<TaskDetailsViewModel>();
+  final TaskModel _task = Get.arguments ;
+
 
   @override
   void initState() {
-     _viewModel.start()  ;
+    //_viewModel = context.read<TaskDetailsViewModel>();
+     //_viewModel.start()  ;
+    print("********** ${_task.status}");
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:StreamBuilder<FlowState>(
+      body: _showBody()
+    );
+        /*StreamBuilder<FlowState>(
         stream: _viewModel.outputState,
         builder: (context, snapshot) {
           return snapshot.data
               ?.getScreenWidget(context, _showBody(), () {}) ??
               _showBody();
         },
-      )) ;
+      )) ;*/
 
   }
 
@@ -49,7 +61,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(_viewModel.task.name!, style: robotoBold.copyWith(fontSize: 16)),
+              Text(_task.name!, style: robotoBold.copyWith(fontSize: 16)),
               const SizedBox(
                 height: 20,
               ),
@@ -68,7 +80,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  _showStatus(),
+                  //_showStatus(),
                   const SizedBox(
                     height: 20,
                   ),
@@ -77,7 +89,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                   Text("Description", style: robotoBold.copyWith(fontSize: 16)),
                   const SizedBox(height:15 ) ,
                   Text(
-                      _viewModel.task.description! ,
+                      _task.description! ,
                      style: robotoMedium.copyWith(color: AppColors.secondaryTxt),
                      )
                 ],
@@ -105,7 +117,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
             children: [
               Image.asset("assets/calendar.png"),
               Text(
-                _viewModel.task.deadline!,
+                _task.deadline!,
                 style: robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),
               )
             ],
@@ -134,7 +146,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
               const SizedBox(
                 width: 5,
               ),
-              Text(_viewModel.task.project!.createdBy!.fullName,style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),)
+              Text(_task.project!.createdBy!.fullName,style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),)
             ],
           ),
         ),
@@ -161,7 +173,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
               const SizedBox(
                 width: 5,
               ),
-              Text(_viewModel.task.assignedUser!.fullName,style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),)
+              Text(_task.assignedUser!.fullName,style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),)
             ],
           ),
         ),
@@ -170,7 +182,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
 
   }
 
-  Widget _showStatus() {
+  /*Widget _showStatus() {
     return Row(
       children: [
         Text(
@@ -178,10 +190,10 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
           style: robotoRegular.copyWith(fontSize: 14 ,color: AppColors.secondaryTxt),
         ),
         const SizedBox(width:30,) ,
-        TaskStatusCard(taskStatusModel: TaskStatusModel.type(_viewModel.task.status!) ),
+        TaskStatusCard(taskStatusModel: TaskStatusModel.type(_task.status ?? "To Do" ) ),
       ],
     );
-  }
+  }*/
 
   Widget _showPriority() {
     return Row(
@@ -191,7 +203,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
           style: robotoRegular.copyWith(fontSize: 14 ,color: AppColors.secondaryTxt),
         ),
         const SizedBox(width:27,) ,
-        TaskPriorityCard(taskPriorityModel: TaskPriorityModel.type(_viewModel.task.priority!))
+        TaskPriorityCard(taskPriorityModel: TaskPriorityModel.type(_task.status ?? "To Do"))
       ],
     );
   }

@@ -134,12 +134,15 @@ initDashboard() {
 
 initTask() {
   instance.registerLazySingleton<TaskDetailsViewModel>(
-      () => TaskDetailsViewModel(instance(), instance()));
+      () => TaskDetailsViewModel(instance(),instance(),));
   instance.registerLazySingleton<AllTasksViewModel>(
           () => AllTasksViewModel(instance()));
     instance.registerFactory<AddTaskUseCase>(() => AddTaskUseCase(instance()));
 
-  instance.registerFactoryParam<ManageTaskViewModel,bool,void>((toEdit,_) => ManageTaskViewModel(instance(), instance(),instance(),toEdit ?? false ,instance() ));
+  instance.registerFactoryParam<ManageTaskViewModel,bool?,void>((toEdit,_) => ManageTaskViewModel(instance(), instance(),instance(), toEdit ?? false ,instance() ));
+  //instance.registerLazySingleton<ManageTaskViewModel>(() => ManageTaskViewModel(instance(), instance(), instance(),true ,instance()));
+
+
   //instance.registerFactory<ManageTaskViewModel>(() => ManageTaskViewModel(instance(), instance(), instance()));
 
   instance.registerFactory<GetProjectTasksUseCase>(() => GetProjectTasksUseCase(instance()));
