@@ -18,11 +18,11 @@ import '../../../../utils/colors.dart';
 import '../../viewmodel/prject_tasks_view_model.dart';
 
 class TaskWidget extends StatefulWidget {
-   const TaskWidget({super.key, required this.task , required this.viewModel, required this.isAssignedToMe, });
+   const TaskWidget({super.key, required this.task , required this.viewModel, required this.isTaskEditable, });
 
   final TaskModel task ;
   final ProjectTasksViewModel viewModel ;
-  final bool isAssignedToMe ;
+  final bool isTaskEditable ;
 
 
   @override
@@ -51,18 +51,24 @@ class _TaskWidgetState extends State<TaskWidget> {
                Selector<ProjectTasksViewModel, String>(
                  selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).name ?? '',
                  builder: (_, name, __) {
-                   print("------- Title --- Card");
                    return Text(
                      name ,//widget.task.name! ,
                      style: robotoBold.copyWith(fontSize: 14, color: AppColors.secondaryTxt),
                    ) ;
                  },
                ),
-               /*Text(
-                 widget.task.name! ,
-                 style: robotoBold.copyWith(fontSize: 14, color: AppColors.secondaryTxt),
-               ) ,*/
-               TaskPriorityCard(taskPriorityModel: TaskPriorityModel.type(widget.task.priority!)),
+
+               Selector<ProjectTasksViewModel, String>(
+                 selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).priority ?? '',
+                 builder: (_, priority, __) {
+                   return TaskPriorityCard(
+                       task: widget.task,
+                       isAssignedToMe: widget.isTaskEditable,
+                       taskPriorityModel: TaskPriorityModel.type(priority)
+                   );
+                 },
+               )
+
                ]),
                const SizedBox(height: 15,)  ,
            Row(
@@ -91,17 +97,11 @@ class _TaskWidgetState extends State<TaskWidget> {
                      },
                    ),
 
-                   /*Text(
-                     widget.task.assignedUser!.fullName,
-                     style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),
-                   )*/
                  ],
                ),
-               widget.isAssignedToMe ? IconButton(
+               widget.isTaskEditable  ? IconButton(
                 onPressed:(){
-                  widget.viewModel.selectedTask == null ?  widget.viewModel.selectedTask = widget.task : null ;
-
-                  print("+++ ${ widget.viewModel.selectedTask!.name} / ${ widget.viewModel.selectedTask!.status}");
+                  widget.viewModel.selectedTask = widget.viewModel.tasks.firstWhere((e)=> e.id == widget.task.id )   ;
                   Get.toNamed(AppRoutes.manageTaskScreen , arguments: {"toEdit": true } );
                 } ,
                 icon: const Icon(Icons.edit_outlined),
@@ -126,22 +126,16 @@ class _TaskWidgetState extends State<TaskWidget> {
                            );
                          },
                        )
-                       /*Text(
-                        widget.task.deadline?? "02/05/2025",
-                         style: robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),
-                       )*/
                      ],
                    ),
 
                   Selector<ProjectTasksViewModel, String>(
                     selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).status ?? '',
                     builder: (_, status, __) {
-                      print("------- Status --- Card");
                       return TaskStatusCard(
                         taskStatusModel: TaskStatusModel.type(status),
-                        viewModel:widget.viewModel,
                         task: widget.task,
-                        isAssignedToMe: widget.isAssignedToMe,
+                        isAssignedToMe: widget.isTaskEditable,
                       );
                     },
                   )
@@ -151,8 +145,6 @@ class _TaskWidgetState extends State<TaskWidget> {
 
              ],
            ) ,
-
-
     ) ;
   }
 }

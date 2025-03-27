@@ -18,7 +18,7 @@ class ProjectTasksScreens extends StatefulWidget {
 }
 
 class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
-  late final ProjectTasksViewModel _viewModel ;//= instance.get<ProjectTasksViewModel>();
+  late final ProjectTasksViewModel _viewModel ;
   @override
   void initState() {
     _viewModel = context.read<ProjectTasksViewModel>() ;
@@ -39,7 +39,7 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
         padding: const EdgeInsets.symmetric(vertical: 25),
         child: Column(
           children: [
-            const CustomAppBar(title: "All Tasks"),
+            CustomAppBar(title: "All Tasks" , ),
             SizedBox(height: 15.h) ,
             _showTaskList()
           ],
@@ -88,9 +88,8 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
                   child: TaskWidget(
                     task: task ,
                     viewModel: _viewModel ,
-                    isAssignedToMe:  _viewModel.localStorage.getUser().id ==   task.assignedUser!.id
+                    isTaskEditable:  _viewModel.isTaskEditable(task),
                   )
-
                 );
               },
             ),

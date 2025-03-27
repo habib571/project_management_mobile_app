@@ -3,16 +3,12 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:project_management_app/application/constants/constants.dart';
 import 'package:project_management_app/domain/models/Task/task.dart';
-import 'package:project_management_app/main.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task_status_card.dart';
-import 'package:project_management_app/presentation/modules/tasks/viewmodel/task_detail_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
-import 'package:provider/provider.dart';
-import '../../../../../application/dependencyInjection/dependency_injection.dart';
-import '../../../../stateRender/state_render_impl.dart';
+
 import '../widget/task priority/task_priority_card.dart';
 
 class TaskDetailScreen extends StatefulWidget {
@@ -55,7 +51,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     return Column(
       children: [
         const SizedBox(height: 25,) ,
-        const CustomAppBar(title: "Task Details"),
+        CustomAppBar(title: "Task Details"),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -80,7 +76,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  //_showStatus(),
+                  _showStatus(),
                   const SizedBox(
                     height: 20,
                   ),
@@ -182,7 +178,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
 
   }
 
-  /*Widget _showStatus() {
+  Widget _showStatus() {
     return Row(
       children: [
         Text(
@@ -190,10 +186,10 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
           style: robotoRegular.copyWith(fontSize: 14 ,color: AppColors.secondaryTxt),
         ),
         const SizedBox(width:30,) ,
-        TaskStatusCard(taskStatusModel: TaskStatusModel.type(_task.status ?? "To Do" ) ),
+        TaskStatusCard(taskStatusModel: TaskStatusModel.type(_task.status!  ,), isAssignedToMe: false, ),
       ],
     );
-  }*/
+  }
 
   Widget _showPriority() {
     return Row(

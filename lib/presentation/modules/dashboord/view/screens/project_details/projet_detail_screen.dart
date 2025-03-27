@@ -53,7 +53,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
               SizedBox(
                 height: 25.h,
               ),
-              const CustomAppBar(title: 'Project Details'),
+              CustomAppBar(title: 'Project Details'),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(

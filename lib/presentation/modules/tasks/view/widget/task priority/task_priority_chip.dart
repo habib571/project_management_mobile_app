@@ -34,13 +34,13 @@ class TaskPriorityChip extends StatelessWidget {
     );
   }
 }
-List<Color> chipColors = [
+List<Color> priorityChipColors = [
   const Color(0xffd4eacc),
   const Color(0xfff9e6d0),
   const Color(0xffffccd2),
   const Color(0xffd4d4d5)
 ];
-List<Color> textColors = [
+List<Color> priorityTextColors = [
   const Color(0xff279600),
   const Color(0xffdf8412),
   const Color(0xffff001f),

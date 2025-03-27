@@ -49,7 +49,7 @@ Widget _showBody(GetAllIssuesViewModel viewModel){
   return  Column(
     children: [
       SizedBox(height: 25.h),
-      const CustomAppBar(title: "All Issues"),
+      CustomAppBar(title: "All Issues"),
       SizedBox(height: 25.h),
       Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),

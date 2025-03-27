@@ -53,13 +53,13 @@ class TaskModel {
     };
   }
 
-  TaskModel copyWith({String? name,String? deadline , User? assignedUser ,String? status}) {
+  TaskModel copyWith({String? name,String? deadline , User? assignedUser ,String? status ,String? priority, String? description }) {
     return TaskModel(
       id,
       name?? this.name,
-      description,
+      description ?? this.description,
       deadline ?? this.deadline,
-      priority,
+      priority ?? this.priority,
       assignedUser ?? this.assignedUser,
       status ?? this.status,
       project,

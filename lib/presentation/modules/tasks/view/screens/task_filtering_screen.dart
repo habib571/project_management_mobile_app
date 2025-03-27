@@ -40,7 +40,7 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
     return Column(
       children: [
         SizedBox(height: 40.h),
-        const CustomAppBar(title: "Advanced Filtering"),
+        CustomAppBar(title: "Advanced Filtering"),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -146,8 +146,8 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
                      chipModel: ChipModel(
                        priorityChipTexts[index],
                        isSelected, // Use the selected state from the provider
-                       textColors[index],
-                       chipColors[index],
+                       priorityTextColors[index],
+                       priorityChipColors[index],
                      ),
                      onSelect: (_) {
                        _viewModel .selectPriority(index) ;

@@ -5,48 +5,17 @@ import 'package:project_management_app/domain/models/Task/task.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task%20status/task_status_chip.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import 'package:provider/provider.dart';
-import '../../viewmodel/prject_tasks_view_model.dart';
-
-
-
-/*
-class TaskStatusCard extends StatelessWidget {
-  const TaskStatusCard({super.key, required this.taskStatusModel});
-final TaskStatusModel taskStatusModel ;
-  @override
-  Widget build(BuildContext context) {
-     return Container(
-       decoration: BoxDecoration(
-           color: taskStatusModel.backgroundColor ,
-          borderRadius: BorderRadius.circular(20)
-       ),
-       child: Padding(
-           padding: const EdgeInsets.symmetric(horizontal: 9 ,vertical: 5),
-          child: Text(
-             taskStatusModel.statusName ,
-             style: robotoMedium.copyWith(color: taskStatusModel.textColor ,fontSize: 12) ,
-          ),
-       ),
-     ) ;
-  }
-}*/
-
-//***************************
-
-
 
 
 class TaskStatusCard extends StatefulWidget {
     TaskStatusCard({
     super.key,
-    required this.taskStatusModel,  this.viewModel, this.task,  this.isAssignedToMe,
+    required this.taskStatusModel, this.task,  this.isAssignedToMe = false,
   });
 
-   TaskStatusModel taskStatusModel;
-  final ProjectTasksViewModel? viewModel ;
+  TaskStatusModel taskStatusModel;
   final TaskModel? task ;
-  bool? isAssignedToMe = false ;
-
+  bool isAssignedToMe  ;
 
 
   @override
@@ -54,28 +23,20 @@ class TaskStatusCard extends StatefulWidget {
 }
 
 class _TaskStatusCardState extends State<TaskStatusCard> {
-  //late TaskStatusModel selectedStatus;
-  //late bool? _isAssignedToMe ;
+
   late ManageTaskViewModel _manageTaskViewModel;
 
   @override
   void initState() {
     super.initState();
     _manageTaskViewModel = context.read<ManageTaskViewModel>();
-    if(widget.viewModel != null){
-      //print("*** ${widget.viewModel!.selectedTask?.name}");
-      print("*** ${widget.task?.name}");
-      //_isAssignedToMe = widget.viewModel!.localStorage.getUser().id == widget.viewModel!.selectedTask?.assignedUser!.id ;
-    }
-    //selectedStatus = widget.taskStatusModel;
   }
 
 
   @override
   Widget build(BuildContext context) {
-    //print(";;;;;;;;; ${widget.task!.name} / ${widget.taskStatusModel.statusName}");
     return InkWell(
-      onTap: widget.isAssignedToMe! ? () => _showDropdownMenu(context) : null,
+      onTap: widget.isAssignedToMe  ? () => _showDropdownMenu(context) : null,
       borderRadius: BorderRadius.circular(20),
       child: Container(
         decoration: BoxDecoration(
@@ -86,9 +47,6 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (widget.isAssignedToMe!)
-              const Icon(Icons.arrow_drop_down, color: Colors.black),
-            if (!widget.isAssignedToMe!) const SizedBox(width: 5),
             Text(
               widget.taskStatusModel.statusName,
               style: TextStyle(
@@ -96,6 +54,7 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
                 fontSize: 12,
               ),
             ),
+            widget.isAssignedToMe ? const Icon(Icons.arrow_drop_down, color: Colors.black) : const SizedBox(width: 5),
           ],
         ),
       ),
@@ -130,34 +89,26 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
     );
 
     if (newStatus != null) {
-      _manageTaskViewModel.updateTaskStatus(
+      _manageTaskViewModel.selectedStatusIndex = statusChipTexts.indexOf(newStatus);
+      //_manageTaskViewModel.projectTaskViewModel.selectedTask = widget.task! ;
+
+      if(_manageTaskViewModel.projectTaskViewModel.selectedTask != null){
+        _manageTaskViewModel.projectTaskViewModel.selectedTask!.status = newStatus ;
+      }
+      else {
+        _manageTaskViewModel.projectTaskViewModel.selectedTask = _manageTaskViewModel.projectTaskViewModel.tasks.firstWhere((e) => e.id == widget.task!.id) ;
+      }
+
+      _manageTaskViewModel.updateTask();
+
+      /*_manageTaskViewModel.updateTaskStatus(
         task: widget.task!,
         newStatus: newStatus,
-      );
+      );*/
     }
 
-    /*if (newStatus != null) {
-      print(newStatus);
-      setState(() {
-        int index = statusChipTexts.indexOf(newStatus);
-        widget.taskStatusModel = TaskStatusModel(
-          statusTextColors[index],
-          statusBackgroundColor[index],
-          statusChipTexts[index],
-        );
-
-        print("taskStatusModel status ${widget.taskStatusModel.statusName}");
-
-        widget.task!.status = statusChipTexts[index] ;
-        widget.viewModel!.selectedTask = widget.task ;
-        widget.viewModel!.notifyListeners();
-
-        //widget.viewModel!.selectedTask = widget.task ;
-        //widget.viewModel!.selectedTask!.status = statusChipTexts[index] ;
-        _manageTaskViewModel.updateTask();
-      });
-    }*/
   }
+
 }
 
 

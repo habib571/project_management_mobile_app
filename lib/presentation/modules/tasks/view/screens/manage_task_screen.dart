@@ -73,7 +73,12 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
           SizedBox(
             height: 25.h,
           ),
-          CustomAppBar(title: _viewModel.toEdit ? 'Update Task' : 'Add Task' ),
+          CustomAppBar(
+            title: _viewModel.toEdit ? 'Update Task' : 'Add Task' ,
+            onPressed: (){
+              _viewModel.projectTaskViewModel.selectedTask = null;
+              _viewModel.initData() ;
+            } , ),
           SizedBox(height: 30.h),
           _taskNameSection(),
           SizedBox(height: 30.h),
@@ -153,11 +158,11 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
               chipModel: ChipModel(
                 priorityChipTexts[index],
                 isSelected , // Use the selected state from the provider
-                textColors[index],
-                chipColors[index],
+                priorityTextColors[index],
+                priorityChipColors[index],
               ),
               onSelect: (_) {
-                _viewModel.selectPriorityChip(index);
+                _viewModel.selectPriorityChip = index ;
                 /*Provider.of<ManageTaskViewModel>(context, listen: false).selectChip(index);*/
               },
             );
@@ -193,7 +198,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
                           statusBackgroundColor[index],
                         ),
                         onSelect: (_) {
-                          _viewModel.selectStatusChip(index);
+                          _viewModel.selectStatusChip = index ;
                         },
                       );
                   },
@@ -204,6 +209,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
    }
 
   Widget assignUserSection() {
+    if(!_viewModel.addUserPermission()) return const SizedBox.shrink();
     return Row(children: [
       Image.asset(
         "assets/user_outline.png",

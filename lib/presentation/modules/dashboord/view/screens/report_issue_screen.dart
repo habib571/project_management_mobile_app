@@ -52,7 +52,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 25.h,),
-                const CustomAppBar(title: "Report issue"),
+                CustomAppBar(title: "Report issue"),
                 SizedBox(height: 35.h,),
                 _issueInputTextSection(),
                 SizedBox(height: 35.h,),

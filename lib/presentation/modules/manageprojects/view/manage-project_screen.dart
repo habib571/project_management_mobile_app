@@ -47,7 +47,7 @@ class ManageProjectScreen extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 25.h,),
-          _viewModel.toEdit == true ? const CustomAppBar(title: 'Edit Project'):const SizedBox.shrink(),
+          _viewModel.toEdit == true ? CustomAppBar(title: 'Edit Project'):const SizedBox.shrink(),
           SizedBox(
             height: 80.h,
           ),

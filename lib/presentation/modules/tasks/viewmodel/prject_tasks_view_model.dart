@@ -23,6 +23,11 @@ class ProjectTasksViewModel extends BaseViewModel {
     super.start();
   }
 
+  bool isTaskEditable(TaskModel task){
+    bool toMe = localStorage.getUser().id == task.assignedUser!.id ;
+    bool createdByMe = localStorage.getUser().id == task.project!.createdBy!.id ;
+    return toMe || createdByMe ;
+  }
 
   final List<TaskModel> _tasks =[] ;
   List<TaskModel> get tasks => _tasks ;
