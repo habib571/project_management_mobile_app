@@ -91,11 +91,12 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
           return Center(child: Text(state.message));
         }
         else if (state is ContentState) {
-          final members = _viewModel.tasks;
-          if (members.isEmpty) {
+          final tasks = _viewModel.tasks;
+          if (tasks.isEmpty) {
             return const Center(child: Text("No Tasks found"));
           }
           return ListView.builder(
+            addAutomaticKeepAlives: true,
               shrinkWrap: true,
               itemCount: _viewModel.tasks.length,
               itemBuilder: (context, index) {
@@ -107,6 +108,5 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
         return const SizedBox.shrink();
       }) ;
 
-    return const SizedBox.shrink();
   }
 }

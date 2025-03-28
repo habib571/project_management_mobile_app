@@ -73,6 +73,7 @@ class Assets {
   static const String requestsAddMemberRequest = 'lib/data/network/requests/add_member_request.dart';
   static const String requestsAddProjectRequest = 'lib/data/network/requests/add_project_request.dart';
   static const String requestsAuthRequests = 'lib/data/network/requests/auth_requests.dart';
+  static const String requestsFilterTaskRequest = 'lib/data/network/requests/filter_task_request.dart';
   static const String requestsPagination = 'lib/data/network/requests/pagination.dart';
   static const String requestsReportIssueRequest = 'lib/data/network/requests/report_issue_request.dart';
   static const String responsesApiResponse = 'lib/data/responses/api_response.dart';
@@ -102,6 +103,7 @@ class Assets {
   static const String stateRenderStateRender = 'lib/presentation/stateRender/state_render.dart';
   static const String stateRenderStateRenderImpl = 'lib/presentation/stateRender/state_render_impl.dart';
   static const String taskAddTaskUserCase = 'lib/domain/usecases/task/add_task_user_case.dart';
+  static const String taskFilterTasksUseCase = 'lib/domain/usecases/task/filter_tasks_use_case.dart';
   static const String taskGetAllTasks = 'lib/domain/usecases/task/get_all_tasks.dart';
   static const String taskSearchTaskUseCase = 'lib/domain/usecases/task/search_task_use_case.dart';
   static const String utilsColors = 'lib/presentation/utils/colors.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task_status_card.dart';
@@ -112,7 +113,7 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
                       statusBackgroundColor[index],
                     ),
                     onSelect: (_) {
-                      _viewModel.selectStatus(index);
+                      _viewModel.selectStatus(index ,statusTypes[index],);
                     },
                   );
                 },
@@ -149,7 +150,7 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
                       chipColors[index],
                     ),
                     onSelect: (_) {
-                      _viewModel.selectPriority(index);
+                      _viewModel.selectPriority(index ,chipTexts[index]);
                     },
                   );
                 },
@@ -192,7 +193,10 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
             Icons.search_rounded,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () {
+            _viewModel.filterTasks() ;
+            Get.back() ;
+          },
           text: "Search"),
     );
   }
