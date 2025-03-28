@@ -27,7 +27,6 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
   void initState() {
     //_viewModel = context.read<TaskDetailsViewModel>();
      //_viewModel.start()  ;
-    print("********** ${_task.status}");
     super.initState();
   }
 

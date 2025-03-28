@@ -26,8 +26,7 @@ class TaskDetailsViewModel extends BaseViewModel {
   }
   void getTaskDetail() {
     updateState(LoadingState(stateRendererType: StateRendererType.overlayLoadingState)) ;
-    print("--**-- ${_addTaskViewModel.task?.name}");
-    setTask(_addTaskViewModel.task!/*TaskModel.taggedTask(2, "TEST")*/) ;
+    setTask(_addTaskViewModel.task!) ;
 
 
     if(_task !=null) {

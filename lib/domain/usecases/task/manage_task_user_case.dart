@@ -8,6 +8,6 @@ class ManageTaskUseCase {
   final TaskRepository _taskRepository ;
   ManageTaskUseCase(this._taskRepository);
   Future<Either<Failure,TaskModel>> addTask(TaskModel request , int projectId) async  => _taskRepository.addTask(request ,projectId) ;
-  Future<Either<Failure,TaskModel>> updateTask(TaskModel request , int projectId) async  => _taskRepository.updateTask(request ,projectId) ;
+  Future<Either<Failure,TaskModel>> updateTask(TaskModel request , int taskId) async  => _taskRepository.updateTask(request ,taskId) ;
 
 }

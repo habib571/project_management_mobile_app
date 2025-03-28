@@ -57,10 +57,10 @@ class TaskRepositoryImpl implements TaskRepository {
 
   }
   @override
-  Future<Either<Failure, TaskModel>> updateTask(TaskModel request , int projectId) async{
+  Future<Either<Failure, TaskModel>> updateTask(TaskModel request , int taskId) async{
     if (await _networkInfo.isConnected) {
       try {
-        final response = await _taskRemoteDataSource.updateTask(request ,projectId) ;
+        final response = await _taskRemoteDataSource.updateTask(request ,taskId) ;
         if (response.statusCode == 200) {
           return Right(TaskModel.fromJson(response.data)) ;
         } else {

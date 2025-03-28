@@ -8,7 +8,7 @@ import '../../responses/api_response.dart';
 abstract class TaskRemoteDataSource {
   Future<ApiResponse> addTask(TaskModel task ,int projectId) ;
   Future<ApiResponse> getProjectTasks(int projectId ,Pagination pagination ) ;
-  Future<ApiResponse> updateTask(TaskModel request ,int projectId);
+  Future<ApiResponse> updateTask(TaskModel request ,int taskId);
 
 }
 class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
@@ -36,9 +36,9 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse> updateTask(TaskModel request ,int projectId)async {
+  Future<ApiResponse> updateTask(TaskModel request ,int taskId)async {
     return await executePatchRequest(
-        apiUrl: "/task/update/$projectId",
+        apiUrl: "/task/update/$taskId",
         bearerToken: _localStorage.getAuthToken() ,
         body: request.updateToJson(),
         onRequestResponse: (response, statusCode) {

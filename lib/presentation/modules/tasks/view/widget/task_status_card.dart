@@ -90,7 +90,6 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
 
     if (newStatus != null) {
       _manageTaskViewModel.selectedStatusIndex = statusChipTexts.indexOf(newStatus);
-      //_manageTaskViewModel.projectTaskViewModel.selectedTask = widget.task! ;
 
       if(_manageTaskViewModel.projectTaskViewModel.selectedTask != null){
         _manageTaskViewModel.projectTaskViewModel.selectedTask!.status = newStatus ;
@@ -101,10 +100,6 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
 
       _manageTaskViewModel.updateTask();
 
-      /*_manageTaskViewModel.updateTaskStatus(
-        task: widget.task!,
-        newStatus: newStatus,
-      );*/
     }
 
   }

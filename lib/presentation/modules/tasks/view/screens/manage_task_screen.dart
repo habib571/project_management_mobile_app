@@ -76,7 +76,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
           CustomAppBar(
             title: _viewModel.toEdit ? 'Update Task' : 'Add Task' ,
             onPressed: (){
-              _viewModel.projectTaskViewModel.selectedTask = null;
+              //_viewModel.projectTaskViewModel.selectedTask = null;
               _viewModel.initData() ;
             } , ),
           SizedBox(height: 30.h),
@@ -152,8 +152,6 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
         return Selector<ManageTaskViewModel, bool>(
           selector: (_, provider) => provider.selectedPriorityIndex == index,
           builder: (_, isSelected, __) {
-            print("----- Selected Index Updated  ${Provider.of<ManageTaskViewModel>(context).selectedPriorityIndex}");
-            print("----- is Selected ? :  $isSelected");
             return TaskPriorityChip(
               chipModel: ChipModel(
                 priorityChipTexts[index],
@@ -189,7 +187,6 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
                 return Selector<ManageTaskViewModel, bool>(
                   selector: (_, provider) => provider.selectedStatusIndex == index,
                   builder: (_, isSelected, __) {
-                    print("----- taskStatusSection Updated");
                     return TaskStatusChip(
                         chipModel: ChipModel(
                           statusChipTexts[index],

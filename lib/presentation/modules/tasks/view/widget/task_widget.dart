@@ -89,7 +89,6 @@ class _TaskWidgetState extends State<TaskWidget> {
                    Selector<ProjectTasksViewModel, String>(
                      selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).assignedUser?.fullName ?? '',
                      builder: (_, fullName, __) {
-                       print("------- Assigned --- Card");
                        return Text(
                          fullName,
                          style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),
@@ -119,7 +118,6 @@ class _TaskWidgetState extends State<TaskWidget> {
                        Selector<ProjectTasksViewModel, String>(
                          selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).deadline ?? '',
                          builder: (_, deadline, __) {
-                           print("------- Status --- Card");
                            return Text(
                              deadline,
                              style: robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),

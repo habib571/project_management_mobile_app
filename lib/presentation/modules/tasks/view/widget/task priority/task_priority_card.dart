@@ -82,30 +82,17 @@ class _TaskPriorityCardState extends State<TaskPriorityCard> {
 
     if (newPriority != null) {
       _manageTaskViewModel.selectedPriorityIndex = priorityChipTexts.indexOf(newPriority);
-      //_manageTaskViewModel.projectTaskViewModel.selectedTask = widget.task! ;
 
       if(_manageTaskViewModel.projectTaskViewModel.selectedTask != null){
         _manageTaskViewModel.projectTaskViewModel.selectedTask!.priority = newPriority ;
       }
       else {
-        //_manageTaskViewModel.projectTaskViewModel.selectedTask = widget.task! ;
         _manageTaskViewModel.projectTaskViewModel.selectedTask = _manageTaskViewModel.projectTaskViewModel.tasks.firstWhere((e) => e.id ==  widget.task!.id) ;
 
       }
 
-      /*if(_manageTaskViewModel.task != null){
-        _manageTaskViewModel.task!.priority = newPriority ;
-      }
-      else {
-        _manageTaskViewModel.setTask(widget.task!) ;
-        _manageTaskViewModel.task!.priority = newPriority ;
-      }*/
-
       _manageTaskViewModel.updateTask();
-      /*_manageTaskViewModel.updateTaskPriority(
-        task: widget.task!,
-        newPriority: newPriority,
-      );*/
+
     }
 
   }
