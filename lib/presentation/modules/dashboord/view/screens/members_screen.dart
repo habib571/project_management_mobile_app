@@ -40,7 +40,7 @@ class _MembersScreenState extends State<MembersScreen> {
             SizedBox(
               height: 25.h,
             ),
-            CustomAppBar(title: 'All Members'),
+            const CustomAppBar(title: 'All Members'),
             Selector<ProjectDetailViewModel,List<ProjectMember>>(
               selector: (context, viewModel) => viewModel.projectMember ,
               builder:  (context, data, child) {

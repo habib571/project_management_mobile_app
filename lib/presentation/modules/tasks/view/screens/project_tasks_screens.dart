@@ -39,7 +39,7 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
         padding: const EdgeInsets.symmetric(vertical: 25),
         child: Column(
           children: [
-            CustomAppBar(title: "All Tasks" , ),
+            const CustomAppBar(title: "All Tasks" , ),
             SizedBox(height: 15.h) ,
             _showTaskList()
           ],

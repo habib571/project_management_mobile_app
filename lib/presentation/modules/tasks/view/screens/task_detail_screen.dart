@@ -50,7 +50,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     return Column(
       children: [
         const SizedBox(height: 25,) ,
-        CustomAppBar(title: "Task Details"),
+        const CustomAppBar(title: "Task Details"),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(

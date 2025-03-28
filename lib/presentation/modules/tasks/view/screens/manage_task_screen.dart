@@ -8,9 +8,9 @@ import 'package:project_management_app/presentation/modules/tasks/view/widget/as
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task%20status/task_status_chip.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
+import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 import 'package:provider/provider.dart';
-import '../../../../../application/dependencyInjection/dependency_injection.dart';
 import '../../../../../domain/models/Task/task_chip.dart';
 import '../../../../sharedwidgets/custom_button.dart';
 import '../../../../sharedwidgets/input_text.dart';
@@ -51,6 +51,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
    @override
   Widget build(BuildContext context) {
      return Scaffold(
+      backgroundColor: AppColors.scaffold ,
       body: SingleChildScrollView(
         child: StreamBuilder<FlowState>(
           stream: _viewModel.outputState,
@@ -76,7 +77,6 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
           CustomAppBar(
             title: _viewModel.toEdit ? 'Update Task' : 'Add Task' ,
             onPressed: (){
-              //_viewModel.projectTaskViewModel.selectedTask = null;
               _viewModel.initData() ;
             } , ),
           SizedBox(height: 30.h),
@@ -116,6 +116,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
       validator: (val) => val.isEmptyInput(),
       controller: _viewModel.taskName,
       hintText: "Enter task name",
+      borderSide: const BorderSide(color: Colors.black),
     );
   }
 
@@ -126,6 +127,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
       controller: _viewModel.taskDescription,
       hintText: "Enter The Task description",
       maxLines: 3,
+      borderSide: const BorderSide(color: Colors.black),
     );
   }
   Widget _deadlineSection(BuildContext context) {
@@ -138,6 +140,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
       onTap: () async {
          await _viewModel.pickProjectEndDate(context);
       },
+      borderSide: const BorderSide(color: Colors.black),
     );
   }
 
@@ -161,7 +164,6 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
               ),
               onSelect: (_) {
                 _viewModel.selectPriorityChip = index ;
-                /*Provider.of<ManageTaskViewModel>(context, listen: false).selectChip(index);*/
               },
             );
           },

@@ -40,7 +40,7 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
     return Column(
       children: [
         SizedBox(height: 40.h),
-        CustomAppBar(title: "Advanced Filtering"),
+        const CustomAppBar(title: "Advanced Filtering"),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(

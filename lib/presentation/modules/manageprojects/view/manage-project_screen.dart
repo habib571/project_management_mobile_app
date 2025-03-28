@@ -47,7 +47,7 @@ class ManageProjectScreen extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 25.h,),
-          _viewModel.toEdit == true ? CustomAppBar(title: 'Edit Project'):const SizedBox.shrink(),
+          _viewModel.toEdit == true ? const CustomAppBar(title: 'Edit Project'):const SizedBox.shrink(),
           SizedBox(
             height: 80.h,
           ),
@@ -91,10 +91,12 @@ class ManageProjectScreen extends StatelessWidget {
       validator: (val) => val.isEmptyInput() ,
       controller: _viewModel.projectDescription,
       hintText: "Enter The project description",
-      borderSide: const BorderSide(color: Colors.black),
       maxLines: 3,
+      borderRadius: 20,
+      borderSide: const BorderSide(color: Colors.black),
     );
   }
+
 
   Widget _addProjectEndDateSection(BuildContext context){
     return InputText(

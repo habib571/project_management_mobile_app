@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_management_app/application/navigation/routes_constants.dart';
@@ -9,10 +8,7 @@ import 'package:project_management_app/presentation/modules/dashboord/viewmodel/
 import 'package:project_management_app/presentation/modules/tasks/view/screens/task_detail_screen.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/prject_tasks_view_model.dart';
 import 'package:project_management_app/presentation/stateRender/state_render.dart';
-
 import '../../../../domain/models/Task/task.dart';
-
-import '../../../../domain/models/user.dart';
 import '../../../stateRender/state_render_impl.dart';
 import '../view/widget/task priority/task_priority_chip.dart';
 import '../view/widget/task status/task_status_chip.dart';

@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import '../utils/styles.dart';
 
 class CustomAppBar extends StatelessWidget {
-  CustomAppBar({super.key, required this.title, this.onPressed});
+  const CustomAppBar({super.key, required this.title, this.onPressed});
   final String title;
-  void Function()? onPressed;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
