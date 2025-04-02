@@ -42,7 +42,7 @@ class AllTasksViewModel extends BaseViewModel {
     } else {
       _selectedStatusIndex = index;
     }
-   status = value;
+    status = value;
     notifyListeners();
   }
 
@@ -52,7 +52,7 @@ class AllTasksViewModel extends BaseViewModel {
     } else {
       _selectedPriorityIndex = index;
     }
-     priority = value;
+    priority = value;
     notifyListeners();
   }
 
@@ -65,12 +65,13 @@ class AllTasksViewModel extends BaseViewModel {
     );
     if (pickedDate != null) {
       selectedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
-      taskDeadline.text =selectedDate! ;
+      taskDeadline.text = selectedDate!;
       deadline = selectedDate;
 
-      print(deadline) ;
+      print(deadline);
     }
   }
+
   String? status;
   String? priority;
   String? deadline;
@@ -93,7 +94,7 @@ class AllTasksViewModel extends BaseViewModel {
   bool get isLoadingMore => _isLoadingMore;
 
   bool hasMore = true;
-  final int _pageSize = 5;
+  final int _pageSize = 4;
   String _searchQuery = "";
   String get searchQuery => _searchQuery;
 
@@ -138,37 +139,40 @@ class AllTasksViewModel extends BaseViewModel {
     _isLoadingMore = false;
   }
 
-  filterTasks() async {
-    _stateNotifier.value = LoadingState(
-        stateRendererType: StateRendererType.fullScreenLoadingState);
-    //   if (_isLoadingMore || !hasMore) return;
+  Future<void> filterTasks() async {
+    // For first page load, clear current tasks and reset pagination.
     if (_currentPage == 0) {
       _tasks.clear();
       _currentPage = 0;
       hasMore = true;
       _stateNotifier.value = ContentState();
     }
-
     _isLoadingMore = true;
 
 
-    (await _filterTaskUseCase.filterTasks(
-         FilterTaskRequest(false , status, priority, deadline)   , Pagination(_currentPage, _pageSize)))
-        .fold((failure) {
-      _stateNotifier.value =
-          ErrorState(StateRendererType.fullScreenErrorState, failure.message);
-    }, (data) {
-      _stateNotifier.value = ContentState();
-      _tasks.addAll(data);
-      log(data.toString()) ;
-      notifyListeners() ;
-      // _currentPage++;
-      _isLoadingMore = false;
-      if (data.length < _pageSize) {
-        hasMore = false;
-      }
+    final result = await _filterTaskUseCase.filterTasks(
+      FilterTaskRequest(false, status, priority, deadline),
+      Pagination(_currentPage, _pageSize),
+    );
 
-    });
+    result.fold(
+      (failure) {
+        _stateNotifier.value =
+            ErrorState(StateRendererType.fullScreenErrorState, failure.message);
+      },
+      (data) {
+        _tasks.addAll(data);
+        log(data.toString());
+        notifyListeners();
+        _currentPage++;
+        if (data.length < _pageSize) {
+          hasMore = false;
+        }
+      },
+    );
+
     _isLoadingMore = false;
+    // Update state to reflect new content
+    _stateNotifier.value = ContentState();
   }
 }

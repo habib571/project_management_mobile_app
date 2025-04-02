@@ -80,33 +80,55 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
       ],
     );
   }
-
   Widget _buildTaskList() {
     return ValueListenableBuilder<FlowState>(
-        valueListenable: _viewModel.stateNotifier,
+      valueListenable: _viewModel.stateNotifier,
       builder: (context, state, child) {
         if (state is LoadingState && _viewModel.tasks.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is ErrorState) {
           return Center(child: Text(state.message));
-        }
-        else if (state is ContentState) {
+        } else if (state is ContentState) {
           final tasks = _viewModel.tasks;
           if (tasks.isEmpty) {
             return const Center(child: Text("No Tasks found"));
           }
-          return ListView.builder(
-            addAutomaticKeepAlives: true,
-              shrinkWrap: true,
-              itemCount: _viewModel.tasks.length,
-              itemBuilder: (context, index) {
-                final task = _viewModel.tasks[index];
-                return TaskWidget(task: task);
-              }
+          return Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 80),
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: tasks.length + (_viewModel.hasMore ? 1 : 0),
+                itemBuilder: (context, index) {
+                  if (index < tasks.length) {
+                    final task = tasks[index];
+                    return TaskWidget(task: task);
+                  } else {
+                    return Center(
+                      child: _viewModel.isLoadingMore
+                          ? const CircularProgressIndicator()
+                          : TextButton(
+                        onPressed: () {
+                          _viewModel.filterTasks();
+                        },
+                        child: const Text(
+                          "Load More",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
           );
         }
         return const SizedBox.shrink();
-      }) ;
-
+      },
+    );
   }
+
 }
