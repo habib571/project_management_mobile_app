@@ -14,7 +14,6 @@ import 'package:project_management_app/domain/usecases/project/issue/report_issu
 import 'package:project_management_app/domain/usecases/project/issue/updae_project_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/myprojects_usecase.dart';
 
-import 'package:project_management_app/domain/usecases/project/update_member_role_use_case.dart';
 import 'package:project_management_app/domain/usecases/task/filter_tasks_use_case.dart';
 
 import 'package:project_management_app/domain/usecases/task/get_all_tasks.dart';

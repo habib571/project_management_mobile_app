@@ -111,7 +111,7 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
                     chipModel: ChipModel(
                       statusChipTexts[index],
                       isSelected, // Use the selected state from the provider
-                      statusTextColors[index],
+                      statusTextColors[index]
                       statusBackgroundColor[index],
                     ),
                     onSelect: (_) {

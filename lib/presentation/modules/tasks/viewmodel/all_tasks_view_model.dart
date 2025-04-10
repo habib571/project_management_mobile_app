@@ -9,7 +9,7 @@ import 'package:project_management_app/domain/usecases/task/search_task_use_case
 import 'package:project_management_app/presentation/base/base_view_model.dart';
 
 import '../../../../data/network/requests/pagination.dart';
-import '../../../../domain/models/task.dart';
+import '../../../../domain/models/Task/task.dart';
 import '../../../stateRender/state_render.dart';
 import '../../../stateRender/state_render_impl.dart';
 

@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:project_management_app/main.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task%20priority/task_priority_card.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task_status_card.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,7 @@ class TaskWidget extends StatefulWidget {
 
   final TaskModel task ;
   final ProjectTasksViewModel viewModel ;
+
   final bool isTaskEditable ;
 
 
@@ -37,7 +39,7 @@ class _TaskWidgetState extends State<TaskWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 25) ,
+      margin: const EdgeInsets.only(bottom: 25) ,
          padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(17) ,

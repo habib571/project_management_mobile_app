@@ -102,7 +102,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                 itemBuilder: (context, index) {
                   if (index < tasks.length) {
                     final task = tasks[index];
-                    return TaskWidget(task: task);
+                    return TaskWidget(task: task, viewModel: , isTaskEditable: null,);
                   } else {
                     return Center(
                       child: _viewModel.isLoadingMore
