@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_it/get_it.dart';
 import 'package:project_management_app/application/navigation/routes.dart';
-import 'package:project_management_app/presentation/modules/addproject/viewmodel/add-project-view-model.dart';
-import 'package:project_management_app/presentation/modules/auth/view/screens/signin_screen.dart';
-import 'package:project_management_app/presentation/modules/auth/view/screens/signup_screen.dart';
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signin-view_model.dart';
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signup_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
-import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/edit_project_details_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
-import 'package:project_management_app/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
+import 'package:project_management_app/presentation/modules/manageprojects/viewmodel/manage-project-view-model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/prject_tasks_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/task_detail_view_model.dart';
 import 'package:provider/provider.dart';
 import 'application/dependencyInjection/dependency_injection.dart';
 import 'application/helpers/screen_configuraton.dart';
+import 'application/helpers/token_mamanger.dart';
 import 'application/navigation/routes_constants.dart';
 
 void main() async {
@@ -32,6 +34,9 @@ class MyApp extends StatelessWidget {
     screenUtility.initialize(context);
     return MultiProvider(
         providers: [
+
+          //Provider( create: (_) => GetIt.instance<ProjectDetailViewModel>()  ), For Test
+
           ChangeNotifierProvider<SignupViewModel>(
               lazy: true, create: (_) => GetIt.instance<SignupViewModel>()),
 
@@ -41,9 +46,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<DashBoardViewModel>(
               lazy: true, create: (_) => GetIt.instance<DashBoardViewModel>()),
           
-          ChangeNotifierProvider<AddProjectViewModel>(
+          ChangeNotifierProvider<ManageProjectViewModel>(
             lazy: true,
-              create: (_) => GetIt.instance<AddProjectViewModel>()),
+              create: (_) => GetIt.instance<ManageProjectViewModel>()),
           
           ChangeNotifierProvider<ProjectDetailViewModel>(
               lazy: true,
@@ -54,14 +59,21 @@ class MyApp extends StatelessWidget {
               create: (_) => GetIt.instance<ReportIssueViewModel>()),
 
           ChangeNotifierProvider(
-              lazy: true, create: (_) => GetIt.instance<AddTaskViewModel>()
+              lazy: true, create: (_) => GetIt.instance<ManageTaskViewModel>(/*param1: Get.arguments?["toEdit"]  ?? false ,*/)
           ) ,
+
+          ChangeNotifierProvider<ProjectTasksViewModel>(
+              lazy: true,
+              create: (_) => GetIt.instance<ProjectTasksViewModel>()),
+
+          ChangeNotifierProvider<TaskDetailsViewModel>(
+              lazy: true,
+              create: (_) => GetIt.instance<TaskDetailsViewModel>()),
+
           ChangeNotifierProvider<AllTasksViewModel>(
               lazy: true, create: (_) => GetIt.instance<AllTasksViewModel>()
           ),
-          ChangeNotifierProvider<EditProjectDetailsViewModel>(
-              lazy: true, create: (_) => GetIt.instance<EditProjectDetailsViewModel>()
-          )
+
         ],
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
@@ -75,3 +87,6 @@ class MyApp extends StatelessWidget {
         ));
   }
 }
+
+
+

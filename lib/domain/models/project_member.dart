@@ -14,6 +14,7 @@ class ProjectMember {
   ProjectMember.updateRoleRequest(this.projectId,this.role);
   ProjectMember.selectedMemberToBeAdded(this.user, this.projectId);
   ProjectMember.selectedMemberToBeUpdated(this.id,this.user, this.projectId, this.role);
+  ProjectMember.taskAsseignedMember(this.user) ;
 
   factory ProjectMember.fromJson(Map<String, dynamic> json) {
     return ProjectMember(

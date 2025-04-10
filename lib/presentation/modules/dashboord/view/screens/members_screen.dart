@@ -8,14 +8,28 @@ import 'package:project_management_app/application/extensions/screen_config_exte
 import 'package:project_management_app/domain/models/project_member.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/widgets/member_listile.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
-import 'package:project_management_app/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import 'package:provider/provider.dart';
 import '../../../../sharedwidgets/custom_appbar.dart';
 
-class MembersScreen extends StatelessWidget {
+class MembersScreen extends StatefulWidget {
    MembersScreen({super.key}) ;
+
+  @override
+  State<MembersScreen> createState() => _MembersScreenState();
+}
+
+class _MembersScreenState extends State<MembersScreen> {
   final ProjectDetailViewModel _viewModel = Get.arguments ;
-  final AddTaskViewModel _addTaskViewModel  =  instance.get<AddTaskViewModel>() ;
+
+  //final ManageTaskViewModel _addTaskViewModel  =  instance.get<ManageTaskViewModel>(param1: false) ;
+   late final ManageTaskViewModel _addTaskViewModel   ;
+
+   @override
+  void initState() {
+     _addTaskViewModel = context.read<ManageTaskViewModel>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
