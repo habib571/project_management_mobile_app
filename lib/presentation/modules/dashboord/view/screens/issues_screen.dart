@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_management_app/application/constants/constants.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
-import 'package:project_management_app/domain/models/task.dart';
+import 'package:project_management_app/domain/models/Task/task.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
@@ -45,34 +46,57 @@ class _IssuesScreenState extends State<IssuesScreen> {
   }
 }
 
-Widget _showBody(GetAllIssuesViewModel viewModel){
-  return  Column(
+Widget _showBody(GetAllIssuesViewModel viewModel) {
+  return Column(
     children: [
       SizedBox(height: 25.h),
       const CustomAppBar(title: "All Issues"),
       SizedBox(height: 25.h),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: ListView.builder(
-          itemCount: viewModel.issuesList.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return IssueCard(
-              currentUserId: viewModel.issuesList[index].issueId ,
-              title: viewModel.issuesList[index].issueTitle,
-              description: viewModel.issuesList[index].issueDescription,
-              taskReference: TaskModel.taggedTask(12, "Task1"),
-              taggedUser: viewModel.issuesList[index].taggedUser ,
-              createdBy:User(1, "Nabil", "nabil@gmail.com",'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80'),
-              isResolved: viewModel.issuesList[index].isSolved,
-              onMarkResolved: () {
-                print("----Test");
-                viewModel.updateIssueStatus(viewModel.issuesList[index].issueId);
-              },
-            );
-          },
+      Expanded(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: viewModel.issuesList.isEmpty
+              ? const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.info_outline, size: 64, color: Colors.grey),
+                SizedBox(height: 16),
+                Text(
+                  "No Issues Found",
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
+                ),
+              ],
+            ),
+          )
+              : ListView.builder(
+            itemCount: viewModel.issuesList.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return IssueCard(
+                currentUserId: viewModel.issuesList[index].issueId,
+                title: viewModel.issuesList[index].issueTitle,
+                description: viewModel.issuesList[index].issueDescription,
+                taskReference: TaskModel.taggedTask(12, "Task1"),
+                taggedUser: viewModel.issuesList[index].taggedUser,
+                createdBy: User(
+                  1,
+                  "Nabil",
+                  "nabil@gmail.com",
+                  Constants.userProfileImageUrl
+                ),
+                isResolved: viewModel.issuesList[index].isSolved,
+                onMarkResolved: () {
+                  print("----Test");
+                  viewModel.updateIssueStatus(viewModel.issuesList[index].issueId);
+                },
+              );
+            },
+          ),
         ),
       ),
     ],
   );
 }
+

@@ -1,54 +1,87 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_management_app/domain/models/project_member.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/project_details/projet_detail_screen.dart';
 import '../../../../data/network/requests/add_member_request.dart';
-import '../../../../domain/usecases/project/add_member_use_case.dart';
+import '../../../../domain/usecases/project/manage_members_use_case.dart';
 import '../../../stateRender/state_render.dart';
 import '../../../stateRender/state_render_impl.dart';
 import '../../dashboord/viewmodel/dashboard_view_model.dart';
+import '../../dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
 import 'member_managment_viewmodel_interface.dart';
 
 
-class AddMemberViewModel extends BaseViewModel implements MemberManagementInterface {
-  final AddMemberUseCase _addMemberUseCase;
-  //final DashBoardViewModel _dashBoardViewModel;
-  AddMemberViewModel(super.tokenManager, this._addMemberUseCase,);
+class ManageMembersViewModel extends BaseViewModel {
+  final ManageMembersUseCase _manageMembersUseCase;
+  final ProjectDetailViewModel _projectDetailViewModel;
+
+  ManageMembersViewModel(super.tokenManager, this._manageMembersUseCase,
+      this._projectDetailViewModel, this.toEdit,);
+
+  final bool toEdit ;
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-  @override
+
   GlobalKey<FormState> get formkey => _formkey;
 
   final TextEditingController _role = TextEditingController();
-  @override
+
   TextEditingController get role => _role;
 
-  @override
-  Future<void> manageMember(int? memberId,int projectId) async {
+
+  addMember(int? memberId, int projectId) async {
     if (_formkey.currentState!.validate()) {
       updateState(LoadingState(
           stateRendererType: StateRendererType.overlayLoadingState));
-
-      (await _addMemberUseCase.addMember(
-          ProjectMember.request( memberId ,role.text.trim(),projectId) //userID
+      print("---- ${role.text.trim()}");
+      (await _manageMembersUseCase
+          .addMember(
+          ProjectMember.request(memberId, role.text.trim(), projectId) //userID
       ))
           .fold(
-        (failure) {
+            (failure) {
           updateState(
             ErrorState(StateRendererType.snackbarState, failure.message),
           );
         },
-        (data) {
+            (data) {
           updateState(ContentState());
-          Get.to(const ProjectDetailScreen());
+          Get.to(ProjectDetailScreen());
         },
       );
     }
   }
 
+  Future<void> updateMemberRole(int? memberId, int projectId) async {
+    if (_formkey.currentState!.validate()) {
+      updateState(LoadingState(
+          stateRendererType: StateRendererType.overlayLoadingState));
+          print(_role.text.trim());
+      (await _manageMembersUseCase.updateMemberRole(
+          ProjectMember.updateRoleRequest(projectId, _role.text.trim())))
+          .fold(
+            (failure) {
+          updateState(
+            ErrorState(StateRendererType.snackbarState, failure.message),
+          );
+        },
+            (data) {
+          print("------$memberId");
+          ProjectMember updatedMember = _projectDetailViewModel.projectMember
+              .firstWhere((m) => m.id == memberId).copyWith(
+              role: _role.text.trim()
+          );
+          //To Update the internal state
+          _projectDetailViewModel.updatedMember(updatedMember);
+          updateState(ContentState());
+        },
+      );
+    }
+  }
 }
-
 
 /*
 class AddMemberViewModel extends BaseViewModel {

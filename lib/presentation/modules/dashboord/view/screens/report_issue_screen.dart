@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:provider/provider.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
+import '../../../../../application/constants/constants.dart';
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
-import '../../../../../domain/models/task.dart';
+import '../../../../../domain/models/Task/task.dart';
 import '../../../../../domain/models/user.dart';
 import '../../../../sharedwidgets/custom_appbar.dart';
 import '../../../../sharedwidgets/custom_button.dart';
@@ -45,27 +46,32 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
   Widget _showBody(BuildContext context) {
     return Form(
         key:_viewModel.formkey ,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 25.h,),
-                const CustomAppBar(title: "Report issue"),
-                SizedBox(height: 35.h,),
-                _issueInputTextSection(),
-                SizedBox(height: 35.h,),
-                _issueDescriptionInputTextSection(),
-                SizedBox(height: 35.h,),
-                _membersChipSection(),
-                SizedBox(height: 35.h,),
-                _tasksChipSection(),
-                SizedBox(height: 85.h,),
-                _showButton()
-              ],
+        child: Column(
+          children: [
+            SizedBox(height: 25.h,),
+            const CustomAppBar(title: "Report issue"),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 35.h,),
+                    _issueInputTextSection(),
+                    SizedBox(height: 35.h,),
+                    _issueDescriptionInputTextSection(),
+                    SizedBox(height: 35.h,),
+                    _membersChipSection(),
+                    SizedBox(height: 35.h,),
+                    _tasksChipSection(),
+                    const Spacer(),
+                    _showButton(),
+                    SizedBox(height: 35.h,),
+                  ],
+                ),
+              ),
             ),
-          ),
+          ],
     ));
   }
 
@@ -123,7 +129,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                   : InkWell(
                 onTap: () {
                     // To modify and Get From All members
-                    _viewModel.updatetaggedMember(User(204, "fullName", "email", "imageUrl"));
+                    _viewModel.updatetaggedMember(User(204, "Ahmed", "email", Constants.userProfileImageUrl));
                     context.read<ReportIssueViewModel>().toggleIsUserAdded() ;
                   /*showSearch(
                     context: context,

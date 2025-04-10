@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 import '../utils/styles.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key, required this.title});
+  const CustomAppBar({super.key, required this.title, this.onPressed});
   final String title;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +14,9 @@ class CustomAppBar extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () {
+            if (onPressed != null) {
+              onPressed!();
+            }
             Get.back();
           },
           icon: const Icon(Icons.arrow_back_rounded),

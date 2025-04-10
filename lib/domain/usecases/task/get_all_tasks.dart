@@ -4,7 +4,7 @@ import 'package:project_management_app/domain/repository/task_repo.dart';
 
 import '../../../data/network/failure.dart';
 import '../../../data/network/requests/pagination.dart';
-import '../../models/task.dart';
+import '../../models/Task/task.dart';
 
 class GetProjectTasksUseCase {
   final TaskRepository _taskRepository;
