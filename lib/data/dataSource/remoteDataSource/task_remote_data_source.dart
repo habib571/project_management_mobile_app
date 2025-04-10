@@ -3,15 +3,17 @@ import 'package:project_management_app/data/network/requests/pagination.dart';
 
 import '../../../application/functions/cruds_functions.dart';
 import '../../../application/helpers/get_storage.dart';
-import '../../../domain/models/task.dart';
+import '../../../domain/models/Task/task.dart';
 import '../../responses/api_response.dart';
 
 abstract class TaskRemoteDataSource {
   Future<ApiResponse> addTask(TaskModel task ,int projectId) ;
   Future<ApiResponse> getProjectTasks(int projectId ,Pagination pagination ) ;
+
   Future<ApiResponse> searchTasks(String taskName , Pagination pagination) ;
   Future<ApiResponse> filterTasks(FilterTaskRequest filterRequest , Pagination pagination) ;
 
+  Future<ApiResponse> updateTask(TaskModel request ,int taskId);
 
 }
 class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
@@ -39,6 +41,7 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   }
 
   @override
+
   Future<ApiResponse> searchTasks(String taskName, Pagination pagination) async{
     return await executeGetRequest(
         apiUrl: "/task/search?name=$taskName&page=${pagination.page}&size=${pagination.size}",
@@ -78,6 +81,16 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
         return ApiResponse(response, statusCode);
       },
     );
+
+  Future<ApiResponse> updateTask(TaskModel request ,int taskId)async {
+    return await executePatchRequest(
+        apiUrl: "/task/update/$taskId",
+        bearerToken: _localStorage.getAuthToken() ,
+        body: request.updateToJson(),
+        onRequestResponse: (response, statusCode) {
+          return ApiResponse(response, statusCode);
+        });
+
   }
 
 }

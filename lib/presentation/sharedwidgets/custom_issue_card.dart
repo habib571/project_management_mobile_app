@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
-import 'package:project_management_app/domain/models/task.dart';
+import 'package:project_management_app/domain/models/Task/task.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 import '../../domain/models/user.dart';
 import '../utils/styles.dart';

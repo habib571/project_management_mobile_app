@@ -1,42 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
+import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
 import 'package:project_management_app/domain/models/project_member.dart';
-import 'package:project_management_app/presentation/modules/managemembers/viewmodel/update_role_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
-import '../../../../base/base_view_model.dart';
 import '../../../../sharedwidgets/custom_button.dart';
 import '../../../../sharedwidgets/image_widget.dart';
 import '../../../../sharedwidgets/input_text.dart';
 import '../../../../stateRender/state_render_impl.dart';
 import '../../../../utils/colors.dart';
-import '../../viewmodel/add_member_viewmodel.dart';
-import '../../viewmodel/member_managment_viewmodel_interface.dart';
+import '../../viewmodel/manage_members_viewmodel.dart';
 
 /*
-    - Screen used to Add a new member or to Update a specific member Role depends on the viewModelType value
-    - Get the viewModelType and use it to get the needed MemberManagementInterface implementations
- */
+    - Screen used to Add a new member or to Update a specific member Role depends on arguments
+*/
 
 class ManageMembersScreen extends StatefulWidget {
 
-  final String viewModelType;
-  const ManageMembersScreen({super.key, required this.viewModelType});
+   const ManageMembersScreen({super.key,}) ;
 
   @override
-  State<ManageMembersScreen> createState() => _AddMemberScreenState();
+  State<ManageMembersScreen> createState() => _ManageMembersScreenState();
 }
 
-class _AddMemberScreenState extends State<ManageMembersScreen> {
-  late MemberManagementInterface _viewModel ;
-  final ProjectMember member = Get.arguments ;
-  
+class _ManageMembersScreenState extends State<ManageMembersScreen> {
+
+  ProjectMember member = Get.arguments?["member"] ;
+  final ManageMembersViewModel _viewModel = instance<ManageMembersViewModel>(param1: Get.arguments?["toEdit"] );
+
   @override
   void initState() {
     super.initState();
-    _viewModel = GetIt.instance<MemberManagementInterface>(instanceName: widget.viewModelType);
     if (member.role != null && member.role!.isNotEmpty) {
       _viewModel.role.text = member.role!;
     }
@@ -47,7 +42,7 @@ class _AddMemberScreenState extends State<ManageMembersScreen> {
     return Scaffold(
         backgroundColor: AppColors.scaffold,
         body: StreamBuilder<FlowState>(
-          stream: (_viewModel as BaseViewModel).outputState, //_viewModel.outputState,
+          stream:  _viewModel.outputState,
           builder: (context, snapshot) {
             return snapshot.data
                 ?.getScreenWidget(context, _showBody(), () {}) ??
@@ -65,7 +60,7 @@ class _AddMemberScreenState extends State<ManageMembersScreen> {
           SizedBox(
             height: 25.h,
           ),
-          CustomAppBar(title: widget.viewModelType == 'AddMember' ? 'Add Member' : 'Update Role'),
+          CustomAppBar(title: _viewModel.toEdit  ? 'Update Role'  : 'Add Member'),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -156,11 +151,10 @@ class _AddMemberScreenState extends State<ManageMembersScreen> {
     );
   }
 
-
   Widget _addMemberRoleSection() {
     return InputText(
       validator: (val) => val.isEmptyInput(),
-      controller: _viewModel.role,
+      controller:  _viewModel.role ,
       prefixIcon: const Padding(
         padding:  EdgeInsetsDirectional.only(end: 12),
         child: Icon(Icons.badge)
@@ -172,10 +166,10 @@ class _AddMemberScreenState extends State<ManageMembersScreen> {
   Widget _addMemberButtonSuction() {
     return CustomButton(
         onPressed: () {
-          widget.viewModelType == 'AddMember' ? print(member.user?.id) : print(member.id);
-          _viewModel.manageMember( widget.viewModelType == 'AddMember' ? member.user?.id : member.id , member.projectId!  );
+          _viewModel.toEdit ? _viewModel.updateMemberRole(member.id , member.projectId!) : _viewModel.addMember(member.user?.id , member.projectId!) ;
         },
-        text: widget.viewModelType == 'AddMember' ? 'Add Member' : 'Update Role',
+        text:_viewModel.toEdit  ? 'Update Role' : 'Add Member'  ,
     );
   }
 }
+

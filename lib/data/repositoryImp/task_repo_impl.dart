@@ -4,9 +4,8 @@ import 'package:project_management_app/data/dataSource/remoteDataSource/task_rem
 import 'package:project_management_app/data/network/failure.dart';
 import 'package:project_management_app/data/network/requests/filter_task_request.dart';
 import 'package:project_management_app/data/network/requests/pagination.dart';
-import 'package:project_management_app/domain/models/task.dart';
+import 'package:project_management_app/domain/models/Task/task.dart';
 import 'package:project_management_app/domain/repository/task_repo.dart';
-
 import '../network/error_handler.dart';
 import '../network/internet_checker.dart';
 
@@ -56,8 +55,8 @@ class TaskRepositoryImpl implements TaskRepository {
     }
     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
 
-
   }
+
 
   @override
   Future<Either<Failure, List<TaskModel>>> searchTasks(String taskName, Pagination pagination) async{
@@ -69,6 +68,15 @@ class TaskRepositoryImpl implements TaskRepository {
           final List<Map<String, dynamic>> responseData = List<Map<String, dynamic>>.from(response.data);
           final tasks = responseData.map((memberJson) => TaskModel.fromJson(memberJson)).toList();
           return Right(tasks);
+
+  @override
+  Future<Either<Failure, TaskModel>> updateTask(TaskModel request , int taskId) async{
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _taskRemoteDataSource.updateTask(request ,taskId) ;
+        if (response.statusCode == 200) {
+          return Right(TaskModel.fromJson(response.data)) ;
+
         } else {
           return Left(Failure.fromJson(response.data));
         }
@@ -79,6 +87,7 @@ class TaskRepositoryImpl implements TaskRepository {
       }
     }
     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+
 
 
   }
@@ -105,4 +114,8 @@ class TaskRepositoryImpl implements TaskRepository {
     }
     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
   }
+
+  }
+
+
 }

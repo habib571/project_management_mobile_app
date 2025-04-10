@@ -1,32 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_management_app/application/constants/constants.dart';
-import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/members_screen.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/assigned_member_chip.dart';
-import 'package:project_management_app/presentation/modules/tasks/view/widget/task_priority_chip.dart';
-import 'package:project_management_app/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/view/widget/task%20status/task_status_chip.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
+import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 import 'package:provider/provider.dart';
+import '../../../../../domain/models/Task/task_chip.dart';
 import '../../../../sharedwidgets/custom_button.dart';
 import '../../../../sharedwidgets/input_text.dart';
 import '../../../../stateRender/state_render_impl.dart';
+import '../widget/task priority/task_priority_chip.dart';
 
-class CreateTaskScreen extends StatefulWidget {
-  const CreateTaskScreen({super.key});
+class ManageTaskScreen extends StatefulWidget {
+  const ManageTaskScreen({super.key});
 
   @override
-  State<CreateTaskScreen> createState() => _CreateTaskScreenState();
+  State<ManageTaskScreen> createState() => _ManageTaskScreenState();
 }
 
-class _CreateTaskScreenState extends State<CreateTaskScreen> {
-  final AddTaskViewModel _viewModel = instance.get<AddTaskViewModel>();
+class _ManageTaskScreenState extends State<ManageTaskScreen> {
+  //final ManageTaskViewModel _viewModel = instance<ManageTaskViewModel>(param1: Get.arguments?["toEdit"] );
+   late ManageTaskViewModel _viewModel ;
+
   @override
+  void initState() {
+    _viewModel =  Provider.of<ManageTaskViewModel>(context, listen: false) ;
+    _viewModel.start();
+    super.initState();
+  }
+
+   @override
+   void didChangeDependencies() {
+     final currentToEdit = Get.arguments?["toEdit"] ?? false;
+     if (currentToEdit != _viewModel.toEdit) {
+       //_viewModel = Provider.of<ManageTaskViewModel>(context, listen: false);
+       _viewModel.toEdit = currentToEdit;
+       _viewModel.start();
+     }
+     super.didChangeDependencies();
+   }
+
+
+
+   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+     return Scaffold(
+      backgroundColor: AppColors.scaffold ,
       body: SingleChildScrollView(
         child: StreamBuilder<FlowState>(
           stream: _viewModel.outputState,
@@ -49,7 +74,11 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
           SizedBox(
             height: 25.h,
           ),
-          const CustomAppBar(title: 'Add Task'),
+          CustomAppBar(
+            title: _viewModel.toEdit ? 'Update Task' : 'Add Task' ,
+            onPressed: (){
+              _viewModel.initData() ;
+            } , ),
           SizedBox(height: 30.h),
           _taskNameSection(),
           SizedBox(height: 30.h),
@@ -57,12 +86,16 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
           SizedBox(height: 30.h),
           _deadlineSection(context),
           SizedBox(height: 30.h),
-          Text('Choose task priority',
+          Text( _viewModel.toEdit ? 'Update task priority' :'Choose task priority',
               style: robotoBold.copyWith(fontSize: 16)),
           const SizedBox(
             height: 15,
           ),
           _taskPrioritySection(),
+          const SizedBox(
+            height: 15,
+          ),
+          _taskStatusSection(),
           SizedBox(height: 30.h),
           Text('Assign user ', style: robotoBold.copyWith(fontSize: 16)),
           const SizedBox(
@@ -70,7 +103,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
           ),
           assignUserSection(),
           SizedBox(
-            height: 120.h,
+            height: _viewModel.toEdit ? 90.h :120.h,
           ),
           _showButton()
         ],
@@ -83,6 +116,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       validator: (val) => val.isEmptyInput(),
       controller: _viewModel.taskName,
       hintText: "Enter task name",
+      borderSide: const BorderSide(color: Colors.black),
     );
   }
 
@@ -93,6 +127,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       controller: _viewModel.taskDescription,
       hintText: "Enter The Task description",
       maxLines: 3,
+      borderSide: const BorderSide(color: Colors.black),
     );
   }
   Widget _deadlineSection(BuildContext context) {
@@ -105,6 +140,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       onTap: () async {
          await _viewModel.pickProjectEndDate(context);
       },
+      borderSide: const BorderSide(color: Colors.black),
     );
   }
 
@@ -116,19 +152,18 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       runSpacing: 8,
       spacing: 8,
       children: List.generate(4, (index) {
-        return Selector<AddTaskViewModel, bool>(
-          selector: (_, provider) => provider.selectedIndex == index,
+        return Selector<ManageTaskViewModel, bool>(
+          selector: (_, provider) => provider.selectedPriorityIndex == index,
           builder: (_, isSelected, __) {
             return TaskPriorityChip(
               chipModel: ChipModel(
-                chipTexts[index],
-                isSelected, // Use the selected state from the provider
-                textColors[index],
-                chipColors[index],
+                priorityChipTexts[index],
+                isSelected , // Use the selected state from the provider
+                priorityTextColors[index],
+                priorityChipColors[index],
               ),
               onSelect: (_) {
-                Provider.of<AddTaskViewModel>(context, listen: false)
-                    .selectChip(index);
+                _viewModel.selectPriorityChip = index ;
               },
             );
           },
@@ -137,7 +172,43 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
     );
   }
 
+   Widget _taskStatusSection() {
+     if (!_viewModel.toEdit) return const SizedBox.shrink();
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            ' Task Status',
+            style: robotoBold.copyWith(fontSize: 17),
+          ),
+          const SizedBox(height: 15,) ,
+          Wrap(
+              runSpacing: 8,
+              spacing: 8,
+              children: List.generate(3, (index) {
+                return Selector<ManageTaskViewModel, bool>(
+                  selector: (_, provider) => provider.selectedStatusIndex == index,
+                  builder: (_, isSelected, __) {
+                    return TaskStatusChip(
+                        chipModel: ChipModel(
+                          statusChipTexts[index],
+                          isSelected, // Use the selected state from the provider
+                          statusTextColors[index],
+                          statusBackgroundColor[index],
+                        ),
+                        onSelect: (_) {
+                          _viewModel.selectStatusChip = index ;
+                        },
+                      );
+                  },
+                );
+              }))
+        ],
+      ) ;
+   }
+
   Widget assignUserSection() {
+    if(!_viewModel.addUserPermission()) return const SizedBox.shrink();
     return Row(children: [
       Image.asset(
         "assets/user_outline.png",
@@ -146,7 +217,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       const SizedBox(
         width: 10,
       ),
-      Selector<AddTaskViewModel, bool>(
+      Selector<ManageTaskViewModel, bool>(
           selector: (_, viewModel) => viewModel.isUserAdded,
           builder: (context, isUserAdded, _) {
             return isUserAdded
@@ -154,14 +225,13 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     imageUrl: Constants.userProfileImageUrl,
                     userName: _viewModel.projectMember.user!.fullName,
                     onDeleted: () {
-                      context.read<AddTaskViewModel>().toggleIsUserAdded();
+                      context.read<ManageTaskViewModel>().toggleIsUserAdded();
                     },
                   )
                 : InkWell(
                     onTap: () {
                       // context.read<AddTaskViewModel>().toggleIsUserAdded();
-                      Get.to(() => MembersScreen(),
-                          arguments: _viewModel.projectViewModel);
+                      Get.to(() => MembersScreen(),arguments: _viewModel.projectViewModel);
                     },
                     child: Image.asset("assets/add_filled.png", height: 40),
                   );
@@ -172,8 +242,8 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: CustomButton(onPressed: () {
-        _viewModel.addTask() ;
-      }, text: 'Add Task'),
+        _viewModel.toEdit ? _viewModel.updateTask() :_viewModel.addTask() ;
+      }, text: _viewModel.toEdit ? 'Update Task' : 'Add Task'),
     );
   }
 }

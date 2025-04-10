@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_common/get_reset.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get_it/get_it.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
 import 'package:project_management_app/presentation/modules/home/home_screen.dart';
@@ -13,14 +14,20 @@ import '../../../sharedwidgets/custom_button.dart';
 import '../../../sharedwidgets/input_text.dart';
 import '../../../stateRender/state_render_impl.dart';
 import '../../../utils/colors.dart';
-import '../viewmodel/add-project-view-model.dart';
+import '../viewmodel/manage-project-view-model.dart';
 
-class AddProjectScreen extends StatelessWidget {
-   AddProjectScreen({super.key});
+/*
+    - Screen used to Add a new project or to Update project details depends on arguments
+ */
 
-   final AddProjectViewModel _viewModel = instance<AddProjectViewModel>();
 
-  @override
+class ManageProjectScreen extends StatelessWidget {
+
+  ManageProjectScreen({super.key}) ;
+
+  final ManageProjectViewModel  _viewModel = instance<ManageProjectViewModel>(param1: Get.arguments?["toEdit"] ?? false);
+
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.scaffold,
@@ -37,15 +44,15 @@ class AddProjectScreen extends StatelessWidget {
   Widget _showBody(BuildContext context) {
     return Form(
       key: _viewModel.formkey ,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 25.h,),
-            const CustomAppBar(title: "Add Project"),
-            SizedBox(
-              height: 80.h,
-            ),
-            Padding(
+      child: Column(
+        children: [
+          SizedBox(height: 25.h,),
+          _viewModel.toEdit == true ? const CustomAppBar(title: 'Edit Project'):const SizedBox.shrink(),
+          SizedBox(
+            height: 80.h,
+          ),
+          Expanded(
+            child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                 children: [
@@ -58,15 +65,14 @@ class AddProjectScreen extends StatelessWidget {
                     height: 40.h,
                   ),
                   _addProjectEndDateSection(context),
-                  SizedBox(
-                    height: 60.h,
-                  ),
-                  _showButton()
+                  const Spacer(),
+                  _showButton(),
+                  _viewModel.toEdit == true ? SizedBox(height: 35.h,) : SizedBox(height: 95.h,),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -74,7 +80,7 @@ class AddProjectScreen extends StatelessWidget {
   Widget _addProjectNameSection(){
     return InputText(
       validator: (val) => val.isEmptyInput() ,
-      controller: _viewModel.projectName,
+      controller:   _viewModel.projectName,
       hintText: "Enter The project name",
       borderSide: const BorderSide(color: Colors.black),
     );
@@ -85,10 +91,12 @@ class AddProjectScreen extends StatelessWidget {
       validator: (val) => val.isEmptyInput() ,
       controller: _viewModel.projectDescription,
       hintText: "Enter The project description",
-      borderSide: const BorderSide(color: Colors.black),
       maxLines: 3,
+      borderRadius: 20,
+      borderSide: const BorderSide(color: Colors.black),
     );
   }
+
 
   Widget _addProjectEndDateSection(BuildContext context){
     return InputText(
@@ -107,9 +115,9 @@ class AddProjectScreen extends StatelessWidget {
    Widget _showButton() {
      return CustomButton(
          onPressed: () {
-           _viewModel.addProject();
+           _viewModel.toEdit == true ? _viewModel.editProjectDetails() : _viewModel.addProject();
          },
-         text: 'Add the project'
+         text: _viewModel.toEdit == true ? 'Edit' : "Add Project"
      );
    }
 }
