@@ -54,6 +54,7 @@ dependencies:
   percent_indicator: ^4.2.4
   smooth_page_indicator: ^1.2.0+3
   cached_network_image: ^3.4.1
+  skeletonizer: ^1.4.3
 
 
 dev_dependencies:
