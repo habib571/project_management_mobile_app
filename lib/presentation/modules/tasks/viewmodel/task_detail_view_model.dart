@@ -1,13 +1,17 @@
-import 'package:project_management_app/domain/models/task.dart';
+import 'package:project_management_app/domain/models/Task/task.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
-import 'package:project_management_app/presentation/modules/tasks/viewmodel/add_task_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import 'package:project_management_app/presentation/stateRender/state_render.dart';
+import 'package:provider/provider.dart';
 
 import '../../../stateRender/state_render_impl.dart';
 
+// NO NEED
+
 class TaskDetailsViewModel extends BaseViewModel {
-  TaskDetailsViewModel(super.tokenManager, this._addTaskViewModel);
-  final AddTaskViewModel _addTaskViewModel ;
+  TaskDetailsViewModel(super.tokenManager,  this._addTaskViewModel ) ;
+  final ManageTaskViewModel _addTaskViewModel ;
+
 
   TaskModel? _task ;
   TaskModel get task => _task! ;
@@ -22,13 +26,13 @@ class TaskDetailsViewModel extends BaseViewModel {
   }
   void getTaskDetail() {
     updateState(LoadingState(stateRendererType: StateRendererType.overlayLoadingState)) ;
-    setTask(_addTaskViewModel.task) ;
+    setTask(_addTaskViewModel.task!) ;
+
 
     if(_task !=null) {
        updateState(ContentState());
     }
   }
-
 
 
 }

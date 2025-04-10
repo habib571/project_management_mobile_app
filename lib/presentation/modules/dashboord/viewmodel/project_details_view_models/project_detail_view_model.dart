@@ -1,25 +1,20 @@
 
 import 'package:project_management_app/application/helpers/get_storage.dart';
 import 'package:project_management_app/domain/models/project_member.dart';
-import 'package:project_management_app/domain/models/user.dart';
 import 'package:project_management_app/domain/usecases/project/delete_member_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/get_members.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
-import '../../../../../application/dependencyInjection/dependency_injection.dart';
-import '../../../../../domain/models/project.dart';
 import '../../../../stateRender/state_render.dart';
 import '../../../../stateRender/state_render_impl.dart';
 import '../dashboard_view_model.dart';
-import 'edit_project_details_view_model.dart';
 
 class ProjectDetailViewModel extends BaseViewModel {
 
-  final EditProjectDetailsViewModel editProjectDetailsViewModel ;
  final DashBoardViewModel dashBoardViewModel ;
   final GetMembersUseCase _getMembersUseCase ;
   final DeleteMemberUseCase _deleteMemberUseCase ;
   final LocalStorage _localStorage ;
-  ProjectDetailViewModel(super.tokenManager, this._getMembersUseCase, this._localStorage, this.dashBoardViewModel, this.editProjectDetailsViewModel, this._deleteMemberUseCase){
+  ProjectDetailViewModel(super.tokenManager, this._getMembersUseCase, this._localStorage, this.dashBoardViewModel, this._deleteMemberUseCase){
     dashBoardViewModel.addListener((){
       notifyListeners();
       print("----- ProjectDetailViewModel Notified");
@@ -70,7 +65,7 @@ class ProjectDetailViewModel extends BaseViewModel {
     updateState(LoadingState(
         stateRendererType: StateRendererType.fullScreenLoadingState));
 
-    (await _getMembersUseCase.getProjectMembers(dashBoardViewModel.project.id!)).fold(
+    (await _getMembersUseCase.getProjectMembers(dashBoardViewModel.project!.id!)).fold(
         (failure) {
           updateState(ErrorState(StateRendererType.fullScreenErrorState, failure.message));
         },
@@ -82,9 +77,7 @@ class ProjectDetailViewModel extends BaseViewModel {
     ) ;
   }
 
-  bool isManger() =>dashBoardViewModel.project.createdBy!.id == _localStorage.getUser().id ;
-
-
+  bool isManger() =>dashBoardViewModel.project!.createdBy!.id == _localStorage.getUser().id ;
 
 }
 

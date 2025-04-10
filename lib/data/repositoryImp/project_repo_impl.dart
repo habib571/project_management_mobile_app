@@ -24,9 +24,11 @@ class ProjectRepositoryImpl implements ProjectRepository{
       try {
         final response = await _projectDataSource.addProject(projectRequest) ;
         if (response.statusCode == 200) {
+          print("--- Project added");
           return Right(Project.fromJson(response.data));
         } else {
-
+          print(response.statusCode);
+          print(response.data);
           return Left(Failure.fromJson(response.data));
         }
       }
@@ -188,7 +190,6 @@ class ProjectRepositoryImpl implements ProjectRepository{
   }
 
   @override
-  //we dont need the returned project
   Future<Either<Failure, Project>> updateProject (Project projectRequest) async {
     if (await _networkInfo.isConnected) {
       try {
@@ -214,9 +215,9 @@ class ProjectRepositoryImpl implements ProjectRepository{
       try {
         final response = await _projectDataSource.updateMemberRole(updateMemberRequest) ;
         if (response.statusCode == 200) {
-          print("------ 200");
           return Right(ProjectMember.fromJson(response.data));
         } else {
+          print(response.statusCode);
           return Left(Failure.fromJson(response.data));
         }
       }
@@ -234,8 +235,6 @@ class ProjectRepositoryImpl implements ProjectRepository{
       try {
         final response = await _projectDataSource.deleteMember (memberId) ;
         if (response.statusCode == 200) {
-          print("--**--- Member Deleted ");
-
           return Right(response.data);
         } else {
           return Left(Failure.fromJson(response.data));

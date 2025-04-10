@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_management_app/data/network/requests/report_issue_request.dart';
-import 'package:project_management_app/domain/models/task.dart';
+import 'package:project_management_app/domain/models/Task/task.dart';
 import 'package:project_management_app/domain/models/user.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
 import 'package:project_management_app/presentation/stateRender/state_render.dart';

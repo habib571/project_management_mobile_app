@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
-import 'package:project_management_app/domain/models/task.dart';
+import 'package:project_management_app/domain/models/Task/task.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task_widget.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/prject_tasks_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../stateRender/state_render_impl.dart';
 import '../../../../utils/colors.dart';
@@ -17,10 +18,10 @@ class ProjectTasksScreens extends StatefulWidget {
 }
 
 class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
-  final ProjectTasksViewModel _viewModel =
-      instance.get<ProjectTasksViewModel>();
+  late final ProjectTasksViewModel _viewModel ;
   @override
   void initState() {
+    _viewModel = context.read<ProjectTasksViewModel>() ;
     _viewModel.start() ;
     super.initState();
   }
@@ -38,7 +39,7 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
         padding: const EdgeInsets.symmetric(vertical: 25),
         child: Column(
           children: [
-            const CustomAppBar(title: "All Tasks"),
+            const CustomAppBar(title: "All Tasks" , ),
             SizedBox(height: 15.h) ,
             _showTaskList()
           ],
@@ -62,9 +63,7 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
           }
           return NotificationListener<ScrollNotification>(
             onNotification: (scrollInfo) {
-              if (scrollInfo.metrics.pixels >=
-                      scrollInfo.metrics.maxScrollExtent &&
-                  !_viewModel.isLoadingMore) {
+              if (scrollInfo.metrics.pixels >= scrollInfo.metrics.maxScrollExtent && !_viewModel.isLoadingMore) {
                 // Fetch next page.
                 _viewModel.getProjectTasks();
               }
@@ -86,7 +85,11 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
                 final task = tasks[index];
                 return Padding(
                   padding: const EdgeInsets.all(20),
-                  child: TaskWidget(task: task),
+                  child: TaskWidget(
+                    task: task ,
+                    viewModel: _viewModel ,
+                    isTaskEditable:  _viewModel.isTaskEditable(task),
+                  )
                 );
               },
             ),
