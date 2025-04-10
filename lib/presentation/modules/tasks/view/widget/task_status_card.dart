@@ -127,3 +127,8 @@ class _TaskStatusCardState extends State<TaskStatusCard> {
  }
 
 
+List<Color> statusTextColors = const [Color(0xff0087ff),Color(0xffff7d53) ,Color(0xff5f33e1)] ;
+List<Color> statusBackgroundColor = const [Color(0xffe3f2ff) ,Color(0xffffe9e1) ,Color(0xffede8ff)] ;
+List<String> statusTypes =["To-Do" ,"In progress" ,"Done"] ;
+
+

@@ -13,7 +13,12 @@ import 'package:project_management_app/domain/usecases/project/issue/get_allissu
 import 'package:project_management_app/domain/usecases/project/issue/report_issue_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/issue/updae_project_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/myprojects_usecase.dart';
+
+import 'package:project_management_app/domain/usecases/project/update_member_role_use_case.dart';
+import 'package:project_management_app/domain/usecases/task/filter_tasks_use_case.dart';
+
 import 'package:project_management_app/domain/usecases/task/get_all_tasks.dart';
+import 'package:project_management_app/domain/usecases/task/search_task_use_case.dart';
 
 import 'package:project_management_app/presentation/modules/manageprojects/viewmodel/manage-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
@@ -48,7 +53,6 @@ import '../../presentation/modules/home/home-viewmodel.dart';
 
 GetIt instance = GetIt.instance;
 initAppModule() async {
-
   await initGetStorageModule();
   instance.registerLazySingleton<TokenManager>(() => TokenManager(instance()));
   instance.registerLazySingleton<NetworkInfo>(
@@ -58,7 +62,6 @@ initAppModule() async {
       () => AuthRemoteDataSourceImp(instance()));
   instance.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(instance(), instance()));
-
 
   instance.registerLazySingleton<ProjectDataSource>(
       () => ProjectRemoteDataSource(instance()));
@@ -74,39 +77,40 @@ initAppModule() async {
   initHomeModule();
   initDashboard();
   intAddProject();
-  initTask() ;
+  initTask();
   initUserProfileModule();
-  initProject() ;
+  initProject();
   initSearchModule();
   initReportIssueModule();
  initGetAllIssuesModule();
+
 
 }
 
 initReportIssueModule() {
   if (!GetIt.I.isRegistered<ReportIssueViewModel>()) {
-    instance.registerFactory<ReportIssueUseCase>(() => ReportIssueUseCase(instance()));
-    instance.registerFactory<ReportIssueViewModel>(() => ReportIssueViewModel(instance(),instance()));
-
+    instance.registerFactory<ReportIssueUseCase>(
+        () => ReportIssueUseCase(instance()));
+    instance.registerFactory<ReportIssueViewModel>(
+        () => ReportIssueViewModel(instance(), instance()));
   }
 }
 
-
 initGetAllIssuesModule() {
   if (!GetIt.I.isRegistered<GetAllIssuesViewModel>()) {
-    instance.registerFactory<GetAllIssuesUseCase>(() => GetAllIssuesUseCase(instance()));
-    instance.registerFactory<GetAllIssuesViewModel>(() => GetAllIssuesViewModel(instance(),instance()));
-
+    instance.registerFactory<GetAllIssuesUseCase>(
+        () => GetAllIssuesUseCase(instance()));
+    instance.registerFactory<GetAllIssuesViewModel>(
+        () => GetAllIssuesViewModel(instance(), instance()));
   }
 }
 
 initSearchModule() {
   if (!GetIt.I.isRegistered<SearchViewModel>()) {
-    instance.registerLazySingleton<SearchViewModel>(() => SearchViewModel(instance(),instance()));
+    instance.registerLazySingleton<SearchViewModel>(
+        () => SearchViewModel(instance(), instance()));
   }
 }
-
-
 
 initHomeModule() {
   instance.registerLazySingleton<HomeViewModel>(() => HomeViewModel(instance()));
@@ -127,32 +131,25 @@ initDashboard() {
     instance.registerLazySingleton<DashBoardViewModel>(
         () => DashBoardViewModel(instance(), instance()));
   }
-
 }
 
-
-
 initTask() {
-  instance.registerLazySingleton<TaskDetailsViewModel>(
-      () => TaskDetailsViewModel(instance(),instance(),));
-  instance.registerLazySingleton<AllTasksViewModel>(
-          () => AllTasksViewModel(instance()));
+  instance.registerLazySingleton<TaskDetailsViewModel>(() => TaskDetailsViewModel(instance(), instance()));
+  instance.registerFactory<SearchTaskUseCase>(() => SearchTaskUseCase(instance()));
+  instance.registerFactory<FilterTaskUseCase>(() => FilterTaskUseCase(instance()));
+  instance.registerLazySingleton<AllTasksViewModel>(   () => AllTasksViewModel(instance(), instance() ,instance()));
+  instance.registerFactory<GetProjectTasksUseCase>( () => GetProjectTasksUseCase(instance()));
     instance.registerFactory<ManageTaskUseCase>(() => ManageTaskUseCase(instance()));
-
   instance.registerFactoryParam<ManageTaskViewModel,bool?,void>((toEdit,_) => ManageTaskViewModel(instance(), instance(),instance(), toEdit ?? false ,instance() ));
-  //instance.registerLazySingleton<ManageTaskViewModel>(() => ManageTaskViewModel(instance(), instance(), instance(),true ,instance()));
-
-
-  //instance.registerFactory<ManageTaskViewModel>(() => ManageTaskViewModel(instance(), instance(), instance()));
-
-  instance.registerFactory<GetProjectTasksUseCase>(() => GetProjectTasksUseCase(instance()));
   instance.registerLazySingleton<ProjectTasksViewModel>(
           () => ProjectTasksViewModel(instance(), instance(), instance(),instance()));
+
 
 }
 
 initProject() {
   if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
+
     instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
     instance.registerFactory<ManageMembersUseCase>(() => ManageMembersUseCase(instance()));
     instance.registerFactory<UpdateProjectUseCase>(() => UpdateProjectUseCase(instance()));
@@ -183,14 +180,12 @@ initSignInModule() {
 
 initUserProfileModule() {
   if (!GetIt.I.isRegistered<UserProfileViewModel>()) {
-
     instance.registerLazySingleton<UserProfileUseCase>(
         () => UserProfileUseCase(instance()));
     instance.registerLazySingleton<UserProfileViewModel>(
         () => UserProfileViewModel(instance(), instance(), instance()));
   }
 }
-
 
 initGetStorageModule() async {
   await GetStorage.init();

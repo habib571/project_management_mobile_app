@@ -34,6 +34,7 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
   }
 
   Widget _showBody() {
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 25),
@@ -44,6 +45,7 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
             _showTaskList()
           ],
         ),
+
       ),
     );
   }
@@ -69,11 +71,11 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
               }
               return false;
             },
+
             child: ListView.builder(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
               itemCount: tasks.length + 1,
-              itemBuilder: (context, index) {
+              itemBuilder: (context, index) { 
                 if (index == tasks.length) {
                   return _viewModel.isLoadingMore
                       ? const Padding(
@@ -92,6 +94,7 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
                   )
                 );
               },
+
             ),
           );
         }
