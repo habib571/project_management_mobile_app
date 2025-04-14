@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/extensions/string_extension.dart';
-import 'package:project_management_app/presentation/modules/tasks/view/widget/task%20status/task_status_chip.dart';
-import 'package:project_management_app/presentation/modules/tasks/view/widget/task_status_card.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_button.dart';
@@ -14,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../../../../domain/models/Task/task_chip.dart';
 import '../../../../sharedwidgets/input_text.dart';
 import '../widget/task priority/task_priority_chip.dart';
+import '../widget/task status/task_status_chip.dart';
 
 class TaskFilteringScreen extends StatefulWidget {
   const TaskFilteringScreen({super.key});
@@ -111,11 +110,11 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
                     chipModel: ChipModel(
                       statusChipTexts[index],
                       isSelected, // Use the selected state from the provider
-                      statusTextColors[index]
+                      statusTextColors[index],
                       statusBackgroundColor[index],
                     ),
                     onSelect: (_) {
-                      _viewModel.selectStatus(index ,statusTypes[index],);
+                      _viewModel.selectStatus(index ,statusChipTexts[index],);
                     },
                   );
                 },
@@ -146,13 +145,13 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
                 builder: (_, isSelected, __) {
                   return TaskPriorityChip(
                     chipModel: ChipModel(
-                      chipTexts[index],
+                      priorityChipTexts[index],
                       isSelected, // Use the selected state from the provider
-                      textColors[index],
-                      chipColors[index],
+                      priorityTextColors[index],
+                      priorityChipColors[index],
                     ),
                     onSelect: (_) {
-                      _viewModel.selectPriority(index ,chipTexts[index]);
+                      _viewModel.selectPriority(index ,priorityChipTexts[index]);
                     },
                   );
                 },

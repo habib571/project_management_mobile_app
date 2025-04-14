@@ -23,7 +23,6 @@ class TaskWidget extends StatefulWidget {
 
   final TaskModel task ;
   final ProjectTasksViewModel viewModel ;
-
   final bool isTaskEditable ;
 
 

@@ -136,7 +136,7 @@ initTask() {
   instance.registerLazySingleton<TaskDetailsViewModel>(() => TaskDetailsViewModel(instance(), instance()));
   instance.registerFactory<SearchTaskUseCase>(() => SearchTaskUseCase(instance()));
   instance.registerFactory<FilterTaskUseCase>(() => FilterTaskUseCase(instance()));
-  instance.registerLazySingleton<AllTasksViewModel>(   () => AllTasksViewModel(instance(), instance() ,instance()));
+  instance.registerLazySingleton<AllTasksViewModel>(   () => AllTasksViewModel(instance(), instance() ,instance(),instance()));
   instance.registerFactory<GetProjectTasksUseCase>( () => GetProjectTasksUseCase(instance()));
     instance.registerFactory<ManageTaskUseCase>(() => ManageTaskUseCase(instance()));
   instance.registerFactoryParam<ManageTaskViewModel,bool?,void>((toEdit,_) => ManageTaskViewModel(instance(), instance(),instance(), toEdit ?? false ,instance() ));

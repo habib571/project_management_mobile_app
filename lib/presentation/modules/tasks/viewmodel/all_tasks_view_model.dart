@@ -7,6 +7,7 @@ import 'package:project_management_app/data/network/requests/filter_task_request
 import 'package:project_management_app/domain/usecases/task/filter_tasks_use_case.dart';
 import 'package:project_management_app/domain/usecases/task/search_task_use_case.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
+import 'package:project_management_app/presentation/modules/tasks/viewmodel/prject_tasks_view_model.dart';
 
 import '../../../../data/network/requests/pagination.dart';
 import '../../../../domain/models/Task/task.dart';
@@ -15,10 +16,11 @@ import '../../../stateRender/state_render_impl.dart';
 
 class AllTasksViewModel extends BaseViewModel {
   AllTasksViewModel(
-      super.tokenManager, this._searchTaskUseCase, this._filterTaskUseCase);
+      super.tokenManager, this._searchTaskUseCase, this._filterTaskUseCase, this.projectTasksViewModel);
 
   final SearchTaskUseCase _searchTaskUseCase;
   final FilterTaskUseCase _filterTaskUseCase;
+  final ProjectTasksViewModel projectTasksViewModel;
 
   int _selectedStatusIndex = -1;
   int get selectedStatusIndex => _selectedStatusIndex;

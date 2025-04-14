@@ -3,7 +3,7 @@ import 'package:project_management_app/data/network/requests/filter_task_request
 
 import '../../../data/network/failure.dart';
 import '../../../data/network/requests/pagination.dart';
-import '../../models/task.dart';
+import '../../models/Task/task.dart';
 import '../../repository/task_repo.dart';
 
 class FilterTaskUseCase {
