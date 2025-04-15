@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -19,10 +20,12 @@ import 'application/dependencyInjection/dependency_injection.dart';
 import 'application/helpers/screen_configuraton.dart';
 import 'application/helpers/token_mamanger.dart';
 import 'application/navigation/routes_constants.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initAppModule();
+
   runApp(const MyApp());
 }
 

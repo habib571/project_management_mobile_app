@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -39,6 +40,7 @@ import '../../domain/usecases/auth/userprofile_usecase.dart';
 import '../../domain/usecases/project/manageproject-use-case.dart';
 import '../../domain/usecases/project/delete_member_use_case.dart';
 import '../../domain/usecases/task/manage_task_user_case.dart';
+import '../../firebase_options.dart';
 import '../../presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
 import '../../presentation/modules/managemembers/viewmodel/manage_members_viewmodel.dart';
 import '../../presentation/modules/managemembers/viewmodel/search_member_view_model.dart';
@@ -52,6 +54,9 @@ import '../../presentation/modules/home/home-viewmodel.dart';
 
 GetIt instance = GetIt.instance;
 initAppModule() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await initGetStorageModule();
   instance.registerLazySingleton<TokenManager>(() => TokenManager(instance()));
   instance.registerLazySingleton<NetworkInfo>(
