@@ -10,7 +10,6 @@ import '../stateRender/state_render_impl.dart';
 abstract class BaseViewModel extends ChangeNotifier implements BaseViewModelInputs, BaseViewModelOutputs {
   // Use BehaviorSubject to cache the latest emitted FlowState.
   final BehaviorSubject<FlowState> _stateSubject = BehaviorSubject<FlowState>();
-
   final TokenManager _tokenManager;
   bool startTokenMonitoringOnInit;
 

@@ -136,8 +136,11 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
           flex: 4,
           child: Row(
             children: [
-              const ImagePlaceHolder(
-                  radius: 10, imageUrl: Constants.userProfileImageUrl),
+              ImagePlaceHolder(
+                  radius: 10,
+                  imageUrl: Constants.userProfileImageUrl,
+                  fullName: _task.project!.createdBy!.fullName,
+              ),
               const SizedBox(
                 width: 5,
               ),
@@ -163,8 +166,11 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
           flex: 4,
           child: Row(
             children: [
-              const ImagePlaceHolder(
-                  radius: 10, imageUrl: Constants.userProfileImageUrl),
+              ImagePlaceHolder(
+                  radius: 10,
+                  imageUrl: Constants.userProfileImageUrl,
+                  fullName: _task.assignedUser!.fullName,
+              ),
               const SizedBox(
                 width: 5,
               ),

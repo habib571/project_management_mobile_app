@@ -18,7 +18,10 @@ class AssignedMemberChip extends StatelessWidget {
         style: robotoBold.copyWith(fontSize: 12),
       ),
       backgroundColor: AppColors.accent,
-      avatar: ImagePlaceHolder(radius: 30, imageUrl: imageUrl) ,
+      avatar: ImagePlaceHolder(radius: 30,
+          imageUrl: imageUrl,
+          fullName: userName,
+      ) ,
       shape:RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18), // Adjust border radius here
       ),

@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_it/get_it.dart';
 import 'package:project_management_app/application/navigation/routes.dart';
+import 'package:project_management_app/application/notifications/notification-service.dart';
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signin-view_model.dart';
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signup_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
@@ -37,7 +38,6 @@ class MyApp extends StatelessWidget {
     screenUtility.initialize(context);
     return MultiProvider(
         providers: [
-
           //Provider( create: (_) => GetIt.instance<ProjectDetailViewModel>()  ), For Test
 
           ChangeNotifierProvider<SignupViewModel>(
@@ -90,6 +90,4 @@ class MyApp extends StatelessWidget {
         ));
   }
 }
-
-
 

@@ -10,7 +10,6 @@ import '../../../../sharedwidgets/image_widget.dart';
 import '../../../../stateRender/state_render_impl.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/styles.dart';
-import '../widgets/userprofile_list_title.dart';
 
 class UserProfileScreen extends StatefulWidget {
    const UserProfileScreen({super.key});
@@ -53,7 +52,28 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             SizedBox(
               height: 40.h,
             ),
-            ImagePlaceHolder(radius: 80.w, imageUrl: Constants.userProfileImageUrl,),
+            Stack(
+              alignment: AlignmentDirectional.bottomEnd,
+              children: [
+                ImagePlaceHolder(radius: 80.w, imageUrl:
+                //Constants.userProfileImageUrl,
+                "",
+                fullName: _viewModel.user?.fullName?? "Loading...",
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.edit_outlined, size: 30,),
+                  style: IconButton.styleFrom(
+                    backgroundColor: AppColors.accent,
+                    foregroundColor: AppColors.scaffold,
+                    padding: const EdgeInsets.all(8),
+                    shape: const CircleBorder(),
+                  ),
+                ),
+
+              ],
+            ),
+
             SizedBox(
               height: 40.h,
             ),

@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -51,12 +52,15 @@ import '../../domain/usecases/auth/signin_usecase.dart';
 import '../../presentation/modules/auth/viewmodel/signin-view_model.dart';
 import '../../presentation/modules/auth/viewmodel/signup_view_model.dart';
 import '../../presentation/modules/home/home-viewmodel.dart';
+import '../notifications/notification-service.dart';
 
 GetIt instance = GetIt.instance;
 initAppModule() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  initNotificationsModule();
+  //NotificationService.instance.initialize();
   await initGetStorageModule();
   instance.registerLazySingleton<TokenManager>(() => TokenManager(instance()));
   instance.registerLazySingleton<NetworkInfo>(
@@ -197,3 +201,11 @@ initGetStorageModule() async {
   instance.registerLazySingleton<LocalStorage>(
       () => LocalStorageImp(instance(), instance()));
 }
+
+initNotificationsModule()async {
+  if (!GetIt.I.isRegistered<UserProfileViewModel>()) {
+    instance.registerLazySingleton<NotificationService>(() =>
+        NotificationService());
+    await instance<NotificationService>().initialize();
+  }
+  }

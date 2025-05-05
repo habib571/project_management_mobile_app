@@ -72,7 +72,7 @@ class IssueCard extends StatelessWidget {
               ],
             ),
           ),
-          leading: ImagePlaceHolder(radius: 20, imageUrl: createdBy.imageUrl),
+          leading: ImagePlaceHolder(radius: 20, imageUrl: createdBy.imageUrl, fullName:createdBy.fullName ,),
           children: [
             Padding(
               padding: const EdgeInsets.all(16),
@@ -145,7 +145,7 @@ Widget _taggedMembersSection(User? taggedUser){
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ImagePlaceHolder(radius: 10, imageUrl: taggedUser.imageUrl),
+              ImagePlaceHolder(radius: 10, imageUrl: taggedUser.imageUrl, fullName:taggedUser.fullName),
               SizedBox(width: 5.w,),
               Text(taggedUser.fullName)
             ],

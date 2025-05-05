@@ -107,6 +107,7 @@ class _ManageMembersScreenState extends State<ManageMembersScreen> {
               imgBorder: true,
               radius: 35,
               imageUrl: member.user!.imageUrl ,
+              fullName: member.user!.fullName,
             ),
             const SizedBox(width: 20),
 

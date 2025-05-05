@@ -83,17 +83,25 @@ class _TaskWidgetState extends State<TaskWidget> {
                        style: robotoSemiBold.copyWith(color: AppColors.secondaryTxt ,fontSize: 14),
                    ),
 
-                   const ImagePlaceHolder(
-                       radius: 10, imageUrl: Constants.userProfileImageUrl),
-                   const SizedBox(
-                     width: 5,
-                   ),
                    Selector<ProjectTasksViewModel, String>(
                      selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).assignedUser?.fullName ?? '',
                      builder: (_, fullName, __) {
-                       return Text(
-                         fullName,
-                         style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),
+                       return Row(
+                         children: [
+                            ImagePlaceHolder(
+                             radius: 10,
+                             imageUrl: Constants.userProfileImageUrl,
+                              fullName: fullName,
+                           ),
+                           const SizedBox(
+                             width: 5,
+                           ),
+
+                           Text(
+                             fullName,
+                             style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),
+                           ),
+                         ],
                        ) ;
                      },
                    ),

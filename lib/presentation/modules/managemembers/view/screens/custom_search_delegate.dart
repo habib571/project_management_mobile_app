@@ -99,6 +99,7 @@ class CustomSearchDelegate extends SearchDelegate {
                       imgBorder: true,
                       radius: 25,
                       imageUrl: member.imageUrl,
+                      fullName: member.fullName,
                     ),
                     title: Text(member.fullName),
                     subtitle: Text(member.email),
