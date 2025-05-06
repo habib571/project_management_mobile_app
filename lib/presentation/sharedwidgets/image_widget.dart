@@ -1,57 +1,87 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 
 import '../utils/colors.dart';
 
-class ImagePlaceHolder extends StatelessWidget {
-  const ImagePlaceHolder({super.key, required this.radius, required this.imageUrl , this.imgBorder = false, required this.fullName});
 
- final double radius ;
- final String imageUrl ;
- final bool imgBorder  ;
- final String fullName ;
+class ImagePlaceHolder extends StatelessWidget {
+  final double radius;
+  final String imageUrl;
+  final bool imgBorder;
+  final String fullName;
+
+  const ImagePlaceHolder({
+    super.key,
+    required this.radius,
+    required this.imageUrl,
+    this.imgBorder = false,
+    required this.fullName,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final String letter = (fullName.isNotEmpty || fullName != "Loading..." ? fullName[0] : "?").toUpperCase();
+    final String letter = (fullName.isNotEmpty && fullName != "Loading..."
+        ? fullName[0]
+        : "?"
+    ).toUpperCase();
+
+    final bool isLocalFile = imageUrl.isNotEmpty && !imageUrl.startsWith('http');
 
     return CircleAvatar(
-      radius: radius ,
-      child: CachedNetworkImage(
-        imageUrl: imageUrl,
-        imageBuilder: (context, imageProvider) => Container(
-          decoration: BoxDecoration(
-            border: imgBorder ? Border.all(color: AppColors.primary,width: 1,) : null,
-            shape: BoxShape.circle,
-            image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.cover,
-              colorFilter: const ColorFilter.mode(
-                Colors.white60,
-                BlendMode.overlay,
-              ),
-            ),
+      radius: radius,
+      child: isLocalFile
+          ? _buildLocalImage()
+          : _buildNetworkImage(letter),
+    );
+  }
+
+  Widget _buildLocalImage() {
+    return Container(
+      decoration: BoxDecoration(
+        border: imgBorder ? Border.all(color: AppColors.primary, width: 1) : null,
+        shape: BoxShape.circle,
+        image: DecorationImage(
+          image: FileImage(File(imageUrl)),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNetworkImage(String letter) {
+    return CachedNetworkImage(
+      imageUrl: imageUrl,
+      imageBuilder: (context, imageProvider) => Container(
+        decoration: BoxDecoration(
+          border: imgBorder ? Border.all(color: AppColors.primary, width: 1) : null,
+          shape: BoxShape.circle,
+          image: DecorationImage(
+            image: imageProvider,
+            fit: BoxFit.cover,
           ),
         ),
-        placeholder: (context, url) =>const CircularProgressIndicator(),
-        errorWidget: (context, url, error) => Container(
-          width: radius * 2,
-          height: radius * 2,
-          decoration: BoxDecoration(
-            color: _getColorFromFirstLetter(letter),
-            shape: BoxShape.circle,
-            border: imgBorder ? Border.all(color: AppColors.primary, width: 1) : null,
-          ),
-          alignment: Alignment.center,
-          child: Text(
-            letter,
-            style: TextStyle(
-              fontSize: radius * 0.9,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
+      ),
+      placeholder: (context, url) => const CircularProgressIndicator(),
+      errorWidget: (context, url, error) => _buildErrorWidget(letter),
+    );
+  }
+
+  Widget _buildErrorWidget(String letter) {
+    return Container(
+      decoration: BoxDecoration(
+        color: _getColorFromFirstLetter(letter),
+        shape: BoxShape.circle,
+        border: imgBorder ? Border.all(color: AppColors.primary, width: 1) : null,
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        letter,
+        style: TextStyle(
+          fontSize: radius * 0.9,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
         ),
       ),
     );
@@ -79,3 +109,6 @@ class ImagePlaceHolder extends StatelessWidget {
   }
 
 }
+
+
+

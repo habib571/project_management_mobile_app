@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:project_management_app/application/helpers/get_storage.dart';
 import 'package:project_management_app/data/dataSource/remoteDataSource/task_remote_data_source.dart';
@@ -191,7 +192,8 @@ initUserProfileModule() {
     instance.registerLazySingleton<UserProfileUseCase>(
         () => UserProfileUseCase(instance()));
     instance.registerLazySingleton<UserProfileViewModel>(
-        () => UserProfileViewModel(instance(), instance(), instance()));
+        () => UserProfileViewModel(instance(), instance(), instance(),instance()));
+    instance.registerLazySingleton<ImagePicker>(() => ImagePicker());
   }
 }
 

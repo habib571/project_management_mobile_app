@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/presentation/modules/userprofile/viewmodel/userprofile_view_model.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../application/constants/constants.dart';
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
@@ -19,10 +21,12 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-  final UserProfileViewModel _viewModel = instance<UserProfileViewModel>();
+  late UserProfileViewModel _viewModel;
+  //final UserProfileViewModel _viewModel = instance<UserProfileViewModel>();
 
   @override
   void initState() {
+    _viewModel = context.read<UserProfileViewModel>() ;
     _viewModel.start();
     super.initState();
   }
@@ -55,13 +59,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             Stack(
               alignment: AlignmentDirectional.bottomEnd,
               children: [
-                ImagePlaceHolder(radius: 80.w, imageUrl:
-                //Constants.userProfileImageUrl,
-                "",
-                fullName: _viewModel.user?.fullName?? "Loading...",
+                Selector<UserProfileViewModel, XFile?>(
+                  selector: (_, viewModel) => viewModel.pickedImage,
+                  builder: (BuildContext context, value, Widget? child) {
+                    return ImagePlaceHolder(radius: 80.w,
+                      imageUrl: _viewModel.pickedImage?.path ?? "" ,
+                    //Constants.userProfileImageUrl,
+                      fullName: _viewModel.user?.fullName?? "Loading...",
+                    );
+                  },
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {_viewModel.pickImage(context);},
                   icon: const Icon(Icons.edit_outlined, size: 30,),
                   style: IconButton.styleFrom(
                     backgroundColor: AppColors.accent,

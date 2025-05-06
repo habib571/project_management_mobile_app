@@ -36,7 +36,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
               height: 40.h,
             ),
             _showSearchBar() ,
-            SizedBox(height: 35,) ,
+            const SizedBox(height: 35,) ,
             _buildTaskList()
           ],
         ),

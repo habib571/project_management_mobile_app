@@ -16,6 +16,8 @@ import 'package:project_management_app/presentation/modules/tasks/viewmodel/mana
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/prject_tasks_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/task_detail_view_model.dart';
+import 'package:project_management_app/presentation/modules/userprofile/View/screens/userprofile_screen.dart';
+import 'package:project_management_app/presentation/modules/userprofile/viewmodel/userprofile_view_model.dart';
 import 'package:provider/provider.dart';
 import 'application/dependencyInjection/dependency_injection.dart';
 import 'application/helpers/screen_configuraton.dart';
@@ -76,6 +78,10 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<AllTasksViewModel>(
               lazy: true, create: (_) => GetIt.instance<AllTasksViewModel>()
           ),
+
+          ChangeNotifierProvider<UserProfileViewModel>(
+              lazy: true, create: (_) => GetIt.instance<UserProfileViewModel>()
+          )
 
         ],
         child: GetMaterialApp(
