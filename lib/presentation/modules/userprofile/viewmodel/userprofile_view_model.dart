@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
 import 'package:project_management_app/presentation/stateRender/state_render_impl.dart';
 
@@ -11,13 +12,15 @@ import '../../../../domain/models/user.dart';
 import '../../../../domain/usecases/auth/userprofile_usecase.dart';
 import '../../../stateRender/state_render.dart';
 import '../../../utils/colors.dart';
+import '../../dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
 
 class UserProfileViewModel extends BaseViewModel {
 
   final UserProfileUseCase _userprofileUseCase ;
+  final ProjectDetailViewModel projectDetailViewModel ;
   final TokenManager _tokenManager;
   final ImagePicker _picker;
-  UserProfileViewModel(super.tokenManager, this._userprofileUseCase, this._tokenManager, this._picker,);
+  UserProfileViewModel(super.tokenManager, this._userprofileUseCase, this._tokenManager, this._picker, this.projectDetailViewModel,);
 
   @override
   void start(){
@@ -102,7 +105,11 @@ class UserProfileViewModel extends BaseViewModel {
       updateState(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
       (await _userprofileUseCase.updateProfileImage(image)).fold((failure){
         updateState(ErrorState(StateRendererType.snackbarState, failure.message));
-      }, (date) {
+      }, (data) {
+        print(data.fullName) ;
+        projectDetailViewModel.dashBoardViewModel.project?.createdBy?.imageUrl = data.imageUrl ;
+        //int index = projectDetailViewModel.projectMember.indexWhere((member) => member.user!.id == _user!.id);
+        //projectDetailViewModel.projectMember[index].user!.imageUrl = image.path ;
         updateState(ContentState());
         notifyListeners();
       });

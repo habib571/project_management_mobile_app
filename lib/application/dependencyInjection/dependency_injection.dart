@@ -192,7 +192,7 @@ initUserProfileModule() {
     instance.registerLazySingleton<UserProfileUseCase>(
         () => UserProfileUseCase(instance()));
     instance.registerLazySingleton<UserProfileViewModel>(
-        () => UserProfileViewModel(instance(), instance(), instance(),instance()));
+        () => UserProfileViewModel(instance(), instance(), instance(),instance(),instance()));
     instance.registerLazySingleton<ImagePicker>(() => ImagePicker());
   }
 }

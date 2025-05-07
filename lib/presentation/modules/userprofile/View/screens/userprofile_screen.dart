@@ -63,7 +63,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   selector: (_, viewModel) => viewModel.pickedImage,
                   builder: (BuildContext context, value, Widget? child) {
                     return ImagePlaceHolder(radius: 80.w,
-                      imageUrl: _viewModel.pickedImage?.path ?? "" ,
+                      imageUrl: _viewModel.pickedImage?.path ,
                     //Constants.userProfileImageUrl,
                       fullName: _viewModel.user?.fullName?? "Loading...",
                     );

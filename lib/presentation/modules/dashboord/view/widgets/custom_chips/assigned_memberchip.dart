@@ -9,7 +9,7 @@ import '../../../../../utils/styles.dart';
 
 class AssignedMemberChip extends StatelessWidget {
   const AssignedMemberChip({super.key, required this.imageUrl, required this.userName, required this.onDeleted});
-  final String imageUrl ;
+  final String? imageUrl ;
   final String  userName ;
   final Function onDeleted ;
   @override

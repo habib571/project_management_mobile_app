@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_listtile.dart';
 
+import '../../../../../application/constants/constants.dart';
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
 import '../../../../../domain/models/user.dart';
 import '../../../../sharedwidgets/image_widget.dart';
@@ -98,7 +99,7 @@ class CustomSearchDelegate extends SearchDelegate {
                     leading: ImagePlaceHolder(
                       imgBorder: true,
                       radius: 25,
-                      imageUrl: member.imageUrl,
+                      imageUrl: "${Constants.baseUrl}/images/${member.imageUrl}" ,
                       fullName: member.fullName,
                     ),
                     title: Text(member.fullName),

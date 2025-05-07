@@ -120,7 +120,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
             builder: (context, isUserAdded, _) {
               return isUserAdded
                   ? AssignedMemberChip(
-                imageUrl: _viewModel.taggedMember!.imageUrl,
+                imageUrl: _viewModel.taggedMember?.imageUrl,
                 userName: _viewModel.taggedMember!.fullName,
                 onDeleted: () {
                   context.read<ReportIssueViewModel>().toggleIsUserAdded();

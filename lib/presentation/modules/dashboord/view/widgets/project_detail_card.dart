@@ -5,6 +5,7 @@ import 'package:project_management_app/application/navigation/routes_constants.d
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
+import '../../../../../application/constants/constants.dart';
 import '../../../../../domain/models/project.dart';
 import '../../../manageprojects/viewmodel/manage-project-view-model.dart';
 
@@ -102,7 +103,7 @@ class ProjectDetailCard extends StatelessWidget {
           children: [
             ImagePlaceHolder(
               radius: 10,
-              imageUrl:'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
+              imageUrl: "${Constants.baseUrl}/images/${project.createdBy?.imageUrl}" ,
               fullName: project.createdBy?.fullName ?? "Loading ..." ,
             ),
             const SizedBox(

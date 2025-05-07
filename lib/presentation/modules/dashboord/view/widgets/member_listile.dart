@@ -6,6 +6,7 @@ import 'package:project_management_app/domain/models/project_member.dart';
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
 import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
+import '../../../../../application/constants/constants.dart';
 import '../../viewmodel/project_details_view_models/project_detail_view_model.dart';
 
 class MemberLisTile extends StatelessWidget {
@@ -27,7 +28,7 @@ class MemberLisTile extends StatelessWidget {
           onPressed: ()=>_showMemberOptions(context, projectMember),
           icon: const Icon(Icons.menu_outlined)) ,
       leading: ImagePlaceHolder(radius: 30,
-          imageUrl: 'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
+          imageUrl: "${Constants.baseUrl}/images/${projectMember.user!.imageUrl}",
           fullName: projectMember.user!.fullName,
       ),
       onTap: () {
