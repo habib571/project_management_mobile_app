@@ -222,7 +222,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
           builder: (context, isUserAdded, _) {
             return isUserAdded
                 ? AssignedMemberChip(
-                    imageUrl: Constants.userProfileImageUrl,
+                    imageUrl: _viewModel.projectMember.user!.imageUrl,
                     userName: _viewModel.projectMember.user!.fullName,
                     onDeleted: () {
                       context.read<ManageTaskViewModel>().toggleIsUserAdded();

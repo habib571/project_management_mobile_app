@@ -36,7 +36,6 @@ class ProjectTasksViewModel extends BaseViewModel {
   TaskModel? get selectedTask => _selectedTask ;
   set selectedTask(TaskModel? value) {
       _selectedTask = value;
-      print(">>>>>>>>>>>>>Notifyer Called");
       notifyListeners();
   }
 

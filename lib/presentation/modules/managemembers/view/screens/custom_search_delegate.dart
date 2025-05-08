@@ -99,7 +99,7 @@ class CustomSearchDelegate extends SearchDelegate {
                     leading: ImagePlaceHolder(
                       imgBorder: true,
                       radius: 25,
-                      imageUrl: "${Constants.baseUrl}/images/${member.imageUrl}" ,
+                      imageUrl: member.imageUrl,//"${Constants.baseUrl}/images/${member.imageUrl}" ,
                       fullName: member.fullName,
                     ),
                     title: Text(member.fullName),

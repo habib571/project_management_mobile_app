@@ -103,7 +103,7 @@ class ProjectDetailCard extends StatelessWidget {
           children: [
             ImagePlaceHolder(
               radius: 10,
-              imageUrl: "${Constants.baseUrl}/images/${project.createdBy?.imageUrl}" ,
+              imageUrl: project.createdBy?.imageUrl,//"${Constants.baseUrl}/images/${project.createdBy?.imageUrl}" ,
               fullName: project.createdBy?.fullName ?? "Loading ..." ,
             ),
             const SizedBox(

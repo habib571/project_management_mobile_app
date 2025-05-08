@@ -28,7 +28,7 @@ class MemberLisTile extends StatelessWidget {
           onPressed: ()=>_showMemberOptions(context, projectMember),
           icon: const Icon(Icons.menu_outlined)) ,
       leading: ImagePlaceHolder(radius: 30,
-          imageUrl: "${Constants.baseUrl}/images/${projectMember.user!.imageUrl}",
+          imageUrl: projectMember.user!.imageUrl,
           fullName: projectMember.user!.fullName,
       ),
       onTap: () {

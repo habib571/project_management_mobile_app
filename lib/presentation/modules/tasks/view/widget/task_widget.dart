@@ -14,6 +14,7 @@ import '../../../../../application/constants/constants.dart';
 import '../../../../../application/helpers/get_storage.dart';
 import '../../../../../application/navigation/routes_constants.dart';
 import '../../../../../domain/models/Task/task.dart';
+import '../../../../../domain/models/user.dart';
 import '../../../../sharedwidgets/image_widget.dart';
 import '../../../../utils/colors.dart';
 import '../../viewmodel/prject_tasks_view_model.dart';
@@ -83,22 +84,22 @@ class _TaskWidgetState extends State<TaskWidget> {
                        style: robotoSemiBold.copyWith(color: AppColors.secondaryTxt ,fontSize: 14),
                    ),
 
-                   Selector<ProjectTasksViewModel, String>(
-                     selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).assignedUser?.fullName ?? '',
-                     builder: (_, fullName, __) {
+                   Selector<ProjectTasksViewModel, User>(
+                     selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).assignedUser!,//?.fullName ?? '',
+                     builder: (_, user, __) {
                        return Row(
                          children: [
                             ImagePlaceHolder(
                              radius: 10,
-                             imageUrl: Constants.userProfileImageUrl,
-                              fullName: fullName,
+                             imageUrl: user.imageUrl,//Constants.userProfileImageUrl
+                              fullName: user.fullName,
                            ),
                            const SizedBox(
                              width: 5,
                            ),
 
                            Text(
-                             fullName,
+                             user.fullName,
                              style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),
                            ),
                          ],

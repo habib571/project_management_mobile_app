@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 
 import '../../application/constants/constants.dart';
+import '../../application/helpers/get_storage.dart';
 import '../utils/colors.dart';
 
 
@@ -13,7 +15,9 @@ class ImagePlaceHolder extends StatelessWidget {
   final bool imgBorder;
   final String fullName;
 
-  const ImagePlaceHolder({
+  final LocalStorage _localStorage = instance<LocalStorage>() ;
+
+   ImagePlaceHolder({
     super.key,
     required this.radius,
     required this.imageUrl,
@@ -50,30 +54,40 @@ class ImagePlaceHolder extends StatelessWidget {
 
   Widget _buildLocalImage(String letter) {
     try {
-      return Container(
-        decoration: BoxDecoration(
-          border: imgBorder
-              ? Border.all(color: AppColors.primary, width: 1)
-              : null,
-          shape: BoxShape.circle,
-          image: DecorationImage(
-            image: FileImage(File(imageUrl!)),
-            fit: BoxFit.cover,
+      final file = File(imageUrl!);
+
+      // Vérifie que le fichier existe avant de l'afficher
+      if (file.existsSync()) {
+        return Container(
+          decoration: BoxDecoration(
+            border: imgBorder
+                ? Border.all(color: AppColors.primary, width: 1)
+                : null,
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: FileImage(file),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-      );
+        );
+      } else {
+        debugPrint('cant find loc: $imageUrl');
+        return _buildNetworkImage(letter);
+      }
     } catch (e) {
+      debugPrint('Erreur fichier local: $e');
       return _buildInitials(letter);
     }
   }
 
   Widget _buildNetworkImage(String letter) {
+    print("ùùùùùùùùùùùù   ${Constants.baseUrl}/images/$imageUrl");
     return CachedNetworkImage(
-      httpHeaders: const {
+      httpHeaders:  {
         'Accept': 'application/json',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5b3Vzc2VmQGdtYWlsLmNvbSIsImlhdCI6MTczNjY0MDAzOCwiZXhwIjoxNzcyNjQwMDM4fQ.idEqO31qMyred3TZXhhmu8gGjyuLRXCOfgzkVsbQVLs'
+        'Authorization': 'Bearer ${_localStorage.getAuthToken()}'
       },
-      imageUrl: imageUrl!,
+      imageUrl: "${Constants.baseUrl}/images/$imageUrl", //imageUrl!,
       //cacheKey: imageUrl?.split('/').last,
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
@@ -88,10 +102,8 @@ class ImagePlaceHolder extends StatelessWidget {
         ),
       ),
       placeholder: (context, url) => const CircularProgressIndicator(),
-      errorWidget: (context, url, error) {
-        print('Image load error: $error');
-        return _buildInitials(letter);
-      },
+      errorWidget: (context, url, error) =>_buildInitials(letter)
+
     );
   }
 

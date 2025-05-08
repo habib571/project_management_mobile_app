@@ -41,7 +41,7 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
         child: Column(
           children: [
             const CustomAppBar(title: "All Tasks" , ),
-            SizedBox(height: 15.h) ,
+            const SizedBox(height: 10) ,
             _showTaskList()
           ],
         ),
@@ -74,8 +74,9 @@ class _ProjectTasksScreensState extends State<ProjectTasksScreens> {
 
             child: ListView.builder(
               shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: tasks.length + 1,
-              itemBuilder: (context, index) { 
+              itemBuilder: (context, index) {
                 if (index == tasks.length) {
                   return _viewModel.isLoadingMore
                       ? const Padding(
