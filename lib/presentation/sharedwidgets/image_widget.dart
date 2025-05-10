@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
-
 import '../../application/constants/constants.dart';
 import '../../application/helpers/get_storage.dart';
 import '../utils/colors.dart';
@@ -56,7 +55,6 @@ class ImagePlaceHolder extends StatelessWidget {
     try {
       final file = File(imageUrl!);
 
-      // Vérifie que le fichier existe avant de l'afficher
       if (file.existsSync()) {
         return Container(
           decoration: BoxDecoration(
@@ -75,13 +73,12 @@ class ImagePlaceHolder extends StatelessWidget {
         return _buildNetworkImage(letter);
       }
     } catch (e) {
-      debugPrint('Erreur fichier local: $e');
+      debugPrint(e as String?);
       return _buildInitials(letter);
     }
   }
 
   Widget _buildNetworkImage(String letter) {
-    print("ùùùùùùùùùùùù   ${Constants.baseUrl}/images/$imageUrl");
     return CachedNetworkImage(
       httpHeaders:  {
         'Accept': 'application/json',

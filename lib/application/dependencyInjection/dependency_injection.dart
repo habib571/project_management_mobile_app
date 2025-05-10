@@ -46,6 +46,7 @@ import '../../firebase_options.dart';
 import '../../presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
 import '../../presentation/modules/managemembers/viewmodel/manage_members_viewmodel.dart';
 import '../../presentation/modules/managemembers/viewmodel/search_member_view_model.dart';
+import '../../presentation/modules/notifications/ViewModel/notifications_hstoric_viewmodel.dart';
 import '../../presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import '../../presentation/modules/tasks/viewmodel/task_detail_view_model.dart';
 import '../helpers/token_mamanger.dart';
@@ -61,7 +62,6 @@ initAppModule() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   initNotificationsModule();
-  //NotificationService.instance.initialize();
   await initGetStorageModule();
   instance.registerLazySingleton<TokenManager>(() => TokenManager(instance()));
   instance.registerLazySingleton<NetworkInfo>(
@@ -206,8 +206,9 @@ initGetStorageModule() async {
 
 initNotificationsModule()async {
   if (!GetIt.I.isRegistered<UserProfileViewModel>()) {
-    instance.registerLazySingleton<NotificationService>(() =>
-        NotificationService());
+    instance.registerLazySingleton<NotificationService>(() =>NotificationService());
     await instance<NotificationService>().initialize();
+    instance.registerFactory<NotificationsHistoricViewModel>(() => NotificationsHistoricViewModel(instance()));
+
   }
   }

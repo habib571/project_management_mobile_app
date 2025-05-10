@@ -126,8 +126,8 @@ abstract class ProjectDataSource {
    @override
    Future<ApiResponse> updateMemberRole(ProjectMember request) async{
      return await executePatchRequest(
-         apiUrl: "/project/update-member/${request.projectId}/${request.role}",
-         body: {},
+         apiUrl: "/project/update-member/${request.id}",
+         body: request.toJsonForUpdateRole(),
          bearerToken: _localStorage.getAuthToken(),
          onRequestResponse: (response, statusCode) {
            return ApiResponse(response, statusCode);

@@ -167,7 +167,7 @@ class _ManageMembersScreenState extends State<ManageMembersScreen> {
   Widget _addMemberButtonSuction() {
     return CustomButton(
         onPressed: () {
-          _viewModel.toEdit ? _viewModel.updateMemberRole(member.id , member.projectId!) : _viewModel.addMember(member.user?.id , member.projectId!) ;
+          _viewModel.toEdit ? _viewModel.updateMemberRole(member.id ) : _viewModel.addMember(member.user?.id , member.projectId!) ;
         },
         text:_viewModel.toEdit  ? 'Update Role' : 'Add Member'  ,
     );
