@@ -32,30 +32,37 @@ class NotificationsHistoric extends StatelessWidget {
   Widget _showBody(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+
         children: [
-          SizedBox(
-            height: 25.h,
-          ),
-          const CustomAppBar(title: 'Notifications Historic'),
+          SizedBox(height: 60.h),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.all(16),
-              itemCount: _viewModel.notifications.length,
-              itemBuilder: (context, index) {
-                return NotificationWidget(
-                  title: _viewModel.notifications[index].title,
-                  description: _viewModel.notifications[index].description,
-                  projectName: _viewModel.notifications[index].projectName,
-                  timestamp: _viewModel.notifications[index].sendDate,
-                  type: _viewModel.notifications[index].type,
-                  isRead: _viewModel.notifications[index].isRead,
-                  onTap: () {},
-                  onDelete: () => {},
-                );
-              },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                    'Notifications Historic',
+                    style: robotoSemiBold.copyWith(fontSize: 28, color: AppColors.primary,)
+                ) ,
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.all(16),
+                  itemCount: _viewModel.notifications.length,
+                  itemBuilder: (context, index) {
+                    return NotificationWidget(
+                      title: _viewModel.notifications[index].title,
+                      description: _viewModel.notifications[index].description,
+                      projectName: _viewModel.notifications[index].projectName,
+                      timestamp: _viewModel.notifications[index].sendDate,
+                      type: _viewModel.notifications[index].type,
+                      isRead: _viewModel.notifications[index].isRead,
+                      onTap: () {},
+                      onDelete: () => {},
+                    );
+                  },
+                ),
+              ],
             ),
           ),
         ],
