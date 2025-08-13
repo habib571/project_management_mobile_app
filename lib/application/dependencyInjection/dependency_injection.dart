@@ -61,11 +61,10 @@ initAppModule() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  initNotificationsModule();
+  //initNotificationsModule();
   await initGetStorageModule();
   instance.registerLazySingleton<TokenManager>(() => TokenManager(instance()));
-  instance.registerLazySingleton<NetworkInfo>(
-      () => NetworkInfoImpl(InternetConnectionChecker()));
+  instance.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(InternetConnectionChecker()));
 
   instance.registerLazySingleton<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImp(instance()));
@@ -91,27 +90,31 @@ initAppModule() async {
   initProject();
   initSearchModule();
   initReportIssueModule();
- initGetAllIssuesModule();
-
+  initGetAllIssuesModule();
+  initNotificationsModule();
 
 }
 
 initReportIssueModule() {
-  if (!GetIt.I.isRegistered<ReportIssueViewModel>()) {
+  //if (!GetIt.I.isRegistered<ReportIssueViewModel>()) {
     instance.registerFactory<ReportIssueUseCase>(
         () => ReportIssueUseCase(instance()));
     instance.registerFactory<ReportIssueViewModel>(
-        () => ReportIssueViewModel(instance(), instance()));
-  }
+        () => ReportIssueViewModel(instance(), instance(), instance()));
+  //}
 }
 
 initGetAllIssuesModule() {
-  if (!GetIt.I.isRegistered<GetAllIssuesViewModel>()) {
+  //if (!GetIt.I.isRegistered<GetAllIssuesViewModel>()) {
     instance.registerFactory<GetAllIssuesUseCase>(
         () => GetAllIssuesUseCase(instance()));
     instance.registerFactory<GetAllIssuesViewModel>(
-        () => GetAllIssuesViewModel(instance(), instance()));
-  }
+        () {
+          print("------------------- FACTORY EXECUTED");
+          return GetAllIssuesViewModel(instance(), instance(), instance());
+        }
+    );
+ // }
 }
 
 initSearchModule() {
@@ -158,7 +161,6 @@ initTask() {
 
 initProject() {
   if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
-
     instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
     instance.registerFactory<ManageMembersUseCase>(() => ManageMembersUseCase(instance()));
     instance.registerFactory<UpdateProjectUseCase>(() => UpdateProjectUseCase(instance()));
@@ -204,11 +206,18 @@ initGetStorageModule() async {
       () => LocalStorageImp(instance(), instance()));
 }
 
-initNotificationsModule()async {
+/*initNotificationsModule()async {
   if (!GetIt.I.isRegistered<UserProfileViewModel>()) {
     instance.registerLazySingleton<NotificationService>(() =>NotificationService());
     await instance<NotificationService>().initialize();
     instance.registerFactory<NotificationsHistoricViewModel>(() => NotificationsHistoricViewModel(instance()));
+  }*/
 
+  initNotificationsModule()async {
+  if (!GetIt.I.isRegistered<NotificationsHistoricViewModel>()) {
+    instance.registerFactory<NotificationsHistoricViewModel>(() => NotificationsHistoricViewModel(instance()));
+    instance.registerLazySingleton<NotificationService>(() =>NotificationService());
+    await instance<NotificationService>().initialize();
   }
-  }
+
+}

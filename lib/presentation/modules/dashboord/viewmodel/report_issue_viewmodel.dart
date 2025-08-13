@@ -10,8 +10,12 @@ import '../../../../domain/models/project_member.dart';
 import '../../../../domain/usecases/project/issue/report_issue_use_case.dart';
 import '../../../utils/colors.dart';
 import '../view/widgets/custom_chips/assigned_memberchip.dart';
+import 'dashboard_view_model.dart';
 
 class ReportIssueViewModel extends BaseViewModel{
+
+  final DashBoardViewModel _dashBoardViewModel ;
+  final ReportIssueUseCase _useCase ;
 
   @override
   void start() {
@@ -19,8 +23,7 @@ class ReportIssueViewModel extends BaseViewModel{
     super.start();
   }
 
-  final ReportIssueUseCase _useCase ;
-  ReportIssueViewModel(super.tokenManager, this._useCase);
+  ReportIssueViewModel(super.tokenManager, this._useCase, this._dashBoardViewModel);
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   GlobalKey<FormState> get formkey => _formkey;
@@ -72,7 +75,7 @@ class ReportIssueViewModel extends BaseViewModel{
               description: _issueDescription.text.trim(),
               memberId: taggedMember?.id ??333  ,
               taskId:_taggedTask?.id,
-              projectId: 64
+              projectId: _dashBoardViewModel.project!.id!
           )
       )).fold((failure) {
         updateState(ErrorState(
@@ -82,5 +85,6 @@ class ReportIssueViewModel extends BaseViewModel{
       });
     }
   }
+
 
 }

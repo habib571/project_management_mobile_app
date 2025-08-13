@@ -4,16 +4,21 @@ import 'package:project_management_app/domain/usecases/project/issue/get_allissu
 import '../../../base/base_view_model.dart';
 import '../../../stateRender/state_render.dart';
 import '../../../stateRender/state_render_impl.dart';
+import 'dashboard_view_model.dart';
 
 class GetAllIssuesViewModel extends BaseViewModel{
   final GetAllIssuesUseCase _useCase ;
+  final DashBoardViewModel dashBoardViewModel;
 
-  GetAllIssuesViewModel(super.tokenManager, this._useCase);
+  GetAllIssuesViewModel(super.tokenManager, this._useCase, this.dashBoardViewModel){
+      print("CONSTRUCTOR CALLED! ${this.hashCode} issuesList length: ${issuesList.length}");
+  }
+
 
   @override
-  void start() {
+  void start() async {
     super.start();
-    getAllProjectIssues();
+    await getAllProjectIssues();
   }
 
   List<Issue> issuesList = [];
@@ -22,11 +27,12 @@ class GetAllIssuesViewModel extends BaseViewModel{
     updateState(LoadingState(
         stateRendererType: StateRendererType.fullScreenLoadingState));
 
-    (await _useCase.getAllIssues(64)).fold(
+    (await _useCase.getAllIssues(dashBoardViewModel.project!.id!)).fold(
             (failure) {
           updateState(ErrorState(StateRendererType.fullScreenErrorState, failure.message));
         },
             (data) {
+          //issuesList.clear();
           issuesList.addAll(data) ;
           updateState(ContentState());
         }
@@ -42,11 +48,19 @@ class GetAllIssuesViewModel extends BaseViewModel{
           updateState(ErrorState(StateRendererType.fullScreenErrorState, failure.message));
         },
             (data) {
-               Issue issue = issuesList.firstWhere((element) => element.issueId == issueId);
+              Issue issue = issuesList.firstWhere((element) => element.issueId == issueId);
               issue.isSolved = !issue.isSolved;
+              notifyListeners();
               updateState(ContentState());
         }
     );
   }
+
+  @override
+  void dispose() {
+    issuesList = []; // Clear issues list
+    print("VM DISPOSED: ${this.hashCode}");
+  }
+
 
 }

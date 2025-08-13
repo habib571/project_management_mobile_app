@@ -13,6 +13,9 @@ abstract class BaseViewModel extends ChangeNotifier implements BaseViewModelInpu
   final TokenManager _tokenManager;
   bool startTokenMonitoringOnInit;
 
+  FlowState get state => _stateSubject.valueOrNull ?? ContentState();
+
+
   BaseViewModel(this._tokenManager, {this.startTokenMonitoringOnInit = true}) {
     if (startTokenMonitoringOnInit) {
       startTokenMonitoring();

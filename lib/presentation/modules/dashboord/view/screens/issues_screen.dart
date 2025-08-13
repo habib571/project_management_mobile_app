@@ -4,6 +4,7 @@ import 'package:project_management_app/application/constants/constants.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/domain/models/Task/task.dart';
 import 'package:project_management_app/presentation/sharedwidgets/custom_appbar.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
 import '../../../../../application/helpers/get_storage.dart';
@@ -12,6 +13,8 @@ import '../../../../sharedwidgets/custom_issue_card.dart';
 import '../../../../stateRender/state_render_impl.dart';
 import '../../../../utils/colors.dart';
 import '../../viewmodel/all_issues_view_model.dart';
+
+/// Still need the createdBy in the API response
 
 class IssuesScreen extends StatefulWidget{
   const IssuesScreen(  {super.key});
@@ -22,12 +25,20 @@ class IssuesScreen extends StatefulWidget{
 
 class _IssuesScreenState extends State<IssuesScreen> {
 
-  final GetAllIssuesViewModel _viewModel = instance<GetAllIssuesViewModel>();
+  //final GetAllIssuesViewModel _viewModel = instance<GetAllIssuesViewModel>();
+  late final GetAllIssuesViewModel _viewModel;
 
   @override
   void initState() {
+    _viewModel = context.read<GetAllIssuesViewModel>();
     _viewModel.start() ;
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _viewModel.dispose(); // Crucial: triggers cleanup
+    super.dispose();
   }
 
   @override
@@ -74,23 +85,29 @@ Widget _showBody(GetAllIssuesViewModel viewModel) {
             itemCount: viewModel.issuesList.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              return IssueCard(
-                currentUserId: viewModel.issuesList[index].issueId,
-                title: viewModel.issuesList[index].issueTitle,
-                description: viewModel.issuesList[index].issueDescription,
-                taskReference: TaskModel.taggedTask(12, "Task1"),
-                taggedUser: viewModel.issuesList[index].taggedUser,
-                createdBy: User(
-                  1,
-                  "Nabil",
-                  "nabil@gmail.com",
-                  Constants.userProfileImageUrl
-                ),
-                isResolved: viewModel.issuesList[index].isSolved,
-                onMarkResolved: () {
-                  print("----Test");
-                  viewModel.updateIssueStatus(viewModel.issuesList[index].issueId);
-                },
+              return Selector<GetAllIssuesViewModel, bool>(
+                selector: (_, vm) => vm.issuesList[index].isSolved,
+                builder: (_, isResolved, __) {
+                  return IssueCard(
+                    key: ValueKey(viewModel.issuesList[index].issueId),
+                    currentUserId: viewModel.issuesList[index].issueId, //FIX
+                    title: viewModel.issuesList[index].issueTitle,
+                    description: viewModel.issuesList[index].issueDescription,
+                    taskReference: TaskModel.taggedTask(12, "Task1"),
+                    taggedUser: viewModel.issuesList[index].taggedUser,
+                    createdBy: User(
+                        1,
+                        "Youssef",
+                        "Youssef@gmail.com",
+                        Constants.userProfileImageUrl
+                    ),
+                    isResolved: viewModel.issuesList[index].isSolved,
+                    onMarkResolved: () {
+                      print("----Test");
+                      viewModel.updateIssueStatus(viewModel.issuesList[index].issueId);
+                    },
+                  );
+                }
               );
             },
           ),

@@ -31,6 +31,7 @@ class IssueCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("---------- ISSUE ${key.toString()} ------");
     return Card(
       color: Colors.white,
       elevation:0,
@@ -92,7 +93,9 @@ class IssueCard extends StatelessWidget {
                   const SizedBox(height: 12),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: _issueCardButton(createdBy, currentUserId , onMarkResolved)
+                    child: isResolved ?
+                        const SizedBox.shrink() :
+                        _issueCardButton(createdBy, currentUserId , onMarkResolved)
                   ),
                 ],
               ),

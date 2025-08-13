@@ -111,18 +111,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
             },
           );
-            /*Consumer<DashBoardViewModel>(
-            builder: (context, DashBoardViewModel, child){
-              print("**** REBUILD dahsbord*****");
-              return ProjectCard(
-                project: _viewModel.projectList[index],
-                onTap: () {
-                  _viewModel.setProject(_viewModel.projectList[index]) ;
-                  Get.to(()=> const ProjectDetailScreen()) ;
-                },
-              );
-            } ,
-          );*/
         },
       ),
       options: CarouselOptions(
