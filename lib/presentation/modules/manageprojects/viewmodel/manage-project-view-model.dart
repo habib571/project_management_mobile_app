@@ -16,6 +16,7 @@ class ManageProjectViewModel extends BaseViewModel{
 
   ManageProjectViewModel(super.tokenManager, this._manageProjectUseCase, this.dashBoardViewModel,this.toEdit){
     _initControllers();
+      print("ManageProjectViewModel CONSTRUCTOR CALLED! ${this.hashCode} ");
   }
 
   @override
@@ -72,6 +73,7 @@ class ManageProjectViewModel extends BaseViewModel{
           .fold((failure) {
              updateState(ErrorState(StateRendererType.snackbarState, failure.message)) ;
       }, (success) {
+            dashBoardViewModel.getMyProjects();
             updateState(ContentState());
             Get.back( );
       }
@@ -112,5 +114,11 @@ class ManageProjectViewModel extends BaseViewModel{
       );
     }
 
+  }
+
+  @override
+  void dispose() {
+    print("VM DISPOSED: ${this.hashCode}");
+    super.dispose();
   }
 }

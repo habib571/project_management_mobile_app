@@ -23,11 +23,22 @@ import '../viewmodel/manage-project-view-model.dart';
  */
 
 
-class ManageProjectScreen extends StatelessWidget {
+class ManageProjectScreen extends StatefulWidget {
 
   ManageProjectScreen({super.key}) ;
 
+  @override
+  State<ManageProjectScreen> createState() => _ManageProjectScreenState();
+}
+
+class _ManageProjectScreenState extends State<ManageProjectScreen> {
   final ManageProjectViewModel  _viewModel = instance<ManageProjectViewModel>(param1: Get.arguments?["toEdit"] ?? false);
+
+  @override
+  void dispose() {
+    _viewModel.dispose(); // Crucial: triggers cleanup
+    super.dispose();
+  }
 
    @override
   Widget build(BuildContext context) {
@@ -60,12 +71,12 @@ class ManageProjectScreen extends StatelessWidget {
                   SizedBox(height: 40.h),
                   _viewModel.toEdit == true ? const SizedBox.shrink() :
                   Text(
-                    'New Project',
-                    style: robotoSemiBold.copyWith(fontSize: 28, color: AppColors.primary,)
+                      'New Project',
+                      style: robotoSemiBold.copyWith(fontSize: 28, color: AppColors.primary,)
                   ) ,
                   Text(
-                    "Project Details",
-                    style: robotoSemiBold.copyWith(fontSize: 18)
+                      "Project Details",
+                      style: robotoSemiBold.copyWith(fontSize: 18)
                   ),
                   SizedBox(height: 16.h),
                   Container(
@@ -106,13 +117,14 @@ class ManageProjectScreen extends StatelessWidget {
       ),
     );
   }
+
   Widget _addProjectNameSection(){
     return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-        "Project Name",
-        style: robotoRegular.copyWith(fontSize: 14, color: AppColors.primaryTxt, )
+            "Project Name",
+            style: robotoRegular.copyWith(fontSize: 14, color: AppColors.primaryTxt, )
         ),
         SizedBox(height: 8.h),
         InputText(
@@ -131,8 +143,8 @@ class ManageProjectScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Description",
-          style: robotoRegular.copyWith(fontSize: 14, color: AppColors.primaryTxt,)
+            "Description",
+            style: robotoRegular.copyWith(fontSize: 14, color: AppColors.primaryTxt,)
         ),
         SizedBox(height: 8.h),
         InputText(
@@ -147,14 +159,13 @@ class ManageProjectScreen extends StatelessWidget {
     );
   }
 
-
   Widget _addProjectEndDateSection(BuildContext context){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "End Date",
-          style: robotoRegular.copyWith(fontSize: 14, color: AppColors.primaryTxt, )
+            "End Date",
+            style: robotoRegular.copyWith(fontSize: 14, color: AppColors.primaryTxt, )
         ),
         SizedBox(height: 8.h),
         InputText(
@@ -166,21 +177,21 @@ class ManageProjectScreen extends StatelessWidget {
           borderSide: const BorderSide(color: Colors.black),
           borderRadius: 12,
           onTap: () async {
-                await _viewModel.pickProjectEndDate(context);
+            await _viewModel.pickProjectEndDate(context);
           },
         )
       ],
     );
   }
 
-   Widget _showButton() {
-     return CustomButton(
-         onPressed: () {
-           _viewModel.toEdit == true ? _viewModel.editProjectDetails() : _viewModel.addProject();
-         },
-         text: _viewModel.toEdit == true ? 'Edit' : "Add Project"
-     );
-   }
+  Widget _showButton() {
+    return CustomButton(
+        onPressed: () {
+          _viewModel.toEdit == true ? _viewModel.editProjectDetails() : _viewModel.addProject();
+        },
+        text: _viewModel.toEdit == true ? 'Edit' : "Add Project"
+    );
+  }
 }
 
 

@@ -68,7 +68,7 @@ class ProjectTasksViewModel extends BaseViewModel {
     (await _getProjectTasksUseCase.getProjectTasks(
         _projectDetailViewModel.dashBoardViewModel.project!.id!,
         Pagination(_currentPage ,_pageSize))
-    ).fold((failure) { 
+    ).fold((failure) {
     _stateNotifier.value =ErrorState(StateRendererType.fullScreenErrorState, failure.message);
     } ,
         (data) {
@@ -79,6 +79,7 @@ class ProjectTasksViewModel extends BaseViewModel {
          if (data.length < _pageSize) {
            hasMore = false;
          }
+
         }
     ) ;
     _isLoadingMore = false;

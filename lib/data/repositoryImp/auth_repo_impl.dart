@@ -22,8 +22,7 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this._authRemoteDataSource, this._networkInfo);
 
   @override
-  Future<Either<Failure, AuthResponse>> signup(
-      RegisterRequest registerRequest) async {
+  Future<Either<Failure, AuthResponse>> signup(RegisterRequest registerRequest) async {
     if (await _networkInfo.isConnected) {
       try {
         final response = await _authRemoteDataSource.signup(registerRequest);

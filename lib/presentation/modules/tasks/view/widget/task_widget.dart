@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:project_management_app/main.dart';
+import 'package:project_management_app/presentation/base/base_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task%20priority/task_priority_card.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task_status_card.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
@@ -52,17 +53,32 @@ class _TaskWidgetState extends State<TaskWidget> {
              mainAxisAlignment: MainAxisAlignment.spaceBetween,
              children: [
                Selector<ProjectTasksViewModel, String>(
-                 selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).name ?? '',
+                 selector: (_, viewModel) {
+                   final task = viewModel.tasks.firstWhereOrNull((t) => t.id == widget.task.id);
+                   return task?.name ?? widget.task.name ?? '';
+                 },
+                 builder: (_, name, __) {
+                   return Text(
+                     name,
+                     style: robotoBold.copyWith(fontSize: 14, color: AppColors.secondaryTxt),
+                   );
+                 },
+               ),
+               /*Selector<ProjectTasksViewModel, String>(
+                 selector: (_, viewModel) => viewModel.tasks.firstWhereOrNull((t) => t.id == widget.task.id)?.name ?? 'fgfg',
                  builder: (_, name, __) {
                    return Text(
                      name ,//widget.task.name! ,
                      style: robotoBold.copyWith(fontSize: 14, color: AppColors.secondaryTxt),
                    ) ;
                  },
-               ),
+               ),*/
 
                Selector<ProjectTasksViewModel, String>(
-                 selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).priority ?? '',
+                 selector: (_, viewModel) {
+                   final task = viewModel.tasks.firstWhereOrNull((t) => t.id == widget.task.id);
+                   return task?.priority ?? widget.task.priority ?? '';
+                 },
                  builder: (_, priority, __) {
                    return TaskPriorityCard(
                        task: widget.task,
@@ -85,7 +101,10 @@ class _TaskWidgetState extends State<TaskWidget> {
                    ),
 
                    Selector<ProjectTasksViewModel, User>(
-                     selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).assignedUser!,//?.fullName ?? '',
+                     selector: (_, viewModel) {
+                       final task = viewModel.tasks.firstWhereOrNull((t) => t.id == widget.task.id);
+                       return task?.assignedUser ?? widget.task.assignedUser! ;
+                     },
                      builder: (_, user, __) {
                        return Row(
                          children: [
@@ -110,7 +129,9 @@ class _TaskWidgetState extends State<TaskWidget> {
                  ],
                ),
                widget.isTaskEditable  ? IconButton(
-                onPressed:(){
+                onPressed:() async{
+                  //TaskModel? task = await widget.viewModel.tasks.firstWhereOrNull((e)=> e.id == widget.task.id );
+                  //widget.viewModel.selectedTask = task ?? widget.task ;
                   widget.viewModel.selectedTask = widget.viewModel.tasks.firstWhere((e)=> e.id == widget.task.id )   ;
                   Get.toNamed(AppRoutes.manageTaskScreen , arguments: {"toEdit": true } );
                 } ,
@@ -127,7 +148,10 @@ class _TaskWidgetState extends State<TaskWidget> {
                        Image.asset("assets/calendar.png"),
                        const SizedBox(width: 5,),
                        Selector<ProjectTasksViewModel, String>(
-                         selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).deadline ?? '',
+                         selector: (_, viewModel) {
+                           final task = viewModel.tasks.firstWhereOrNull((t) => t.id == widget.task.id);
+                           return task?.deadline ?? widget.task.deadline ?? '';
+                         },
                          builder: (_, deadline, __) {
                            return Text(
                              deadline,
@@ -139,7 +163,10 @@ class _TaskWidgetState extends State<TaskWidget> {
                    ),
 
                   Selector<ProjectTasksViewModel, String>(
-                    selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).status ?? '',
+                    selector: (_, viewModel) {
+                      final task = viewModel.tasks.firstWhereOrNull((t) => t.id == widget.task.id);
+                      return task?.status ?? widget.task.status ?? '';
+                    },
                     builder: (_, status, __) {
                       return TaskStatusCard(
                         taskStatusModel: TaskStatusModel.type(status),

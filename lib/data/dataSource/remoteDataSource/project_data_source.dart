@@ -87,6 +87,7 @@ abstract class ProjectDataSource {
          body: request.toJson(),
          bearerToken: _localStorage.getAuthToken(),
          onRequestResponse: (response, statusCode) {
+           print("------------ ${ _localStorage.getAuthToken()} ----------");
            return ApiResponse(response, statusCode);
          });
    }

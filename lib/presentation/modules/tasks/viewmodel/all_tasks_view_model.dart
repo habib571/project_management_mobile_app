@@ -109,6 +109,7 @@ class AllTasksViewModel extends BaseViewModel {
 
   final TextEditingController searchController = TextEditingController();
   searchTasks() async {
+    print("-------1------- ${_tasks.length} ----------");
     _stateNotifier.value = LoadingState(
         stateRendererType: StateRendererType.fullScreenLoadingState);
     //   if (_isLoadingMore || !hasMore) return;
@@ -124,11 +125,12 @@ class AllTasksViewModel extends BaseViewModel {
     (await _searchTaskUseCase.searchTasks(
             _searchQuery, Pagination(_currentPage, _pageSize)))
         .fold((failure) {
-      _stateNotifier.value =
-          ErrorState(StateRendererType.fullScreenErrorState, failure.message);
+      _stateNotifier.value = ErrorState(StateRendererType.fullScreenErrorState, failure.message);
     }, (data) {
       _stateNotifier.value = ContentState();
       _tasks.addAll(data);
+      print("-------2------- ${_tasks.length} ----------");
+
       // _currentPage++;
       _isLoadingMore = false;
       if (data.length < _pageSize) {
