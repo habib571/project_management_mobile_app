@@ -37,7 +37,7 @@ class _IssuesScreenState extends State<IssuesScreen> {
 
   @override
   void dispose() {
-    _viewModel.dispose(); // Crucial: triggers cleanup
+    _viewModel.dispose();
     super.dispose();
   }
 

@@ -25,7 +25,7 @@ import '../viewmodel/manage-project-view-model.dart';
 
 class ManageProjectScreen extends StatefulWidget {
 
-  ManageProjectScreen({super.key}) ;
+  const ManageProjectScreen({super.key}) ;
 
   @override
   State<ManageProjectScreen> createState() => _ManageProjectScreenState();
