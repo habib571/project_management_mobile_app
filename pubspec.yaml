@@ -89,7 +89,6 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/
-    - lib/presentation/modules/dashboord/view/screens/
   fonts:
     - family: Roboto
       fonts:
