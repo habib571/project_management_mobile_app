@@ -25,9 +25,10 @@ import 'package:provider/provider.dart';
 import '../../../../../../application/constants/constants.dart';
 import '../../../../../sharedwidgets/custom_add_button.dart';
 import '../../../../managemembers/view/screens/custom_search_delegate.dart';
+import '../meetings_screen.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
-   ProjectDetailScreen({
+   const ProjectDetailScreen({
     super.key,
   });
 
@@ -67,7 +68,6 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                     Selector<ProjectDetailViewModel,Project?>(
                       selector: (context, viewModel) => viewModel.dashBoardViewModel.project ,
                       builder:  (context, data, child){
-                        print("detailsCard");
                         return ProjectDetailCard(
                           project: _viewModel.dashBoardViewModel.project!,
                         );
@@ -113,6 +113,10 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                       height: 20,
                     ),
                     _tasksSection(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                     _meetingSection() ,
                      SizedBox(
                       height: 40.h,
                     ),
@@ -207,6 +211,21 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
           Get.toNamed(AppRoutes.issuesScreen);
         });
   }
+  Widget _meetingSection() {
+    return CustomListTile(
+        leading: const Icon(Icons.video_camera_front_outlined,
+            color: AppColors.primary),
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          color: AppColors.accent,
+          size: 13,
+        ),
+        title: const Text("meetings"),
+        onTap: () {
+          Get.to(() => const MeetingsScreen()) ;
+        });
+  }
+
 
   Widget _tasksSection() {
     return CustomListTile(
@@ -216,7 +235,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
           color: AppColors.accent,
           size: 13,
         ),
-        title: const Text("View tasks"),
+        title: const Text(" tasks"),
         onTap: () {
           Get.to(()=>ProjectTasksScreens()) ;
         });

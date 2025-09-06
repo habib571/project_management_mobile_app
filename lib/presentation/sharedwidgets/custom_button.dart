@@ -44,6 +44,7 @@ class CustomButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   widget,
+                  widget == const SizedBox() ? const SizedBox.shrink() :
                   const SizedBox(width: 10,) ,
                   Text(
                     text,

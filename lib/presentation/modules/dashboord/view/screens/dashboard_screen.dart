@@ -105,7 +105,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 project: _viewModel.projectList[index],
                 onTap: () {
                   _viewModel.setProject(_viewModel.projectList[index]) ;
-                  Get.to(()=>  ProjectDetailScreen()) ;
+                  Get.to(()=>  const ProjectDetailScreen()) ;
                 },
               );
 

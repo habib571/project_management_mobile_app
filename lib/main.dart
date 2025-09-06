@@ -5,12 +5,12 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_it/get_it.dart';
 import 'package:project_management_app/application/navigation/routes.dart';
-import 'package:project_management_app/application/notifications/notification-service.dart';
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signin-view_model.dart';
 import 'package:project_management_app/presentation/modules/auth/viewmodel/signup_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/issues_screen.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/meeting_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
 import 'package:project_management_app/presentation/modules/manageprojects/viewmodel/manage-project-view-model.dart';
@@ -83,6 +83,9 @@ class MyApp extends StatelessWidget {
 
           ChangeNotifierProvider<GetAllIssuesViewModel>(
               lazy: true, create: (_) => GetIt.instance<GetAllIssuesViewModel>(),
+          ) ,
+          ChangeNotifierProvider<MeetingViewModel>(
+            lazy: true, create: (_) => GetIt.instance<MeetingViewModel>(),
           )
 
 

@@ -61,7 +61,7 @@ class NotificationService {
     const channel = AndroidNotificationChannel(
       'high_importance_channel',
       'High Importance Notifications',
-      description: 'This channel is used for important notifications.',
+      description: 'This channel is used for important services.',
       importance: Importance.high,
     );
 
@@ -104,7 +104,7 @@ class NotificationService {
             'high_importance_channel',
             'High Importance Notifications',
             channelDescription:
-            'This channel is used for important notifications.',
+            'This channel is used for important services.',
             importance: Importance.high,
             priority: Priority.high,
             icon: '@mipmap/ic_launcher',

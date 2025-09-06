@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:project_management_app/application/helpers/get_storage.dart';
+import 'package:project_management_app/application/services/signaling_service.dart';
 import 'package:project_management_app/data/dataSource/remoteDataSource/task_remote_data_source.dart';
 import 'package:project_management_app/data/repositoryImp/auth_repo_impl.dart';
 import 'package:project_management_app/data/repositoryImp/project_repo_impl.dart';
@@ -21,6 +22,7 @@ import 'package:project_management_app/domain/usecases/task/filter_tasks_use_cas
 
 import 'package:project_management_app/domain/usecases/task/get_all_tasks.dart';
 import 'package:project_management_app/domain/usecases/task/search_task_use_case.dart';
+import 'package:project_management_app/presentation/modules/dashboord/viewmodel/meeting_view_model.dart';
 
 import 'package:project_management_app/presentation/modules/manageprojects/viewmodel/manage-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
@@ -54,7 +56,7 @@ import '../../domain/usecases/auth/signin_usecase.dart';
 import '../../presentation/modules/auth/viewmodel/signin-view_model.dart';
 import '../../presentation/modules/auth/viewmodel/signup_view_model.dart';
 import '../../presentation/modules/home/home-viewmodel.dart';
-import '../notifications/notification-service.dart';
+import '../services/notification-service.dart';
 
 GetIt instance = GetIt.instance;
 initAppModule() async {
@@ -79,6 +81,11 @@ initAppModule() async {
       () => TaskRemoteDataSourceImpl(instance()));
   instance.registerLazySingleton<TaskRepository>(
       () => TaskRepositoryImpl(instance(), instance()));
+  instance.registerLazySingleton<SignalingService>(
+          () => SignalingService());
+
+  instance.registerLazySingleton<MeetingViewModel>(
+          () => MeetingViewModel(instance(), instance() ,instance()));
 
   initSignInModule();
   initSignupModule();
