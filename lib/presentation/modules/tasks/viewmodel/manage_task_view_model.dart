@@ -40,7 +40,7 @@ class ManageTaskViewModel extends BaseViewModel{
       _selectedPriorityIndex = priorityChipTexts.indexOf(_projectTasksViewModel.selectedTask!.priority!);
       _selectedStatusIndex = statusChipTexts.indexOf(_projectTasksViewModel.selectedTask!.status!);
       _isUserAdded = true ;
-      _projectMember  = ProjectMember.taskAsseignedMember(_projectTasksViewModel.selectedTask!.assignedUser) ;
+      _projectMember  = ProjectMember.taskAssignedMember(_projectTasksViewModel.selectedTask!.assignedUser) ;
 
     }else {
       taskName.clear();
