@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
-import 'package:project_management_app/presentation/modules/dashboord/view/screens/project_details/voice_call_screen.dart';
-import 'package:project_management_app/presentation/modules/dashboord/view/widgets/video_call_buttons.dart';
+import 'package:project_management_app/presentation/modules/meeting/view/screens/voice_call_screen.dart';
+import 'package:project_management_app/presentation/modules/meeting/view/widgets/video_call_buttons.dart';
 import 'package:provider/provider.dart';
 
-import '../../viewmodel/meeting_view_model.dart';
+import '../../viewModels/video_call_view_model.dart';
 
 class VideoCallScreen extends StatefulWidget {
   const VideoCallScreen({super.key});
@@ -20,7 +20,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<MeetingViewModel>().init();
+      context.read<VideoCallViewModel>().init();
     });
     super.initState();
   }
@@ -28,7 +28,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<MeetingViewModel>();
+    final viewModel = context.watch<VideoCallViewModel>();
     return Scaffold(
       body: Stack(
         children: [
@@ -101,7 +101,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     );
   }
 
-  Widget _buildLocalPreview(MeetingViewModel vm) {
+  Widget _buildLocalPreview(VideoCallViewModel vm) {
     return Container(
       width: 120,
       height: 160,

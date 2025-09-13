@@ -4,8 +4,8 @@ import 'package:project_management_app/application/helpers/get_storage.dart';
 import 'package:project_management_app/presentation/base/base_view_model.dart';
 import '../../../../application/services/signaling_service.dart';
 
-class MeetingViewModel extends BaseViewModel {
-  MeetingViewModel(super.tokenManager, this._signalingService, this._localStorage);
+class VideoCallViewModel extends BaseViewModel {
+  VideoCallViewModel(super.tokenManager, this._signalingService, this._localStorage);
 
   final LocalStorage _localStorage;
   final SignalingService _signalingService;

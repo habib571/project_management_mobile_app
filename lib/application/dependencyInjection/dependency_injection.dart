@@ -22,11 +22,11 @@ import 'package:project_management_app/domain/usecases/task/filter_tasks_use_cas
 
 import 'package:project_management_app/domain/usecases/task/get_all_tasks.dart';
 import 'package:project_management_app/domain/usecases/task/search_task_use_case.dart';
-import 'package:project_management_app/presentation/modules/dashboord/viewmodel/meeting_view_model.dart';
 
 import 'package:project_management_app/presentation/modules/manageprojects/viewmodel/manage-project-view-model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
+import 'package:project_management_app/presentation/modules/meeting/viewModels/meeting_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/prject_tasks_view_model.dart';
 
@@ -48,6 +48,7 @@ import '../../firebase_options.dart';
 import '../../presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
 import '../../presentation/modules/managemembers/viewmodel/manage_members_viewmodel.dart';
 import '../../presentation/modules/managemembers/viewmodel/search_member_view_model.dart';
+import '../../presentation/modules/meeting/viewModels/video_call_view_model.dart';
 import '../../presentation/modules/notifications/ViewModel/notifications_hstoric_viewmodel.dart';
 import '../../presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import '../../presentation/modules/tasks/viewmodel/task_detail_view_model.dart';
@@ -66,7 +67,8 @@ initAppModule() async {
   //initNotificationsModule();
   await initGetStorageModule();
   instance.registerLazySingleton<TokenManager>(() => TokenManager(instance()));
-  instance.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(InternetConnectionChecker()));
+  instance.registerLazySingleton<NetworkInfo>(
+      () => NetworkInfoImpl(InternetConnectionChecker()));
 
   instance.registerLazySingleton<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImp(instance()));
@@ -81,11 +83,14 @@ initAppModule() async {
       () => TaskRemoteDataSourceImpl(instance()));
   instance.registerLazySingleton<TaskRepository>(
       () => TaskRepositoryImpl(instance(), instance()));
-  instance.registerLazySingleton<SignalingService>(
-          () => SignalingService());
+  instance.registerLazySingleton<SignalingService>(() => SignalingService());
+
+  instance.registerLazySingleton<VideoCallViewModel>(
+      () => VideoCallViewModel(instance(), instance(), instance()));
 
   instance.registerLazySingleton<MeetingViewModel>(
-          () => MeetingViewModel(instance(), instance() ,instance()));
+          () => MeetingViewModel(instance()));
+
 
   initSignInModule();
   initSignupModule();
@@ -99,29 +104,25 @@ initAppModule() async {
   initReportIssueModule();
   initGetAllIssuesModule();
   initNotificationsModule();
-
 }
 
 initReportIssueModule() {
   //if (!GetIt.I.isRegistered<ReportIssueViewModel>()) {
-    instance.registerFactory<ReportIssueUseCase>(
-        () => ReportIssueUseCase(instance()));
-    instance.registerFactory<ReportIssueViewModel>(
-        () => ReportIssueViewModel(instance(), instance(), instance()));
+  instance.registerFactory<ReportIssueUseCase>(
+      () => ReportIssueUseCase(instance()));
+  instance.registerFactory<ReportIssueViewModel>(
+      () => ReportIssueViewModel(instance(), instance(), instance()));
   //}
 }
 
 initGetAllIssuesModule() {
   //if (!GetIt.I.isRegistered<GetAllIssuesViewModel>()) {
-    instance.registerFactory<GetAllIssuesUseCase>(
-        () => GetAllIssuesUseCase(instance()));
-    instance.registerFactory<GetAllIssuesViewModel>(
-        () {
-          print("------------------- FACTORY EXECUTED");
-          return GetAllIssuesViewModel(instance(), instance(), instance());
-        }
-    );
- // }
+  instance.registerFactory<GetAllIssuesUseCase>(
+      () => GetAllIssuesUseCase(instance()));
+  instance.registerFactory<GetAllIssuesViewModel>(() {
+    return GetAllIssuesViewModel(instance(), instance(), instance());
+  });
+  // }
 }
 
 initSearchModule() {
@@ -132,15 +133,17 @@ initSearchModule() {
 }
 
 initHomeModule() {
-  instance.registerLazySingleton<HomeViewModel>(() => HomeViewModel(instance()));
+  instance
+      .registerLazySingleton<HomeViewModel>(() => HomeViewModel(instance()));
 }
 
 intAddProject() {
-  instance.registerFactoryParam<ManageProjectViewModel,bool,void>(
-      (toEdit,_) => ManageProjectViewModel(instance(), instance(),instance(),toEdit ?? false));
+  instance.registerFactoryParam<ManageProjectViewModel, bool, void>(
+      (toEdit, _) => ManageProjectViewModel(
+          instance(), instance(), instance(), toEdit ?? false));
 
-
-  instance.registerFactory<ManageProjectUseCase>(() => ManageProjectUseCase(instance()));
+  instance.registerFactory<ManageProjectUseCase>(
+      () => ManageProjectUseCase(instance()));
 }
 
 initDashboard() {
@@ -153,32 +156,44 @@ initDashboard() {
 }
 
 initTask() {
-  instance.registerLazySingleton<TaskDetailsViewModel>(() => TaskDetailsViewModel(instance(), instance()));
-  instance.registerFactory<SearchTaskUseCase>(() => SearchTaskUseCase(instance()));
-  instance.registerFactory<FilterTaskUseCase>(() => FilterTaskUseCase(instance()));
-  instance.registerLazySingleton<AllTasksViewModel>(   () => AllTasksViewModel(instance(), instance() ,instance(),instance()));
-  instance.registerFactory<GetProjectTasksUseCase>( () => GetProjectTasksUseCase(instance()));
-    instance.registerFactory<ManageTaskUseCase>(() => ManageTaskUseCase(instance()));
-  instance.registerFactoryParam<ManageTaskViewModel,bool?,void>((toEdit,_) => ManageTaskViewModel(instance(), instance(),instance(), toEdit ?? false ,instance() ));
-  instance.registerLazySingleton<ProjectTasksViewModel>(
-          () => ProjectTasksViewModel(instance(), instance(), instance(),instance()));
-
-
+  instance.registerLazySingleton<TaskDetailsViewModel>(
+      () => TaskDetailsViewModel(instance(), instance()));
+  instance
+      .registerFactory<SearchTaskUseCase>(() => SearchTaskUseCase(instance()));
+  instance
+      .registerFactory<FilterTaskUseCase>(() => FilterTaskUseCase(instance()));
+  instance.registerLazySingleton<AllTasksViewModel>(
+      () => AllTasksViewModel(instance(), instance(), instance(), instance()));
+  instance.registerFactory<GetProjectTasksUseCase>(
+      () => GetProjectTasksUseCase(instance()));
+  instance
+      .registerFactory<ManageTaskUseCase>(() => ManageTaskUseCase(instance()));
+  instance.registerFactoryParam<ManageTaskViewModel, bool?, void>((toEdit, _) =>
+      ManageTaskViewModel(
+          instance(), instance(), instance(), toEdit ?? false, instance()));
+  instance.registerLazySingleton<ProjectTasksViewModel>(() =>
+      ProjectTasksViewModel(instance(), instance(), instance(), instance()));
 }
 
 initProject() {
   if (!GetIt.I.isRegistered<GetMembersUseCase>()) {
-    instance.registerFactory<GetMembersUseCase>(() => GetMembersUseCase(instance()));
-    instance.registerFactory<ManageMembersUseCase>(() => ManageMembersUseCase(instance()));
-    instance.registerFactory<UpdateProjectUseCase>(() => UpdateProjectUseCase(instance()));
-    instance.registerFactory<DeleteMemberUseCase>(() => DeleteMemberUseCase(instance()));
-    instance.registerFactoryParam<ManageMembersViewModel,bool,void>((toEdit,_) => ManageMembersViewModel(instance(), instance(),instance(),toEdit ?? false));
+    instance.registerFactory<GetMembersUseCase>(
+        () => GetMembersUseCase(instance()));
+    instance.registerFactory<ManageMembersUseCase>(
+        () => ManageMembersUseCase(instance()));
+    instance.registerFactory<UpdateProjectUseCase>(
+        () => UpdateProjectUseCase(instance()));
+    instance.registerFactory<DeleteMemberUseCase>(
+        () => DeleteMemberUseCase(instance()));
+    instance.registerFactoryParam<ManageMembersViewModel, bool, void>(
+        (toEdit, _) => ManageMembersViewModel(
+            instance(), instance(), instance(), toEdit ?? false));
     //instance.registerFactory<ManageMembersViewModel>(() => ManageMembersViewModel(instance() ,instance(),instance() , instance() ) );
-    instance.registerLazySingleton<ProjectDetailViewModel>(() => ProjectDetailViewModel(instance() ,instance() ,instance() ,instance(),instance()) );
+    instance.registerLazySingleton<ProjectDetailViewModel>(() =>
+        ProjectDetailViewModel(
+            instance(), instance(), instance(), instance(), instance()));
   }
 }
-
-
 
 initSignupModule() {
   if (!GetIt.I.isRegistered<SignupUseCase>()) {
@@ -200,8 +215,9 @@ initUserProfileModule() {
   if (!GetIt.I.isRegistered<UserProfileViewModel>()) {
     instance.registerLazySingleton<UserProfileUseCase>(
         () => UserProfileUseCase(instance()));
-    instance.registerLazySingleton<UserProfileViewModel>(
-        () => UserProfileViewModel(instance(), instance(), instance(),instance(),instance()));
+    instance.registerLazySingleton<UserProfileViewModel>(() =>
+        UserProfileViewModel(
+            instance(), instance(), instance(), instance(), instance()));
     instance.registerLazySingleton<ImagePicker>(() => ImagePicker());
   }
 }
@@ -220,11 +236,12 @@ initGetStorageModule() async {
     instance.registerFactory<NotificationsHistoricViewModel>(() => NotificationsHistoricViewModel(instance()));
   }*/
 
-  initNotificationsModule()async {
+initNotificationsModule() async {
   if (!GetIt.I.isRegistered<NotificationsHistoricViewModel>()) {
-    instance.registerFactory<NotificationsHistoricViewModel>(() => NotificationsHistoricViewModel(instance()));
-    instance.registerLazySingleton<NotificationService>(() =>NotificationService());
+    instance.registerFactory<NotificationsHistoricViewModel>(
+        () => NotificationsHistoricViewModel(instance()));
+    instance.registerLazySingleton<NotificationService>(
+        () => NotificationService());
     await instance<NotificationService>().initialize();
   }
-
 }

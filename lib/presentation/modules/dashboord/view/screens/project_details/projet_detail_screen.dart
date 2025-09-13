@@ -25,7 +25,7 @@ import 'package:provider/provider.dart';
 import '../../../../../../application/constants/constants.dart';
 import '../../../../../sharedwidgets/custom_add_button.dart';
 import '../../../../managemembers/view/screens/custom_search_delegate.dart';
-import '../meetings_screen.dart';
+import '../../../../meeting/view/screens/meetings_screen.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
    const ProjectDetailScreen({

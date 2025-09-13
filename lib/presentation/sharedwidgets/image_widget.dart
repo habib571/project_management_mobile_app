@@ -114,12 +114,14 @@ class ImagePlaceHolder extends StatelessWidget {
             : null,
       ),
       alignment: Alignment.center,
-      child: Text(
-        letter,
-        style: TextStyle(
-          fontSize: radius * 0.9,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
+      child: Center(
+        child: Text(
+          letter,
+          style: TextStyle(
+            fontSize: radius * 0.4,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
       ),
     );

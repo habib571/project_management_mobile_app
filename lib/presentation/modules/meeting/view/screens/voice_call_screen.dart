@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_management_app/presentation/sharedwidgets/image_widget.dart';
 
-import '../../../../../utils/styles.dart';
+import '../../../../utils/styles.dart';
 
 class VoiceCallScreen extends StatelessWidget {
   const VoiceCallScreen(

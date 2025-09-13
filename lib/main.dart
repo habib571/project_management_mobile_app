@@ -10,10 +10,11 @@ import 'package:project_management_app/presentation/modules/auth/viewmodel/signu
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/issues_screen.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/all_issues_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/dashboard_view_model.dart';
-import 'package:project_management_app/presentation/modules/dashboord/viewmodel/meeting_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/project_details_view_models/project_detail_view_model.dart';
 import 'package:project_management_app/presentation/modules/dashboord/viewmodel/report_issue_viewmodel.dart';
 import 'package:project_management_app/presentation/modules/manageprojects/viewmodel/manage-project-view-model.dart';
+import 'package:project_management_app/presentation/modules/meeting/viewModels/meeting_view_model.dart';
+import 'package:project_management_app/presentation/modules/meeting/viewModels/video_call_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/manage_task_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/prject_tasks_view_model.dart';
@@ -84,9 +85,12 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<GetAllIssuesViewModel>(
               lazy: true, create: (_) => GetIt.instance<GetAllIssuesViewModel>(),
           ) ,
+          ChangeNotifierProvider<VideoCallViewModel>(
+            lazy: true, create: (_) => GetIt.instance<VideoCallViewModel>(),
+          ) ,
           ChangeNotifierProvider<MeetingViewModel>(
             lazy: true, create: (_) => GetIt.instance<MeetingViewModel>(),
-          )
+          ) ,
 
 
         ],
