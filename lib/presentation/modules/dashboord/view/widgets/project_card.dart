@@ -16,7 +16,96 @@ class ProjectCard extends StatelessWidget {
   final Function onTap ;
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return InkWell(
+      onTap: () {
+        onTap() ;
+      },
+      child: Container(
+        padding: const EdgeInsets.all(15),
+        width: double.infinity ,
+        height: 170.h,
+        decoration: BoxDecoration(
+            color: Colors.white,
+          boxShadow: [
+            BoxShadow(color: AppColors.accent.withOpacity(0.5), blurRadius: 10)
+          ],
+          borderRadius: BorderRadius.circular(12)
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+           children: [
+             Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+                 Text(
+                   project.name! ,
+                   style: robotoBold.copyWith(fontSize: 14),
+
+                 ) ,
+                 IconButton(
+                     onPressed:
+                     () {
+
+                     },
+                     icon: const Icon(Icons.more_vert_sharp)
+                 )
+
+               ],
+             ) , 
+             Text(
+               project.startDate! ,
+               style: robotoMedium.copyWith(fontSize: 12),
+
+             ),
+             const Spacer() ,
+             Text(
+               overflow: TextOverflow.ellipsis,
+               project.description! ,
+               style: robotoRegular.copyWith(fontSize: 13),
+             ) ,
+             const Spacer() ,
+             Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+                 Text(
+                    "Progress",
+                   style: robotoMedium.copyWith(fontSize: 13),
+                 ) ,
+                 Text(
+                   "${(project.progress! * 100).toStringAsFixed(0)}%" ,
+                   style: robotoBold.copyWith(fontSize: 14),
+                 ) ,
+
+
+               ],
+             ) ,
+             const Spacer() ,
+             LinearProgressIndicator(
+               value: project.progress ,
+               backgroundColor: AppColors.accent,
+               color: AppColors.primary,
+             )
+
+
+
+           ],
+        ),
+      ),
+    ) ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*  Card(
       color: AppColors.primary,
       child: InkWell(
         child: Padding(
@@ -71,6 +160,6 @@ class ProjectCard extends StatelessWidget {
           ),
         ),
       ),
-    );
+    );*/
   }
 }

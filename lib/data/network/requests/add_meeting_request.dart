@@ -19,8 +19,9 @@ class AddMeetingRequest {
     return {
       'title': title,
       'type': type?.toString().split('.').last,
+       "projectId" :projectId ,
       'startDateTime': startDateTime,
-      'participantsIds': participantsIds,
+      'participantIds': participantsIds,
     };
   }
 }

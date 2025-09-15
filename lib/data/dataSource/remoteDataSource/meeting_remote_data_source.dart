@@ -16,7 +16,7 @@ class MeetingRemoteDataSourceImpl implements MeetingRemoteDataSource{
   @override
   Future<ApiResponse> addMeeting(AddMeetingRequest request) async{
     return await executePostRequest(
-        apiUrl: "/meeting/",
+        apiUrl: "/meeting",
         bearerToken: _localStorage.getAuthToken() ,
         body: request.toJson(),
         onRequestResponse: (response, statusCode) {

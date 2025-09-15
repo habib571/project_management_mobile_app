@@ -71,6 +71,7 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
             ),
             CustomButton(
               onPressed: () {
+                _viewModel.createMeeting() ;
 
               },
               text: "Create Meeting" ,

@@ -37,10 +37,11 @@ class ProjectDetailScreen extends StatefulWidget {
 }
 
 class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
-  late final ProjectDetailViewModel _viewModel = instance<ProjectDetailViewModel>();
+  late final ProjectDetailViewModel _viewModel ;
 
   @override
   void initState() {
+    _viewModel  = context.read<ProjectDetailViewModel>();
     _viewModel.start();
     super.initState();
   }

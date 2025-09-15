@@ -120,6 +120,14 @@ flutter:
           weight: 700
         - asset: fonts/Inter-SemiBold.ttf
           weight: 600
+    - family: Satoshi
+      fonts:
+        - asset: fonts/Satoshi-Regular.otf
+          weight: 400
+        - asset: fonts/Satoshi-Medium.otf
+          weight: 500
+        - asset: fonts/Satoshi-Bold.otf
+          weight: 700
 
 
 

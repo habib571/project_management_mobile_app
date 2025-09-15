@@ -11,7 +11,7 @@ class CustomButton extends StatelessWidget {
       required this.text,
       this.widget = const SizedBox(),
       this.height,
-        this.borderRadius =40,
+        this.borderRadius= 7,
         this.textColor  = Colors.white,
         this.padding =12
       });

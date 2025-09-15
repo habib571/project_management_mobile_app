@@ -8,6 +8,7 @@ import 'package:project_management_app/application/extensions/screen_config_exte
 
 import 'package:project_management_app/application/navigation/routes_constants.dart';
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/project_details/projet_detail_screen.dart';
+import 'package:project_management_app/presentation/sharedwidgets/input_text.dart';
 
 import 'package:provider/provider.dart';
 import '../../../../../domain/models/project.dart';
@@ -27,10 +28,11 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  final DashBoardViewModel _viewModel = instance<DashBoardViewModel>();
+  late final DashBoardViewModel _viewModel  ;
 
   @override
   void initState() {
+    _viewModel = context.read<DashBoardViewModel>() ;
     _viewModel.start();
     super.initState();
   }
@@ -42,7 +44,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffold,
+      backgroundColor: Colors.white,
       body: StreamBuilder<FlowState>(
         stream: _viewModel.outputState,
         builder: (context, snapshot) {
@@ -68,106 +70,60 @@ class _DashboardScreenState extends State<DashboardScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 50.h),
-            Text('My Workspaces (projects)',
-                style: robotoBold.copyWith(fontSize: 18)),
-            const SizedBox(height: 25),
+            _showSearchBar(),
+            const SizedBox(height: 10),
           _showProjectsSection(),
-            SizedBox(height: 50.h),
-            Text('In Progress', style: robotoBold.copyWith(fontSize: 18)),
-            const SizedBox(height: 25),
-            _showTasksAndIndicators(context),
+            SizedBox(height: 100.h),
+
           ],
         ),
       ),
     );
   }
+  Widget _showSearchBar() {
+    return Card(
+      shadowColor: AppColors.accent.withOpacity(0.5) ,
+      elevation: 5,
+      child: InputText(
+        prefixIcon: const Icon(Icons.search_outlined),
+        controller: TextEditingController(),
+        hintText: "search...",
+      ),
+    ) ;
+  }
 
   Widget _showProjectsSection() {
-    return Column(
-      children: [
-        _showProjects(),
-        const SizedBox(height: 30),
-        Center(child: _showProjectIndicator()),
-      ],
-    );
-  }
+    return Selector<DashBoardViewModel, List<Project>>(
+      selector: (_, viewModel) => viewModel.projectList,
+      builder: (_, projects, __) {
+        if (projects.isEmpty) {
+          return const Center(child: Text("No projects available"));
+        }
 
-  Widget _showProjects() {
-    return CarouselSlider(
-      items: List.generate(  // We must use listviewBuilder for more optimisation
-        _viewModel.projectList.length,
-        (index) {
-
-          return Selector<DashBoardViewModel, List<Project>>(
-            selector: (_, viewModel) => viewModel.projectList,
-            builder: (_, data, __) {
-              return ProjectCard(
-                project: _viewModel.projectList[index],
+        return ListView.builder(
+          shrinkWrap: true, // important to use inside SingleChildScrollView
+          physics: const NeverScrollableScrollPhysics(), // avoid nested scrolling
+          itemCount: projects.length,
+          itemBuilder: (context, index) {
+            final project = projects[index];
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ProjectCard(
+                project: project,
                 onTap: () {
-                  _viewModel.setProject(_viewModel.projectList[index]) ;
-                  Get.to(()=>  const ProjectDetailScreen()) ;
-                },
-              );
-
-            },
-          );
-        },
-      ),
-      options: CarouselOptions(
-        height: 150.h,
-        onPageChanged: (index, reason) {
-          context.read<DashBoardViewModel>().setCurrentProject(index);
-        },
-      ),
-    );
-  }
-
-  Widget _showProjectIndicator() {
-    return Selector<DashBoardViewModel, int>(
-      selector: (_, viewModel) => viewModel.currentProject,
-      builder: (_, currentProject, __) {
-        return AnimatedIndicator(
-          activeIndex: currentProject,
-          count: _viewModel.projectList.length,
-          dotColor: AppColors.primary,
-        );
-      },
-    );
-  }
-
-  Widget _showTasksAndIndicators(BuildContext context) {
-    return Selector<DashBoardViewModel, int>(
-      selector: (_, viewModel) => viewModel.currentTask,
-      builder: (_, currentTask, __) {
-        return Column(
-          children: [
-            CarouselSlider(
-              items: const [
-                DashboardTasCard(),
-                DashboardTasCard(),
-                DashboardTasCard()
-              ],
-              options: CarouselOptions(
-                height: 150.h,
-                padEnds: false,
-                initialPage: currentTask,
-                enableInfiniteScroll: true,
-                reverse: false,
-                autoPlay: false,
-                onPageChanged: (index, reason) {
-                  context.read<DashBoardViewModel>().setCurrentTask(index);
+                  _viewModel.setProject(project);
+                  Get.to(() => const ProjectDetailScreen());
                 },
               ),
-            ),
-            const SizedBox(height: 30),
-            AnimatedIndicator(
-              activeIndex: currentTask,
-              count: 3,
-              dotColor: AppColors.primary,
-            ),
-          ],
+            );
+          },
         );
       },
     );
   }
+
+
+
+
+
 }

@@ -11,7 +11,7 @@ import '../../../../stateRender/state_render_impl.dart';
 import '../../../../utils/colors.dart';
 
 class ProjectTasksScreens extends StatefulWidget {
-  ProjectTasksScreens({super.key});
+  const ProjectTasksScreens({super.key});
 
   @override
   State<ProjectTasksScreens> createState() => _ProjectTasksScreensState();

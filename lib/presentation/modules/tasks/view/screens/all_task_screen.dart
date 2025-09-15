@@ -48,27 +48,33 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
     return Row(
       children: [
         Expanded(
-          flex: 5,
-          child: InputText(
-            onChanged: (val) {
-              _viewModel.setSearchQuery(val) ;
-              _viewModel.searchTasks() ;
-            },
-            controller:_viewModel.searchController ,
-            prefixIcon: const Icon(Icons.search),
-            hintText: "Enter task name",
+          flex: 13,
+          child: Card(
+            shadowColor: AppColors.accent.withOpacity(0.5) ,
+            elevation: 5,
+            child: InputText(
+              onChanged: (val) {
+                _viewModel.setSearchQuery(val) ;
+                _viewModel.searchTasks() ;
+              },
+              controller:_viewModel.searchController ,
+              prefixIcon: const Icon(Icons.search),
+              hintText: "Enter task name",
+            ),
           ),
         ),
         Expanded(
-          flex: 1,
+          flex: 3,
           child: InkWell(
             onTap: () {
               Get.to(() => const TaskFilteringScreen());
             },
             child: Card(
+              shadowColor: AppColors.accent.withOpacity(0.5) ,
+              elevation: 5,
               color: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10),

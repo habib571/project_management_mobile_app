@@ -12,7 +12,7 @@ class InputText extends StatelessWidget {
         this.textInputType = TextInputType.text,
         this.label,
         this.hintText = "",
-        this.borderRadius = 40,
+        this.borderRadius = 7,
         this.validator,
         this.onChanged,
         this.suffixIcon,

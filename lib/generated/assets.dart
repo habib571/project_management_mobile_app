@@ -19,4 +19,5 @@ class Assets {
   static const String assetsUserAccent = 'assets/user_accent.png';
   static const String assetsUserOutline = 'assets/user_outline.png';
   static const String assetsUserPrimary = 'assets/user_primary.png';
+
 }

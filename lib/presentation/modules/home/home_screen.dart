@@ -58,7 +58,7 @@ class HomeNavBar extends StatelessWidget {
        ),
        padding: const EdgeInsets.all(0)  ,
        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 8),
-       navBarStyle: NavBarStyle.style10,
+       navBarStyle: NavBarStyle.style15,
      );
    }
 
@@ -76,14 +76,14 @@ class HomeNavBar extends StatelessWidget {
     return [
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.home),
-        title: ("Home"),
+     //   title: ("Home"),
         activeColorPrimary: AppColors.accent,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.task),
-        title: ("Task"),
+       // title: ("Task"),
         activeColorPrimary: AppColors.accent,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,
@@ -91,21 +91,21 @@ class HomeNavBar extends StatelessWidget {
 
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.add,),
-        title: "Add",
+      //  title: "Add",
         activeColorPrimary: AppColors.accent,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.notifications_active),
-        title: "Notifications",
+    //    title: "Notifications",
         activeColorPrimary: AppColors.accent,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.person),
-        title: "Profile",
+     //   title: "Profile",
         activeColorPrimary: AppColors.accent,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,

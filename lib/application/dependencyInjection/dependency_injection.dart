@@ -6,10 +6,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:project_management_app/application/helpers/get_storage.dart';
 import 'package:project_management_app/application/services/signaling_service.dart';
+import 'package:project_management_app/data/dataSource/remoteDataSource/meeting_remote_data_source.dart';
 import 'package:project_management_app/data/dataSource/remoteDataSource/task_remote_data_source.dart';
 import 'package:project_management_app/data/repositoryImp/auth_repo_impl.dart';
 import 'package:project_management_app/data/repositoryImp/project_repo_impl.dart';
 import 'package:project_management_app/domain/repository/auth_repo.dart';
+import 'package:project_management_app/domain/repository/meeting_repo.dart';
 import 'package:project_management_app/domain/repository/project_repo.dart';
 import 'package:project_management_app/domain/usecases/project/manage_members_use_case.dart';
 import 'package:project_management_app/domain/usecases/project/get_members.dart';
@@ -37,6 +39,7 @@ import 'package:project_management_app/presentation/modules/dashboord/viewmodel/
 import '../../data/dataSource/remoteDataSource/auth_remote_data_source.dart';
 import '../../data/dataSource/remoteDataSource/project_data_source.dart';
 import '../../data/network/internet_checker.dart';
+import '../../data/repositoryImp/meeting_repo_impl.dart';
 import '../../data/repositoryImp/task_repo_impl.dart';
 import '../../domain/repository/task_repo.dart';
 import '../../domain/usecases/auth/signup_usecase.dart';
@@ -85,12 +88,6 @@ initAppModule() async {
       () => TaskRepositoryImpl(instance(), instance()));
   instance.registerLazySingleton<SignalingService>(() => SignalingService());
 
-  instance.registerLazySingleton<VideoCallViewModel>(
-      () => VideoCallViewModel(instance(), instance(), instance()));
-
-  instance.registerLazySingleton<MeetingViewModel>(
-          () => MeetingViewModel(instance()));
-
 
   initSignInModule();
   initSignupModule();
@@ -104,7 +101,9 @@ initAppModule() async {
   initReportIssueModule();
   initGetAllIssuesModule();
   initNotificationsModule();
+  initMeetingModule() ;
 }
+
 
 initReportIssueModule() {
   //if (!GetIt.I.isRegistered<ReportIssueViewModel>()) {
@@ -239,9 +238,26 @@ initGetStorageModule() async {
 initNotificationsModule() async {
   if (!GetIt.I.isRegistered<NotificationsHistoricViewModel>()) {
     instance.registerFactory<NotificationsHistoricViewModel>(
-        () => NotificationsHistoricViewModel(instance()));
+            () => NotificationsHistoricViewModel(instance()));
     instance.registerLazySingleton<NotificationService>(
-        () => NotificationService());
+            () => NotificationService());
     await instance<NotificationService>().initialize();
   }
 }
+  initMeetingModule()  {
+    instance.registerLazySingleton<MeetingRemoteDataSource>(
+            () => MeetingRemoteDataSourceImpl(instance()));
+    instance.registerLazySingleton<MeetingRepository>(
+            () => MeetingRepoImpl(instance(), instance()));
+
+    if (!GetIt.I.isRegistered<MeetingViewModel>()) {
+    instance.registerFactory<MeetingViewModel>(
+        () => MeetingViewModel(instance(), instance(), instance()));
+  }
+    if (!GetIt.I.isRegistered<VideoCallViewModel>()) {
+      instance.registerFactory<VideoCallViewModel>(
+              () => VideoCallViewModel(instance(), instance(), instance()));
+    }
+
+  }
+
