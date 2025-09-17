@@ -40,12 +40,15 @@ class _TaskWidgetState extends State<TaskWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 25) ,
+      margin: const EdgeInsets.only(bottom: 2) ,
          padding: const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(17) ,
-          color: Colors.white
-        ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(color: AppColors.accent.withOpacity(0.5), blurRadius: 10)
+          ],
+          borderRadius: BorderRadius.circular(12)
+      ),
        child: Column(
          crossAxisAlignment: CrossAxisAlignment.start,
          children: [

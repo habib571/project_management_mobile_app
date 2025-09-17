@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/navigation/routes_constants.dart';
@@ -49,7 +50,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.scaffold,
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -81,6 +82,19 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                     const SizedBox(
                       height: 30,
                     ),
+
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text('Progress',
+                        style: robotoSemiBold.copyWith(fontSize: 16)),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    _showProgress(),
+                    const SizedBox(
+                      height: 15,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -97,7 +111,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 25,
                     ),
                     StreamBuilder<FlowState>(
                         stream: _viewModel.outputState,
@@ -144,7 +158,12 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(17), color: Colors.white),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(color: AppColors.accent.withOpacity(0.5), blurRadius: 10)
+          ],
+          borderRadius: BorderRadius.circular(12)
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -197,6 +216,32 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
       ),
     ]);
   }
+  Widget _showProgress() {
+    return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+        BoxShadow(color: AppColors.accent.withOpacity(0.5), blurRadius: 10)
+    ],
+    borderRadius: BorderRadius.circular(12)
+    ) ,
+      child:  CircularPercentIndicator(
+
+         animation: true,
+          radius: 40,
+          lineWidth: 10.0,
+          percent:_viewModel.dashBoardViewModel.project!.progress!  ,
+          center: Text(
+            "${(_viewModel.dashBoardViewModel.project!.progress! * 100).toStringAsFixed(0)}%" ,
+            style: robotoBold.copyWith(color: AppColors.primaryTxt),
+          ),
+          backgroundColor: AppColors.accent,
+          progressColor: AppColors.primary
+      )
+    );
+  }
 
   Widget _reportIssueSection() {
     return CustomListTile(
@@ -204,10 +249,13 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
             color: AppColors.primary),
         trailing: const Icon(
           Icons.arrow_forward_ios,
-          color: AppColors.accent,
+          color: AppColors.primary,
           size: 13,
         ),
-        title: const Text("View issues"),
+        title:  Text(
+            "View issues" ,
+          style: robotoRegular.copyWith(fontSize: 16),
+        ),
         onTap: () {
           Get.toNamed(AppRoutes.issuesScreen);
         });
@@ -218,10 +266,14 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
             color: AppColors.primary),
         trailing: const Icon(
           Icons.arrow_forward_ios,
-          color: AppColors.accent,
+          color: AppColors.primary,
           size: 13,
         ),
-        title: const Text("meetings"),
+        title:  Text(
+            "meetings" ,
+          style: robotoRegular.copyWith(fontSize: 16),
+
+        ),
         onTap: () {
           Get.to(() => const MeetingsScreen()) ;
         });
@@ -233,12 +285,15 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
         leading: const Icon(Icons.task_outlined, color: AppColors.primary),
         trailing: const Icon(
           Icons.arrow_forward_ios,
-          color: AppColors.accent,
+          color: AppColors.primary,
           size: 13,
         ),
-        title: const Text(" tasks"),
+        title:  Text(
+            "tasks" ,
+           style: robotoRegular.copyWith(fontSize: 16),
+        ),
         onTap: () {
-          Get.to(()=>ProjectTasksScreens()) ;
+          Get.to(()=>const ProjectTasksScreens()) ;
         });
   }
 

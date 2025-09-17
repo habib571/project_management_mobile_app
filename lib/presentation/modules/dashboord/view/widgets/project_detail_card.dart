@@ -20,10 +20,14 @@ class ProjectDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(17),
-        color: Colors.white,
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(color: AppColors.accent.withOpacity(0.5), blurRadius: 10)
+          ],
+          borderRadius: BorderRadius.circular(12)
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

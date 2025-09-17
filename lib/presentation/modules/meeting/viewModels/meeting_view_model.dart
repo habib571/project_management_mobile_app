@@ -15,6 +15,11 @@ import '../../../stateRender/state_render_impl.dart';
 
 class MeetingViewModel extends BaseViewModel {
   MeetingViewModel(super.tokenManager, this._meetingRepository, this._dashBoardViewModel);
+  @override
+  void start() {
+    getMeetings();
+    super.start();
+  }
   final MeetingRepository _meetingRepository;
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   TextEditingController titleController = TextEditingController();
@@ -32,6 +37,9 @@ class MeetingViewModel extends BaseViewModel {
   final List<ProjectMember> _participants = [];
 
   List<ProjectMember> get participants => _participants;
+
+   List<Meeting> _meetings = [];
+  List<Meeting> get meetings => _meetings;
 
   void toggleSchedule(bool value) {
     _isScheduled = value;
@@ -128,7 +136,17 @@ class MeetingViewModel extends BaseViewModel {
       });
 
   }
-
+getMeetings() async {
+  updateState(LoadingState(
+      stateRendererType: StateRendererType.fullScreenLoadingState));
+  (await _meetingRepository.getMeetings(_dashBoardViewModel.project!.id!)).fold((failure) {
+    updateState(ErrorState(StateRendererType.snackbarState, failure.message));
+  }, (data) {
+    _meetings = data;
+    notifyListeners();
+    updateState(ContentState());
+  });
+}
   @override
   void dispose() {
     titleController.dispose();

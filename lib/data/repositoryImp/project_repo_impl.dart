@@ -24,11 +24,8 @@ class ProjectRepositoryImpl implements ProjectRepository{
       try {
         final response = await _projectDataSource.addProject(projectRequest) ;
         if (response.statusCode == 200) {
-          print("--- Project added");
           return Right(Project.fromJson(response.data));
         } else {
-          print(response.statusCode);
-          print(response.data);
           return Left(Failure.fromJson(response.data));
         }
       }

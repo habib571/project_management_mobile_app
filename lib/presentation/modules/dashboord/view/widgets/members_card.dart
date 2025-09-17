@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../utils/colors.dart';
+
 class MembersCard extends StatelessWidget {
   const MembersCard({super.key, required this.children});
   final List<Widget> children ;
@@ -9,8 +11,11 @@ class MembersCard extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(17)
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(color: AppColors.accent.withOpacity(0.5), blurRadius: 10)
+          ],
+          borderRadius: BorderRadius.circular(12)
       ),
       child: Wrap(
         alignment: WrapAlignment.start,
