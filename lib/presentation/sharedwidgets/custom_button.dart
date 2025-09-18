@@ -11,7 +11,7 @@ class CustomButton extends StatelessWidget {
       required this.text,
       this.widget = const SizedBox(),
       this.height,
-        this.borderRadius =40,
+        this.borderRadius= 7,
         this.textColor  = Colors.white,
         this.padding =12
       });
@@ -44,7 +44,8 @@ class CustomButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   widget,
-                  SizedBox(width: 10,) ,
+                  widget == const SizedBox() ? const SizedBox.shrink() :
+                  const SizedBox(width: 10,) ,
                   Text(
                     text,
                     style: robotoMedium.copyWith(color: textColor, fontSize: 16) ,

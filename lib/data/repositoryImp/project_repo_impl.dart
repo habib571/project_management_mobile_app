@@ -24,11 +24,8 @@ class ProjectRepositoryImpl implements ProjectRepository{
       try {
         final response = await _projectDataSource.addProject(projectRequest) ;
         if (response.statusCode == 200) {
-          print("--- Project added");
           return Right(Project.fromJson(response.data));
         } else {
-          print(response.statusCode);
-          print(response.data);
           return Left(Failure.fromJson(response.data));
         }
       }
@@ -42,7 +39,6 @@ class ProjectRepositoryImpl implements ProjectRepository{
 
   @override
   Future<Either<Failure, ProjectResponse>> getMyProjects() async{
-
     if (await _networkInfo.isConnected) {
       try {
         final response = await _projectDataSource.getProjects() ;
@@ -146,13 +142,12 @@ class ProjectRepositoryImpl implements ProjectRepository{
     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
   }
 
-  @override
+@override
   Future<Either<Failure, List<Issue>>> getAllIssues(int projectId) async{
     if (await _networkInfo.isConnected) {
       try {
 
         final response = await _projectDataSource.getAllIssues(projectId) ;
-
         if (response.statusCode == 200) {
           final List<Map<String, dynamic>> responseData = List<Map<String, dynamic>>.from(response.data);
           final issues = responseData.map((issueJson) => Issue.fromJson(issueJson)).toList();

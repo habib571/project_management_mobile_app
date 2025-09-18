@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/presentation/modules/userprofile/viewmodel/userprofile_view_model.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../application/constants/constants.dart';
 import '../../../../../application/dependencyInjection/dependency_injection.dart';
@@ -10,7 +12,6 @@ import '../../../../sharedwidgets/image_widget.dart';
 import '../../../../stateRender/state_render_impl.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/styles.dart';
-import '../widgets/userprofile_list_title.dart';
 
 class UserProfileScreen extends StatefulWidget {
    const UserProfileScreen({super.key});
@@ -20,10 +21,12 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-  final UserProfileViewModel _viewModel = instance<UserProfileViewModel>();
+  late UserProfileViewModel _viewModel;
+  //final UserProfileViewModel _viewModel = instance<UserProfileViewModel>();
 
   @override
   void initState() {
+    _viewModel = context.read<UserProfileViewModel>() ;
     _viewModel.start();
     super.initState();
   }
@@ -53,7 +56,33 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             SizedBox(
               height: 40.h,
             ),
-            ImagePlaceHolder(radius: 80.w, imageUrl: Constants.userProfileImageUrl,),
+            Stack(
+              alignment: AlignmentDirectional.bottomEnd,
+              children: [
+                Selector<UserProfileViewModel, XFile?>(
+                  selector: (_, viewModel) => viewModel.pickedImage,
+                  builder: (BuildContext context, value, Widget? child) {
+                    return ImagePlaceHolder(radius: 80.w,
+                      imageUrl: _viewModel.pickedImage?.path ,
+                    //Constants.userProfileImageUrl,
+                      fullName: _viewModel.user?.fullName?? "Loading...",
+                    );
+                  },
+                ),
+                IconButton(
+                  onPressed: () {_viewModel.pickImage(context);},
+                  icon: const Icon(Icons.edit_outlined, size: 30,),
+                  style: IconButton.styleFrom(
+                    backgroundColor: AppColors.accent,
+                    foregroundColor: AppColors.scaffold,
+                    padding: const EdgeInsets.all(8),
+                    shape: const CircleBorder(),
+                  ),
+                ),
+
+              ],
+            ),
+
             SizedBox(
               height: 40.h,
             ),

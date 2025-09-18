@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 import 'package:project_management_app/application/extensions/screen_config_extension.dart';
 import 'package:project_management_app/application/navigation/routes_constants.dart';
@@ -22,11 +23,13 @@ import 'package:project_management_app/presentation/utils/colors.dart';
 import 'package:project_management_app/presentation/utils/styles.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../application/constants/constants.dart';
 import '../../../../../sharedwidgets/custom_add_button.dart';
 import '../../../../managemembers/view/screens/custom_search_delegate.dart';
+import '../../../../meeting/view/screens/meetings_screen.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
-   ProjectDetailScreen({
+   const ProjectDetailScreen({
     super.key,
   });
 
@@ -35,10 +38,11 @@ class ProjectDetailScreen extends StatefulWidget {
 }
 
 class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
-  late final ProjectDetailViewModel _viewModel = instance<ProjectDetailViewModel>();
+  late final ProjectDetailViewModel _viewModel ;
 
   @override
   void initState() {
+    _viewModel  = context.read<ProjectDetailViewModel>();
     _viewModel.start();
     super.initState();
   }
@@ -46,7 +50,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.scaffold,
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -66,7 +70,6 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                     Selector<ProjectDetailViewModel,Project?>(
                       selector: (context, viewModel) => viewModel.dashBoardViewModel.project ,
                       builder:  (context, data, child){
-                        print("detailsCard");
                         return ProjectDetailCard(
                           project: _viewModel.dashBoardViewModel.project!,
                         );
@@ -78,6 +81,19 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                     _showProjectDescription(),
                     const SizedBox(
                       height: 30,
+                    ),
+
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text('Progress',
+                        style: robotoSemiBold.copyWith(fontSize: 16)),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    _showProgress(),
+                    const SizedBox(
+                      height: 15,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,7 +111,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 25,
                     ),
                     StreamBuilder<FlowState>(
                         stream: _viewModel.outputState,
@@ -112,6 +128,10 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                       height: 20,
                     ),
                     _tasksSection(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                     _meetingSection() ,
                      SizedBox(
                       height: 40.h,
                     ),
@@ -138,7 +158,12 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(17), color: Colors.white),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(color: AppColors.accent.withOpacity(0.5), blurRadius: 10)
+          ],
+          borderRadius: BorderRadius.circular(12)
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -165,14 +190,17 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   }
 
   Widget _showMembers() {
-    return MembersCard(children: [
+    return MembersCard(
+        children: [
       ...List.generate(_viewModel.projectMember.length, (index) {
         log(_viewModel.projectMember.length.toString());
-        return const ImagePlaceHolder(
+        return  ImagePlaceHolder(
             imgBorder: true,
             radius: 17,
-            imageUrl:
-                'https://images.unsplash.com/photo-1567784177951-6fa58317e16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80');
+            imageUrl: _viewModel.projectMember[index].user!.imageUrl,  //"${Constants.baseUrl}/images/${_viewModel.projectMember[index].user!.imageUrl}",
+            fullName: _viewModel.projectMember[index].user!.fullName,
+        );
+
       }),
       CustomAddButton(
         onTap: () {
@@ -189,6 +217,31 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
       ),
     ]);
   }
+  Widget _showProgress() {
+    return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+        BoxShadow(color: AppColors.accent.withOpacity(0.5), blurRadius: 10)
+    ],
+    borderRadius: BorderRadius.circular(12)
+    ) ,
+      child:  CircularPercentIndicator(
+         animation: true,
+          radius: 40,
+          lineWidth: 10.0,
+          percent:_viewModel.dashBoardViewModel.project!.progress!  ,
+          center: Text(
+            "${(_viewModel.dashBoardViewModel.project!.progress! * 100).toStringAsFixed(0)}%" ,
+            style: robotoBold.copyWith(color: AppColors.primaryTxt),
+          ),
+          backgroundColor: AppColors.accent,
+          progressColor: AppColors.primary
+      )
+    );
+  }
 
   Widget _reportIssueSection() {
     return CustomListTile(
@@ -196,26 +249,51 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
             color: AppColors.primary),
         trailing: const Icon(
           Icons.arrow_forward_ios,
-          color: AppColors.accent,
+          color: AppColors.primary,
           size: 13,
         ),
-        title: const Text("View issues"),
+        title:  Text(
+            "View issues" ,
+          style: robotoRegular.copyWith(fontSize: 16),
+        ),
         onTap: () {
           Get.toNamed(AppRoutes.issuesScreen);
         });
   }
+  Widget _meetingSection() {
+    return CustomListTile(
+        leading: const Icon(Icons.video_camera_front_outlined,
+            color: AppColors.primary),
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          color: AppColors.primary,
+          size: 13,
+        ),
+        title:  Text(
+            "meetings" ,
+          style: robotoRegular.copyWith(fontSize: 16),
+
+        ),
+        onTap: () {
+          Get.to(() => const MeetingsScreen()) ;
+        });
+  }
+
 
   Widget _tasksSection() {
     return CustomListTile(
         leading: const Icon(Icons.task_outlined, color: AppColors.primary),
         trailing: const Icon(
           Icons.arrow_forward_ios,
-          color: AppColors.accent,
+          color: AppColors.primary,
           size: 13,
         ),
-        title: const Text("View tasks"),
+        title:  Text(
+            "tasks" ,
+           style: robotoRegular.copyWith(fontSize: 16),
+        ),
         onTap: () {
-          Get.to(()=>ProjectTasksScreens()) ;
+          Get.to(()=>const ProjectTasksScreens()) ;
         });
   }
 

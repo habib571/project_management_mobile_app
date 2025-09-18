@@ -4,6 +4,7 @@ import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:project_management_app/application/dependencyInjection/dependency_injection.dart';
 
 import 'package:project_management_app/presentation/modules/dashboord/view/screens/dashboard_screen.dart';
+import 'package:project_management_app/presentation/modules/notifications/View/Screens/notfications_historic_screen.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/screens/all_task_screen.dart';
 import 'package:project_management_app/presentation/modules/userprofile/View/screens/userprofile_screen.dart';
 
@@ -55,9 +56,9 @@ class HomeNavBar extends StatelessWidget {
          ],
          border: Border.all(color: Colors.transparent, width: 0),
        ),
-       padding: const EdgeInsets.all(0)  ,// Adjusts padding for floating effect
-       margin: const EdgeInsets.only(left: 20, right: 20, bottom: 8), // Lifts the navbar
-       navBarStyle: NavBarStyle.style10,
+       padding: const EdgeInsets.all(0)  ,
+       margin: const EdgeInsets.only(left: 20, right: 20, bottom: 8),
+       navBarStyle: NavBarStyle.style15,
      );
    }
 
@@ -66,6 +67,7 @@ class HomeNavBar extends StatelessWidget {
        const DashboardScreen(),
        const AllTasksScreen(),
        ManageProjectScreen(),
+       NotificationsHistoric(),
        const UserProfileScreen(),
      ];
    }
@@ -74,14 +76,14 @@ class HomeNavBar extends StatelessWidget {
     return [
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.home),
-        title: ("Home"),
+     //   title: ("Home"),
         activeColorPrimary: AppColors.accent,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(Icons.task_outlined),
-        title: ("Task"),
+        icon: const Icon(Icons.task),
+       // title: ("Task"),
         activeColorPrimary: AppColors.accent,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,
@@ -89,14 +91,21 @@ class HomeNavBar extends StatelessWidget {
 
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.add,),
-        title: "Add",
+      //  title: "Add",
+        activeColorPrimary: AppColors.accent,
+        inactiveColorPrimary: AppColors.accent,
+        activeColorSecondary: AppColors.primary,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.notifications_active),
+    //    title: "Notifications",
         activeColorPrimary: AppColors.accent,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.person),
-        title: ("Profile"),
+     //   title: "Profile",
         activeColorPrimary: AppColors.accent,
         inactiveColorPrimary: AppColors.accent,
         activeColorSecondary: AppColors.primary,

@@ -15,7 +15,7 @@ class CustomListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTileTheme(
         data:const ListTileThemeData(
-          tileColor:  Colors.white ,
+          tileColor:  AppColors.accent ,
         ),
         child: ListTile(
           leading: leading,
@@ -24,6 +24,7 @@ class CustomListTile extends StatelessWidget {
           title: title,
           onTap: onTap,
           shape: RoundedRectangleBorder(
+
             borderRadius: BorderRadius.circular(15),
           ),
         )

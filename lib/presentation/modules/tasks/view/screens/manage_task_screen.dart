@@ -103,9 +103,12 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
           ),
           assignUserSection(),
           SizedBox(
-            height: _viewModel.toEdit ? 90.h :120.h,
+            height: _viewModel.toEdit ?55.h :90.h,
           ),
-          _showButton()
+          _showButton() ,
+          SizedBox(
+            height: 40.h ,
+          ),
         ],
       ),
     );
@@ -222,7 +225,7 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
           builder: (context, isUserAdded, _) {
             return isUserAdded
                 ? AssignedMemberChip(
-                    imageUrl: Constants.userProfileImageUrl,
+                    imageUrl: _viewModel.projectMember.user!.imageUrl,
                     userName: _viewModel.projectMember.user!.fullName,
                     onDeleted: () {
                       context.read<ManageTaskViewModel>().toggleIsUserAdded();
@@ -230,8 +233,9 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
                   )
                 : InkWell(
                     onTap: () {
+                      const isMeeting = false ;
                       // context.read<AddTaskViewModel>().toggleIsUserAdded();
-                      Get.to(() => MembersScreen(),arguments: _viewModel.projectViewModel);
+                      Get.to(() => MembersScreen(),arguments: isMeeting);
                     },
                     child: Image.asset("assets/add_filled.png", height: 40),
                   );

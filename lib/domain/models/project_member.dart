@@ -11,10 +11,10 @@ class ProjectMember {
 
   ProjectMember(this.id, this.project, this.user, this.role);
   ProjectMember.request(this.userId, this.role, this.projectId); //ProjectMember.request(this.userId, String this.role, this.projectId);
-  ProjectMember.updateRoleRequest(this.projectId,this.role);
+  ProjectMember.updateRoleRequest(this.id,this.role);
   ProjectMember.selectedMemberToBeAdded(this.user, this.projectId);
   ProjectMember.selectedMemberToBeUpdated(this.id,this.user, this.projectId, this.role);
-  ProjectMember.taskAsseignedMember(this.user) ;
+  ProjectMember.taskAssignedMember(this.user) ;
 
   factory ProjectMember.fromJson(Map<String, dynamic> json) {
     return ProjectMember(
@@ -31,6 +31,10 @@ class ProjectMember {
       'member_id': userId,
       'role': role,
     };
+  }
+
+  Map<String, dynamic> toJsonForUpdateRole() {
+    return {'role': role};
   }
 
   ProjectMember copyWith({

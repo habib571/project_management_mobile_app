@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:project_management_app/main.dart';
+import 'package:project_management_app/presentation/base/base_view_model.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task%20priority/task_priority_card.dart';
 import 'package:project_management_app/presentation/modules/tasks/view/widget/task_status_card.dart';
 import 'package:project_management_app/presentation/modules/tasks/viewmodel/all_tasks_view_model.dart';
@@ -14,6 +15,7 @@ import '../../../../../application/constants/constants.dart';
 import '../../../../../application/helpers/get_storage.dart';
 import '../../../../../application/navigation/routes_constants.dart';
 import '../../../../../domain/models/Task/task.dart';
+import '../../../../../domain/models/user.dart';
 import '../../../../sharedwidgets/image_widget.dart';
 import '../../../../utils/colors.dart';
 import '../../viewmodel/prject_tasks_view_model.dart';
@@ -38,12 +40,15 @@ class _TaskWidgetState extends State<TaskWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 25) ,
+      margin: const EdgeInsets.only(bottom: 15) ,
          padding: const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(17) ,
-          color: Colors.white
-        ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(color: AppColors.accent.withOpacity(0.5), blurRadius: 10)
+          ],
+          borderRadius: BorderRadius.circular(12)
+      ),
        child: Column(
          crossAxisAlignment: CrossAxisAlignment.start,
          children: [
@@ -51,17 +56,32 @@ class _TaskWidgetState extends State<TaskWidget> {
              mainAxisAlignment: MainAxisAlignment.spaceBetween,
              children: [
                Selector<ProjectTasksViewModel, String>(
-                 selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).name ?? '',
+                 selector: (_, viewModel) {
+                   final task = viewModel.tasks.firstWhereOrNull((t) => t.id == widget.task.id);
+                   return task?.name ?? widget.task.name ?? '';
+                 },
+                 builder: (_, name, __) {
+                   return Text(
+                     name,
+                     style: robotoBold.copyWith(fontSize: 14, color: AppColors.secondaryTxt),
+                   );
+                 },
+               ),
+               /*Selector<ProjectTasksViewModel, String>(
+                 selector: (_, viewModel) => viewModel.tasks.firstWhereOrNull((t) => t.id == widget.task.id)?.name ?? 'fgfg',
                  builder: (_, name, __) {
                    return Text(
                      name ,//widget.task.name! ,
                      style: robotoBold.copyWith(fontSize: 14, color: AppColors.secondaryTxt),
                    ) ;
                  },
-               ),
+               ),*/
 
                Selector<ProjectTasksViewModel, String>(
-                 selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).priority ?? '',
+                 selector: (_, viewModel) {
+                   final task = viewModel.tasks.firstWhereOrNull((t) => t.id == widget.task.id);
+                   return task?.priority ?? widget.task.priority ?? '';
+                 },
                  builder: (_, priority, __) {
                    return TaskPriorityCard(
                        task: widget.task,
@@ -83,17 +103,28 @@ class _TaskWidgetState extends State<TaskWidget> {
                        style: robotoSemiBold.copyWith(color: AppColors.secondaryTxt ,fontSize: 14),
                    ),
 
-                   const ImagePlaceHolder(
-                       radius: 10, imageUrl: Constants.userProfileImageUrl),
-                   const SizedBox(
-                     width: 5,
-                   ),
-                   Selector<ProjectTasksViewModel, String>(
-                     selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).assignedUser?.fullName ?? '',
-                     builder: (_, fullName, __) {
-                       return Text(
-                         fullName,
-                         style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),
+                   Selector<ProjectTasksViewModel, User>(
+                     selector: (_, viewModel) {
+                       final task = viewModel.tasks.firstWhereOrNull((t) => t.id == widget.task.id);
+                       return task?.assignedUser ?? widget.task.assignedUser! ;
+                     },
+                     builder: (_, user, __) {
+                       return Row(
+                         children: [
+                            ImagePlaceHolder(
+                             radius: 10,
+                             imageUrl: user.imageUrl,//Constants.userProfileImageUrl
+                              fullName: user.fullName,
+                           ),
+                           const SizedBox(
+                             width: 5,
+                           ),
+
+                           Text(
+                             user.fullName,
+                             style:  robotoBold.copyWith(fontSize: 15 ,color:AppColors.secondaryTxt),
+                           ),
+                         ],
                        ) ;
                      },
                    ),
@@ -101,7 +132,9 @@ class _TaskWidgetState extends State<TaskWidget> {
                  ],
                ),
                widget.isTaskEditable  ? IconButton(
-                onPressed:(){
+                onPressed:() async{
+                  //TaskModel? task = await widget.viewModel.tasks.firstWhereOrNull((e)=> e.id == widget.task.id );
+                  //widget.viewModel.selectedTask = task ?? widget.task ;
                   widget.viewModel.selectedTask = widget.viewModel.tasks.firstWhere((e)=> e.id == widget.task.id )   ;
                   Get.toNamed(AppRoutes.manageTaskScreen , arguments: {"toEdit": true } );
                 } ,
@@ -118,7 +151,10 @@ class _TaskWidgetState extends State<TaskWidget> {
                        Image.asset("assets/calendar.png"),
                        const SizedBox(width: 5,),
                        Selector<ProjectTasksViewModel, String>(
-                         selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).deadline ?? '',
+                         selector: (_, viewModel) {
+                           final task = viewModel.tasks.firstWhereOrNull((t) => t.id == widget.task.id);
+                           return task?.deadline ?? widget.task.deadline ?? '';
+                         },
                          builder: (_, deadline, __) {
                            return Text(
                              deadline,
@@ -130,7 +166,10 @@ class _TaskWidgetState extends State<TaskWidget> {
                    ),
 
                   Selector<ProjectTasksViewModel, String>(
-                    selector: (_, viewModel) => viewModel.tasks.firstWhere((t) => t.id == widget.task.id).status ?? '',
+                    selector: (_, viewModel) {
+                      final task = viewModel.tasks.firstWhereOrNull((t) => t.id == widget.task.id);
+                      return task?.status ?? widget.task.status ?? '';
+                    },
                     builder: (_, status, __) {
                       return TaskStatusCard(
                         taskStatusModel: TaskStatusModel.type(status),

@@ -9,7 +9,7 @@ import '../../../../../utils/styles.dart';
 
 class AssignedMemberChip extends StatelessWidget {
   const AssignedMemberChip({super.key, required this.imageUrl, required this.userName, required this.onDeleted});
-  final String imageUrl ;
+  final String? imageUrl ;
   final String  userName ;
   final Function onDeleted ;
   @override
@@ -20,7 +20,10 @@ class AssignedMemberChip extends StatelessWidget {
         style: robotoBold.copyWith(fontSize: 12),
       ),
       backgroundColor: AppColors.accent,
-      avatar: ImagePlaceHolder(radius: 30, imageUrl: imageUrl) ,
+      avatar: ImagePlaceHolder(radius: 30,
+          imageUrl: imageUrl,
+          fullName: userName,
+      ) ,
       shape:RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18), // Adjust border radius here
       ),

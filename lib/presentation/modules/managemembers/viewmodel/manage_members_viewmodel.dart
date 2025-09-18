@@ -55,13 +55,13 @@ class ManageMembersViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> updateMemberRole(int? memberId, int projectId) async {
+  Future<void> updateMemberRole(int? memberId, /*int projectId*/) async {
     if (_formkey.currentState!.validate()) {
       updateState(LoadingState(
           stateRendererType: StateRendererType.overlayLoadingState));
           print(_role.text.trim());
       (await _manageMembersUseCase.updateMemberRole(
-          ProjectMember.updateRoleRequest(projectId, _role.text.trim())))
+          ProjectMember.updateRoleRequest(memberId, _role.text.trim())))
           .fold(
             (failure) {
           updateState(

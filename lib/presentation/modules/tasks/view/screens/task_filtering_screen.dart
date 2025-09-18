@@ -33,7 +33,7 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffold,
-      body: _showBody(context),
+      body: SingleChildScrollView(child: _showBody(context)),
     );
   }
 
@@ -55,8 +55,9 @@ class _TaskFilteringScreenState extends State<TaskFilteringScreen> {
               _prioritySection(context),
               SizedBox(height: 40.h),
               _deadlineSection(context),
-              SizedBox(height: 150.h),
-              _searchButton()
+              SizedBox(height: 80.h),
+              _searchButton() ,
+              SizedBox(height: 80.h),
             ],
           ),
         ),

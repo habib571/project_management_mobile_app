@@ -31,6 +31,7 @@ class IssueCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("---------- ISSUE ${key.toString()} ------");
     return Card(
       color: Colors.white,
       elevation:0,
@@ -72,7 +73,7 @@ class IssueCard extends StatelessWidget {
               ],
             ),
           ),
-          leading: ImagePlaceHolder(radius: 20, imageUrl: createdBy.imageUrl),
+          leading: ImagePlaceHolder(radius: 20, imageUrl: createdBy.imageUrl, fullName:createdBy.fullName ,),
           children: [
             Padding(
               padding: const EdgeInsets.all(16),
@@ -92,7 +93,9 @@ class IssueCard extends StatelessWidget {
                   const SizedBox(height: 12),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: _issueCardButton(createdBy, currentUserId , onMarkResolved)
+                    child: isResolved ?
+                        const SizedBox.shrink() :
+                        _issueCardButton(createdBy, currentUserId , onMarkResolved)
                   ),
                 ],
               ),
@@ -145,7 +148,7 @@ Widget _taggedMembersSection(User? taggedUser){
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ImagePlaceHolder(radius: 10, imageUrl: taggedUser.imageUrl),
+              ImagePlaceHolder(radius: 10, imageUrl: taggedUser.imageUrl, fullName:taggedUser.fullName),
               SizedBox(width: 5.w,),
               Text(taggedUser.fullName)
             ],

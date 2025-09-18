@@ -1,5 +1,6 @@
 
 import 'package:dartz/dartz.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:project_management_app/data/network/failure.dart';
 import 'package:project_management_app/domain/models/user.dart';
 
@@ -14,6 +15,9 @@ class UserProfileUseCase {
   }
   Future<Either<Failure,bool>> logOut() async {
     return await _repository.logOut();
+  }
+  Future<Either<Failure,User>> updateProfileImage(XFile image) async {
+    return await _repository.updateProfileImage(image);
   }
 }
 

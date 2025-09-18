@@ -28,4 +28,25 @@ class Issue {
       isSolved: json["solved"] as bool,
     );
   }
+
+  Issue copyWith({
+    int? issueId,
+    String? issueTitle,
+    String? issueDescription,
+    User? taggedUser,
+    TaskModel? taggedTask,
+    bool? isSolved,
+    // ... other properties
+  }) {
+    return Issue(
+      issueId: issueId ?? this.issueId,
+      issueTitle: issueTitle ?? this.issueTitle,
+      issueDescription: issueDescription ?? this.issueDescription,
+      taggedUser : taggedUser ?? this.taggedUser,
+      taggedTask : taggedTask ?? this.taggedTask,
+      isSolved: isSolved ?? this.isSolved,
+      // ... copy other properties
+    );
+  }
+
 }

@@ -10,8 +10,9 @@ class InputText extends StatelessWidget {
         this.readOnly = false,
         this.controller,
         this.textInputType = TextInputType.text,
+        this.label,
         this.hintText = "",
-        this.borderRadius = 40,
+        this.borderRadius = 7,
         this.validator,
         this.onChanged,
         this.suffixIcon,
@@ -25,6 +26,7 @@ class InputText extends StatelessWidget {
   final bool obscureText;
   final TextEditingController? controller;
   final TextInputType textInputType;
+  Widget? label;
   final String hintText;
   double borderRadius;
   final String? Function(String? s)? validator;
@@ -46,6 +48,7 @@ class InputText extends StatelessWidget {
       keyboardType: textInputType,
       style: robotoRegular.copyWith(fontSize: 13),
       decoration: InputDecoration(
+          label: label,
           suffixIcon: suffixIcon,
           prefixIcon: prefixIcon,
           filled: true,

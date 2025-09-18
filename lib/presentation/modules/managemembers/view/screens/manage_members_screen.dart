@@ -53,20 +53,20 @@ class _ManageMembersScreenState extends State<ManageMembersScreen> {
   }
 
   Widget _showBody() {
-    return Form(
-      key: _viewModel.formkey ,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 25.h,
-          ),
-          CustomAppBar(title: _viewModel.toEdit  ? 'Update Role'  : 'Add Member'),
-          Expanded(
-            child: Padding(
+    return SingleChildScrollView(
+      child: Form(
+        key: _viewModel.formkey ,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 25.h,
+            ),
+            CustomAppBar(title: _viewModel.toEdit  ? 'Update Role'  : 'Add Member'),
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  //crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                 SizedBox(
                   height: 50.h,
@@ -79,13 +79,13 @@ class _ManageMembersScreenState extends State<ManageMembersScreen> {
                 SizedBox(
                   height: 40.h,
                 ),
-                const Spacer(),
+
                 _addMemberButtonSuction(),
                 SizedBox(height: 35.h,),
               ]),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -107,43 +107,42 @@ class _ManageMembersScreenState extends State<ManageMembersScreen> {
               imgBorder: true,
               radius: 35,
               imageUrl: member.user!.imageUrl ,
+              fullName: member.user!.fullName,
             ),
             const SizedBox(width: 20),
 
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.person, color: AppColors.primary, size: 18),
-                      const SizedBox(width: 8),
-                      Text(
-                        member.user!.fullName,
-                        style:const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black87,
-                        ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.person, color: AppColors.primary, size: 18),
+                    const SizedBox(width: 8),
+                    Text(
+                      member.user!.fullName,
+                      style:const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 6),
-                  Row(
-                    children: [
-                      const Icon(Icons.email, color: AppColors.primary, size: 18),
-                      const SizedBox(width: 8),
-                      Text(
-                        member.user!.email,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey[700],
-                        ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    const Icon(Icons.email, color: AppColors.primary, size: 18),
+                    const SizedBox(width: 8),
+                    Text(
+                      member.user!.email,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[700],
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
@@ -152,21 +151,25 @@ class _ManageMembersScreenState extends State<ManageMembersScreen> {
   }
 
   Widget _addMemberRoleSection() {
-    return InputText(
-      validator: (val) => val.isEmptyInput(),
-      controller:  _viewModel.role ,
-      prefixIcon: const Padding(
-        padding:  EdgeInsetsDirectional.only(end: 12),
-        child: Icon(Icons.badge)
+    return Card(
+      shadowColor: AppColors.accent.withOpacity(0.5) ,
+      elevation: 5,
+      child: InputText(
+        validator: (val) => val.isEmptyInput(),
+        controller:  _viewModel.role ,
+        prefixIcon: const Padding(
+          padding:  EdgeInsetsDirectional.only(end: 12),
+          child: Icon(Icons.badge)
+        ),
+        hintText: "Add member role",
       ),
-      hintText: "Add member role",
     );
   }
 
   Widget _addMemberButtonSuction() {
     return CustomButton(
         onPressed: () {
-          _viewModel.toEdit ? _viewModel.updateMemberRole(member.id , member.projectId!) : _viewModel.addMember(member.user?.id , member.projectId!) ;
+          _viewModel.toEdit ? _viewModel.updateMemberRole(member.id ) : _viewModel.addMember(member.user?.id , member.projectId!) ;
         },
         text:_viewModel.toEdit  ? 'Update Role' : 'Add Member'  ,
     );
