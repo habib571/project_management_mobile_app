@@ -14,7 +14,6 @@ class VideoCallScreen extends StatefulWidget {
 }
 
 class _VideoCallScreenState extends State<VideoCallScreen> {
-
   Offset _floatingPosition = const Offset(20, 60); // initial position
 
   @override
@@ -24,7 +23,6 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     });
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -36,52 +34,67 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
             child: viewModel.loading
                 ? const Center(child: CircularProgressIndicator())
                 : viewModel.remoteTiles.isEmpty
-                    ? viewModel.cameraOn? RTCVideoView (viewModel.localRenderer ,objectFit: RTCVideoViewObjectFit
-                .RTCVideoViewObjectFitCover,) :const VoiceCallScreen(name: "Habib", imageUrl: "")
-                    : GridView.builder(
-                        padding: const EdgeInsets.fromLTRB(8, 8, 8, 96),
-                        itemCount: viewModel.remoteTiles.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount:
-                              viewModel.remoteTiles.length <= 1 ? 1 : 2,
-                          mainAxisSpacing: 8,
-                          crossAxisSpacing: 8,
-                        ),
-                        itemBuilder: (ctx, i) {
-                          final renderer = viewModel.remoteTiles[i].value;
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: RTCVideoView(
-                              renderer,
-                              objectFit: RTCVideoViewObjectFit
-                                  .RTCVideoViewObjectFitCover,
+                    ? viewModel.cameraOn
+                        ? RTCVideoView(
+                            viewModel.localRenderer,
+                            objectFit: RTCVideoViewObjectFit
+                                .RTCVideoViewObjectFitCover,
+                            mirror: true,
+                          )
+                        : const VoiceCallScreen(name: "Habib", imageUrl: "")
+                    : viewModel.remoteTiles.length == 1
+                        // full screen for one-to-one
+                        ? RTCVideoView(
+                            viewModel.remoteTiles.first.value,
+                            objectFit: RTCVideoViewObjectFit
+                                .RTCVideoViewObjectFitCover,
+                          )
+                        // grid for group call
+                        : GridView.builder(
+                            padding: const EdgeInsets.fromLTRB(8, 8, 8, 96),
+                            itemCount: viewModel.remoteTiles.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 8,
+                              crossAxisSpacing: 8,
                             ),
-                          );
-                        },
-                      ),
+                            itemBuilder: (ctx, i) {
+                              final renderer = viewModel.remoteTiles[i].value;
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: RTCVideoView(
+                                  renderer,
+                                  objectFit: RTCVideoViewObjectFit
+                                      .RTCVideoViewObjectFitCover,
+                                ),
+                              );
+                            },
+                          ),
           ),
-          viewModel.remoteTiles.isNotEmpty ?
-              viewModel.cameraOn?
-          Positioned(
-            left: _floatingPosition.dx,
-            top: _floatingPosition.dy,
-            child: Draggable(
-              feedback: _buildLocalPreview(viewModel),
-              childWhenDragging: const SizedBox.shrink(),
-              onDragEnd: (details) {
-                setState(() {
-                  _floatingPosition = details.offset;
-                });
-              },
-              child: _buildLocalPreview(viewModel),
-            ),
-          ):const VoiceCallScreen(name: "Habib", imageUrl: "") :
-              const SizedBox.shrink(),
+          viewModel.remoteTiles.isNotEmpty
+              ? viewModel.cameraOn
+                  ? Positioned(
+                      left: _floatingPosition.dx,
+                      top: _floatingPosition.dy,
+                      child: Draggable(
+                        feedback: _buildLocalPreview(viewModel),
+                        childWhenDragging: const SizedBox.shrink(),
+                        onDragEnd: (details) {
+                          setState(() {
+                            _floatingPosition = details.offset;
+                          });
+                        },
+                        child: _buildLocalPreview(viewModel),
+                      ),
+                    )
+                  : const VoiceCallScreen(name: "Habib", imageUrl: "")
+              : const SizedBox.shrink(),
           Align(
             alignment: Alignment.bottomCenter,
             child: VideoCallButtons(
               isVolumeOn: true,
-              isCameraOn: viewModel.cameraOn ,
+              isCameraOn: viewModel.cameraOn,
               isMicOn: viewModel.micOn,
               onCameraToggle: () {
                 viewModel.toggleCamera();
@@ -92,7 +105,6 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               onEndCall: () {
                 viewModel.end();
                 Navigator.pop(context);
-
               },
             ),
           )

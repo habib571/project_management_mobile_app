@@ -40,7 +40,12 @@ class VideoCallViewModel extends BaseViewModel {
 
     _localStream = await navigator.mediaDevices.getUserMedia({
       "audio": true,
-      "video": {"facingMode": "user"}
+      "video": {
+        "facingMode": "user",
+        "width": {"ideal": 1920},   // Full HD
+        "height": {"ideal": 1080},
+        "frameRate": {"ideal": 30, "max": 60}
+      }
     });
     localRenderer.srcObject = _localStream;
 

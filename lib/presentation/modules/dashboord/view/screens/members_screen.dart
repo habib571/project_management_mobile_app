@@ -21,17 +21,21 @@ class MembersScreen extends StatefulWidget {
 }
 
 class _MembersScreenState extends State<MembersScreen> {
-  final ProjectDetailViewModel _viewModel = Get.arguments ;
+  final isMeeting = Get.arguments ;
 
   //final ManageTaskViewModel _addTaskViewModel  =  instance.get<ManageTaskViewModel>(param1: false) ;
    late final ManageTaskViewModel _addTaskViewModel   ;
    MeetingViewModel? _meetingViewModel   ;
+ late final ProjectDetailViewModel _viewModel ;
+
 
 
    @override
   void initState() {
      _addTaskViewModel = context.read<ManageTaskViewModel>();
      _meetingViewModel = context.read<MeetingViewModel>();
+     _viewModel = context.read<ProjectDetailViewModel>() ;
+
     super.initState();
   }
 
@@ -57,7 +61,7 @@ class _MembersScreenState extends State<MembersScreen> {
                     itemBuilder: (context ,index) {
                       return MemberLisTile(
                         onTap: (){
-                          if(_meetingViewModel != null) {
+                          if(isMeeting && isMeeting!=null) {
                             _meetingViewModel!.addParticipant(_viewModel.projectMember[index]) ;
                           }
                           if(_viewModel.projectMember[index].role !="Manger") {

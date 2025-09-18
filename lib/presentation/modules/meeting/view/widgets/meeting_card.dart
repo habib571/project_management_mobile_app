@@ -17,53 +17,59 @@ class MeetingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0,
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+        elevation: 0,
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(meeting.title!, style: robotoBold),
+                const SizedBox(
+                  height: 7,),
                 meeting.type == MeetingType.SCHEDULED
                     ? _buildMeetingDateTime(
-                        const Icon(Icons.calendar_today), "Feb 12, 2023")
+                        const Icon(Icons.calendar_today), "Jul 12, 2025")
                     : const SizedBox.shrink(),
                 meeting.type == MeetingType.SCHEDULED
                     ? _buildMeetingDateTime(
                         const Icon(Icons.access_time_rounded), "10:00 AM")
                     : const SizedBox.shrink(),
-                const SizedBox(height: 10,) ,
-                _getMeetingType(meeting.status!) ,
-                const SizedBox(height: 10,) ,
+                const SizedBox(
+                  height: 10,
+                ),
+                _getMeetingType(meeting.status!),
+                const SizedBox(
+                  height: 10,
+                ),
                 SizedBox(
-
+                  height: 30,
                   width: 150,
                   child: OverlappedImages(
                     users: meeting.participants!.map((e) => e.user!).toList(),
-
-                              ),
+                  ),
                 ),
+              ],
+            ),
 
-          ],
-        ),
-
-            SizedBox(
-              width: 100,
-              child: CustomButton(
-                padding: 5,
-                height: 35,
-                borderRadius: 17,
-                onPressed: () {
-                  Get.to(() => const VideoCallScreen());
-                },
-                text: "Join",
+            Visibility(
+              visible: meeting.status == MeetingStatus.CREATED || meeting.status == MeetingStatus.ONGOING,
+              child: SizedBox(
+                width: 100,
+                child: CustomButton(
+                  padding: 5,
+                  height: 35,
+                  borderRadius: 17,
+                  onPressed: () {
+                    Get.to(() => const VideoCallScreen());
+                  },
+                  text: "Join",
+                ),
               ),
             )
-     ]),
-    ));
+          ]),
+        ));
   }
 
   Widget _buildMeetingDateTime(Icon icon, String dateTime) {

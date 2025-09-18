@@ -190,7 +190,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   }
 
   Widget _showMembers() {
-    return MembersCard(children: [
+    return MembersCard(
+        children: [
       ...List.generate(_viewModel.projectMember.length, (index) {
         log(_viewModel.projectMember.length.toString());
         return  ImagePlaceHolder(
@@ -228,7 +229,6 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
     borderRadius: BorderRadius.circular(12)
     ) ,
       child:  CircularPercentIndicator(
-
          animation: true,
           radius: 40,
           lineWidth: 10.0,

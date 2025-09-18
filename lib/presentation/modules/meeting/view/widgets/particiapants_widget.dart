@@ -16,6 +16,7 @@ class ParticipantsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final meetingViewModel = context.read<MeetingViewModel>();
     final projectViewModel = context.read<ProjectDetailViewModel>();
+    const isMeeting = true ;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +31,7 @@ class ParticipantsWidget extends StatelessWidget {
             ),
             TextButton.icon(
               onPressed: () => () {
-                Get.to(() => MembersScreen(), arguments: projectViewModel);
+                Get.to(() => MembersScreen(), arguments: isMeeting);
               },
               icon: const Icon(Icons.person_add_alt, size: 18),
               label: const Text("Add"),
@@ -62,7 +63,7 @@ class ParticipantsWidget extends StatelessWidget {
                     ),
                     onPressed: () {
                       Get.to(() => MembersScreen(),
-                          arguments: projectViewModel);
+                          arguments: projectViewModel );
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18),

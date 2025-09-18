@@ -107,6 +107,19 @@ class MeetingViewModel extends BaseViewModel {
   List<int> getParticipantIds() {
     return _participants.map((e) => e.id?? 0 ).toList();
   }
+  void sortMeetingsByStatus(List<Meeting> meetings) {
+    const order = {
+      MeetingStatus.ONGOING: 0,
+      MeetingStatus.CREATED: 1,
+      MeetingStatus.ENDED: 2,
+    };
+
+    meetings.sort((a, b) {
+      final aRank = order[a.status] ?? 99;
+      final bRank = order[b.status] ?? 99;
+      return aRank.compareTo(bRank);
+    });
+  }
   createMeeting() async {
     log("id projet : ${_dashBoardViewModel.project!.id!}") ;
       updateState(LoadingState(
@@ -142,7 +155,8 @@ getMeetings() async {
   (await _meetingRepository.getMeetings(_dashBoardViewModel.project!.id!)).fold((failure) {
     updateState(ErrorState(StateRendererType.snackbarState, failure.message));
   }, (data) {
-    _meetings = data;
+    _meetings = data  ;
+    sortMeetingsByStatus(_meetings) ;
     notifyListeners();
     updateState(ContentState());
   });

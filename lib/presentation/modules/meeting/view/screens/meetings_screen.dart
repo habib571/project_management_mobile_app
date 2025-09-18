@@ -54,16 +54,19 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
           children: [
             SizedBox(height: 40.h),
             const CustomAppBar(title: "Meetings"),
-            ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: _viewModel.meetings.length,
-                itemBuilder: (context, index) {
-                  return MeetingCard(
-                      isScheduled: true, meeting: _viewModel.meetings[index],
-                  );
-                }
-            )
+            Expanded(
+              child: ListView.builder(
+                //  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: _viewModel.meetings.length,
+                  itemBuilder: (context, index) {
+                    return MeetingCard(
+                        isScheduled: true, meeting: _viewModel.meetings[index],
+                    );
+                  }
+              ),
+            ) ,
+            SizedBox(height: 40.h),
           ],
         ),
       );

@@ -28,7 +28,8 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _showBody(),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(child: _showBody()),
     );
   }
 
@@ -39,7 +40,7 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 25.h,
+              height: 35.h,
             ),
             const CustomAppBar(
               title: "Create Meeting",
@@ -48,6 +49,9 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
               height: 30.h,
             ),
              _labelSection("Meeting Title") ,
+            const SizedBox(
+              height: 15,
+            ),
             _titleSection(),
 
             SizedBox(
@@ -57,10 +61,7 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
             SizedBox(
               height: 25.h,
             ),
-            _labelSection("Meeting Date & Time"),
-            SizedBox(
-              height: 25.h,
-            ),
+
             _dateTimeSection() ,
             SizedBox(
               height: 25.h,
@@ -134,7 +135,10 @@ class _CreateMeetingScreenState extends State<CreateMeetingScreen> {
         return Visibility(
           visible: isScheduled,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              _labelSection("Meeting Date & Time"),
+              const SizedBox(height: 15),
               _selectDate(context),
               const SizedBox(height: 12),
               _selectTime(context),

@@ -40,7 +40,7 @@ class _TaskWidgetState extends State<TaskWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 2) ,
+      margin: const EdgeInsets.only(bottom: 15) ,
          padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
           color: Colors.white,

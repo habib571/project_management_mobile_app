@@ -41,8 +41,8 @@ class NotificationsHistoric extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                    'Notifications Historic',
-                    style: robotoSemiBold.copyWith(fontSize: 28, color: AppColors.primary,)
+                    'Notifications',
+                    style: robotoBold.copyWith(fontSize: 28, color: AppColors.primary,)
                 ) ,
                 ListView.builder(
                   shrinkWrap: true,
